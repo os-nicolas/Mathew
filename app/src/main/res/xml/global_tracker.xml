@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--this is not being used atm -->
+
+<resources>
+    <integer name="ga_sessionTimeout">300</integer>
+
+    <!-- Enable automatic Activity measurement -->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!-- The screen names that will appear in reports -->
+    <screenName name="colin.example.algebrator.WriteScreen">
+        WrtiteScreen
+    </screenName>
+    <screenName name="colin.example.algebrator.SolveScreen">
+        SolveScreen
+    </screenName>
+    <!--  The following value should be replaced with correct property id. -->
+    <string name="ga_trackingId">UA-59613283-1</string>
+</resources>
