@@ -260,11 +260,11 @@ public class Operations {
             Equation e = leftCopyNum.get(i);
             boolean match = false;
             for (int ii = 0; ii < commonCopyNum.size(); ii++) {
-                Equation ee = commonCopyNum.get(i);
+                Equation ee = commonCopyNum.get(ii);
                 if (e.same(ee)) {
                     match = true;
-                    leftCopyNum.remove(e);
-                    commonCopyNum.remove(ee);
+                    leftCopyNum.remove(i);
+                    commonCopyNum.remove(ii);
                     i--;
                     break;
                 }
@@ -343,11 +343,19 @@ public class Operations {
             }
         }
 
-        for (Equation e : left.copyNumbers()) {
-            for (Equation ee : right.copyNumbers()) {
+        ArrayList<Equation> leftNumCopy = left.copyNumbers();
+        ArrayList<Equation> rightNumCopy = right.copyNumbers();
+
+
+        for (int i=0;i<leftNumCopy.size();i++) {
+            Equation e = leftNumCopy.get(i);
+            for (int ii=0;ii<rightNumCopy.size();ii++) {
+                Equation ee = rightNumCopy.get(ii);
                 if (e.same(ee) && getValue(e).doubleValue() != 0) {
                     result.numbers.add(e);
-                    rightCopy.remove(ee);
+                    leftNumCopy.remove(i);
+                    rightNumCopy.remove(ii);
+                    i--;
                     break;
                 }
             }
