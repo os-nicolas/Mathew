@@ -143,7 +143,7 @@ public class Operations {
             // and multiply the result time common if there is any common
             if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 0) {
                 return result;
-            } else if (common.key.size() != 0 || (common.numbers.size() != 0 && !(common.numbers.size() == 1 && common.getValue().doubleValue() == 1))) {
+            } else if (common.notOne()) {
                 // handle 5A + 5A in this case we get
                 // result = 2, commmon = 5,A
                 // we want to clear out result and
@@ -328,9 +328,14 @@ public class Operations {
             for (EquationCounts ee : rightCopy) {
                 EquationCounts common = findCommon(e, ee);
                 if (common != null) {
-                    result.addToKey(common.getEquation());
-                    rightCopy.remove(ee);
-                    break;
+                    Equation newKey =common.getEquation();
+                    if (!(sortaNumber(newKey) && getValue(newKey).doubleValue()==1.0)) {
+                        result.addToKey(newKey);
+                        rightCopy.remove(ee);
+                        // i want this break to break out of both ifs and the for
+                        // does it?
+                        break;
+                    }
                 }
             }
         }

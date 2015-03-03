@@ -95,9 +95,9 @@ public class EquationCounts {
     public Equation getEquation() {
         SuperView owner = root.owner;
         if (equations.size()==0){
-            if ( v.doubleValue()  == BigDecimal.ONE.doubleValue()) {
+            if ( v.doubleValue()  == 1) {
                 return root;
-            }else if (v.doubleValue()  == BigDecimal.ZERO.doubleValue()){
+            }else if (v.doubleValue()  == 0){
                 return new NumConstEquation(BigDecimal.ONE, owner);
             }else {
                 Equation newEq = new PowerEquation(owner);
@@ -138,7 +138,9 @@ public class EquationCounts {
                     addEq.add(multi);
                 }
             }
-            addEq.add(new NumConstEquation(v,owner));
+            if (v.doubleValue() != 0) {
+                addEq.add(new NumConstEquation(v, owner));
+            }
             if (addEq.size()==0) {
                 newEq = new NumConstEquation(BigDecimal.ONE,owner);
             }else if (addEq.size()==1){

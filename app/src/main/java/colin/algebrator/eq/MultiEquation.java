@@ -450,4 +450,8 @@ class MultiCountData {
         }
         return key.add(copy);
     }
+
+    public boolean notOne() {
+        return key.size() != 0 || (numbers.size() != 0 && !(numbers.size() == 1 && getValue().doubleValue() == 1));
+    }
 }

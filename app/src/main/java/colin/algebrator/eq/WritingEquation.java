@@ -39,15 +39,11 @@ public class WritingEquation extends Equation {
 
     private boolean deepLegal(Equation eq) {
         for (Equation e : eq) {
-            if (e instanceof WritingEquation) {
-                if (!((WritingEquation) e).deepLegal()) {
-                    return false;
-                }
-            } else if (e instanceof WritingLeafEquation) {
+             if (e instanceof WritingLeafEquation) {
                 if (((WritingLeafEquation) e).illegal()) {
                     return false;
                 }
-            } else if (e instanceof DivEquation) {
+            }  else {
                 if (!deepLegal(e)) {
                     return false;
                 }

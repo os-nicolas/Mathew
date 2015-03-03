@@ -1420,7 +1420,7 @@ abstract public class Equation extends ArrayList<Equation> {
         if (owner instanceof EmilyView) {
             return 48 * Algebrator.getAlgebrator().getDpi();
         } else {
-            return 24 * Algebrator.getAlgebrator().getDpi();
+            return 28 * Algebrator.getAlgebrator().getDpi();
         }
     }
 

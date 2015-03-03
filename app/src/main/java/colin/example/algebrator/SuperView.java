@@ -2,12 +2,17 @@ package colin.example.algebrator;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -175,6 +180,20 @@ public abstract class SuperView extends View implements
 //            canvas.drawCircle(dlx,dly,15,temp);
 //        }
 
+//        Picture pic = new Picture();
+//        Canvas c = pic.beginRecording(canvas.getWidth(),canvas.getHeight());
+//        Paint testP = new Paint();
+//        testP.setColor(0xffff00ff);
+//        c.drawRect(0,0,200,200,testP);
+//        pic.endRecording();
+//        pic.draw(canvas);
+
+//        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+//        Canvas c = new Canvas(bmp);
+//        Paint testP = new Paint();
+//        testP.setColor(0xffff00ff);
+//        c.drawRect(0,0,200,200,testP);
+//        canvas.drawBitmap(bmp,10,10,testP);
 
         if (this instanceof EmilyView) {
             stupid.draw(canvas, width / 2 + offsetX, height / 3 + offsetY);
@@ -659,11 +678,8 @@ public abstract class SuperView extends View implements
                     if (myMode == TouchMode.SELECT) {
                         // if they get too far from were they started we are going to start dragging
                         //TODO scale by dpi
-                        float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
-                        float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
-                        if (maxMovement < distance) {
+
                             selectMoved(event);
-                        }
                     }
 
                     // if we are dragging something move it

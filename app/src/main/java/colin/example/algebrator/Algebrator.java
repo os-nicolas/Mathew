@@ -52,7 +52,7 @@ public class Algebrator extends Application {
     }
 
     public float getPranEdgeX(Equation eq) {
-        return (eq.owner instanceof ColinView?2*getDpi():6*getDpi());
+        return (eq.owner instanceof ColinView?7*getDpi():7*getDpi());
     }
 
     public float getPranEdgeY(Equation eq) {

@@ -44,7 +44,7 @@ public class NumberAction extends Action {
                         emilyView.insert(newEq);
                     }
                 } else {
-                    if ((r instanceof NumConstEquation) && (emilyView.selected.parent.equals(r.parent))) {
+                    if ((r instanceof NumConstEquation) && (emilyView.selected.parent.equals(r.parent)) && !(emilyView.selected.parent instanceof BinaryEquation)) {
                         if (!r.getDisplay(-1).equals("0")) {
                             r.setDisplay(num + ((NumConstEquation) r).getDisplaySimple());
                         } else {

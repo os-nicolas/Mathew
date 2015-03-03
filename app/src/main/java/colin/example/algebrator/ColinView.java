@@ -117,18 +117,18 @@ public class ColinView extends SuperView {
 
     @Override
     protected void selectMoved(MotionEvent event){
-        // if they get too far from were they started we are going to start dragging
-        //TODO scale by dpi
-        float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
-        float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
-        if (maxMovement < distance) {
-            boolean pass = true;
-            if (selected != null) {
-                startDragging();
-            } else {
-                myMode = TouchMode.MOVE;
+            // if they get too far from were they started we are going to start dragging
+            //TODO scale by dpi
+            float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
+            float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
+            if (maxMovement < distance) {
+                boolean pass = true;
+                if (selected != null) {
+                    startDragging();
+                } else {
+                    myMode = TouchMode.MOVE;
+                }
             }
-        }
     }
 
     private void startDragging() {

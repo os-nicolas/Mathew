@@ -268,24 +268,6 @@ public class EmilyView extends SuperView {
     }
 
     public void insert(Equation newEq) {
-//        Equation l = left();
-//        if (l != null) {
-//            if (l.parent instanceof WritingEquation) {
-//                if (l instanceof PlaceholderEquation) {
-//                    // this really should not happen
-//                    Log.e("", "yoyo");
-//                    //int at = emilyView.selected.parent.indexOf(emilyView.selected);
-//                    //emilyView.selected.parent.add(at, new WritingLeafEquation("+", emilyView));
-//                } else {
-//                    int at = l.parent.indexOf(l);
-//                    l.parent.add(at + 1, newEq);
-//                }
-//            }
-//        }else{
-//            if (selected instanceof PlaceholderEquation){
-//                selected.parent.add(0, newEq);
-//            }
-//        }
         selected.parent.add(selected.parent.indexOf(selected), newEq);
     }
 

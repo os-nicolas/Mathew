@@ -23,8 +23,16 @@ public class DeleteAction extends Action {
             if (l != null) {
                 if (l.parent instanceof BinaryEquation) {
                     l.parent.replace(l);
-                    int pos = l.parent.indexOf(l);
-                    l.parent.add(pos + 1, emilyView.selected);
+                    // didn't we just check this? confusing i know but since the replace our l.parent has changed
+                    if (!(l.parent instanceof  BinaryEquation)) {
+                        int pos = l.parent.indexOf(l);
+                        l.parent.add(pos + 1, emilyView.selected);
+                    }else{
+                        Equation write = new WritingEquation(emilyView);
+                        l.replace(write);
+                        write.add(l);
+                        write.add(emilyView.selected);
+                    }
                 } else if (l instanceof NumConstEquation) {
                     if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
                         String display =((NumConstEquation) l).getDisplaySimple();
