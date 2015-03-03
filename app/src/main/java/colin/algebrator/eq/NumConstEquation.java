@@ -53,8 +53,15 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
                 df.setMaximumFractionDigits(3);
             }
             String result = df.format(getValue());
-            if (display.endsWith(".")) {
-                result += ".";
+            // we need to deel with trailing zeros
+            int at = display.length()-1;
+            String toAdd ="";
+            while (at >=0&&display.charAt(at)=='0'){
+                toAdd = toAdd +'0';
+                at--;
+            }
+            if (at >=0 && display.charAt(at)=='.'){
+                result += "."+toAdd;
             }
             return result;
         }else {

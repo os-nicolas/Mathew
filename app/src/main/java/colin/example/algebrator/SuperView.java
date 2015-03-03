@@ -167,6 +167,9 @@ public abstract class SuperView extends View implements
 
     @Override
     protected void onDraw(Canvas canvas) {
+        height = canvas.getHeight();
+        width = canvas.getWidth();
+
         // canvas.drawColor(0xFFFFFFFF, Mode.CLEAR);
         Algebrator.getAlgebrator().at++;
 

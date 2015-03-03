@@ -204,7 +204,10 @@ public class Operations {
             return NumConstEquation.create(sum, owner);
         }
         // otherwise make an add equation and throw them both in it
-        if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0) {
+        if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0
+                && right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
+            return new NumConstEquation(0,owner);
+        } else  if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0) {
             return right.getEquation(owner);
         } else if (right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
             return left.getEquation(owner);
@@ -342,7 +345,7 @@ public class Operations {
 
         for (Equation e : left.copyNumbers()) {
             for (Equation ee : right.copyNumbers()) {
-                if (e.same(ee)) {
+                if (e.same(ee) && getValue(e).doubleValue() != 0) {
                     result.numbers.add(e);
                     rightCopy.remove(ee);
                     break;
@@ -437,7 +440,7 @@ public class Operations {
         // we check to see if they are both power equations of the same power
         // or close to that (just a negetive sign away
         boolean samePower =(a.removeNeg() instanceof  PowerEquation &&
-                a.removeNeg() instanceof PowerEquation &&
+                b.removeNeg() instanceof PowerEquation &&
                 a.removeNeg().get(1).same(b.removeNeg().get(1)));
 
         if (samePower){

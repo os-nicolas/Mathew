@@ -9,14 +9,15 @@ import colin.example.algebrator.SuperView;
 
 public class PlaceholderEquation extends LeafEquation {
 	private long lastUpdate;
+    public boolean drawBkg=false;
 
-	public PlaceholderEquation(SuperView owner) {
+    public PlaceholderEquation(SuperView owner) {
 		super(owner);
         init();
 	}
 
     private void init() {
-        display = "|";
+        display = "\u007C";
         myWidth =0;
         myHeight = Algebrator.getAlgebrator().getDefaultSize();
         goDark();

@@ -69,8 +69,8 @@ public class EmilyView extends SuperView {
         firstRow.add(new Button("9", new NumberAction(this, "9")));
         firstRow.add(new Button("A", new VarAction(this, "A")));
         firstRow.add(new Button("B", new VarAction(this, "B")));
-        firstRow.add(new Button("(", new ParenthesesAction(this, true)));
-        firstRow.add(new Button(")", new ParenthesesAction(this, false)));
+        firstRow.add(new Button("+", new PlusAction(this)));
+        firstRow.add(new Button("-", new MinusAction(this)));
         firstRow.add(new Button("=", new EqualsAction(this)));
         //TODO this does not work since my font does not support this
         //char[] backSpaceUnicode = { '\u232B'};
@@ -80,11 +80,13 @@ public class EmilyView extends SuperView {
         secondRow.add(new Button("4", new NumberAction(this, "4")));
         secondRow.add(new Button("5", new NumberAction(this, "5")));
         secondRow.add(new Button("6", new NumberAction(this, "6")));
-        secondRow.add(new Button(".", new DecimalAction(this, ".")));
-        secondRow.add(new Button("+", new PlusAction(this)));
+        secondRow.add(new Button("(", new ParenthesesAction(this, true)));
+        secondRow.add(new Button(")", new ParenthesesAction(this, false)));
         char[] timesUnicode = {'\u00D7'};
         secondRow.add(new Button(new String(timesUnicode), new TimesAction(this)));
-        secondRow.add(new Button("^", new PowerAction(this)));
+        char[] divisionUnicode = {'\u00F7'};
+        secondRow.add(new Button(new String(divisionUnicode), new DivAction(this)));
+
 
 
         ArrayList<Button> thridRow = new ArrayList<Button>();
@@ -92,9 +94,8 @@ public class EmilyView extends SuperView {
         thridRow.add(new Button("2", new NumberAction(this, "2")));
         thridRow.add(new Button("3", new NumberAction(this, "3")));
         thridRow.add(new Button("0", new NumberAction(this, "0")));
-        thridRow.add(new Button("-", new MinusAction(this)));
-        char[] divisionUnicode = {'\u00F7'};
-        thridRow.add(new Button(new String(divisionUnicode), new DivAction(this)));
+        thridRow.add(new Button(".", new DecimalAction(this, ".")));
+        thridRow.add(new Button("^", new PowerAction(this)));
         char[] sqrtUnicode = {'\u221A'};
         thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction(this)));
         char[] leftUnicode = {'\u2190'};
@@ -108,7 +109,6 @@ public class EmilyView extends SuperView {
         solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(solve);
         addButtonsRow(thridRow, 8f / 9f, 9f / 9f);
-
     }
 
     private void addButtonsRow(ArrayList<Button> row, float top, float bottum) {
@@ -183,8 +183,8 @@ public class EmilyView extends SuperView {
         lcp = closest.get(0).equation;
 
         // TODO 100 to var scale by dpi
-        float minDis = 100 * Algebrator.getAlgebrator().getDpi();
-        if (Math.abs(event.getY() - lcp.y) < minDis) {
+        //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
+        //if (Math.abs(event.getY() - lcp.y) < minDis) {
             if (lcp instanceof PlaceholderEquation) {
                 lcp.setSelected(true);
             } else {
@@ -258,7 +258,16 @@ public class EmilyView extends SuperView {
                 }
 
             }
+        //}
+        if (selected != null) {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                ((PlaceholderEquation) selected).drawBkg = false;
+            } else {
+                ((PlaceholderEquation) selected).drawBkg = true;
+                ((PlaceholderEquation) selected).goDark();
+            }
         }
+
         return;
     }
 

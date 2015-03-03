@@ -573,7 +573,7 @@ abstract public class Equation extends ArrayList<Equation> {
     protected void drawBkgBox(Canvas canvas, float x, float y) {
         updateBkgColors();
         float bkgBuffer = Algebrator.getAlgebrator().getbkgBuffer();
-        if (canvas != null && !(this instanceof PlaceholderEquation) && bkgAlpha == getMaxBkgAlpha()) {
+        if (canvas != null && bkgAlpha == getMaxBkgAlpha()) {
             Paint p = new Paint();
             p.setColor(bkgColor);
             p.setAlpha(bkgAlpha);
@@ -594,7 +594,13 @@ abstract public class Equation extends ArrayList<Equation> {
             bkgColor = Algebrator.colorFade(bkgColor, Algebrator.getAlgebrator().lightColor);
             int scale = Algebrator.getAlgebrator().getRate();
 
-            if (isSelected() || demo) {
+            boolean dark = isSelected() || demo;
+
+            if (this instanceof PlaceholderEquation){
+                dark = ((PlaceholderEquation) this).drawBkg;
+            }
+
+            if (dark ) {
                 bkgAlpha = (bkgAlpha * (scale - 1) + 0xFF) / scale;
             } else {
                 bkgAlpha = (bkgAlpha * (scale - 1) + 0x00) / scale;
@@ -1393,7 +1399,8 @@ abstract public class Equation extends ArrayList<Equation> {
             return true;
         }
         String dis = getDisplay(-1);
-        if (dis.equals("+") || dis.equals("-") || dis.equals("*") || dis.equals("=")) {
+        char[] timesUnicode = {'\u00D7'};
+        if (dis.equals("+") || dis.equals("-") || dis.equals(new String(timesUnicode)) || dis.equals("=")) {
             return true;
         }
         return false;
@@ -1409,7 +1416,8 @@ abstract public class Equation extends ArrayList<Equation> {
             return true;
         }
         String dis = getDisplay(-1);
-        if (dis.equals("+") || dis.equals("-") || dis.equals("*") || dis.equals("=")) {
+        char[] timesUnicode = {'\u00D7'};
+        if (dis.equals("+") || dis.equals("-") || dis.equals(new String(timesUnicode)) || dis.equals("=")) {
             return true;
         }
         return false;
