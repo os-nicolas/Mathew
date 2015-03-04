@@ -74,8 +74,6 @@ public class Operations {
                 if (value.doubleValue() != 1) {
                     target.numbers.add(NumConstEquation.create(value, owner));
                 }
-
-
             } else {
                 for (Equation e : at.numbers) {
                     target.numbers.add(e.copy());

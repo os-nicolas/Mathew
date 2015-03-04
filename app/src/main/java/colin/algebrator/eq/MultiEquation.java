@@ -111,12 +111,12 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
         if (fullSet.size() == 1) {
             MultiCountData mine =  fullSet.get(0);
-            mine.combine = true;
+            //mine.combine = true;
             result = mine.getEquation(owner);
         } else if (fullSet.size() > 1) {
             result = new AddEquation(owner);
             for (MultiCountData e : fullSet) {
-                e.combine = true;
+                //e.combine = true;
                 result.add(e.getEquation(owner));
             }
         }
@@ -359,11 +359,8 @@ class MultiCountData {
                     if (!(getValue().abs().doubleValue() == 1)) {
                         top.add(NumConstEquation.create(getValue(),owner));
                     }
-                }else{
-                    for (Equation e:numbers){
-                        top.add(e);
-                    }
                 }
+
                 ArrayList<EquationCounts> ecs = new ArrayList<EquationCounts>();
                 for (Equation e :key) {
                     boolean match = false;
@@ -376,6 +373,21 @@ class MultiCountData {
                         ecs.add(new EquationCounts(e));
                     }
                 }
+
+                if (!combine) {
+                    for (Equation e : numbers) {
+                        boolean match = false;
+                        for (EquationCounts ec : ecs) {
+                            if (ec.add(e)) {
+                                match = true;
+                            }
+                        }
+                        if (!match) {
+                            top.add(e);
+                        }
+                    }
+                }
+
                 // add all the equation
                 for (EquationCounts ec:ecs){
                     top.add(ec.getEquation());

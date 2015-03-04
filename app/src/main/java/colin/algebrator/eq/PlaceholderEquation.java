@@ -17,7 +17,7 @@ public class PlaceholderEquation extends LeafEquation {
 	}
 
     private void init() {
-        display = "\u007C";
+        display = "I";//"\u007C";
         myWidth =0;
         myHeight = Algebrator.getAlgebrator().getDefaultSize();
         goDark();

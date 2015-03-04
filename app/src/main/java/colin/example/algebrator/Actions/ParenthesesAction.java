@@ -28,7 +28,7 @@ public class ParenthesesAction extends Action {
 
             boolean can = true;
             boolean op = false;
-            Equation next = (left ? emilyView.left() : emilyView.selected.right());
+            Equation next = (left ? emilyView.selected.right() : emilyView.left());
 
 
             if (next instanceof WritingLeafEquation) {
