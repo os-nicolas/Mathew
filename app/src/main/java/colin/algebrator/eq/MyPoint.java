@@ -48,4 +48,8 @@ public class MyPoint extends Point {
                 && y < this.y + near + this.myHeight / 2
                 && y > this.y - near - this.myHeight / 2;
     }
+
+    public float distance(float x2, float y2) {
+        return (float)Math.sqrt((x2- this.x)*(x2- this.x)+(y2 - this.y)*(y2- this.y));
+    }
 }

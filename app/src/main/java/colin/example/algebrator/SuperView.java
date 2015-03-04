@@ -50,8 +50,8 @@ public abstract class SuperView extends View implements
     public Equation stupid;
     int width;
     int height;
-    int offsetX = 0;
-    int offsetY = 0;
+    float offsetX = 0;
+    float offsetY = 0;
     protected float buttonsPercent;
     public ArrayList<Animation> animation = new ArrayList<Animation>();
     public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
@@ -218,12 +218,14 @@ public abstract class SuperView extends View implements
         // keep selected on the screen
         long now = System.currentTimeMillis();
         long diff = now - lastVelocityUpdate;
+
         //TODO scale by dpi
         float pushV = 1f * Algebrator.getAlgebrator().getDpi();
         float maxV = 4f * Algebrator.getAlgebrator().getDpi();
         float chunk = 20f * Algebrator.getAlgebrator().getDpi();
 
         float steps = diff / step;
+
         float or = outRight();
         if (or != 0) {
             vx -= step * pushV * or / chunk;
@@ -258,12 +260,27 @@ public abstract class SuperView extends View implements
         }
 
         if (slidding) {
+            //if (steps == 0){
+                //Log.e("steps was zero!","diff:" + steps);
+            //}
 
             float dx = (float) (vx * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
             float dy = (float) (vy * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
 
+//            vx= friction*vx;
+//            vy = friction*vy;
+
+//            float lastVx=vx;
             vx = (float) (vx * Math.pow(friction, steps));
+//            if (lastVx == vx){
+//                Log.e("vx","diff:" + diff);
+//            }
+//
+//            float lastVy=vy;
             vy = (float) (vy * Math.pow(friction, steps));
+//            if (lastVy == vy){
+//                Log.e("vy","diff:" + diff);
+//            }
             lastVelocityUpdate = now;
             updateOffsetX(dx);
             updateOffsetY(dy);
@@ -411,12 +428,7 @@ public abstract class SuperView extends View implements
     }
 
     private void updateOffsetX(float vx) {
-        float tempOffset = offsetX + vx;
-        //TODO upadte this math it should keep history in mind too
-
-        //if (Math.abs(tempOffset) < (width + stupid.measureWidth()) / 2 - eqDragPadding) {
-        offsetX = (int) tempOffset;
-        //}
+        offsetX += vx;
     }
 
     private void updateOffsetY(float vy) {

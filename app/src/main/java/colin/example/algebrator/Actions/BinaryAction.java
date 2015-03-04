@@ -8,6 +8,7 @@ import colin.algebrator.eq.VarEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
+import colin.algebrator.eq.WritingSqrtEquation;
 import colin.example.algebrator.EmilyView;
 
 /**
@@ -68,7 +69,7 @@ public abstract class BinaryAction extends Action {
                 if (can) {
 
                     Equation oldEq = emilyView.selected;
-                    if (newEq instanceof PowerEquation) {
+                    if (newEq instanceof PowerEquation && !(oldEq.get(0) instanceof WritingSqrtEquation)) {
                         oldEq.remove(0);
                         Equation swap = oldEq;
                         if (oldEq.size() == 2) {

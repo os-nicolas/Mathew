@@ -23,7 +23,7 @@ public abstract class MonaryEquation extends Equation {
     }
 
     private void init() {
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
+        myWidth = (int)(Algebrator.getAlgebrator().getDefaultSize()*.75);
         myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 

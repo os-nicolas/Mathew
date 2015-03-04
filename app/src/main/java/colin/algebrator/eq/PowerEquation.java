@@ -149,7 +149,11 @@ public class PowerEquation extends Operation implements BinaryEquation {
                         }
 
                         if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
-                            replace(get(0).plusMinus());
+                            Equation toReplace= this;
+                            while (toReplace.parent instanceof PlusMinusEquation){
+                                toReplace=toReplace.parent;
+                            }
+                            toReplace.replace(get(0).plusMinus());
                         } else {
                             replace(get(0));
                         }
@@ -314,7 +318,15 @@ public class PowerEquation extends Operation implements BinaryEquation {
                                 }
                                 justRemove();
                             } else {
-                                replace(result);
+                                if (result.isPlusMinus()){
+                                    Equation toReplace= this;
+                                    while (toReplace.parent instanceof PlusMinusEquation){
+                                        toReplace=toReplace.parent;
+                                    }
+                                    toReplace.replace(result);
+                                }else {
+                                    replace(result);
+                                }
                             }
                         }
                     }

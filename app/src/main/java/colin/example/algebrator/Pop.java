@@ -12,11 +12,11 @@ import colin.example.algebrator.Animation;
  * Created by Colin on 2/19/2015.
  */
 public class Pop extends Animation {
-    float targetRadius = 30*Algebrator.getAlgebrator().getDpi();
-    long runTime = 150;
+    float targetRadius = 32*Algebrator.getAlgebrator().getDpi();
+    long runTime = 180;
     long startedAt;
-    int startAlpha = 0x80;
-    MyPoint myPoint;
+    int startAlpha = 0x90;
+    public MyPoint myPoint;
 
     public Pop(MyPoint myPoint,SuperView owner) {
         super(owner);

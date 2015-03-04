@@ -482,19 +482,50 @@ abstract public class Equation extends ArrayList<Equation> {
             }
 
             if (owner instanceof ColinView) {
+                MyPoint myPoint = getLastPoint(x, y);
+
                 if (!(old.same(owner.stupid))) {
                     ((ColinView) owner).changed = true;
+                    // if we operated we should be the one to pop
+                    for (int i = 0; i < owner.afterAnimations.size(); i++) {
+                        Animation a = owner.afterAnimations.get(i);
+                        if (a instanceof Pop) {
+                            owner.afterAnimations.remove(a);
+                            i--;
+                        }
+                    }
+                    owner.afterAnimations.add(new Pop(myPoint, owner));
                     return true;
                 }
-                MyPoint myPoint = getLastPoint(x, y);
-                for (int i = 0; i < owner.afterAnimations.size(); i++) {
-                    Animation a = owner.afterAnimations.get(i);
+
+                // otherwise we clear and add if we are the closest
+                // and we are not a num const equation
+                //if (!(this instanceof NumConstEquation)){
+                float ourDis = myPoint.distance(x, y);
+                Log.d("dis", this.toString() + " " + ourDis);
+                boolean closest = true;
+                for (Animation a : owner.afterAnimations) {
                     if (a instanceof Pop) {
-                        owner.afterAnimations.remove(a);
-                        i--;
+                        float aDis = ((Pop) a).myPoint.distance(x, y);
+                        closest = ourDis <= aDis;
+                        if (!closest) {
+                            break;
+                        }
                     }
                 }
-                owner.afterAnimations.add(new Pop(myPoint, owner));
+                if (closest) {
+                    for (int i = 0; i < owner.afterAnimations.size(); i++) {
+                        Animation a = owner.afterAnimations.get(i);
+                        if (a instanceof Pop) {
+                            owner.afterAnimations.remove(a);
+                            i--;
+                        }
+                    }
+                    owner.afterAnimations.add(new Pop(myPoint, owner));
+                }
+
+                //}
+
             }
         }
         return false;
@@ -596,11 +627,11 @@ abstract public class Equation extends ArrayList<Equation> {
 
             boolean dark = isSelected() || demo;
 
-            if (this instanceof PlaceholderEquation){
+            if (this instanceof PlaceholderEquation) {
                 dark = ((PlaceholderEquation) this).drawBkg;
             }
 
-            if (dark ) {
+            if (dark) {
                 bkgAlpha = (bkgAlpha * (scale - 1) + 0xFF) / scale;
             } else {
                 bkgAlpha = (bkgAlpha * (scale - 1) + 0x00) / scale;
@@ -661,7 +692,7 @@ abstract public class Equation extends ArrayList<Equation> {
     public boolean addContain(Equation equation) {
         Equation current = equation;
         while (true) {
-            if (!(current instanceof EqualsEquation || current instanceof AddEquation || current.equals(equation) || current instanceof MinusEquation || current instanceof PlusMinusEquation )) {
+            if (!(current instanceof EqualsEquation || current instanceof AddEquation || current.equals(equation) || current instanceof MinusEquation || current instanceof PlusMinusEquation)) {
                 return false;
             } else if (current.equals(this)) {
                 return true;
@@ -693,7 +724,7 @@ abstract public class Equation extends ArrayList<Equation> {
     public boolean DivMultiContain(Equation equation) {
         Equation current = equation;
         while (true) {
-            if (!(current instanceof EqualsEquation || current instanceof MinusEquation  || current instanceof PlusMinusEquation|| current instanceof MultiDivSuperEquation || current.equals(equation))) {
+            if (!(current instanceof EqualsEquation || current instanceof MinusEquation || current instanceof PlusMinusEquation || current instanceof MultiDivSuperEquation || current.equals(equation))) {
                 return false;
             } else if (current.equals(this)) {
                 return true;
@@ -1023,12 +1054,12 @@ abstract public class Equation extends ArrayList<Equation> {
                 //dragging.updateOps(dragging.demo);
             } else if (this instanceof NumConstEquation && ((NumConstEquation) this).getValue().doubleValue() == BigDecimal.ZERO.doubleValue() && op == Op.ADD) {
                 dragging.remove();
-                dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                 this.replace(dragging);
                 return dragging;
             } else if (this instanceof NumConstEquation && ((NumConstEquation) this).getValue().doubleValue() == BigDecimal.ONE.doubleValue() && op == Op.MULTI) {
                 dragging.remove();
-                dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                 this.replace(dragging);
                 // bring back the minus signs on demo
                 for (MinusEquation me : minusSigns) {
@@ -1051,10 +1082,10 @@ abstract public class Equation extends ArrayList<Equation> {
                 int myIndex = parent.indexOf(this);
                 Log.i("", "added to existing");
                 if (!right) {
-                    dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                    dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                     parent.add(myIndex + 1, dragging);
                 } else {
-                    dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                    dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                     parent.add(myIndex, dragging);
                 }
             } else {
@@ -1077,17 +1108,17 @@ abstract public class Equation extends ArrayList<Equation> {
                 oldEq.replace(newEq);
                 if (op != Op.DIV) {
                     if (right) {
-                        dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                        dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                         newEq.add(dragging);
                         newEq.add(oldEq);
                     } else {
                         newEq.add(oldEq);
-                        dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                        dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                         newEq.add(dragging);
                     }
                 } else {
                     newEq.add(oldEq);
-                    dragging = update(dragging, notSameSide, thisNeg, dragNeg,op);
+                    dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                     newEq.add(dragging);
                 }
             }
@@ -1102,7 +1133,7 @@ abstract public class Equation extends ArrayList<Equation> {
         return dragging;
     }
 
-    private Equation update(Equation dragging, boolean notSameSide, boolean thisNeg, boolean dragNeg,Op op) {
+    private Equation update(Equation dragging, boolean notSameSide, boolean thisNeg, boolean dragNeg, Op op) {
         Equation toInsert;
         if (dragNeg && !thisNeg && !(dragging instanceof PlusMinusEquation)) {
             toInsert = dragging.negate();
@@ -1320,14 +1351,14 @@ abstract public class Equation extends ArrayList<Equation> {
 
     public void setAlpha(int currentAlpha) {
         getPaint().setAlpha(currentAlpha);
-        for (Equation e:this){
+        for (Equation e : this) {
             e.setAlpha(currentAlpha);
         }
     }
 
     public void setColor(int currentColor) {
         getPaint().setColor(currentColor);
-        for (Equation e:this){
+        for (Equation e : this) {
             e.setColor(currentColor);
         }
     }
@@ -1335,8 +1366,8 @@ abstract public class Equation extends ArrayList<Equation> {
     public boolean isNeg() {
         boolean result = false;
         Equation at = this;
-        while (at instanceof MinusEquation || at instanceof PlusMinusEquation){
-            if (at instanceof MinusEquation){
+        while (at instanceof MinusEquation || at instanceof PlusMinusEquation) {
+            if (at instanceof MinusEquation) {
                 result = !result;
             }
             at = this.get(0);
@@ -1347,8 +1378,8 @@ abstract public class Equation extends ArrayList<Equation> {
 
     public boolean isPlusMinus() {
         Equation at = this;
-        while (at instanceof MinusEquation || at instanceof PlusMinusEquation){
-            if (at instanceof PlusMinusEquation){
+        while (at instanceof MinusEquation || at instanceof PlusMinusEquation) {
+            if (at instanceof PlusMinusEquation) {
                 return true;
             }
             at = this.get(0);
