@@ -82,7 +82,9 @@ public class Operations {
                 }
             }
             if (target.under == null) {
-                target.under = at.under;
+                if (at.under != null) {
+                    target.under = new MultiCountData(at.under);
+                }
                 at = null;
             } else {
                 at = at.under;
@@ -543,12 +545,30 @@ public class Operations {
 //                Equation topEq = top.getEquation(owner);
 //                Equation botEq = bot.getEquation(owner);
 //                result = getResult(topEq, botEq);
-            } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
 
-                BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
-                bot.numbers = new ArrayList<Equation>();
-                top.numbers = new ArrayList<Equation>();
-                top.numbers.add(NumConstEquation.create(value, owner));
+                // if we have a/b where a and b are sortaNumbers
+            } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
+                int topInt = (int) Math.floor(top.getValue().doubleValue());
+                int botInt = (int) Math.floor(bot.getValue().doubleValue());
+                int myGcd = gcd(topInt,botInt);
+
+                // if it can be reduced
+                if (bot.getValue().doubleValue() ==  botInt
+                        && top.getValue().doubleValue() == topInt
+                        && myGcd != 1){
+
+                    bot.numbers = new ArrayList<Equation>();
+                    bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt/myGcd), owner));
+                    top.numbers = new ArrayList<Equation>();
+                    top.numbers.add(NumConstEquation.create(new BigDecimal(topInt/myGcd), owner));
+
+
+                }else {
+                    BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
+                    bot.numbers = new ArrayList<Equation>();
+                    top.numbers = new ArrayList<Equation>();
+                    top.numbers.add(NumConstEquation.create(value, owner));
+                }
 
                 if (bot.plusMinus) {
                     bot.plusMinus = false;
@@ -558,7 +578,6 @@ public class Operations {
                 Equation topEq = top.getEquation(owner);
                 Equation botEq = bot.getEquation(owner);
                 result = getResult(topEq, botEq);
-
             } else {
                 Equation topEq = a;
                 Equation botEq = b;

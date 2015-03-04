@@ -566,7 +566,7 @@ abstract public class Equation extends ArrayList<Equation> {
         return currentMax;
     }
 
-    protected int bkgAlpha = 0x00;
+    public int bkgAlpha = 0x00;
     //TODO scale by dpi
 
 

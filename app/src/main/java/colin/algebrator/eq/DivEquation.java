@@ -217,6 +217,22 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         return a;
     }
 
+
+    @Override
+    protected Equation negate() {
+        Equation result = this.copy();
+        result.set(0,result.get(0).negate());
+        return result;
+    }
+
+    @Override
+    protected Equation plusMinus() {
+        Equation result = this.copy();
+        result.set(0,result.get(0).plusMinus());
+        return result;
+    }
+
+
     private double lcm(double a, double b)
     {
         return a * (b / gcd(a, b));

@@ -172,6 +172,12 @@ public class EmilyView extends SuperView {
     protected void resolveSelected(MotionEvent event) {
         // now we need to figure out what we are selecting
         // find the least commond parent
+
+        int currentBkgAlpha = 0x00;
+        if (selected != null){
+            currentBkgAlpha=selected.bkgAlpha;
+        }
+
         removeSelected();
 
         Equation lcp = null;
@@ -185,9 +191,9 @@ public class EmilyView extends SuperView {
         // TODO 100 to var scale by dpi
         //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
         //if (Math.abs(event.getY() - lcp.y) < minDis) {
-            if (lcp instanceof PlaceholderEquation) {
-                lcp.setSelected(true);
-            } else {
+//            if (lcp instanceof PlaceholderEquation) {
+//                lcp.setSelected(true);
+//            } else {
                 // the the lcp is the left or right end of something we might want to select it's parent
                 Equation current = lcp;
 
@@ -233,6 +239,7 @@ public class EmilyView extends SuperView {
 
                 // insert a Placeholder to the left of everything
                 Equation toSelect = new PlaceholderEquation(this);
+                toSelect.bkgAlpha = currentBkgAlpha;
                 toSelect.x = event.getX();
                 toSelect.y = event.getY();
                 // add toSelect left of lcp
@@ -257,7 +264,7 @@ public class EmilyView extends SuperView {
                     toSelect.setSelected(true);
                 }
 
-            }
+//            }
         //}
         if (selected != null) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
