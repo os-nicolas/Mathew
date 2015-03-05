@@ -85,6 +85,12 @@ public class AddEquation extends FlexOperation {
         myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
+    // addition is a little more spread out
+    @Override
+    protected float myWidthAdd() {
+        return 16*Algebrator.getAlgebrator().getDpi();
+    }
+
     public void tryOperator(ArrayList<Equation> eqs) {
         //TODO handle inbeddedness
         Equation a = eqs.get(0);

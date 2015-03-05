@@ -197,82 +197,86 @@ public class ColinView extends SuperView {
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             willRemove = false;
         }
-
         if (selected != null) {
-            // if everything we are adding is deep contained by selected we want to remove
-            // otherwise we want to add what is not already contained
+            if (willSelect.isEmpty()) {
+                // if they did not click anything let's not select anything
+                selectingSet = new ArrayList<>();
+            }else {
+
+                // if everything we are adding is deep contained by selected we want to remove
+                // otherwise we want to add what is not already contained
 
 
+                // if all of new is on the other side we select the other side
+                boolean otherSide = false;
 
-            // if all of new is on the other side we select the other side
-            boolean otherSide = false;
+                // if new is not all contained by old we add
+                boolean newNotAllInCurrent = false;
 
-            // if new is not all contained by old we add
-            boolean newNotAllInCurrent = false;
+                // if new is current we select nothing
+                boolean newIsCurrent = true;
 
-            // if new is current we select nothing
-            boolean newIsCurrent = true;
-
-            // if new is all contained we select new
-            boolean newSubSetCurrent = false;
+                // if new is all contained we select new
+                boolean newSubSetCurrent = false;
 
 
-            ArrayList<Equation> current = selected.getLeafs();
-            ArrayList<Equation> newLeafs = new ArrayList<>();
-            for (Equation e : willSelect) {
-                for (Equation l : e.getLeafs()) {
-                    if (!newLeafs.contains(l)) {
-                        newLeafs.add(l);
+                ArrayList<Equation> current = selected.getLeafs();
+                ArrayList<Equation> newLeafs = new ArrayList<>();
+                for (Equation e : willSelect) {
+                    for (Equation l : e.getLeafs()) {
+                        if (!newLeafs.contains(l)) {
+                            newLeafs.add(l);
+                        }
                     }
                 }
-            }
 
-            int currentSide = current.get(0).side();
-            for (Equation e : newLeafs) {
-                if (e.side() != currentSide) {
-                    otherSide = true;
-                    break;
-                }
-                if (!current.contains(e)) {
-                    newNotAllInCurrent = true;
-                }
-            }
-            if (otherSide) {
-                // just new
-                selectingSet = newLeafs;
-            } else if (newNotAllInCurrent) {
-                // union
-                selectingSet = current;
+                int currentSide = current.get(0).side();
                 for (Equation e : newLeafs) {
-                    if (!selectingSet.contains(e)) {
-                        selectingSet.add(e);
+                    if (e.side() != currentSide) {
+                        otherSide = true;
+                        break;
+                    }
+                    if (!current.contains(e)) {
+                        newNotAllInCurrent = true;
                     }
                 }
-            } else {
-                for (Equation e : current) {
-                    if (!newLeafs.contains(e)) {
-                        newIsCurrent = false;
-                    }
-                }
-                if (newIsCurrent ) {
-                    // nothing
-                    if (willRemove && event.getAction() == MotionEvent.ACTION_UP){
-                        selectingSet = new ArrayList<>();
-                    }else  if (event.getAction() == MotionEvent.ACTION_DOWN){
-                        willRemove = true;
-                        selectingSet = current;
-                    }else{
-                        selectingSet = current;
+                if (otherSide) {
+                    // just new
+                    selectingSet = newLeafs;
+                } else if (newNotAllInCurrent) {
+                    // union
+                    selectingSet = current;
+                    for (Equation e : newLeafs) {
+                        if (!selectingSet.contains(e)) {
+                            selectingSet.add(e);
+                        }
                     }
                 } else {
-                    // just new
-                    if (willRemove && event.getAction() == MotionEvent.ACTION_UP) {
-                        selectingSet = newLeafs;
-                    }else if (event.getAction() == MotionEvent.ACTION_DOWN){
-                        willRemove = true;
-                        selectingSet = current;
-                    }else{
-                        selectingSet = current;
+                    for (Equation e : current) {
+                        if (!newLeafs.contains(e)) {
+                            newIsCurrent = false;
+                        }
+                    }
+                    if (newIsCurrent) {
+                        // nothing
+                        if (willRemove && event.getAction() == MotionEvent.ACTION_UP) {
+                            selectingSet = new ArrayList<>();
+                        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            willRemove = true;
+                            selectingSet = current;
+                        } else {
+                            selectingSet = current;
+                        }
+                    } else {
+                        // just new
+                        if (willRemove && event.getAction() == MotionEvent.ACTION_UP) {
+                            selectingSet = newLeafs;
+                        } else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                            willRemove = true;
+                            selectingSet = current;
+                        } else {
+                            selectingSet = current;
+                        }
                     }
                 }
             }

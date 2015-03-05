@@ -133,7 +133,11 @@ public class Operations {
         SuperView owner = Algebrator.getAlgebrator().solveView;
 
         //if under == null we actully add
-        if (under == null) {
+        if (under == null && !(left.key.isEmpty() &&
+                right.key.isEmpty() &&
+                (right.numbers.size() > 1 || left.numbers.size() > 1))) {
+
+
             MultiCountData common = findCommon(left, right);
             if (!common.key.isEmpty() || !common.numbers.isEmpty()) {
                 left = remainder(left, common);
@@ -187,12 +191,16 @@ public class Operations {
                     top.add(eq);
                 }
             }
-            Log.d("bot", "combine:  " + under.combine + " numbers.size: " + under.numbers.size() + "under.getValue" + under.getValue().doubleValue() + " neg: " + under.negative);
-            Equation bot = under.getEquation(owner);
-            Equation result = new DivEquation(owner);
-            result.add(top);
-            result.add(bot);
-            return result;
+            if (under != null) {
+                Log.d("bot", "combine:  " + under.combine + " numbers.size: " + under.numbers.size() + "under.getValue" + under.getValue().doubleValue() + " neg: " + under.negative);
+                Equation bot = under.getEquation(owner);
+                Equation result = new DivEquation(owner);
+                result.add(top);
+                result.add(bot);
+                return result;
+            }else{
+                return top;
+            }
         }
     }
 
@@ -206,8 +214,8 @@ public class Operations {
         // otherwise make an add equation and throw them both in it
         if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0
                 && right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
-            return new NumConstEquation(0,owner);
-        } else  if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0) {
+            return new NumConstEquation(0, owner);
+        } else if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0) {
             return right.getEquation(owner);
         } else if (right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
             return left.getEquation(owner);
@@ -267,6 +275,28 @@ public class Operations {
                     commonCopyNum.remove(ii);
                     i--;
                     break;
+                } else {
+                    int eInt = (int) Math.floor(getValue(e).doubleValue());
+                    int eeInt = (int) Math.floor(getValue(ee).doubleValue());
+                    int myGcd = gcd(eInt, eeInt);
+                    if (getValue(e).doubleValue() == eInt
+                            && getValue(ee).doubleValue() == eeInt
+                            && myGcd != 1) {
+                        match = true;
+                        if (eInt == myGcd) {
+                            leftCopyNum.remove(i);
+                        } else {
+                            leftCopyNum.set(i, NumConstEquation.create(new BigDecimal(eInt / myGcd), e.owner));
+                        }
+                        if (eeInt == myGcd) {
+                            commonCopyNum.remove(ii);
+                        } else {
+                            commonCopyNum.set(ii, NumConstEquation.create(new BigDecimal(eeInt / myGcd), ee.owner));
+                        }
+                        i--;
+                        break;
+                    }
+
                 }
             }
             if (!match) {
@@ -280,7 +310,7 @@ public class Operations {
         result.plusMinus = left.plusMinus;
         if (common.under == null && left.under != null) {
             result.under = new MultiCountData(left.under);
-        }else if (left.under != null) {
+        } else if (left.under != null) {
             result.under = remainder(left.under, common.under);
         }
         // what do we do with unders?
@@ -289,22 +319,22 @@ public class Operations {
         return result;
     }
 
-    private static MultiCountData deepFindCommon(MultiCountData left, MultiCountData right){
-        MultiCountData leftAt= left;
+    private static MultiCountData deepFindCommon(MultiCountData left, MultiCountData right) {
+        MultiCountData leftAt = left;
         MultiCountData rightAt = right;
-        MultiCountData result = findCommon(leftAt,rightAt);
+        MultiCountData result = findCommon(leftAt, rightAt);
         MultiCountData resultAt = result;
-        while (true){
-            if (leftAt.under == null && rightAt.under == null){
+        while (true) {
+            if (leftAt.under == null && rightAt.under == null) {
                 break;
             }
-            if(leftAt.under ==null) {
+            if (leftAt.under == null) {
                 leftAt.under = new MultiCountData();
             }
-            if(rightAt.under ==null) {
+            if (rightAt.under == null) {
                 rightAt.under = new MultiCountData();
             }
-            resultAt.under = findCommon(leftAt.under,rightAt.under);
+            resultAt.under = findCommon(leftAt.under, rightAt.under);
             resultAt = resultAt.under;
             leftAt = leftAt.under;
             rightAt = rightAt.under;
@@ -331,8 +361,8 @@ public class Operations {
             for (EquationCounts ee : rightCopy) {
                 EquationCounts common = findCommon(e, ee);
                 if (common != null) {
-                    Equation newKey =common.getEquation();
-                    if (!(sortaNumber(newKey) && getValue(newKey).doubleValue()==1.0)) {
+                    Equation newKey = common.getEquation();
+                    if (!(sortaNumber(newKey) && getValue(newKey).doubleValue() == 1.0)) {
                         result.addToKey(newKey);
                         rightCopy.remove(ee);
                         // i want this break to break out of both ifs and the for
@@ -347,9 +377,9 @@ public class Operations {
         ArrayList<Equation> rightNumCopy = right.copyNumbers();
 
 
-        for (int i=0;i<leftNumCopy.size();i++) {
+        for (int i = 0; i < leftNumCopy.size(); i++) {
             Equation e = leftNumCopy.get(i);
-            for (int ii=0;ii<rightNumCopy.size();ii++) {
+            for (int ii = 0; ii < rightNumCopy.size(); ii++) {
                 Equation ee = rightNumCopy.get(ii);
                 if (e.same(ee) && getValue(e).doubleValue() != 0) {
                     result.numbers.add(e);
@@ -357,6 +387,27 @@ public class Operations {
                     rightNumCopy.remove(ii);
                     i--;
                     break;
+                } else {
+                    int eInt = (int) Math.floor(getValue(e).doubleValue());
+                    int eeInt = (int) Math.floor(getValue(ee).doubleValue());
+                    int myGcd = gcd(eInt, eeInt);
+                    if (getValue(e).doubleValue() == eInt
+                            && getValue(ee).doubleValue() == eeInt
+                            && myGcd != 1) {
+                        result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));
+                        if (eInt == myGcd) {
+                            leftNumCopy.remove(i);
+                            i--;
+                        } else {
+                            leftNumCopy.set(i, NumConstEquation.create(new BigDecimal(eInt / myGcd), e.owner));
+                        }
+                        if (eeInt == myGcd) {
+                            rightNumCopy.remove(ii);
+                        } else {
+                            rightNumCopy.set(ii, NumConstEquation.create(new BigDecimal(eeInt / myGcd), ee.owner));
+                        }
+                        break;
+                    }
                 }
             }
         }
@@ -368,6 +419,10 @@ public class Operations {
         //if ((left.value == Math.floor(left.value)) && (right.value == Math.floor(right.value))) {
         //    result.value = Double.valueOf(gcd((int) (Math.abs(Math.floor(left.value))), (int) Math.abs(Math.floor(right.value))));
         //}
+        Log.d("found Common:", result.toString());
+
+        result.combine = true;
+
         return result;
     }
 
@@ -379,7 +434,7 @@ public class Operations {
             if (Math.signum(left.v.doubleValue()) == Math.signum(right.v.doubleValue())) {
                 result.v = new BigDecimal(Math.min(Math.abs(left.v.doubleValue()), Math.abs(right.v.doubleValue())) * Math.signum(left.v.doubleValue()));
             }
-            // now what do they share up top side
+            // now what keys do they share up top side
             for (Equation keyl : left.equations.keySet()) {
                 for (Equation keyr : right.equations.keySet()) {
                     if (keyl.same(keyr)) {
@@ -392,6 +447,7 @@ public class Operations {
                     }
                 }
             }
+
             return result;
         } else {
             return null;
@@ -447,11 +503,11 @@ public class Operations {
 
         // we check to see if they are both power equations of the same power
         // or close to that (just a negetive sign away
-        boolean samePower =(a.removeNeg() instanceof  PowerEquation &&
+        boolean samePower = (a.removeNeg() instanceof PowerEquation &&
                 b.removeNeg() instanceof PowerEquation &&
                 a.removeNeg().get(1).same(b.removeNeg().get(1)));
 
-        if (samePower){
+        if (samePower) {
             boolean neg = a.isNeg() != b.isNeg();
             boolean plusMinus = a.isPlusMinus() != b.isPlusMinus();
             Equation div = new DivEquation(owner);
@@ -461,16 +517,15 @@ public class Operations {
             power.add(div);
             power.add(a.removeNeg().get(1).copy());
 
-            if (plusMinus){
+            if (plusMinus) {
                 result = result.plusMinus();
-            }else if (neg){
+            } else if (neg) {
                 result = power.negate();
-            }else{
+            } else {
                 result = power;
             }
 
-        }else
-        if (a instanceof AddEquation) {
+        } else if (a instanceof AddEquation) {
             result = new AddEquation(owner);
             for (Equation e : a) {
                 Equation newEq = new DivEquation(owner);
@@ -488,20 +543,20 @@ public class Operations {
             MultiCountData commonAt = common;
 
             boolean anyCommon = false;
-            while(!anyCommon && commonAt != null){
-                if (!commonAt.isEmpty()){
+            while (!anyCommon && commonAt != null) {
+                if (!commonAt.isEmpty()) {
                     anyCommon = true;
                 }
                 commonAt = commonAt.under;
             }
 
-            if (anyCommon){ // they have anything in common
-                MultiCountData topData = remainder(top,common);
-                MultiCountData botData = remainder(bot,common);
+            if (anyCommon) { // they have anything in common
+                MultiCountData topData = remainder(top, common);
+                MultiCountData botData = remainder(bot, common);
                 Equation topEq = topData.getEquation(owner);
                 Equation botEq = botData.getEquation(owner);
                 result = getResult(topEq, botEq);
-            //old code
+                //old code
 //            MultiCountData top = new MultiCountData(a);
 //            MultiCountData bot = new MultiCountData(b);
 //
@@ -548,20 +603,20 @@ public class Operations {
             } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
                 int topInt = (int) Math.floor(top.getValue().doubleValue());
                 int botInt = (int) Math.floor(bot.getValue().doubleValue());
-                int myGcd = gcd(topInt,botInt);
+                int myGcd = gcd(topInt, botInt);
 
                 // if it can be reduced
-                if (bot.getValue().doubleValue() ==  botInt
+                if (bot.getValue().doubleValue() == botInt
                         && top.getValue().doubleValue() == topInt
-                        && myGcd != 1){
+                        && myGcd != 1) {
 
                     bot.numbers = new ArrayList<Equation>();
-                    bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt/myGcd), owner));
+                    bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt / myGcd), owner));
                     top.numbers = new ArrayList<Equation>();
-                    top.numbers.add(NumConstEquation.create(new BigDecimal(topInt/myGcd), owner));
+                    top.numbers.add(NumConstEquation.create(new BigDecimal(topInt / myGcd), owner));
 
 
-                }else {
+                } else {
                     BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
                     bot.numbers = new ArrayList<Equation>();
                     top.numbers = new ArrayList<Equation>();

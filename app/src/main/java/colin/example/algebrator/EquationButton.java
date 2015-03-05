@@ -127,7 +127,9 @@ public class EquationButton extends Button {
         cv.offsetX += x;
         cv.offsetY += y;
 
-
+        if (cv.selected !=null){
+            cv.selected.setSelected(false);
+        }
 
         // and set this back to be the boss
         cv.stupid = myEq.copy();
@@ -137,6 +139,8 @@ public class EquationButton extends Button {
         // at time is writing copy does not change active but it might someday so let's be safe
         cv.stupid.active = true;
         cv.stupid.updateLocation();
+
+
 
         // we need to remove all history and including this
         cv.history = new ArrayList<EquationButton>(cv.history.subList(cv.history.indexOf(this), cv.history.size()));

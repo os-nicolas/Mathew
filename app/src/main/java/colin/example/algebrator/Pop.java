@@ -34,7 +34,7 @@ public class Pop extends Animation {
             p.setAlpha((int) currentAlpha);
             float rad = 25*Algebrator.getAlgebrator().getDpi()+((targetRadius)*((now - startedAt)/(float)runTime));
             canvas.drawCircle(myPoint.x, myPoint.y, rad, p);
-            Log.i("I tried", "x: " + myPoint.x + " y: " + myPoint.y + " alpha: " + (int) currentAlpha + " rad: " + rad);
+            //Log.i("I tried", "x: " + myPoint.x + " y: " + myPoint.y + " alpha: " + (int) currentAlpha + " rad: " + rad);
         }else{
             remove();
         }

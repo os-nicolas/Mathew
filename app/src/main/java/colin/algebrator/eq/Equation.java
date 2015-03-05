@@ -197,7 +197,7 @@ abstract public class Equation extends ArrayList<Equation> {
         float totalWidth = 0;
         for (int i = 0; i < size() - 1; i++) {
             if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                totalWidth += myWidth;
+                totalWidth += myWidth + myWidthAdd();
             }
         }
 
@@ -209,6 +209,10 @@ abstract public class Equation extends ArrayList<Equation> {
             totalWidth += getParnWidthAddition();
         }
         return totalWidth;
+    }
+
+    protected float myWidthAdd() {
+        return 2*Algebrator.getAlgebrator().getDpi();
     }
 
     public void draw(Canvas canvas, float x, float y) {
@@ -257,15 +261,17 @@ abstract public class Equation extends ArrayList<Equation> {
 
             if (i != size() - 1) {
                 if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                    MyPoint point = new MyPoint(myWidth, myHeight);
-                    point.x = (int) (x - (totalWidth / 2) + currentX + (myWidth / 2));
+                    float pointWidth = myWidth + myWidthAdd();
+                    MyPoint point = new MyPoint(pointWidth, myHeight);
+
+                    point.x = (int) (x - (totalWidth / 2) + currentX + (pointWidth / 2));
                     point.y = (int) (y + (h / 2));
                     if (canvas != null) {
                         canvas.drawText(getDisplay(i + 1), point.x, point.y, temp);
                     }
                     point.y = (int) (y);
                     lastPoint.add(point);
-                    currentX += myWidth;
+                    currentX += pointWidth;
                 } else {
                     MyPoint point = new MyPoint(myWidth, myHeight);
                     point.x = (int) (x - (totalWidth / 2) + currentX);

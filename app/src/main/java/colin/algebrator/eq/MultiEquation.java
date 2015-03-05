@@ -277,6 +277,8 @@ class MultiCountData {
 
 
 
+
+
         // uncomment to match on numbers
 //        if (numbers.size() != mcd.numbers.size()) {
 //            return false;
@@ -302,6 +304,19 @@ class MultiCountData {
         return true;
     }
 
+    @Override
+    public String toString(){
+        String nums = "numbers: ";
+        for (Equation e:this.numbers){
+            nums +=e.toString() +",";
+        }
+        String ks = "key: ";
+        for (Equation e:this.key){
+            ks +=e.toString() +",";
+        }
+        return nums + " " + ks;
+    }
+
     public Equation getEquation(SuperView owner) {
         Equation top = null;
         Equation bot = null;
@@ -313,7 +328,7 @@ class MultiCountData {
             }
         }
 
-        if (combine && getValue().doubleValue() == 0){
+        if (getValue().doubleValue() == 0){
             top = new NumConstEquation(BigDecimal.ZERO,owner);
             if (under != null){
                 if (!(under.getValue().doubleValue()==0.0)){
