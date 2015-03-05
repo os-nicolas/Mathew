@@ -11,14 +11,18 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.DragEquation;
 import colin.algebrator.eq.DragLocations;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MonaryEquation;
+import colin.algebrator.eq.NumConstEquation;
+import colin.algebrator.eq.VarEquation;
 
 public class ColinView extends SuperView {
     public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
     protected DragLocations dragLocations = new DragLocations();
+
 
     public ColinView(Context context) {
         super(context);
@@ -67,7 +71,7 @@ public class ColinView extends SuperView {
                 if ((stupid.lastPoint.get(0).y + atHeight + eb.myEq.measureHeightLower()) > 0 &&
                         (stupid.lastPoint.get(0).y + atHeight - eb.myEq.measureHeightUpper()) < height) {
                     eb.draw(canvas, stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
-                } else {
+                } else  if (  stupid.lastPoint.get(0).y > -400*Algebrator.getAlgebrator().getDpi()){
                     // update the locations
                     eb.updateLocations(stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
                 }
@@ -107,7 +111,12 @@ public class ColinView extends SuperView {
         boolean result = super.onTouch(view, event);
 
         if (changed) {
-            history.add(0, new EquationButton(stupid.copy(), this));
+            // for testing:
+            Equation warnEq = new AddEquation(this);
+            warnEq.add(new NumConstEquation(5,this));
+            warnEq.add(new VarEquation("A",this));
+
+            history.add(0, new EquationButton(stupid.copy(), this).warn(warnEq));
             Log.i("add to History", stupid.toString());
             changed = false;
         }

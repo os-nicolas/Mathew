@@ -19,7 +19,7 @@ public class RootTut  extends PowerTut {
     @Override
     protected boolean privateShouldShow(SuperView view) {
         Equation power=  getPower(view.stupid);
-        if (view instanceof ColinView 
+        if (view instanceof ColinView
                 && power!= null
                 && ((PowerEquation)power).isSqrt() == true
                 && !view.active()){

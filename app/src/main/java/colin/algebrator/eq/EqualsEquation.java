@@ -55,10 +55,10 @@ public class EqualsEquation extends Equation {
 
 	public void tryOperator(ArrayList<Equation> eqs){}
 
-
+    // this is badly named this is draw centered on the equals
     public void drawCentered(Canvas canvas, float x, float y) {
         // we need to figure out where the equals is
-        float diffX = +this.measureWidth()/2 - get(0).measureWidth() - myWidth/2;
+        float diffX = +this.measureWidth()/2 - get(0).measureWidth() - (myWidth + myWidthAdd())/2;
         super.draw(canvas, x+diffX, y);
     }
 

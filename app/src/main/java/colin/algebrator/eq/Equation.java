@@ -562,7 +562,7 @@ abstract public class Equation extends ArrayList<Equation> {
 
     private Paint mPaint = null;
 
-    protected Paint getPaint() {
+    public Paint getPaint() {
         if (mPaint == null) {
             updatePaint();
         }

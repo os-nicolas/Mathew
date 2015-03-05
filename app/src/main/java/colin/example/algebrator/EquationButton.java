@@ -10,6 +10,9 @@ import android.view.MotionEvent;
 
 import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
+import colin.algebrator.eq.NumConstEquation;
+import colin.algebrator.eq.WritingEquation;
+import colin.algebrator.eq.WritingLeafEquation;
 
 import java.util.ArrayList;
 
@@ -31,6 +34,9 @@ public class EquationButton extends Button {
     ColinView cv;
     public int targetColor;
     public int currentColor = Color.BLACK;
+    private boolean warn = false;
+    private Equation warnEq = null;
+
 
     public EquationButton(Equation e, ColinView cv) {
         myEq = e;
@@ -38,11 +44,39 @@ public class EquationButton extends Button {
         this.cv = cv;
     }
 
+    public EquationButton warn(Equation bot){
+        warn = true;
+        warnEq = new WritingEquation(cv);
+        warnEq.add(bot);
+        warnEq.add(new WritingLeafEquation("\u2260",cv));
+        warnEq.add(new NumConstEquation(0,cv));
+        return this;
+    }
+
     public void draw(Canvas canvas, int stupidX, int stupidY) {
         drawBkg(canvas, x + stupidX, y + stupidY);
         myEq.setColor(currentColor);
         myEq.setAlpha(currentAlpha);
         ((EqualsEquation) myEq).drawCentered(canvas, x + stupidX, y + stupidY);
+
+        // if there is a warning show that too
+        if (warn && canvas !=null){
+            // we need to find the right end
+            float at =myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + 50*Algebrator.getAlgebrator().getDpi();
+            Paint p = new Paint();
+            p.setTextSize(myEq.getPaint().getTextSize());
+            p.setAlpha(currentAlpha);
+            p.setColor(currentColor);
+            String s ="assuming: ";
+            canvas.drawText(s,at,y + stupidY,p);
+            at += p.measureText(s);
+            at += 10*Algebrator.getAlgebrator().getDpi();
+            at += warnEq.measureWidth()/2;
+            warnEq.setAlpha(currentAlpha);
+            warnEq.setColor(currentColor);
+            Log.i("at","x: "+at +",y:"+y + stupidY);
+            warnEq.draw(canvas,at,y + stupidY);
+        }
     }
 
     // x and y are the center of the equation
