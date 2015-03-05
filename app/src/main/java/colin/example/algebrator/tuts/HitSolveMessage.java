@@ -20,7 +20,7 @@ public class HitSolveMessage extends TutMessage {
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof EmilyView && view.stupid instanceof WritingEquation && ((WritingEquation)view.stupid).deepLegal() && Action.countEquals(view.stupid) == 1 &&
                 (view.selected == null || !(view.selected.left() instanceof WritingLeafEquation && ((WritingLeafEquation)view.selected.left()).getDisplay(-1).equals("=")))
-                ){
+                && !view.active()){
             return true;
         }
         return false;

@@ -17,14 +17,18 @@ public class PowerTut extends TutMessage {
 
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        if (view instanceof ColinView && getPower(view.stupid)!= null){
+        Equation power = getPower(view.stupid);
+        if (view instanceof ColinView
+                && power!= null
+                && ((PowerEquation)power).isSqrt() == false
+                && !view.active()){
             return true;
         }
         return false;
     }
 
-    private Equation getPower(Equation eq) {
-        if (eq instanceof PowerEquation && Operations.sortaNumber(eq.get(1))){
+    protected Equation getPower(Equation eq) {
+        if (eq instanceof PowerEquation){//&& Operations.sortaNumber(eq.get(1)
             return eq;
         }
         for (Equation e:eq){
@@ -39,7 +43,6 @@ public class PowerTut extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(1000,"Nice work!");
-        view.message.enQue(1000,"hit the back button to enter another equation");
+        view.message.enQue(4000,new String[]{"To rise something to a power,"," double tap the exponent"});
     }
 }

@@ -19,7 +19,7 @@ public class WriteMessage extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(3000, "Hi!");
+        view.message.enQue(4000, "Hi!");
         view.message.enQue(3000, "thanks for installing Algebrator");
         view.message.enQue(3000, "go ahead and type an equation");
     }

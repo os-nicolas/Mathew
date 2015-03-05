@@ -658,8 +658,15 @@ public abstract class SuperView extends View implements
 //        return true;
 //    }
 
+    long lastTouch = System.currentTimeMillis();
+    final long inactive = 2000;
+    public boolean active(){
+        return System.currentTimeMillis() - lastTouch < inactive;
+    }
+
     @Override
     public boolean onTouch(View view, MotionEvent event) {
+        lastTouch = System.currentTimeMillis();
         if (!disabled) {
             if (event.getPointerCount() == 1) {
 

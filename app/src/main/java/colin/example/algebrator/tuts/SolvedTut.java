@@ -33,7 +33,7 @@ public class SolvedTut extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(1000,"Nice work!");
-        view.message.enQue(1000,"hit the back button to enter another equation");
+        view.message.enQue(2000,"Nice work!");
+        view.message.enQue(2000,"hit the back button to enter another equation");
     }
 }

@@ -20,7 +20,7 @@ public class SolveMessage extends TutMessage{
     @Override
     protected void privateShow(SuperView view) {
         view.message.enQue(2000, "this is the solve screen");
-        view.message.enQue(4000, new String[]{"to move numbers of variables around"," simply drag and drop them"});
-        view.message.enQue(4000, new String[]{"to add, subtract, mulipy or divide","double tap on +, -, \u00D7 or \u00F7"});
+        view.message.enQue(4000, new String[]{"to move numbers or variables around"," simply drag and drop them"});
+        view.message.enQue(4000, new String[]{"to add, subtract, multiply or divide","double tap on +, -, \u00D7 or \u00F7"});
     }
 }

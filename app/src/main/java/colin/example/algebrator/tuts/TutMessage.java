@@ -10,11 +10,15 @@ import colin.example.algebrator.SuperView;
  */
 public abstract class TutMessage {
     static TutMessage[] tuts = new TutMessage[]{
-        new SolvedTut(),
-        new HitSolveMessage(),
         new WriteMessage(),
+        new HitSolveMessage(),
         new SolveMessage(),
-          new HistoryTut()
+        new HistoryTut(),
+        new SolvedTut(),
+        new PowerTut(),
+        new PowerDragTut(),
+        new RootTut(),
+        new RootDragTut()
     };
     public static final String PREFS_NAME = "tuts";
     protected abstract String getSp_key();
@@ -22,11 +26,11 @@ public abstract class TutMessage {
     public TutMessage(){
 
         // for testing only so i can get my tut message all the time
-//        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.putBoolean(getSp_key(), false);
-//
-//        editor.commit();
+        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(getSp_key(), false);
+
+        editor.commit();
     }
 
     public static void tryShowAll(SuperView view){

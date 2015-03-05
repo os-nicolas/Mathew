@@ -348,7 +348,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
 
     }
 
-    private boolean isSqrt() {
+    public boolean isSqrt() {
         if (get(1) instanceof NumConstEquation && ((NumConstEquation) get(1)).getValue().equals(new BigDecimal(.5))) {
             return true;
         }
