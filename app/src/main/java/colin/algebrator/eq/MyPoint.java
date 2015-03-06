@@ -24,17 +24,18 @@ public class MyPoint extends Point {
     }
 
     public boolean on(float x, float y) {
-        // we use 1.75 instead of 2 to make the target a little bigger
+        // we use 1.9 instead of 2 to make the target a little bigger
+        double scale =1.9;
 
-        return x < this.x + Algebrator.getAlgebrator().getBuffer() + this.myWidth / 2
-                && x > this.x - Algebrator.getAlgebrator().getBuffer() - this.myWidth / 2
-                && y < this.y+ Algebrator.getAlgebrator().getBuffer()  + this.myHeight / 2
-                && y > this.y - Algebrator.getAlgebrator().getBuffer() - this.myHeight / 2;
+        return x < this.x + Algebrator.getAlgebrator().getBuffer() + this.myWidth / scale
+                && x > this.x - Algebrator.getAlgebrator().getBuffer() - this.myWidth / scale
+                && y < this.y+ Algebrator.getAlgebrator().getBuffer()  + this.myHeight / scale
+                && y > this.y - Algebrator.getAlgebrator().getBuffer() - this.myHeight / scale;
     }
 
     public void draw(Canvas canvas) {
         if (canvas != null) {
-            RectF r = new RectF(x - myWidth / 2, y - myHeight / 2, x + myWidth / 2, y + myWidth / 2);
+            RectF r = new RectF(x - myWidth / 2, y - myHeight / 2, x + myWidth / 2, y + myHeight / 2);
             Paint p = new Paint();
             p.setAlpha(0x40);
             canvas.drawRect(r, p);
@@ -50,6 +51,6 @@ public class MyPoint extends Point {
     }
 
     public float distance(float x2, float y2) {
-        return (float)Math.sqrt((x2- this.x)*(x2- this.x)+(y2 - this.y)*(y2- this.y));
+        return (float)Math.sqrt(((x2- this.x)*(x2- this.x))+((y2 - this.y)*(y2- this.y)));
     }
 }

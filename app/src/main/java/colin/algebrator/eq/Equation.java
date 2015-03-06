@@ -224,7 +224,7 @@ abstract public class Equation extends ArrayList<Equation> {
 
         privateDraw(canvas, x, y);
 
-        //drawLastPoints(canvas);
+//        drawLastPoints(canvas);
 
     }
 
@@ -492,6 +492,15 @@ abstract public class Equation extends ArrayList<Equation> {
 
                 if (!(old.same(owner.stupid))) {
                     ((ColinView) owner).changed = true;
+
+                    // see if we need to to warn
+                    if (this instanceof DivEquation){
+                        Equation warn = ((DivEquation)this).botCouldBeZero();
+                        if (warn!=null){
+                            ((ColinView) owner).changedEq = warn;
+                        }
+                    }
+
                     // if we operated we should be the one to pop
                     for (int i = 0; i < owner.afterAnimations.size(); i++) {
                         Animation a = owner.afterAnimations.get(i);

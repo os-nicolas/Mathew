@@ -22,6 +22,7 @@ import colin.algebrator.eq.VarEquation;
 public class ColinView extends SuperView {
     public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
     protected DragLocations dragLocations = new DragLocations();
+    public Equation changedEq;
 
 
     public ColinView(Context context) {
@@ -111,14 +112,16 @@ public class ColinView extends SuperView {
         boolean result = super.onTouch(view, event);
 
         if (changed) {
-            // for testing:
-            Equation warnEq = new AddEquation(this);
-            warnEq.add(new NumConstEquation(5,this));
-            warnEq.add(new VarEquation("A",this));
+            // if they could have divided by 0 we need to warn them
+            // we don't have to worry warn checks for null
+            history.get(0).warn(changedEq);
+            changedEq=null;
 
-            history.add(0, new EquationButton(stupid.copy(), this).warn(warnEq));
+            // add a new Equation to history
+            history.add(0, new EquationButton(stupid.copy(), this));
             Log.i("add to History", stupid.toString());
             changed = false;
+
         }
 
         return result;
@@ -324,7 +327,7 @@ public class ColinView extends SuperView {
         Equation closest = stupid;
         float dis = disToCenter(stupid.x, stupid.y);
         for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))) {
+            if (!eb.equals(history.get(0)) ) {
                 float myDis = disToCenter(eb.myEq.x, eb.myEq.y);
                 if (myDis < dis) {
                     dis = myDis;
@@ -335,6 +338,70 @@ public class ColinView extends SuperView {
         return closest;
     }
 
+    // TODO these are not quite right
+    // eq + width/2 is not the right side that is a little m more complex
+    private Equation rightest(){
+        Equation closest = stupid;
+        float dis = stupid.x + stupid.measureWidth()/2;
+        for (EquationButton eb : history) {
+            if (!eb.equals(history.get(0)) && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
+                float myDis = eb.myEq.x+ eb.myEq.measureWidth()/2;
+                if (myDis < dis) {
+                    dis = myDis;
+                    closest = eb.myEq;
+                }
+            }
+        }
+        return closest;
+    }
+
+    // again this is a bit wrong
+    private Equation leftest(){
+        Equation closest = stupid;
+        float dis = stupid.x - stupid.measureWidth()/2;
+        for (EquationButton eb : history) {
+            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
+                float myDis = eb.myEq.x- eb.myEq.measureWidth()/2;
+                if (myDis < dis) {
+                    dis = myDis;
+                    closest = eb.myEq;
+                }
+            }
+        }
+        return closest;
+    }
+
+    private Equation topest(){
+        Equation closest = stupid;
+        float dis = stupid.y - stupid.measureHeightUpper();
+        for (EquationButton eb : history) {
+            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
+                float myDis = eb.myEq.y- eb.myEq.measureHeightUpper();
+                if (myDis < dis) {
+                    dis = myDis;
+                    closest = eb.myEq;
+                }
+            }
+        }
+        return closest;
+    }
+
+    private Equation bottumest(){
+        Equation closest = stupid;
+        float dis = stupid.y + stupid.measureHeightLower();
+        for (EquationButton eb : history) {
+            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
+                float myDis = eb.myEq.y+ eb.myEq.measureHeightLower();
+                if (myDis < dis) {
+                    dis = myDis;
+                    closest = eb.myEq;
+                }
+            }
+        }
+        return closest;
+    }
+
+
     private float disToCenter(float x, float y) {
         return (float) Math.sqrt((x - width / 2) * (x - width / 2) + (y - buttonLine() / 2) * (y - buttonLine() / 2));
     }
@@ -342,7 +409,7 @@ public class ColinView extends SuperView {
 
     @Override
     protected float outTop() {
-        Equation closest = getCenterEq();
+        Equation closest = topest();//getCenterEq();
         if (closest.y + closest.measureHeightLower() - buffer < 0 && closest.y + closest.measureHeightLower() + buffer < buttonLine()) {
             Log.d("out,top", "closest");
             //message.db("outtop, closest");
@@ -353,7 +420,7 @@ public class ColinView extends SuperView {
 
     @Override
     protected float outLeft() {
-        Equation closest = getCenterEq();
+        Equation closest = leftest();//getCenterEq();
         if (closest.x + closest.measureWidth() / 2 - buffer < 0 && closest.x + closest.measureWidth() / 2 + buffer < width) {
             Log.d("out,left", "closest");
             //message.db("outleft, closest");
@@ -364,7 +431,7 @@ public class ColinView extends SuperView {
 
     @Override
     protected float outBottom() {
-        Equation closest = getCenterEq();
+        Equation closest = bottumest();//getCenterEq();
         if (closest.y - closest.measureHeightUpper() + buffer > buttonLine() && closest.y - closest.measureHeightUpper() - buffer > 0) {
             Log.d("out,bot", "closest");
             //message.db("outbot, closest");
@@ -375,7 +442,7 @@ public class ColinView extends SuperView {
 
     @Override
     protected float outRight() {
-        Equation closest = getCenterEq();
+        Equation closest = rightest();//getCenterEq();
         if (closest.x - closest.measureWidth() / 2 + buffer > width && closest.x - closest.measureWidth() / 2 - buffer > 0) {
             Log.d("out,right", "closest");
             //message.db("outright, closest");

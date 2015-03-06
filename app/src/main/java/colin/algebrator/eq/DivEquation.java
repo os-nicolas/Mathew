@@ -103,7 +103,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			get(i).draw(canvas, x, currentY + get(i).measureHeightUpper() );
 			currentY += get(i).measureHeight();
 			if (i != size() - 1) {
-				MyPoint point = new MyPoint(measureWidth(),myHeight);
+				MyPoint point = new MyPoint(measureWidth() - Algebrator.getAlgebrator().getDivWidthAdd(),myHeight);
 				point.x = (int) x;
 				point.y = (int) (currentY + (myHeight) / 2);
                 // TODO scale by dpi
@@ -232,10 +232,31 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         return result;
     }
 
+    // null -> false
+    public Equation botCouldBeZero() {
+        if (botCouldBeZeroHelper(get(1))){
+            return get(1);
+        }
+        return null;
+    }
+
+    public boolean botCouldBeZeroHelper(Equation eq){
+        if (eq instanceof VarEquation && !onTop(eq)){
+            return true;
+        }
+        for (Equation e:eq){
+            boolean pass = botCouldBeZeroHelper(e);
+            if ( pass ){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private double lcm(double a, double b)
     {
         return a * (b / gcd(a, b));
     }
+
 
 }

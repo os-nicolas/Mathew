@@ -4,6 +4,7 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -45,11 +46,15 @@ public class EquationButton extends Button {
     }
 
     public EquationButton warn(Equation bot){
-        warn = true;
-        warnEq = new WritingEquation(cv);
-        warnEq.add(bot);
-        warnEq.add(new WritingLeafEquation("\u2260",cv));
-        warnEq.add(new NumConstEquation(0,cv));
+        if (bot!=null) {
+            warn = true;
+            warnEq = new WritingEquation(cv);
+            warnEq.add(new WritingLeafEquation("Assuming: ", cv));
+            warnEq.add(bot);
+            warnEq.add(new WritingLeafEquation("\u2260", cv));
+            warnEq.add(new NumConstEquation(0, cv));
+
+        }
         return this;
     }
 
@@ -63,18 +68,23 @@ public class EquationButton extends Button {
         if (warn && canvas !=null){
             // we need to find the right end
             float at =myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + 50*Algebrator.getAlgebrator().getDpi();
-            Paint p = new Paint();
+            Paint p = new Paint(Algebrator.getAlgebrator().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);
             p.setColor(currentColor);
-            String s ="assuming: ";
-            canvas.drawText(s,at,y + stupidY,p);
-            at += p.measureText(s);
-            at += 10*Algebrator.getAlgebrator().getDpi();
+//            String s ="assuming: ";
+//
+//            Rect out =  new Rect();
+//            p.getTextBounds(s, 0,(s).length(),out);
+//            float h= out.height();
+//            float w= out.width();
+//            at+= w/2;
+//            canvas.drawText(s,at,y + stupidY,p);
+//            at+= w/2;
+            //at += 10*Algebrator.getAlgebrator().getDpi();
             at += warnEq.measureWidth()/2;
             warnEq.setAlpha(currentAlpha);
             warnEq.setColor(currentColor);
-            Log.i("at","x: "+at +",y:"+y + stupidY);
             warnEq.draw(canvas,at,y + stupidY);
         }
     }
