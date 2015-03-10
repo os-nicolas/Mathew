@@ -46,13 +46,17 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			if (get(0) instanceof MultiDivSuperEquation) {
 				MultiDivSuperEquation next = (MultiDivSuperEquation) get(0);
 				return next.onTop(eq);
-			}
+			}else{
+                return true;
+            }
 		}
 		if (get(1).deepContains(eq)) {
 			if (get(1) instanceof MultiDivSuperEquation) {
 				MultiDivSuperEquation next = (MultiDivSuperEquation) get(1);
 				return !next.onTop(eq);
-			}
+			}else {
+                return false;
+            }
 		}
 		Log.e("123","onTop for something this does not contain ");
 		return false;

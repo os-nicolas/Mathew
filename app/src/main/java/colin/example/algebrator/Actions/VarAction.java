@@ -22,8 +22,7 @@ public class VarAction extends Action {
         if (emilyView.selected instanceof PlaceholderEquation) {
             ((PlaceholderEquation)emilyView.selected).goDark();
 
-            Equation l = emilyView.left();
-            if ((l == null || !(l.parent instanceof BinaryEquation)) && !(emilyView.selected.parent instanceof BinaryEquation)) {
+            if (!(emilyView.selected.parent instanceof BinaryEquation)) {
                 Equation newEq = new VarEquation(var, emilyView);
                 emilyView.insert(newEq);
             } else {
@@ -35,10 +34,11 @@ public class VarAction extends Action {
                 holder.add(oldEq);
                 oldEq.setSelected(true);
             }
-        } else if (emilyView.selected != null) {
-            Equation numEq = new VarEquation(var, emilyView);
-            addToBlock(numEq);
         }
+//        else if (emilyView.selected != null) {
+//            Equation numEq = new VarEquation(var, emilyView);
+//            addToBlock(numEq);
+//        }
 //        if (! (emilyView.selected instanceof WritingEquation) ){
 //            if (emilyView.selected instanceof PlaceholderEquation) {
 //                Equation newEq = new VarEquation(var, emilyView);

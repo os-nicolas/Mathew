@@ -159,6 +159,13 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         if (right instanceof MonaryEquation){
             return true;
         }
+        if (left instanceof PowerEquation && Operations.sortaNumber(left.get(0))){
+            return true;
+        }
+        if (right instanceof PowerEquation && Operations.sortaNumber(right.get(0))){
+            return true;
+        }
+
         return false;
     }
 }
@@ -454,11 +461,9 @@ class MultiCountData {
     }
 
     public boolean addToKey(Equation copy) {
-
-
         if (copy instanceof PowerEquation) {
             for (Equation k : key) {
-                if (k instanceof PowerEquation && k.get(1).same(copy.get(1))){
+                if (k instanceof PowerEquation && k.get(1).same(copy.get(1)) && !(k.get(0).same(copy.get(0)))){
                     if (!(k.get(0) instanceof MultiEquation)){
                         Equation oldEq = k.get(0);
                         k.set(0,new MultiEquation(k.owner));

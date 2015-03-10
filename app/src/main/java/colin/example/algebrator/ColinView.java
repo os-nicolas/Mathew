@@ -72,7 +72,8 @@ public class ColinView extends SuperView {
                 if ((stupid.lastPoint.get(0).y + atHeight + eb.myEq.measureHeightLower()) > 0 &&
                         (stupid.lastPoint.get(0).y + atHeight - eb.myEq.measureHeightUpper()) < height) {
                     eb.draw(canvas, stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
-                } else  if (  stupid.lastPoint.get(0).y > -400*Algebrator.getAlgebrator().getDpi()){
+                } else  if (  stupid.lastPoint.get(0).y > -(height/4)*Algebrator.getAlgebrator().getDpi()
+                        || stupid.lastPoint.get(0).y < (height*5/4)*Algebrator.getAlgebrator().getDpi()){
                     // update the locations
                     eb.updateLocations(stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
                 }
@@ -338,15 +339,17 @@ public class ColinView extends SuperView {
         return closest;
     }
 
-    // TODO these are not quite right
-    // eq + width/2 is not the right side that is a little m more complex
-    private Equation rightest(){
-        Equation closest = stupid;
+    //TODO these (left,rigth,top, bottom)est are all a bit wrong:
+        // 1 - we always know the bottomest and the topest not need to waste time
+        // 2 - for left and right stupid get included even when it is not in the screeen
+
+    private Physical rightest(){
+        Physical closest = stupid;
         float dis = stupid.x + stupid.measureWidth()/2;
         for (EquationButton eb : history) {
             if (!eb.equals(history.get(0)) && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
                 float myDis = eb.myEq.x+ eb.myEq.measureWidth()/2;
-                if (myDis < dis) {
+                if (myDis > dis) {
                     dis = myDis;
                     closest = eb.myEq;
                 }
@@ -355,49 +358,55 @@ public class ColinView extends SuperView {
         return closest;
     }
 
-    // again this is a bit wrong
-    private Equation leftest(){
-        Equation closest = stupid;
-        float dis = stupid.x - stupid.measureWidth()/2;
+
+    private Physical leftest(){
+        Physical closest = stupid;
+        float dis = stupid.getX() - stupid.measureWidth()/2;
         for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
-                float myDis = eb.myEq.x- eb.myEq.measureWidth()/2;
+            if (!eb.equals(history.get(0))  && disToCenter(eb.getX(), eb.getY()) < width/2) {
+                float myDis = eb.getX()- (eb.measureWidth()/2);
                 if (myDis < dis) {
                     dis = myDis;
-                    closest = eb.myEq;
+                    closest = eb;
                 }
             }
         }
         return closest;
     }
 
-    private Equation topest(){
-        Equation closest = stupid;
-        float dis = stupid.y - stupid.measureHeightUpper();
-        for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
-                float myDis = eb.myEq.y- eb.myEq.measureHeightUpper();
-                if (myDis < dis) {
-                    dis = myDis;
-                    closest = eb.myEq;
-                }
-            }
+    private Physical topest(){
+//        Physical closest = stupid;
+//        float dis = stupid.y - stupid.measureHeightUpper();
+//        for (EquationButton eb : history) {
+//            if (!eb.equals(history.get(0))  && disToCenter(eb.getX(), eb.getY()) < width/2) {
+//                float myDis = eb.getY()- (eb.measureHeight()/2);
+//                if (myDis < dis) {
+//                    dis = myDis;
+//                    closest = eb;
+//                }
+//            }
+//        }
+        Physical closest;
+        if (history.isEmpty()){
+            closest = stupid;
+        }else{
+            closest = history.get(history.size()-1);
         }
         return closest;
     }
 
-    private Equation bottumest(){
-        Equation closest = stupid;
-        float dis = stupid.y + stupid.measureHeightLower();
-        for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))  && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
-                float myDis = eb.myEq.y+ eb.myEq.measureHeightLower();
-                if (myDis < dis) {
-                    dis = myDis;
-                    closest = eb.myEq;
-                }
-            }
-        }
+    private Physical bottumest(){
+        Physical closest = stupid;
+//        float dis = stupid.y + stupid.measureHeightLower();
+//        for (EquationButton eb : history) {
+//            if (!eb.equals(history.get(0))  && disToCenter(eb.getX(), eb.getY()) < width/2) {
+//                float myDis = eb.y+ (eb.measureHeight()/2);
+//                if (myDis > dis) {
+//                    dis = myDis;
+//                    closest = eb;
+//                }
+//            }
+//        }
         return closest;
     }
 
@@ -407,46 +416,53 @@ public class ColinView extends SuperView {
     }
 
 
+    //these are all wrong they neeed to look at two things,
+    // the left and right
+    // at least the horizonal ones
+    // these all should also use math.min of the two condition to return
+
     @Override
     protected float outTop() {
-        Equation closest = topest();//getCenterEq();
-        if (closest.y + closest.measureHeightLower() - buffer < 0 && closest.y + closest.measureHeightLower() + buffer < buttonLine()) {
+        Physical closest = topest();//getCenterEq();
+        if (closest.getY() + closest.measureHeight()/2 - buffer < 0 && closest.getY() + (closest.measureHeight()/2) + buffer < buttonLine()) {
             Log.d("out,top", "closest");
             //message.db("outtop, closest");
-            return -(closest.y + closest.measureHeightLower() - buffer);
+            return -(closest.getY() + closest.measureHeight()/2 - buffer);
         }
         return super.outTop();
     }
 
     @Override
     protected float outLeft() {
-        Equation closest = leftest();//getCenterEq();
-        if (closest.x + closest.measureWidth() / 2 - buffer < 0 && closest.x + closest.measureWidth() / 2 + buffer < width) {
+        Physical left = leftest();//getCenterEq();
+        Physical right = rightest();
+        if (left.getX() + left.measureWidth() / 2 - buffer < 0 && right.getX() + right.measureWidth() / 2 + buffer < width) {
             Log.d("out,left", "closest");
             //message.db("outleft, closest");
-            return -(closest.x + closest.measureWidth() / 2 - buffer);
+            return -(left.getX() + left.measureWidth() / 2 - buffer);
         }
         return super.outLeft();
     }
 
     @Override
     protected float outBottom() {
-        Equation closest = bottumest();//getCenterEq();
-        if (closest.y - closest.measureHeightUpper() + buffer > buttonLine() && closest.y - closest.measureHeightUpper() - buffer > 0) {
+        Physical closest = bottumest();//getCenterEq();
+        if (closest.getY() - (closest.measureHeight()/2) + buffer > buttonLine() && closest.getY() - (closest.measureHeight()/2) - buffer > 0) {
             Log.d("out,bot", "closest");
             //message.db("outbot, closest");
-            return (closest.y - closest.measureHeightUpper() + buffer) - buttonLine();
+            return (closest.getY() - (closest.measureHeight()/2) + buffer) - buttonLine();
         }
         return super.outBottom();
     }
 
     @Override
     protected float outRight() {
-        Equation closest = rightest();//getCenterEq();
-        if (closest.x - closest.measureWidth() / 2 + buffer > width && closest.x - closest.measureWidth() / 2 - buffer > 0) {
+        Physical left = leftest();//getCenterEq();
+        Physical right = rightest();
+        if (right.getX() - (right.measureWidth() / 2) + buffer > width && left.getX() - (left.measureWidth() / 2 )- buffer > 0) {
             Log.d("out,right", "closest");
             //message.db("outright, closest");
-            return (closest.x - closest.measureWidth() / 2 + buffer) - width;
+            return (right.getX() - (right.measureWidth() / 2) + buffer) - width;
         }
         return super.outRight();
     }

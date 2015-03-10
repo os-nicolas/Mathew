@@ -17,10 +17,11 @@ import colin.example.algebrator.Animation;
 import colin.example.algebrator.ColinView;
 import colin.example.algebrator.DragLocation;
 import colin.example.algebrator.EmilyView;
+import colin.example.algebrator.Physical;
 import colin.example.algebrator.Pop;
 import colin.example.algebrator.SuperView;
 
-abstract public class Equation extends ArrayList<Equation> {
+abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected static final float PARN_HEIGHT_ADDITION = 6 * Algebrator.getAlgebrator().getDpi();
 
@@ -493,13 +494,21 @@ abstract public class Equation extends ArrayList<Equation> {
                 if (!(old.same(owner.stupid))) {
                     ((ColinView) owner).changed = true;
 
-                    // see if we need to to warn
-                    if (this instanceof DivEquation){
-                        Equation warn = ((DivEquation)this).botCouldBeZero();
-                        if (warn!=null){
-                            ((ColinView) owner).changedEq = warn;
-                        }
-                    }
+                    // we are moving this code anyway
+//                    boolean samePower = (get(0).removeNeg() instanceof PowerEquation &&
+//                            get(1).removeNeg() instanceof PowerEquation &&
+//                            get(0).removeNeg().get(1).same(get(1).removeNeg().get(1)));
+//
+//                    // see if we need to to warn
+//                    if (this instanceof DivEquation
+//                            && !(this.get(0) instanceof AddEquation)    // if the top is an add they just rewrote it
+//                            && !samePower                               // if they are the same power they just rewrote it
+//                            ){
+//                        Equation warn = ((DivEquation)this).botCouldBeZero();
+//                        if (warn!=null){
+//                            ((ColinView) owner).changedEq = warn;
+//                        }
+//                    }
 
                     // if we operated we should be the one to pop
                     for (int i = 0; i < owner.afterAnimations.size(); i++) {
@@ -707,7 +716,7 @@ abstract public class Equation extends ArrayList<Equation> {
     public boolean addContain(Equation equation) {
         Equation current = equation;
         while (true) {
-            if (!(current instanceof EqualsEquation || current instanceof AddEquation || current.equals(equation) || current instanceof MinusEquation || current instanceof PlusMinusEquation)) {
+            if (!(current instanceof EqualsEquation || current instanceof AddEquation || current.equals(equation) || current instanceof MinusEquation )) {//|| current instanceof PlusMinusEquation
                 return false;
             } else if (current.equals(this)) {
                 return true;
@@ -1476,6 +1485,16 @@ abstract public class Equation extends ArrayList<Equation> {
         } else {
             return 28 * Algebrator.getAlgebrator().getDpi();
         }
+    }
+
+
+    public float getX(){
+        return x;
+    }
+
+    // believe it or not this is not the same as Y, it is centered
+    public float getY(){
+        return y - measureHeightUpper() + (measureHeight()/2);
     }
 
     public enum Op {ADD, DIV, POWER, MULTI}

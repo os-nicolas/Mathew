@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * Created by Colin on 1/3/2015.
  */
 public class EquationButton extends Button {
+    private static final float WARN_SPACE = 50;
     public static EquationButton current = null;
 
     Equation myEq;
@@ -67,7 +68,7 @@ public class EquationButton extends Button {
         // if there is a warning show that too
         if (warn && canvas !=null){
             // we need to find the right end
-            float at =myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + 50*Algebrator.getAlgebrator().getDpi();
+            float at =myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE*Algebrator.getAlgebrator().getDpi();
             Paint p = new Paint(Algebrator.getAlgebrator().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);
@@ -235,5 +236,32 @@ public class EquationButton extends Button {
 
     public void updateLocations(int stupidX, int stupidY) {
         ((EqualsEquation) myEq).drawCentered(null, x + stupidX, y + stupidY);
+    }
+
+    //TODO these are not tatally right
+        // stupid should have a get equals center function these should call
+
+    @Override
+    protected float top() {
+        return y +cv.stupid.lastPoint.get(0).getY() -myEq.measureHeightUpper();
+    }
+
+    @Override
+    protected float left() {
+        return x +cv.stupid.lastPoint.get(0).getX() -(myEq.measureWidth()/2);
+    }
+
+    @Override
+    protected float bottom() {
+        return y +cv.stupid.lastPoint.get(0).getY() +myEq.measureHeightLower();
+    }
+
+    @Override
+    protected float right() {
+        float base= x +cv.stupid.lastPoint.get(0).getX() + (myEq.measureWidth()/2);
+        if (warn){
+            return base + warnEq.measureWidth()+ WARN_SPACE*Algebrator.getAlgebrator().getDpi();
+        }
+        return base;
     }
 }

@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 
 import colin.example.algebrator.Actions.Action;
 
-public class Button {
+public class Button implements  Physical {
     // in percent of width (1 = full width)
     float left;
     // in percent of width (1 = full width)
@@ -85,13 +85,13 @@ public class Button {
         float buffer = Algebrator.getAlgebrator().getBuffer();
         String textToMeasure= text;
         textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2*buffer > right() - left() || out.height() + 2*buffer > bottom() - top()) {
+        while (out.width() + 2*buffer > measureWidth() || out.height() + 2*buffer > measureHeight()) {
             textPaint.setTextSize(textPaint.getTextSize() - 1);
             textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
         }
         textToMeasure= "A";
         textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2*buffer > right() - left() || out.height() + 2*buffer > bottom() - top()) {
+        while (out.width() + 2*buffer > measureWidth() || out.height() + 2*buffer > measureHeight()) {
             textPaint.setTextSize(textPaint.getTextSize() - 1);
             textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
         }
@@ -113,23 +113,22 @@ public class Button {
         canvas.drawText(text, (right() + left()) / 2, (bottom() + top()) / 2 + h / 2 , textHighlight);
         //textHighlight.setMaskFilter(null);*/
 
-        canvas.drawText(text, (right() + left()) / 2, (bottom() + top()) / 2 + h / 2, textPaint);
+        canvas.drawText(text, getX(), getY() + h / 2, textPaint);
     }
 
-    private float top() {
+    protected float top() {
         return top * canvasHeight;
     }
 
-    private float left() {
+    protected float left() {
         return left * canvasWidth;
     }
 
-    private float bottom() {
+    protected float bottom() {
         return bottom * canvasHeight;
     }
 
-    private float right() {
-
+    protected float right() {
         return right * canvasWidth;
     }
 
@@ -148,4 +147,23 @@ public class Button {
     }
 
 
+    @Override
+    public float measureWidth() {
+        return right()-left();
+    }
+
+    @Override
+    public float measureHeight() {
+        return  bottom()-top();
+    }
+
+    @Override
+    public float getX() {
+        return (left() + right())/2;
+    }
+
+    @Override
+    public float getY() {
+        return (top() + bottom())/2;
+    }
 }

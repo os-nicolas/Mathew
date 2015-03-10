@@ -8,11 +8,12 @@ import android.graphics.RectF;
 import java.util.Random;
 
 import colin.example.algebrator.Algebrator;
+import colin.example.algebrator.Physical;
 
 /**
  * Created by Colin on 2/11/2015.
  */
-public class MyPoint extends Point {
+public class MyPoint extends Point implements Physical {
     public final float myWidth;
     public final float myHeight;
 
@@ -43,7 +44,7 @@ public class MyPoint extends Point {
     }
 
     public boolean near(float x, float y) {
-        float near = 100* Algebrator.getAlgebrator().getDpi();
+        float near = 75* Algebrator.getAlgebrator().getDpi();
         return x < this.x + near + this.myWidth / 2
                 && x > this.x - near - this.myWidth / 2
                 && y < this.y + near + this.myHeight / 2
@@ -52,5 +53,25 @@ public class MyPoint extends Point {
 
     public float distance(float x2, float y2) {
         return (float)Math.sqrt(((x2- this.x)*(x2- this.x))+((y2 - this.y)*(y2- this.y)));
+    }
+
+    @Override
+    public float measureWidth() {
+        return myWidth;
+    }
+
+    @Override
+    public float measureHeight() {
+        return myHeight;
+    }
+
+    @Override
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
     }
 }

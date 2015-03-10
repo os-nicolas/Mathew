@@ -32,12 +32,15 @@ public class ParenthesesAction extends Action {
 
 
             if (next instanceof WritingLeafEquation) {
-                op = ((WritingLeafEquation) next).isOpLeft();
+                if (left){
+                    op = ((WritingLeafEquation) next).isOpRight();
+                }else {
+                    op = ((WritingLeafEquation) next).isOpLeft();
+                }
             }
             can &= !op;
 
             if (can) {
-
                 if (!(emilyView.selected.parent instanceof BinaryEquation)) {
                     emilyView.insert(newEq);
                 } else {
