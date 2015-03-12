@@ -58,6 +58,7 @@ public abstract class SuperView extends View implements
 
     public boolean disabled = false;
     int stupidAlpha = 0xff;
+    public boolean hasUpdated;
 
 
     protected float buttonLine() {
@@ -669,6 +670,10 @@ public abstract class SuperView extends View implements
         lastTouch = System.currentTimeMillis();
         if (!disabled) {
             if (event.getPointerCount() == 1) {
+                if (!hasUpdated){
+                    stupid.updateLocation();
+                }
+                hasUpdated = false;
 
                 // we need to know if they started in the box
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {

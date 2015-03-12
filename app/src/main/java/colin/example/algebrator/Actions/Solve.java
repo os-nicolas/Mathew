@@ -19,32 +19,39 @@ public class Solve extends Action {
         super(emilyView);
     }
 
+    public static Equation mine;
+
     @Override
     public void act() {
-        if (emilyView.stupid instanceof WritingEquation)
+        // we need to copy stupid
+        mine = emilyView.stupid.copy();
 
+        // we want to remove the place holder
+        if (emilyView.selected instanceof PlaceholderEquation) {
+            Equation at = emilyView.stupid;
+            Equation myAt = mine;
+            while (!at.equals(emilyView.selected)) {
+                int index = at.deepIndexOf(emilyView.selected);
+                at = at.get(index);
+                myAt = myAt.get(index);
+            }
+            myAt.remove();
+        }
 
-            if (((WritingEquation) emilyView.stupid).deepLegal() && countEquals(emilyView.stupid) == 1) {
+        // we need to follow the path to selected
+        // and remove it from mine
+        if (mine instanceof WritingEquation) {
 
-                AsyncTask<Void,Void,Long> task = new AsyncTask<Void,Void,Long>(){
+            if (((WritingEquation) mine).deepLegal() && countEquals(mine) == 1) {
+
+                AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
                     Intent myIntent;
                     Context myContext;
 
                     protected Long doInBackground(Void... v) {
-                        Equation toPass = emilyView.stupid.copy();
-                        // we want to remove the place holder
-                        if (emilyView.selected instanceof PlaceholderEquation){
-                            Equation at = emilyView.stupid;
-                            Equation myAt = toPass;
-                            while (!at.equals(emilyView.selected)) {
-                                int index = at.deepIndexOf(emilyView.selected);
-                                at = at.get(index);
-                                myAt = myAt.get(index);
-                            }
-                            myAt.remove();
-                        }
 
-                        Equation newEq = ((WritingEquation) toPass).convert();
+
+                        Equation newEq = ((WritingEquation) Solve.mine).convert();
 
                         myContext = emilyView.getContext();
                         ColinView colinView = new ColinView(myContext);
@@ -67,5 +74,6 @@ public class Solve extends Action {
                 emilyView.disabled = true;
                 task.execute();
             }
+        }
     }
 }

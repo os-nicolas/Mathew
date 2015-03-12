@@ -340,8 +340,11 @@ public class PowerEquation extends Operation implements BinaryEquation {
             return false;
         }
 
-        if (get(1) instanceof NumConstEquation && BigDecimal.ONE.divide(((NumConstEquation) get(1)).getValue(), 20, RoundingMode.HALF_UP).remainder(new BigDecimal(2)).doubleValue() == 0) {
-            return true;
+        if (get(1) instanceof NumConstEquation){
+            double power = ((NumConstEquation) get(1)).getValue().doubleValue();
+            if ((1/(power-Math.floor(power)))%2 ==0){
+                return true;
+            }
         }
         // there are other cases but we do not worry about them
         return false;

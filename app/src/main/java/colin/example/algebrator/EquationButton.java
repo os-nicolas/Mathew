@@ -50,7 +50,7 @@ public class EquationButton extends Button {
         if (bot!=null) {
             warn = true;
             warnEq = new WritingEquation(cv);
-            warnEq.add(new WritingLeafEquation("Assuming: ", cv));
+            warnEq.add(new WritingLeafEquation( Algebrator.getAlgebrator().getResources().getString(R.string.assume)+": ", cv));
             warnEq.add(bot);
             warnEq.add(new WritingLeafEquation("\u2260", cv));
             warnEq.add(new NumConstEquation(0, cv));

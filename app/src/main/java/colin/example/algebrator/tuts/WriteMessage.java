@@ -1,6 +1,8 @@
 package colin.example.algebrator.tuts;
 
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.EmilyView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -19,8 +21,9 @@ public class WriteMessage extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(4000, "Hi!");
-        view.message.enQue(3000, "thanks for installing Algebrator");
-        view.message.enQue(3000, "go ahead and type an equation");
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_1));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_2));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_3));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_4));
     }
 }

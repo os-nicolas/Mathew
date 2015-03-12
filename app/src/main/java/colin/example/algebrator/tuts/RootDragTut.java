@@ -3,7 +3,9 @@ package colin.example.algebrator.tuts;
 import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PowerEquation;
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -22,7 +24,8 @@ public class RootDragTut  extends PowerTut {
         if (view instanceof ColinView && power!= null
                 && ((PowerEquation)power).isSqrt() == true
                 && power.parent instanceof EqualsEquation
-                && !view.active()){
+                && !view.active()
+                && view.message.isOpen()){
             return true;
         }
         return false;
@@ -30,6 +33,6 @@ public class RootDragTut  extends PowerTut {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(4000,new String[]{"Draw a sqrt sign to the other side"," to square both sides"});
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_rootdrag));
     }
 }

@@ -129,10 +129,20 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
             }
         }
 
+        Equation noChangeResult = new MultiEquation(owner);
+        noChangeResult.addAll(eqs);
 
-        add(at, result);
-        if (this.size() == 1) {
-            this.replace(this.get(0));
+        if (result.same(noChangeResult)){
+            result = noChangeResult;
+        }
+
+        if (result instanceof MultiEquation){
+            addAll(at,result);
+        }else {
+            add(at, result);
+            if (this.size() == 1) {
+                this.replace(this.get(0));
+            }
         }
     }
 
@@ -165,6 +175,9 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         if (right instanceof PowerEquation && Operations.sortaNumber(right.get(0))){
             return true;
         }
+        if (right instanceof PlusMinusEquation){
+            return true;
+        }
 
         return false;
     }
@@ -175,6 +188,7 @@ class MultiCountData {
     public ArrayList<Equation> numbers = new ArrayList<Equation>();
     public MultiCountData under;
     public boolean plusMinus= false;
+    public int myPlusMinusId=-1;
     public boolean combine = false;
     public boolean negative = false;
 
@@ -216,6 +230,7 @@ class MultiCountData {
             this.under =new MultiCountData(mcd.under);
         }
         this.plusMinus= mcd.plusMinus;
+        this.myPlusMinusId = mcd.myPlusMinusId;
         this.combine = mcd.combine;
         this.negative = mcd.negative;
     }
@@ -232,6 +247,7 @@ class MultiCountData {
         }
         if (e instanceof PlusMinusEquation) {
             plusMinus = true;
+            myPlusMinusId = ((PlusMinusEquation) e).myPlusMinusId;
             e = e.get(0);
         }
         if (e instanceof NumConstEquation) {

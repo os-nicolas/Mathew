@@ -2,7 +2,9 @@ package colin.example.algebrator.tuts;
 
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.VarEquation;
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -32,8 +34,12 @@ public class SolvedTut extends TutMessage {
     }
 
     @Override
+    protected void alwaysShow(SuperView view){
+        view.message.enQue(shortTime,Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1));
+    }
+
+    @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(2000,"Nice work!");
-        view.message.enQue(2000,"hit the back button to enter another equation");
+        view.message.enQue(aveTime,Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_2));
     }
 }

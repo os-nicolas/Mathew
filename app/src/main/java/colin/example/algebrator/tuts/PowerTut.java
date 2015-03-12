@@ -3,7 +3,9 @@ package colin.example.algebrator.tuts;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.PowerEquation;
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -21,7 +23,8 @@ public class PowerTut extends TutMessage {
         if (view instanceof ColinView
                 && power!= null
                 && ((PowerEquation)power).isSqrt() == false
-                && !view.active()){
+                && !view.active()
+                && view.message.isOpen()){
             return true;
         }
         return false;
@@ -43,6 +46,6 @@ public class PowerTut extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(4000,new String[]{"To rise something to a power,"," double tap the exponent"});
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_power));
     }
 }

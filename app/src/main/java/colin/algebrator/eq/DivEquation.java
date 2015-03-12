@@ -236,27 +236,6 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         return result;
     }
 
-    // null -> false
-    public Equation botCouldBeZero() {
-        if (botCouldBeZeroHelper(get(1))){
-            return get(1);
-        }
-        return null;
-    }
-
-    public boolean botCouldBeZeroHelper(Equation eq){
-        if (eq instanceof VarEquation && !onTop(eq)){
-            return true;
-        }
-        for (Equation e:eq){
-            boolean pass = botCouldBeZeroHelper(e);
-            if ( pass ){
-                return true;
-            }
-        }
-        return false;
-    }
-
     private double lcm(double a, double b)
     {
         return a * (b / gcd(a, b));

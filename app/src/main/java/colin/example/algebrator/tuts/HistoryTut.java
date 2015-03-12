@@ -1,6 +1,8 @@
 package colin.example.algebrator.tuts;
 
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -22,6 +24,6 @@ public class HistoryTut extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(4000,new String[]{"to revert to a previous step","tap it and hold"});
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_history));
     }
 }

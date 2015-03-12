@@ -1,8 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ALGEBRATOR</string>
+    <string name="app_name">Mathilda</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="solve">SOLVE</string>
+    <string name="assume">Assuming</string>
+
+    <string-array name="tut_history">
+        <item>To revert to a previous step</item>
+        <item>tap it and hold</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>Once you have the equation you want,</item>
+        <item>hit SOLVE to start manipulating it</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>To root both sides,</item>
+        <item>drag an exponent to the other side</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>To rise something to a power,</item>
+        <item>double tap the exponent</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>To square both sides,</item>
+        <item>drag a sqrt sign to the other side</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>Double tap a square root sign</item>
+        <item>to square root it\'s contents</item>
+    </string-array>
+
+
+    <string name="tut_solved_1">Nice work!</string>
+    <string name="tut_solved_2">Hit the back button to enter another equation</string>
+
+    <string name="tut_solvemessage_1">This is the solve screen</string>
+    <string-array name="tut_solvemessage_2">
+        <item>To move numbers or variables around,</item>
+        <item>simply drag and drop them</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>To add, subtract, multiply or divide,</item>
+        <item>double tap on +, -, × or ÷</item>
+    </string-array>
+    <string-array name="tut_add">
+        <item>To cancel something by adding to/subtract from both sides,</item>
+        <item>drag what you want to cancel to the other side</item>
+    </string-array>
+    <string-array name="tut_div">
+        <item>To cancel something by multiplying both sides by it,</item>
+        <item>drag what you want to cancel to the other side</item>
+    </string-array>
+    <string-array name="tut_multi">
+        <item>To cancel something by divide both sides by it,</item>
+        <item>drag what you want to cancel to the other side</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">Hi!</string>
+    <string name="tut_writemessage_2">Thanks for installing Mathilda</string>
+    <string name="tut_writemessage_3">Go ahead and type an equation</string>
+    <string name="tut_writemessage_4">Tap on a message to skip it</string>
 
 </resources>

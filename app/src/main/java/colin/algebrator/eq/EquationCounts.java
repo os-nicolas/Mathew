@@ -1,5 +1,7 @@
 package colin.algebrator.eq;
 
+import android.util.Log;
+
 import colin.example.algebrator.SuperView;
 
 import java.math.BigDecimal;
@@ -41,6 +43,16 @@ public class EquationCounts {
     }
 
     public EquationCounts() { }
+
+    public EquationCounts(EquationCounts toCopy) {
+        root = toCopy.root.copy();
+        equations = new HashMap<Equation,Float>();
+        for (Equation k: toCopy.equations.keySet()){
+            equations.put(k.copy(),toCopy.equations.get(k));
+        }
+        v =new BigDecimal(toCopy.v.doubleValue());
+        neg = toCopy.neg;
+    }
 
     private void update(Equation e) {
         boolean innerNeg = false;
@@ -150,5 +162,33 @@ public class EquationCounts {
             }
             return newEq;
         }
+    }
+
+    public boolean isEmpty(){
+        if (v.equals(BigDecimal.ZERO) && equations.isEmpty()){
+            return  true;
+        }
+        return false;
+    }
+
+    public EquationCounts remainder(EquationCounts equationCounts) {
+        EquationCounts result = new EquationCounts(this);
+        // if the roots are not the same log
+        if (!result.root.same(equationCounts.root)){
+            Log.e("ec remainder", "they should have the same root");
+        }
+        result.v = result.v.subtract(equationCounts.v);
+        result.neg = (result.neg != equationCounts.neg );
+
+        for (Equation k: equationCounts.equations.keySet()){
+            float numleft = result.equations.get(k) - equationCounts.equations.get(k);
+            if (numleft == 0){
+                result.equations.remove(k);
+            }else{
+                result.equations.put(k,numleft);
+            }
+        }
+
+        return result;
     }
 }

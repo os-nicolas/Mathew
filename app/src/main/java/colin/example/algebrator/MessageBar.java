@@ -47,6 +47,10 @@ public class MessageBar {
         }
     }
 
+    public boolean isOpen(){
+        return current()==null;
+    }
+
 
     public void draw(Canvas canvas){
 

@@ -3,6 +3,7 @@ package colin.example.algebrator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -73,8 +74,11 @@ public class EmilyView extends SuperView {
         firstRow.add(new Button("-", new MinusAction(this)));
         firstRow.add(new Button("=", new EqualsAction(this)));
         //TODO this does not work since my font does not support this
-        //char[] backSpaceUnicode = { '\u232B'};
-        firstRow.add(new Button("DEL", new DeleteAction(this)));//
+        char[] backSpaceUnicode = { '\u232B'};
+        Button del = new Button(new String(backSpaceUnicode), new DeleteAction(this));
+        Typeface myTypeface = Typeface.createFromAsset(Algebrator.getAlgebrator().getAssets(), "fonts/DejaVuSans.ttf");
+        del.textPaint.setTypeface(myTypeface);
+        firstRow.add(del);//
 
         ArrayList<Button> secondRow = new ArrayList<Button>();
         secondRow.add(new Button("4", new NumberAction(this, "4")));
@@ -105,7 +109,7 @@ public class EmilyView extends SuperView {
 
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button solve = new Button("SOLVE", new Solve(this));
+        Button solve = new Button(getResources().getString(R.string.solve), new Solve(this));
         solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(solve);
         addButtonsRow(thridRow, 8f / 9f, 9f / 9f);

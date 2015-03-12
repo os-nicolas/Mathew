@@ -194,7 +194,6 @@ public class ColinView extends SuperView {
                 willSelect = new HashSet<>();
                 break;
             }
-
         }
 
         String db1 = "";
@@ -421,13 +420,16 @@ public class ColinView extends SuperView {
     // at least the horizonal ones
     // these all should also use math.min of the two condition to return
 
+    float yBuffer = (height*(3f/4f));//200*Algebrator.getAlgebrator().getDpi();
+
     @Override
     protected float outTop() {
-        Physical closest = topest();//getCenterEq();
-        if (closest.getY() + closest.measureHeight()/2 - buffer < 0 && closest.getY() + (closest.measureHeight()/2) + buffer < buttonLine()) {
+        Physical top = topest();//getCenterEq();
+        Physical bot = bottumest();
+        if (top.getY() + top.measureHeight()/2 - buffer < 0 && bot.getY() + (bot.measureHeight()/2)  < buttonLine() - (height*(3f/4f))) {
             Log.d("out,top", "closest");
             //message.db("outtop, closest");
-            return -(closest.getY() + closest.measureHeight()/2 - buffer);
+            return -(top.getY() + top.measureHeight()/2 - buffer);
         }
         return super.outTop();
     }
@@ -446,11 +448,12 @@ public class ColinView extends SuperView {
 
     @Override
     protected float outBottom() {
-        Physical closest = bottumest();//getCenterEq();
-        if (closest.getY() - (closest.measureHeight()/2) + buffer > buttonLine() && closest.getY() - (closest.measureHeight()/2) - buffer > 0) {
+        Physical bot = bottumest();//getCenterEq();
+        Physical top = topest();
+        if (bot.getY() - (bot.measureHeight()/2) + buffer > buttonLine() && top.getY() - (top.measureHeight()/2) > (height*(3f/4f))) {
             Log.d("out,bot", "closest");
             //message.db("outbot, closest");
-            return (closest.getY() - (closest.measureHeight()/2) + buffer) - buttonLine();
+            return (bot.getY() - (bot.measureHeight()/2) + buffer) - buttonLine();
         }
         return super.outBottom();
     }
@@ -465,5 +468,14 @@ public class ColinView extends SuperView {
             return (right.getX() - (right.measureWidth() / 2) + buffer) - width;
         }
         return super.outRight();
+    }
+
+    public boolean tryWarn(Equation equation) {
+        Equation warnEq =equation.CouldBeZero();
+        if (warnEq != null){
+            changedEq = warnEq;
+        }
+
+        return false;
     }
 }

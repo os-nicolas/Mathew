@@ -220,6 +220,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         this.x = x;
         this.y = y;
 
+        owner.hasUpdated= true;
+
 
         drawBkgBox(canvas, x, y);
 
@@ -490,7 +492,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
             if (owner instanceof ColinView) {
                 MyPoint myPoint = getLastPoint(x, y);
-
+                Log.i("did it change?",old.toString() + " " + owner.stupid.toString());
                 if (!(old.same(owner.stupid))) {
                     ((ColinView) owner).changed = true;
 
@@ -819,8 +821,16 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public void replace(Equation eq) {
         if (parent != null) {
             int index = parent.indexOf(this);
-            this.parent.set(index, eq);
-
+            // oh man does this seem dangerous
+            if ((parent instanceof MultiEquation && eq instanceof MultiEquation)
+                ||(parent instanceof MultiEquation && eq instanceof MultiEquation)){
+                for (Equation e:eq){
+                    parent.add(index++,e);
+                }
+                this.parent.remove(this);
+            }else {
+                this.parent.set(index, eq);
+            }
         } else {
             owner.stupid = eq;
         }
@@ -1439,10 +1449,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         for (Equation eq : this) {
             clostest = eq.closetOn(x, y, clostest);
         }
-
         return clostest;
     }
-
 
     /**
      * looking form the left
@@ -1485,6 +1493,27 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         } else {
             return 28 * Algebrator.getAlgebrator().getDpi();
         }
+    }
+
+    // null -> false
+    public Equation CouldBeZero() {
+        if (botCouldBeZeroHelper(this)){
+            return this;
+        }
+        return null;
+    }
+
+    private boolean botCouldBeZeroHelper(Equation eq){
+        if (eq instanceof VarEquation && (!(this instanceof DivEquation) || !((DivEquation)this).onTop(eq))){
+            return true;
+        }
+        for (Equation e:eq){
+            boolean pass = botCouldBeZeroHelper(e);
+            if ( pass ){
+                return true;
+            }
+        }
+        return false;
     }
 
 

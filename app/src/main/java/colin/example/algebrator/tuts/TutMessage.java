@@ -3,6 +3,7 @@ package colin.example.algebrator.tuts;
 import android.content.SharedPreferences;
 
 import colin.example.algebrator.Algebrator;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -10,46 +11,58 @@ import colin.example.algebrator.SuperView;
  */
 public abstract class TutMessage {
     static TutMessage[] tuts = new TutMessage[]{
-        new WriteMessage(),
-        new HitSolveMessage(),
-        new SolveMessage(),
-        new SolvedTut(),
-        new HistoryTut(),
-        new PowerTut(),
-        new PowerDragTut(),
-        new RootTut(),
-        new RootDragTut()
+            new WriteMessage(),
+            new HitSolveMessage(),
+            new SolveMessage(),
+            new SolvedTut(),
+            new HistoryTut(),
+            new PowerTut(),
+            new PowerDragTut(),
+            new RootTut(),
+            new AddTut(),
+            new DivTut(),
+            new MultiTut(),
+            new RootDragTut()
     };
     public static final String PREFS_NAME = "tuts";
+    public final long shortTime = 2000l;
+    public final long aveTime = 2*shortTime;
+    public final long longTime = 3*shortTime;
+
     protected abstract String getSp_key();
 
-    public TutMessage(){
+    public TutMessage() {
 
         // for testing only so i can get my tut message all the time
-        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(getSp_key(), false);
-
-        editor.commit();
+//        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putBoolean(getSp_key(), false);
+//
+//        editor.commit();
     }
 
-    public static void tryShowAll(SuperView view){
-        for (TutMessage tm:tuts){
+    public static void tryShowAll(SuperView view) {
+        for (TutMessage tm : tuts) {
             tm.tryShow(view);
         }
     }
 
-    public void tryShow(SuperView view){
-        if (shouldShow(view)){
+    public void tryShow(SuperView view) {
+        if (shouldShow(view)) {
+            alwaysShow(view);
             show(view);
         }
     }
 
-    public boolean shouldShow(SuperView view){
+
+    protected void alwaysShow(SuperView view){
+    }
+
+    public boolean shouldShow(SuperView view) {
 
         SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
         boolean alreadyShown = settings.getBoolean(getSp_key(), false);
-        if (!alreadyShown){
+        if (!alreadyShown) {
             return privateShouldShow(view);
         }
         return false;
@@ -57,7 +70,7 @@ public abstract class TutMessage {
 
     protected abstract boolean privateShouldShow(SuperView view);
 
-    public void show(SuperView view){
+    public void show(SuperView view) {
         privateShow(view);
 
         SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);

@@ -7,6 +7,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import colin.example.algebrator.Algebrator;
+import colin.example.algebrator.ColinView;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -60,7 +61,12 @@ public class Operations {
         MultiCountData at = newMcd;
         MultiCountData target = result;
         while (at != null) {
-            target.plusMinus |= at.plusMinus;
+            if (target.plusMinus && at.plusMinus && target.myPlusMinusId == at.myPlusMinusId){
+                target.plusMinus = false;
+            }else if (at.plusMinus){
+                target.plusMinus = true;
+                target.myPlusMinusId = at.myPlusMinusId;
+            }
             if (at.negative) {
                 target.negative = !target.negative;
             }
@@ -239,22 +245,54 @@ public class Operations {
         for (Equation e : common.copyKey()) {
             commonCopy.add(new EquationCounts(e));
         }
-        for (EquationCounts lft : leftCopy) {
-            boolean match = false;
-            for (EquationCounts com : commonCopy) {
-                EquationCounts removed = removeCommon(lft, com);
-                if (!lft.equals(removed)) {
-                    match = true;
-                    Equation newEq = removed.getEquation();
-                    if (!(newEq instanceof NumConstEquation && ((NumConstEquation) newEq).getValue().doubleValue() == 1)) {
-                        result.addToKey(newEq);
+//        for (EquationCounts lft : leftCopy) {
+//            boolean match = false;
+//            for (EquationCounts com : commonCopy) {
+//
+//
+//                EquationCounts removed = removeCommon(lft, com);
+//                if (!lft.equals(removed)) {
+//                    match = true;
+//                    Equation newEq = removed.getEquation();
+//                    if (!(newEq instanceof NumConstEquation && ((NumConstEquation) newEq).getValue().doubleValue() == 1)) {
+//                        result.addToKey(newEq);
+//                    }
+//                    commonCopy.remove(com);
+//                    break;
+//                }
+//            }
+//            if (!match) {
+//                result.addToKey(lft.getEquation());
+//            }
+//        }
+        for (EquationCounts e : leftCopy) {
+            for (EquationCounts ee : commonCopy) {
+                EquationCounts commonE = findCommon(e, ee);
+                if (commonE != null) {
+                    Equation newKey = commonE.getEquation();
+                    if (!(sortaNumber(newKey) && getValue(newKey).doubleValue() == 1.0)) {
+
+                        int index =commonCopy.indexOf(ee);
+
+                        ee = ee.remainder(new EquationCounts(newKey));
+                        commonCopy.set(index, ee);
+
+                        index =leftCopy.indexOf(e);
+                        e =e.remainder(new EquationCounts(newKey));
+                        leftCopy.set(index, e);
+                        // i want this break to break out of both ifs and the for
+                        // does it?
+                        if (e.isEmpty()) {
+                            break;
+                        }
                     }
-                    commonCopy.remove(com);
-                    break;
                 }
             }
-            if (!match) {
-                result.addToKey(lft.getEquation());
+        }
+
+        for (EquationCounts ec:leftCopy){
+            if (!ec.isEmpty()) {
+                result.addToKey(ec.getEquation());
             }
         }
 
@@ -281,7 +319,7 @@ public class Operations {
                     int myGcd = gcd(eInt, eeInt);
                     if (getValue(e).doubleValue() == eInt
                             && getValue(ee).doubleValue() == eeInt
-                            && myGcd != 1) {
+                            && Math.abs(myGcd) != 1) {
                         match = true;
                         if (eInt == myGcd) {
                             leftCopyNum.remove(i);
@@ -364,10 +402,19 @@ public class Operations {
                     Equation newKey = common.getEquation();
                     if (!(sortaNumber(newKey) && getValue(newKey).doubleValue() == 1.0)) {
                         result.addToKey(newKey);
-                        rightCopy.remove(ee);
+                        int index =rightCopy.indexOf(ee);
+
+                        ee = ee.remainder(new EquationCounts(newKey));
+                        rightCopy.set(index, ee);
+
+                        index =leftCopy.indexOf(e);
+                        e =e.remainder(new EquationCounts(newKey));
+                        leftCopy.set(index, e);
                         // i want this break to break out of both ifs and the for
                         // does it?
-                        break;
+                        if (e.isEmpty()) {
+                            break;
+                        }
                     }
                 }
             }
@@ -393,7 +440,7 @@ public class Operations {
                     int myGcd = gcd(eInt, eeInt);
                     if (getValue(e).doubleValue() == eInt
                             && getValue(ee).doubleValue() == eeInt
-                            && myGcd != 1) {
+                            && Math.abs(myGcd) != 1) {
                         result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));
                         if (eInt == myGcd) {
                             leftNumCopy.remove(i);
@@ -551,6 +598,9 @@ public class Operations {
             }
 
             if (anyCommon) { // they have anything in common
+
+                ((ColinView)owner).tryWarn(common.getEquation(owner));
+
                 MultiCountData topData = remainder(top, common);
                 MultiCountData botData = remainder(bot, common);
                 Equation topEq = topData.getEquation(owner);
@@ -608,7 +658,7 @@ public class Operations {
                 // if it can be reduced
                 if (bot.getValue().doubleValue() == botInt
                         && top.getValue().doubleValue() == topInt
-                        && myGcd != 1) {
+                        && Math.abs(myGcd) != 1) {
 
                     bot.numbers = new ArrayList<Equation>();
                     bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt / myGcd), owner));

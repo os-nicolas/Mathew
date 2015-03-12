@@ -7,13 +7,18 @@ import colin.example.algebrator.SuperView;
  */
 public class PlusMinusEquation extends MonaryEquation {
 
+    public static int plusMinusId = 0;
+    public int myPlusMinusId;
+
     public PlusMinusEquation(SuperView owner2) {
         super(owner2);
+        myPlusMinusId = plusMinusId++;
         init();
     }
 
     public PlusMinusEquation(SuperView owner, PlusMinusEquation equations) {
         super(owner, equations);
+        myPlusMinusId = equations.myPlusMinusId;
         init();
     }
 

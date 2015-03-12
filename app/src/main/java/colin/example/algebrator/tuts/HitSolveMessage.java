@@ -4,7 +4,9 @@ import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.EmilyView;
+import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -28,6 +30,6 @@ public class HitSolveMessage extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(4000,new String[]{"Once you have the equation you want","hit SOLVE to start manipulating it"});
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_hitsolve));
     }
 }
