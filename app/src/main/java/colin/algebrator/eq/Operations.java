@@ -300,6 +300,7 @@ public class Operations {
 
         ArrayList<Equation> commonCopyNum = common.copyNumbers();
 
+        boolean toFlip = false;
 
         // cancel any common numbers too
         for (int i = 0; i < leftCopyNum.size(); i++) {
@@ -307,7 +308,10 @@ public class Operations {
             boolean match = false;
             for (int ii = 0; ii < commonCopyNum.size(); ii++) {
                 Equation ee = commonCopyNum.get(ii);
-                if (e.same(ee)) {
+                if (e.removeNeg().same(ee.removeNeg())) {
+                    if (e.isNeg() != ee.isNeg()){
+                        toFlip = ! toFlip;
+                    }
                     match = true;
                     leftCopyNum.remove(i);
                     commonCopyNum.remove(ii);
@@ -344,6 +348,9 @@ public class Operations {
 
 
         result.negative = left.negative != common.negative;
+        if (toFlip){
+            result.negative = ! result.negative;
+        }
 
         if (result.plusMinus && left.plusMinus && left.myPlusMinusId == result.myPlusMinusId) {
             result.plusMinus = false;
@@ -435,8 +442,9 @@ public class Operations {
             Equation e = leftNumCopy.get(i);
             for (int ii = 0; ii < rightNumCopy.size(); ii++) {
                 Equation ee = rightNumCopy.get(ii);
-                if (e.same(ee) && getValue(e).doubleValue() != 0) {
-                    result.numbers.add(e);
+                if (e.removeNeg().same(ee.removeNeg()) && getValue(e).doubleValue() != 0) {
+                    boolean neg = e.isNeg() && ee.isNeg();
+                    result.numbers.add((!neg?e.removeNeg():e));
                     leftNumCopy.remove(i);
                     rightNumCopy.remove(ii);
                     i--;

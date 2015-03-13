@@ -121,6 +121,7 @@ public abstract class MonaryEquation extends Equation {
 
     @Override
     public void integrityCheck() {
+        super.integrityCheck();
         if (size()!=1){
             Log.e("ic", "this should always be size 1");
         }

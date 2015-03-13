@@ -20,6 +20,7 @@ public abstract class LeafEquation extends Equation {
 
     @Override
     public void integrityCheck(){
+        super.integrityCheck();
         if (size() != 0){
             Log.e("ic","this should be size 0");
         }

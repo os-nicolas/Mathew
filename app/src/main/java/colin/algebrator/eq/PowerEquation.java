@@ -77,6 +77,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
 
     @Override
     public void integrityCheck() {
+        super.integrityCheck();
         if (size() != 2) {
             Log.e("ic", "this should be size 2");
         }

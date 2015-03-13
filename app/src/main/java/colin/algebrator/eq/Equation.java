@@ -9,6 +9,7 @@ import android.util.Log;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
@@ -87,6 +88,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     // we could template this in C++ can we in java?
 
     public void integrityCheck() {
+        if (this.parent!= null && !this.parent.contains(this)){
+            Log.e("kid not in parent",this.toString() + " " + parent.toString());
+        }
+        if (parent != null && owner.stupid.deepContains(this) && ! owner.stupid.deepContains(parent)){
+            Log.e("parent is wrong",this.toString() + " " + parent.toString());
+        }
     }
 
     public void setDisplay(String display) {
@@ -143,6 +150,24 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         equation.parent = this;
         return result;
     }
+
+    @Override
+    public boolean addAll(int i,Collection<? extends Equation> equations) {
+        for (Equation e:equations){
+            this.add(i,e);
+            i++;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends Equation> equations) {
+        for (Equation e:equations){
+            this.add(e);
+        }
+        return true;
+    }
+
 
     @Override
     public void add(int i, Equation equation) {
@@ -1286,7 +1311,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 while (at instanceof MonaryEquation) {
                     at = at.get(0);
                 }
-                if (at instanceof MultiDivSuperEquation) {
+                if (this.deepContains(at)){
+                    myTop = true;
+                }else if (at instanceof MultiDivSuperEquation) {
                     myTop = ((MultiDivSuperEquation) at).onTop(this);
                 }
                 boolean eqTop = true;

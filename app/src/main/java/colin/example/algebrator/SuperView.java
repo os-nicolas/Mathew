@@ -400,7 +400,6 @@ public abstract class SuperView extends View implements
         float targetAlpha = startAt;
         p.setAlpha((int) targetAlpha);
         float scaleBy = Algebrator.getAlgebrator().getShadowFade();
-        ;
         int at = Math.max(0, (int) message.currentBodyHeight());
         for (int i = 0; i < Algebrator.getAlgebrator().getTopLineWidth(); i++) {
             p.setAlpha((int) targetAlpha);

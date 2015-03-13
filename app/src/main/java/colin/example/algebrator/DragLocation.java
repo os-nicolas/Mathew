@@ -1,12 +1,11 @@
 package colin.example.algebrator;
 
+
 import android.util.Log;
 
 import colin.algebrator.eq.Equation;
 
-/**
- * Created by Colin on 2/5/2015.
- */
+
 public class DragLocation implements Comparable<DragLocation> {
     public float x;
     public float y;
@@ -52,9 +51,7 @@ public class DragLocation implements Comparable<DragLocation> {
 
             myStupid.updateLocation();
 
-            float equalsOffest = myStupid.lastPoint.get(0).x - owner.stupid.lastPoint.get(0).x - owner.stupid.x;
-
-            this.x = myDemo.x - myStupid.lastPoint.get(0).x;//+equalsOffest;
+            this.x = myDemo.x - myStupid.lastPoint.get(0).x;
             this.y = myDemo.y - myStupid.lastPoint.get(0).y;
 
             myDemo.demo = true;

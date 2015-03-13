@@ -14,6 +14,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     @Override
     public void integrityCheck(){
+        super.integrityCheck();
         if (size() != 2){
             Log.e("ic","this should be size 2");
         }
