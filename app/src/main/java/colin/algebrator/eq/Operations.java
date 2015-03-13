@@ -345,7 +345,14 @@ public class Operations {
 
         result.negative = left.negative != common.negative;
 
-        result.plusMinus = left.plusMinus;
+        if (result.plusMinus && left.plusMinus && left.myPlusMinusId == result.myPlusMinusId) {
+            result.plusMinus = false;
+            result.myPlusMinusId = -1;
+        }else {
+            result.plusMinus = left.plusMinus;
+            result.myPlusMinusId = left.myPlusMinusId;
+        }
+
         if (common.under == null && left.under != null) {
             result.under = new MultiCountData(left.under);
         } else if (left.under != null) {
@@ -706,13 +713,11 @@ public class Operations {
             }
             // bottom is 1
             else {
-                if (getValue(botEq).doubleValue() == -1) {
-                    if (topEq instanceof MinusEquation) {
-                        return topEq.get(0);
-                    } else {
-                        return topEq.negate();
-                    }
-                } else {
+                if (botEq.isPlusMinus()){
+                    return topEq.plusMinus();
+                }else if (botEq.isNeg()) {
+                    return topEq.negate();
+                } else  {
                     return topEq;
                 }
             }

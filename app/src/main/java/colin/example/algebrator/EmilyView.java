@@ -92,14 +92,13 @@ public class EmilyView extends SuperView {
         secondRow.add(new Button(new String(divisionUnicode), new DivAction(this)));
 
 
-
         ArrayList<Button> thridRow = new ArrayList<Button>();
         thridRow.add(new Button("1", new NumberAction(this, "1")));
         thridRow.add(new Button("2", new NumberAction(this, "2")));
         thridRow.add(new Button("3", new NumberAction(this, "3")));
         thridRow.add(new Button("0", new NumberAction(this, "0")));
         thridRow.add(new Button(".", new DecimalAction(this, ".")));
-        thridRow.add(new Button("^", new PowerAction(this)));
+        thridRow.add(new Button("cⁿ", new PowerAction(this)));
         char[] sqrtUnicode = {'\u221A'};
         thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction(this)));
         char[] leftUnicode = {'\u2190'};

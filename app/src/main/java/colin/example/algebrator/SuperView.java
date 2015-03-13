@@ -844,8 +844,6 @@ public abstract class SuperView extends View implements
         }
     }
 
-
-
     protected boolean inButtons(MotionEvent event) {
         for (Button b : buttons) {
             if (b.couldClick(event)) {

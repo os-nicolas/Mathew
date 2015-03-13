@@ -35,7 +35,11 @@ public class Solve extends Action {
                 at = at.get(index);
                 myAt = myAt.get(index);
             }
-            myAt.remove();
+            if (myAt.parent != null && myAt.parent.size() != 1) {
+                myAt.remove();
+            }else{
+                return;
+            }
         }
 
         // we need to follow the path to selected
