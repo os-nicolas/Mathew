@@ -16,6 +16,7 @@ import colin.algebrator.eq.DragEquation;
 import colin.algebrator.eq.DragLocations;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MonaryEquation;
+import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.VarEquation;
 
@@ -471,9 +472,26 @@ public class ColinView extends SuperView {
     }
 
     public boolean tryWarn(Equation equation) {
-        Equation warnEq =equation.CouldBeZero();
-        if (warnEq != null){
-            changedEq = warnEq;
+        if (changedEq == null) {
+            Equation warnEq = equation.CouldBeZero();
+            if (warnEq != null) {
+                changedEq = warnEq;
+            }
+        }else{
+            Equation warnEq = equation.CouldBeZero();
+            if (warnEq != null) {
+                if (!(changedEq instanceof MultiEquation)){
+                    Equation old = changedEq;
+                    changedEq = new MultiEquation(this);
+                    changedEq.add(old);
+
+                }
+                if (warnEq instanceof MultiEquation) {
+                    changedEq.addAll(warnEq);
+                }else{
+                    changedEq.add(warnEq);
+                }
+            }
         }
 
         return false;

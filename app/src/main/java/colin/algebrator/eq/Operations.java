@@ -709,6 +709,7 @@ public class Operations {
         SuperView owner = Algebrator.getAlgebrator().solveView;
         // if the top is 0 and the bottom is not
         if ((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0))) {
+            ((ColinView)owner).tryWarn(botEq);
             return new NumConstEquation(0.0, owner);
         } else
             // they are both meaningful
