@@ -22,7 +22,10 @@ public class AddTut extends TutMessage {
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){
             // is one of the roots an add?
-            if ((view.stupid.get(0) instanceof AddEquation || view.stupid.get(1) instanceof AddEquation) && !view.active() && view.message.isOpen()) {
+            if ((view.stupid.get(0) instanceof AddEquation || view.stupid.get(1) instanceof AddEquation)
+                    && !view.active()
+                    && !((ColinView)view).isSolved()
+                    && view.message.isOpen()) {
                 return true;
             }
         }

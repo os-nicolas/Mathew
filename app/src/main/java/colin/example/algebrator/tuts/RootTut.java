@@ -25,6 +25,7 @@ public class RootTut  extends PowerTut {
                 && power!= null
                 && ((PowerEquation)power).isSqrt() == true
                 && !view.active()
+                && !((ColinView)view).isSolved()
                 && view.message.isOpen()){
             return true;
         }

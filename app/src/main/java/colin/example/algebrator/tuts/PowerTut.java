@@ -24,6 +24,7 @@ public class PowerTut extends TutMessage {
                 && power!= null
                 && ((PowerEquation)power).isSqrt() == false
                 && !view.active()
+                && !((ColinView)view).isSolved()
                 && view.message.isOpen()){
             return true;
         }

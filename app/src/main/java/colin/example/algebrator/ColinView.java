@@ -10,21 +10,25 @@ import android.view.View;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 
 import colin.algebrator.eq.AddEquation;
+import colin.algebrator.eq.DivEquation;
 import colin.algebrator.eq.DragEquation;
 import colin.algebrator.eq.DragLocations;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MonaryEquation;
 import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.NumConstEquation;
+import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.VarEquation;
+import colin.example.algebrator.tuts.TutMessage;
 
 public class ColinView extends SuperView {
     public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
-
+    public boolean alreadySolved= false;
 
     public ColinView(Context context) {
         super(context);
@@ -44,6 +48,7 @@ public class ColinView extends SuperView {
     protected void init(Context context) {
         canDrag = true;
         buttonsPercent = 1f;
+        alreadySolved = false;
     }
 
     @Override
@@ -124,6 +129,10 @@ public class ColinView extends SuperView {
             Log.i("add to History", stupid.toString());
             changed = false;
 
+            if (isSolved()){//&& !alreadySolved
+                showSolvedMessage();
+                alreadySolved = true;
+            }
         }
 
         return result;
@@ -495,5 +504,33 @@ public class ColinView extends SuperView {
         }
 
         return false;
+    }
+
+    public boolean isSolved() {
+        if (stupid.get(0) instanceof VarEquation){
+            return Operations.sortaNumber(stupid.get(1)) || isNumDiv(stupid.get(1));
+        }else if(stupid.get(1) instanceof VarEquation){
+            return Operations.sortaNumber(stupid.get(0)) || isNumDiv(stupid.get(0));
+        }
+        return false;
+    }
+
+    private boolean isNumDiv(Equation eq){
+        return (eq instanceof DivEquation && Operations.sortaNumber(eq.get(0)) && Operations.sortaNumber(eq.get(1)));
+    }
+
+    public void showSolvedMessage(){
+        Log.i("show solved message","trying");
+        Random r = new Random();
+        int i = Math.abs(r.nextInt())%4;
+        if (i==0) {
+            this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_0));
+        }else if (i==1){
+            this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_1));
+        }else if (i==2){
+            this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_2));
+        }else if (i==3){
+            this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_3));
+        }
     }
 }

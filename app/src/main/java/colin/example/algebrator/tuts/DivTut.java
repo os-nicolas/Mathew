@@ -20,7 +20,10 @@ public class DivTut extends WriteMessage {
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){
             // is one of the roots an add?
-            if ((view.stupid.get(0) instanceof DivEquation || view.stupid.get(1) instanceof DivEquation) && !view.active() && view.message.isOpen()) {
+            if ((view.stupid.get(0) instanceof DivEquation || view.stupid.get(1) instanceof DivEquation)
+                    && !view.active()
+                    && !((ColinView)view).isSolved()
+                    && view.message.isOpen()) {
                 return true;
             }
         }

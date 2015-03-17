@@ -25,6 +25,7 @@ public class RootDragTut  extends PowerTut {
                 && ((PowerEquation)power).isSqrt() == true
                 && power.parent instanceof EqualsEquation
                 && !view.active()
+                && !((ColinView)view).isSolved()
                 && view.message.isOpen()){
             return true;
         }

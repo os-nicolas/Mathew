@@ -25,9 +25,9 @@ public abstract class TutMessage {
             new RootDragTut()
     };
     public static final String PREFS_NAME = "tuts";
-    public final long shortTime = 2200l;
-    public final long aveTime = 2*shortTime;
-    public final long longTime = 3*shortTime;
+    public static final long shortTime = 2200l;
+    public static final long aveTime = 2*shortTime;
+    public static final long longTime = 3*shortTime;
 
     protected abstract String getSp_key();
 
@@ -51,20 +51,21 @@ public abstract class TutMessage {
 
         if (shouldShow(view)) {
             show(view);
-        }else if (privateShouldShow(view)){
-            alwaysShow(view);
         }
+//        else if (privateShouldShow(view)){
+//            alwaysShow(view);
+//        }
     }
 
-    protected SuperView lastShownFor;
-    protected boolean alreadyShown(SuperView view) {
-        return view.equals(lastShownFor);
-    }
+//    protected SuperView lastShownFor;
+//    protected boolean alreadyShown(SuperView view) {
+//        return view.equals(lastShownFor);
+//    }
 
-    private void alwaysShow(SuperView view){
-        privateAlwaysShow(view);
-        lastShownFor = view;
-    }
+//    private void alwaysShow(SuperView view){
+//        privateAlwaysShow(view);
+//        lastShownFor = view;
+//    }
 
     protected void privateAlwaysShow (SuperView view){
 
@@ -83,7 +84,7 @@ public abstract class TutMessage {
     protected abstract boolean privateShouldShow(SuperView view);
 
     private void show(SuperView view) {
-        alwaysShow(view);
+//        alwaysShow(view);
         privateShow(view);
 
         SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
