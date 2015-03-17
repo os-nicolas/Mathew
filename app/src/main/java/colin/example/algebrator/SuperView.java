@@ -55,6 +55,10 @@ public abstract class SuperView extends View implements
     protected float buttonsPercent;
     public ArrayList<Animation> animation = new ArrayList<Animation>();
     public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
+    public boolean trackFinger = false;
+    public boolean trackFingerUp = true;
+    public float trackFingerX = -1;
+    public float trackFingerY = -1;
 
     public boolean disabled = false;
     int stupidAlpha = 0xff;
@@ -488,6 +492,15 @@ public abstract class SuperView extends View implements
         TutMessage.tryShowAll(this);
         message.draw(canvas);
 
+        if (trackFinger && !trackFingerUp){
+            Paint p = new Paint();
+            //0xffd5080b
+            p.setARGB(0xff/2,(0xd5-(0xff/2))*2,0x04,0x06);
+            //p.setARGB(0xff/2,(0xd5-(0xff/2))*2,(0x08-(0xff/2))*2,(0x0b-(0xff/2))*2);
+            //p.setARGB(255/2,(221-(255/2))*2,(215-(255/2))*2,(215-(255/2))*2);
+            canvas.drawCircle(trackFingerX,trackFingerY,20*Algebrator.getAlgebrator().getDpi(),p);
+        }
+
         if (disabled) {
             disabledAlpha = (int) ((5f * disabledAlpha + 0x80) / 6f);
             Rect r = new Rect(0, 0, width, height);
@@ -668,14 +681,20 @@ public abstract class SuperView extends View implements
     public boolean onTouch(View view, MotionEvent event) {
         lastTouch = System.currentTimeMillis();
         if (!disabled) {
+
+
             if (event.getPointerCount() == 1) {
                 if (!hasUpdated){
                     stupid.updateLocation();
                 }
                 hasUpdated = false;
 
+                trackFingerX = event.getX();
+                trackFingerY = event.getY();
+
                 // we need to know if they started in the box
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    trackFingerUp =false;
                     lastVelocityUpdate = System.currentTimeMillis();
                     // figure out the mode;
                     if (inButtons(event)) {
@@ -731,7 +750,7 @@ public abstract class SuperView extends View implements
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-
+                    trackFingerUp =true;
                     // did we click anything?
                     boolean clicked = false;
                     long now = System.currentTimeMillis();

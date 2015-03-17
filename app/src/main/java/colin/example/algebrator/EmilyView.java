@@ -68,8 +68,8 @@ public class EmilyView extends SuperView {
         firstRow.add(new Button("7", new NumberAction(this, "7")));
         firstRow.add(new Button("8", new NumberAction(this, "8")));
         firstRow.add(new Button("9", new NumberAction(this, "9")));
-        firstRow.add(new Button("A", new VarAction(this, "A")));
-        firstRow.add(new Button("B", new VarAction(this, "B")));
+        firstRow.add(new Button("a", new VarAction(this, "a")));
+        firstRow.add(new Button("b", new VarAction(this, "b")));
         firstRow.add(new Button("+", new PlusAction(this)));
         firstRow.add(new Button("-", new MinusAction(this)));
         firstRow.add(new Button("=", new EqualsAction(this)));
@@ -194,9 +194,9 @@ public class EmilyView extends SuperView {
         // TODO 100 to var scale by dpi
         //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
         //if (Math.abs(event.getY() - lcp.y) < minDis) {
-//            if (lcp instanceof PlaceholderEquation) {
-//                lcp.setSelected(true);
-//            } else {
+            if (lcp instanceof PlaceholderEquation) {
+                lcp.setSelected(true);
+            } else {
                 // the the lcp is the left or right end of something we might want to select it's parent
                 Equation current = lcp;
 
@@ -267,7 +267,7 @@ public class EmilyView extends SuperView {
                     toSelect.setSelected(true);
                 }
 
-//            }
+            }
         //}
         if (selected != null) {
             if (event.getAction() == MotionEvent.ACTION_UP) {
