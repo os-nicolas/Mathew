@@ -60,9 +60,13 @@ public abstract class SuperView extends View implements
     public float trackFingerX = -1;
     public float trackFingerY = -1;
 
+    public double zoom = 1;
+    private double lastZoomDis;
+
     public boolean disabled = false;
     int stupidAlpha = 0xff;
     public boolean hasUpdated;
+    private Point lastCenter;
 
 
     protected float buttonLine() {
@@ -147,22 +151,6 @@ public abstract class SuperView extends View implements
 
     }
 
-//	@Override
-//	public synchronized void run() {
-//		while (running) {
-//			if (surfaceHolder.getSurface().isValid()) {
-//				Canvas canvas = surfaceHolder.lockCanvas();
-//				myDraw(canvas);
-//				surfaceHolder.unlockCanvasAndPost(canvas);
-//				try {
-//					wait(100);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//	}
-
     private String lastLog = "";
 
     private long lastVelocityUpdate = 0l;
@@ -178,7 +166,32 @@ public abstract class SuperView extends View implements
         // canvas.drawColor(0xFFFFFFFF, Mode.CLEAR);
         Algebrator.getAlgebrator().at++;
 
+
+
         canvas.drawColor(0xFFFFFFFF, Mode.ADD);
+
+        Paint p = new Paint();
+        p.setColor(Color.GREEN);
+        Point tcp = getStupidCenter();
+
+        Rect r = new Rect((int)(tcp.x+(200*zoom)),
+                (int)(tcp.y+(200*zoom)),
+                (int)(tcp.x+(400*zoom)),
+                (int)(tcp.y+(400*zoom)));
+        canvas.drawRect(r,p);
+
+        r = new Rect((int)(tcp.x+(-400*zoom)),
+                (int)(tcp.y+(-500*zoom)),
+                (int)(tcp.x+(100*zoom)),
+                (int)(tcp.y+(-400*zoom)));
+        canvas.drawRect(r,p);
+
+        r = new Rect((int)(tcp.x+(-300*zoom)),
+                (int)(tcp.y+(200*zoom)),
+                (int)(tcp.x+(-100*zoom)),
+                (int)(tcp.y+(400*zoom)));
+        canvas.drawRect(r,p);
+
 
 //        for (DragLocation dl:dragLocations){
 //            float dlx = dl.x + stupid.lastPoint.get(0).x;
@@ -204,7 +217,8 @@ public abstract class SuperView extends View implements
 //        canvas.drawBitmap(bmp,10,10,testP);
 
         if (this instanceof EmilyView) {
-            stupid.draw(canvas, width / 2 + offsetX, height / 3 + offsetY);
+            Point stupidCenter = getStupidCenter();
+            stupid.draw(canvas, stupidCenter.x, stupidCenter.y);
         } else {
             //TODO - clean up stupid should probably own it's own alpha
             int targetAlpha;
@@ -217,7 +231,8 @@ public abstract class SuperView extends View implements
             int rate = Algebrator.getAlgebrator().getRate();
             stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
             stupid.setAlpha(stupidAlpha);
-            ((EqualsEquation) stupid).drawCentered(canvas, width / 2 + offsetX, height / 2 + offsetY);
+            Point stupidCenter = getStupidCenter();
+            ((EqualsEquation) stupid).drawCentered(canvas, stupidCenter.x, stupidCenter.y);
         }
 
         // keep selected on the screen
@@ -514,163 +529,6 @@ public abstract class SuperView extends View implements
     }
 
 
-//    public boolean oldOnTouch(View view, MotionEvent event) {
-//        if (!disabled) {
-//            if (event.getPointerCount() == 1) {
-//                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//                    lastVelocityUpdate = System.currentTimeMillis();
-//                    // figure out the mode;
-//                    if (inButtons(event)) {
-//                        myMode = TouchMode.BUTTON;
-//                    } else if (stupid.nearAny(event.getX(), event.getY())) {
-//                        myMode = TouchMode.SELECT;
-//                        willSelect = stupid.closetOn(event.getX(),
-//                                event.getY());
-//                    } else if (message.inBar(event)) {
-//                        myMode = TouchMode.MESSAGE;
-//                    }else{
-//                        myMode = TouchMode.MOVE;
-//                        if (selected != null && canDrag) {
-//                            removeSelected();
-//                        }
-//                    }
-//                    startTime = System.currentTimeMillis();
-//                    lastX = event.getX();
-//                    lastY = event.getY();
-//                    // stop stupid sliding
-//                    slidding = false;
-//                    vx = 0;
-//                    vy = 0;
-//                }
-//                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//                    // check if they selected anything
-//                    if (myMode == TouchMode.SELECT) {
-//                        // if they get too far from were they started we are going to start dragging
-//                        //TODO scale by dpi
-//                        float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
-//                        float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
-//                        if (maxMovement < distance) {
-//                            boolean pass = true;
-//                            if (selected != null) {
-//                                for (Equation e : willSelect) {
-//                                    if (!selected.deepContains(e)) {
-//                                        pass = false;
-//                                        break;
-//                                    }
-//                                }
-//                            } else {
-//                                resolveSelected(event);
-//                            }
-//
-//                            if (pass) {
-//                                startDragging();
-//                            } else {
-//                                myMode = TouchMode.MOVE;
-//                            }
-//                        }
-//                    }
-//
-//                    // if we are dragging something move it
-//                    if (myMode == TouchMode.DRAG) {
-//                        dragging.eq.x = event.getX();
-//                        dragging.eq.y = event.getY();
-//
-//                        DragLocation closest = dragLocations.closest(event);
-//
-//                        if (closest != null) {
-//                            stupid = closest.myStupid;
-//                        }
-//                    }
-//
-//                    // if they are moving the equation
-//                    if (myMode == TouchMode.MOVE) {
-//                        updateVelocity(event);
-//                        if (selected != null && selected instanceof PlaceholderEquation){
-//                            ((PlaceholderEquation)selected).goDark();
-//                        }
-//                    }
-//                }
-//
-//                if (event.getAction() == MotionEvent.ACTION_UP) {
-//
-//                    // did we click anything?
-//                    boolean clicked = false;
-//                    long now = System.currentTimeMillis();
-//                    Point tapPoint = new Point();
-//                    tapPoint.x = (int) event.getX();
-//                    tapPoint.y = (int) event.getY();
-//                    long tapSpacing = now - lastTapTime;
-//                    if (tapSpacing < Algebrator.getAlgebrator().doubleTapSpacing && dis(tapPoint, lastTapPoint) < Algebrator.getAlgebrator().getDoubleTapDistance() && myMode == TouchMode.SELECT) {
-//                        Log.i("", "doubleTap! dis: " + dis(tapPoint, lastTapPoint) + " time: " + tapSpacing);
-//                        if (canDrag) {
-//                            stupid.tryOperator(event.getX(),
-//                                    event.getY());
-//                            clicked = true;
-//                            if (this instanceof ColinView) {
-//                                if (((ColinView) this).changed == false) {
-//                                    clicked = false;
-//                                    // TODO
-//                                    // TODO
-//                                    // this is def a band-aid
-//                                    // the problem is that some operation don't change the eq
-//                                    // in these case we still select - altho maybe we don't need to
-//                                    // however sometimes selected is in the old version of stupid
-//                                    // this casues problem when we try to select it
-//                                    // the real solution is to pass selected on in a good way
-//                                    // this probably mean editing copy and rewriting it like constructors
-//                                    // TODO
-//                                    // TODO
-//                                    if (selected != null) {
-//                                        selected.setSelected(false);
-//                                    }
-//                                } else {
-//                                    if (selected != null) {
-//                                        selected.setSelected(false);
-//                                    }
-//                                }
-//                            }
-//                        }
-//
-//                        // set the lastTapTime to zero so they can not triple tap and get two double taps
-//                        lastTapTime = 0;
-//                    } else {
-//                        lastTapTime = now;
-//                    }
-//                    lastTapPoint = tapPoint;
-//                    if (!clicked) {
-//                        // update locationand will select because
-//                        stupid.updateLocation();
-//                        willSelect = stupid.closetOn(event.getX(),
-//                                event.getY());
-//                        endOnePointer(event);
-//                    }
-//
-//                    // if we were dragging everything around
-//                    if (myMode == TouchMode.MOVE) {
-//                        updateVelocity(event);
-//                        slidding = true;
-//                    }
-//
-//                    lastLongTouch = null;
-//
-//                }
-//
-//            } else if (event.getPointerCount() == 2) {
-//                if (myMode != TouchMode.ZOOM) {
-//                    endOnePointer(event);
-//                    myMode = TouchMode.ZOOM;
-//                }
-//            } else{
-//                myMode = TouchMode.DEAD;
-//            }
-//        } else {
-//            myMode = TouchMode.DEAD;
-//        }
-//
-//        Log.i("", stupid.toString());
-//        return true;
-//    }
-
     long lastTouch = System.currentTimeMillis();
     final long inactive = 2000;
     public boolean active(){
@@ -814,6 +672,20 @@ public abstract class SuperView extends View implements
                 if (myMode != TouchMode.ZOOM) {
                     endOnePointer(event);
                     myMode = TouchMode.ZOOM;
+                    lastZoomDis = getPointerDistance(event);
+                    lastCenter = getCenter(event);
+                }else{
+                    double currentZoomDis = getPointerDistance(event);
+                    Point touchCenter = getCenter(event);
+                    Point screenCenter = getCenter();
+                    double oldZoom = zoom;
+                    zoom = zoom*(currentZoomDis/lastZoomDis);
+                    lastZoomDis = currentZoomDis;
+                    float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
+                    float oldDisy =lastCenter.y - (screenCenter.y +offsetY);
+                    offsetX =(float) -((zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
+                    offsetY =(float) -((zoom/oldZoom)*(oldDisy)-touchCenter.y + screenCenter.y);
+                    lastCenter =touchCenter;
                 }
             } else{
                 myMode = TouchMode.DEAD;
@@ -824,6 +696,43 @@ public abstract class SuperView extends View implements
 
     Log.i("", stupid.toString());
         return true;
+    }
+
+    private Point getCenter() {
+        Point result = new Point();
+        result.x = (int) (width / 2 );
+        result.y = (int) (height / 3 );
+        return result;
+    }
+
+    private Point getStupidCenter() {
+        Point result = getCenter();
+        result.x = (int) (result.x + offsetX);
+        result.y = (int) (result.y + offsetY);
+        return result;
+    }
+
+    private Point getCenter(MotionEvent event) {
+        Point result = new Point();
+        if (event.getPointerCount() != 2){
+            Log.e("SuperView.getPointerDistance","pointer count should be 2");
+        }else {
+            result.x = (int)(event.getX(0) + event.getX(1))/2;
+            result.y = (int)(event.getY(0) + event.getY(1))/2;
+        }
+        return result;
+    }
+
+    private double getPointerDistance(MotionEvent event) {
+        if (event.getPointerCount() != 2){
+            Log.e("SuperView.getPointerDistance","pointer count should be 2");
+            return -1;
+        }else {
+            float dx = event.getX(0) - event.getX(1);
+            float dy = event.getY(0) - event.getY(1);
+            return Math.sqrt(dx*dx + dy*dy);
+        }
+
     }
 
     protected abstract void selectMoved(MotionEvent event);

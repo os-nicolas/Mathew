@@ -62,10 +62,12 @@ public class ColinView extends SuperView {
     }
 
     // TODO scale with dpi
-    float buffer = 75 * Algebrator.getAlgebrator().getDpi();
+    float baseBuffer = 75 * Algebrator.getAlgebrator().getDpi();
     float fade = 0.4f;
 
     private void drawHistory(Canvas canvas) {
+        float buffer = (float)(baseBuffer*zoom);
+
         float atHeight = -stupid.measureHeightUpper() - buffer;
         float currentPercent = fade;
         for (EquationButton eb : history) {

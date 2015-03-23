@@ -26,8 +26,6 @@ public class EqualsEquation extends Equation {
 
     private void init() {
         display = "=";
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     public int side(Equation equation)  {
@@ -59,7 +57,7 @@ public class EqualsEquation extends Equation {
     // this is badly named this is draw centered on the equals
     public void drawCentered(Canvas canvas, float x, float y) {
         // we need to figure out where the equals is
-        float diffX = +this.measureWidth()/2 - get(0).measureWidth() - (myWidth + myWidthAdd())/2;
+        float diffX = (float) (+this.measureWidth()/2 - get(0).measureWidth() - (getMyWidth() + myWidthAdd())/2);
         super.draw(canvas, x+diffX, y);
     }
 

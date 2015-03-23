@@ -24,7 +24,9 @@ import colin.example.algebrator.SuperView;
 
 abstract public class Equation extends ArrayList<Equation> implements Physical {
 
-    protected static final float PARN_HEIGHT_ADDITION = 6 * Algebrator.getAlgebrator().getDpi();
+    protected float PARN_HEIGHT_ADDITION(){
+        return (float) (6 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
+    }
 
     private static int idBacker = 0;
     public Equation parent;
@@ -34,8 +36,17 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public ArrayList<MyPoint> lastPoint = new ArrayList<MyPoint>();
     protected String display = "";
     protected boolean selected = false;
-    protected int myWidth;
-    protected int myHeight;
+    private int myWidth;
+    protected int getMyWidth(){
+        return (int) (myWidth*owner.zoom);
+    }
+    protected void setMyWidth(int newWidth) {
+        myWidth=newWidth;
+    }
+    private int myHeight;
+    protected int getMyHeight(){
+        return (int) (myHeight*owner.zoom);
+    }
     public SuperView owner;
     private int id;
     private int buffer = 10;
@@ -83,6 +94,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private void init(SuperView owner2) {
         owner = owner2;
         id = idBacker++;
+        myWidth = Algebrator.getAlgebrator().getDefaultSize();
+        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     // we could template this in C++ can we in java?
@@ -223,7 +236,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         float totalWidth = 0;
         for (int i = 0; i < size() - 1; i++) {
             if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                totalWidth += myWidth + myWidthAdd();
+                totalWidth += getMyWidth() + myWidthAdd();
             }
         }
 
@@ -258,7 +271,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     private void drawLastPoints(Canvas canvas) {
         for (MyPoint point : lastPoint) {
-            point.draw(canvas);
+            point.draw(canvas,this);
         }
     }
 
@@ -289,8 +302,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
             if (i != size() - 1) {
                 if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                    float pointWidth = myWidth + myWidthAdd();
-                    MyPoint point = new MyPoint(pointWidth, myHeight);
+                    float pointWidth = getMyWidth() + myWidthAdd();
+                    MyPoint point = new MyPoint(pointWidth, getMyHeight());
 
                     point.x = (int) (x - (totalWidth / 2) + currentX + (pointWidth / 2));
                     point.y = (int) (y + (h / 2));
@@ -301,7 +314,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                     lastPoint.add(point);
                     currentX += pointWidth;
                 } else {
-                    MyPoint point = new MyPoint(myWidth, myHeight);
+                    MyPoint point = new MyPoint(getMyWidth(), getMyHeight());
                     point.x = (int) (x - (totalWidth / 2) + currentX);
                     point.y = (int) (y);
                     lastPoint.add(point);
@@ -324,7 +337,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected float privateMeasureHeightLower() {
 
-        float totalHeight = myHeight / 2;
+        float totalHeight = (float) (getMyHeight() / 2);
 
         for (int i = 0; i < size(); i++) {
             if (get(i).measureHeightLower() > totalHeight) {
@@ -332,7 +345,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         }
         if (parenthesis()) {
-            totalHeight += PARN_HEIGHT_ADDITION / 2f;
+            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
         }
         return totalHeight;
     }
@@ -350,7 +363,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     protected float privateMeasureHeightUpper() {
-        float totalHeight = myHeight / 2f;
+        float totalHeight = (float)(getMyHeight()) / 2f;
 
         for (int i = 0; i < size(); i++) {
             if (get(i).measureHeightUpper() > totalHeight) {
@@ -358,7 +371,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         }
         if (parenthesis()) {
-            totalHeight += PARN_HEIGHT_ADDITION / 2f;
+            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
         }
         return totalHeight;
     }
@@ -400,7 +413,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public HashSet<Equation> on(float x, float y) {
 
         for (int i = 0; i < lastPoint.size(); i++) {
-            if (lastPoint.get(i).on(x, y)) {
+            if (lastPoint.get(i).on(x, y,this)) {
                 return getEquationsFormLastPoint(i);
             }
         }
@@ -584,7 +597,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     private MyPoint getLastPoint(float x, float y) {
         for (int i = 0; i < lastPoint.size(); i++) {
-            if (lastPoint.get(i).on(x, y)) {
+            if (lastPoint.get(i).on(x, y,this)) {
                 return lastPoint.get(i);
             }
         }
@@ -618,7 +631,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 targetTextSize = MIN_TEXT_SIZE;
             }
         }
-        mPaint.setTextSize(targetTextSize);
+        mPaint.setTextSize((float) (targetTextSize*owner.zoom));
         return mPaint;
     }
 
@@ -654,7 +667,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected void drawBkgBox(Canvas canvas, float x, float y) {
         updateBkgColors();
-        float bkgBuffer = Algebrator.getAlgebrator().getbkgBuffer();
+        float bkgBuffer = Algebrator.getAlgebrator().getbkgBuffer(this);
         if (canvas != null && bkgAlpha == getMaxBkgAlpha()) {
             Paint p = new Paint();
             p.setColor(bkgColor);
@@ -662,7 +675,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             RectF r = new RectF((int) (x - measureWidth() / 2) - bkgBuffer,
                     (int) (y - measureHeightUpper()) - bkgBuffer,
                     (int) (x + measureWidth() / 2) + bkgBuffer, (int) (y + measureHeightLower() + bkgBuffer));
-            canvas.drawRoundRect(r, Algebrator.getAlgebrator().getCornor(), Algebrator.getAlgebrator().getCornor(), p);
+            canvas.drawRoundRect(r, Algebrator.getAlgebrator().getCornor(this), Algebrator.getAlgebrator().getCornor(this), p);
         }
     }
 
@@ -709,7 +722,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected static void drawParentheses(boolean left, Canvas canvas, float x, float y, Paint ptemp, float uh, float lh, Equation myEq) {
         float edgeX = Algebrator.getAlgebrator().getPranEdgeX(myEq);
         float edgeY = Algebrator.getAlgebrator().getPranEdgeY(myEq);
-        float in = Algebrator.getAlgebrator().getPranIn();
+        float in = Algebrator.getAlgebrator().getPranIn(myEq);
 
         if (left) {
             //left side
@@ -728,7 +741,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth());
+            ptemp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(this));
             float w = measureWidth();
             float hu = measureHeightUpper();
             float hl = measureHeightLower();
@@ -1466,7 +1479,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     private Clostest closetOn(float x, float y, Clostest clostest) {
         for (int i = 0; i < lastPoint.size(); i++) {
-            if (lastPoint.get(i).on(x, y)) {
+            if (lastPoint.get(i).on(x, y,this)) {
                 float myDis = (float) Math.sqrt(Math.pow(x - lastPoint.get(i).x, 2) + Math.pow(y - lastPoint.get(i).y, 2));
                 if (myDis < clostest.dis) {
                     clostest = new Clostest(myDis, getEquationsFormLastPointForSelect(i));
@@ -1516,9 +1529,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
         if (owner instanceof EmilyView) {
-            return 48 * Algebrator.getAlgebrator().getDpi();
+            return (float) (48 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
         } else {
-            return 28 * Algebrator.getAlgebrator().getDpi();
+            return (float) (28 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
         }
     }
 

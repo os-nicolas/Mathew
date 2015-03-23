@@ -70,15 +70,11 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     private void init() {
         display = "/";
-
-
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     @Override
     protected float privateMeasureWidth() {
-		float maxWidth = myWidth;
+		float maxWidth = getMyWidth();
 
 		for (int i = 0; i < size(); i++) {
 			if (get(i).measureWidth() > maxWidth) {
@@ -89,7 +85,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			maxWidth += getParnWidthAddition();
 		}
 
-		return maxWidth + Algebrator.getAlgebrator().getDivWidthAdd();
+		return maxWidth + Algebrator.getAlgebrator().getDivWidthAdd(this);
 	}
 
 	@Override
@@ -101,38 +97,38 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		Paint temp = getPaint();
 		if (parenthesis()) {
                 drawParentheses(canvas, x, y, temp);
-			currentY += PARN_HEIGHT_ADDITION / 2;
+			currentY += PARN_HEIGHT_ADDITION() / 2;
 		}
 
 		for (int i = 0; i < size(); i++) {
 			get(i).draw(canvas, x, currentY + get(i).measureHeightUpper() );
 			currentY += get(i).measureHeight();
 			if (i != size() - 1) {
-				MyPoint point = new MyPoint(measureWidth() - Algebrator.getAlgebrator().getDivWidthAdd(),myHeight);
+				MyPoint point = new MyPoint(measureWidth() - Algebrator.getAlgebrator().getDivWidthAdd(this),getMyHeight());
 				point.x = (int) x;
-				point.y = (int) (currentY + (myHeight) / 2);
+				point.y = (int) (currentY + (getMyHeight()) / 2);
                 // TODO scale by dpi
-				temp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth());
-				int halfwidth = (int) ((measureWidth() - (2 * Algebrator.getAlgebrator().getDivWidthAdd())) / 2);
+				temp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(this));
+				int halfwidth = (int) ((measureWidth() - (2 * Algebrator.getAlgebrator().getDivWidthAdd(this))) / 2);
                 if (canvas !=null ) {
                     canvas.drawLine(point.x - halfwidth, point.y, point.x
                             + halfwidth, point.y, temp);
                 }
 				lastPoint.add(point);
-				currentY += myHeight;
+				currentY += getMyHeight();
 			}
 		}
 	}
 
 	@Override
 	public float measureHeight() {
-		float totalHeight = myHeight;
+		float totalHeight = getMyHeight();
 
 		for (int i = 0; i < size(); i++) {
 			totalHeight += get(i).measureHeight();
 		}
 		if (parenthesis()) {
-			totalHeight += PARN_HEIGHT_ADDITION;
+			totalHeight += PARN_HEIGHT_ADDITION();
 		}
 		return totalHeight;
 	}

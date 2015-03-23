@@ -45,19 +45,19 @@ public class WritingSqrtEquation extends WritingPraEquation {
             }
         }
 
-        PowerEquation.sqrtSignDraw(canvas, x - Algebrator.getAlgebrator().getSqrtWidthAdd()/2 ,  y, temp ,measureHeightLower(), measureHeightUpper(),end);
+        PowerEquation.sqrtSignDraw(canvas, x - Algebrator.getAlgebrator().getSqrtWidthAdd(this)/2 ,  y, temp ,measureHeightLower(), measureHeightUpper(),end,this);
 
-        super.privateDraw(canvas,x+ Algebrator.getAlgebrator().getSqrtWidthAdd()/2 ,y);
+        super.privateDraw(canvas,x+ Algebrator.getAlgebrator().getSqrtWidthAdd(this)/2 ,y);
     }
 
     @Override
     protected float privateMeasureHeightUpper() {
-        return super.privateMeasureHeightUpper() + Algebrator.getAlgebrator().getSqrtHeightAdd() ;
+        return super.privateMeasureHeightUpper() + Algebrator.getAlgebrator().getSqrtHeightAdd(this) ;
     }
 
     @Override
     protected float privateMeasureWidth(){
-        return super.privateMeasureWidth() + Algebrator.getAlgebrator().getSqrtWidthAdd();
+        return super.privateMeasureWidth() + Algebrator.getAlgebrator().getSqrtWidthAdd(this);
     }
 
 

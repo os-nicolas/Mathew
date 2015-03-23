@@ -32,8 +32,6 @@ public abstract class LeafEquation extends Equation {
 	}
 
     private void init() {
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     @Override
@@ -80,7 +78,7 @@ public abstract class LeafEquation extends Equation {
     @Override
     protected float privateMeasureWidth() {
 		// not tested
-		float totalWidth= myWidth + getPaint().measureText(getDisplay(-1)) -getPaint().measureText("A");//Math.max(myWidth,textPaint.measureText(display)); //-textPaint.measureText(display.subSequence(0, 1)+"")
+		float totalWidth= (float) (getMyWidth()) + getPaint().measureText(getDisplay(-1)) -getPaint().measureText("A");//Math.max(myWidth,textPaint.measureText(display)); //-textPaint.measureText(display.subSequence(0, 1)+"")
 		
 		if (parenthesis()){
 			totalWidth += getParnWidthAddition();
@@ -94,10 +92,10 @@ public abstract class LeafEquation extends Equation {
 //		textPaint.getTextBounds(display, 0, display.length(),out);
 //		float totalHeight= out.height();
 		
-		float totalHeight= myHeight;
+		float totalHeight= (float) (getMyHeight());
 		
 		if (parenthesis()){
-			totalHeight += PARN_HEIGHT_ADDITION;
+			totalHeight += PARN_HEIGHT_ADDITION();
 		}
 		return totalHeight;
 	}
@@ -126,6 +124,5 @@ public abstract class LeafEquation extends Equation {
 	}
 
 	public void tryOperator(ArrayList< Equation> yos){}
-
 
 }
