@@ -114,8 +114,10 @@ public class ColinView extends SuperView {
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        for (int i = 0; i < history.size(); i++) {
-            history.get(i).click(event);
+        if (!message.inBar(event)) {
+            for (int i = 0; i < history.size(); i++) {
+                history.get(i).click(event);
+            }
         }
 
         boolean result = super.onTouch(view, event);
@@ -432,7 +434,6 @@ public class ColinView extends SuperView {
     // at least the horizonal ones
     // these all should also use math.min of the two condition to return
 
-    float yBuffer = (height*(3f/4f));//200*Algebrator.getAlgebrator().getDpi();
 
     @Override
     protected float outTop() {

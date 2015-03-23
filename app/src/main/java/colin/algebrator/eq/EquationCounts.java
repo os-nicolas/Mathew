@@ -181,11 +181,21 @@ public class EquationCounts {
         result.neg = (result.neg != equationCounts.neg );
 
         for (Equation k: equationCounts.equations.keySet()){
-            float numleft = result.equations.get(k) - equationCounts.equations.get(k);
+            float sub = equationCounts.equations.get(k);
+            float subFrom = 0;
+            Equation myKey= null;
+            for ( Equation resultK: result.equations.keySet()){
+                if ( k.same(resultK)){
+                    subFrom =result.equations.get(resultK);
+                    myKey = resultK;
+                    break;
+                }
+            }
+            float numleft = subFrom - sub;
             if (numleft == 0){
-                result.equations.remove(k);
+                result.equations.remove(myKey);
             }else{
-                result.equations.put(k,numleft);
+                result.equations.put(myKey,numleft);
             }
         }
 

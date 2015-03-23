@@ -170,27 +170,27 @@ public abstract class SuperView extends View implements
 
         canvas.drawColor(0xFFFFFFFF, Mode.ADD);
 
-        Paint p = new Paint();
-        p.setColor(Color.GREEN);
-        Point tcp = getStupidCenter();
-
-        Rect r = new Rect((int)(tcp.x+(200*zoom)),
-                (int)(tcp.y+(200*zoom)),
-                (int)(tcp.x+(400*zoom)),
-                (int)(tcp.y+(400*zoom)));
-        canvas.drawRect(r,p);
-
-        r = new Rect((int)(tcp.x+(-400*zoom)),
-                (int)(tcp.y+(-500*zoom)),
-                (int)(tcp.x+(100*zoom)),
-                (int)(tcp.y+(-400*zoom)));
-        canvas.drawRect(r,p);
-
-        r = new Rect((int)(tcp.x+(-300*zoom)),
-                (int)(tcp.y+(200*zoom)),
-                (int)(tcp.x+(-100*zoom)),
-                (int)(tcp.y+(400*zoom)));
-        canvas.drawRect(r,p);
+//        Paint p = new Paint();
+//        p.setColor(Color.GREEN);
+//        Point tcp = getStupidCenter();
+//
+//        Rect r = new Rect((int)(tcp.x+(200*zoom)),
+//                (int)(tcp.y+(200*zoom)),
+//                (int)(tcp.x+(400*zoom)),
+//                (int)(tcp.y+(400*zoom)));
+//        canvas.drawRect(r,p);
+//
+//        r = new Rect((int)(tcp.x+(-400*zoom)),
+//                (int)(tcp.y+(-500*zoom)),
+//                (int)(tcp.x+(100*zoom)),
+//                (int)(tcp.y+(-400*zoom)));
+//        canvas.drawRect(r,p);
+//
+//        r = new Rect((int)(tcp.x+(-300*zoom)),
+//                (int)(tcp.y+(200*zoom)),
+//                (int)(tcp.x+(-100*zoom)),
+//                (int)(tcp.y+(400*zoom)));
+//        canvas.drawRect(r,p);
 
 
 //        for (DragLocation dl:dragLocations){
@@ -338,7 +338,7 @@ public abstract class SuperView extends View implements
     }
 
     //TODO scale by dpi
-    int buffer = (int) (50 * Algebrator.getAlgebrator().getDpi());
+    int buffer = (int) (50 * Algebrator.getAlgebrator().getDpi() *zoom);
 
 
     protected float outTop() {
@@ -680,6 +680,8 @@ public abstract class SuperView extends View implements
                     Point screenCenter = getCenter();
                     double oldZoom = zoom;
                     zoom = zoom*(currentZoomDis/lastZoomDis);
+                    if (zoom < .25){zoom = .25;}
+                    if (zoom > 2){zoom = 2;}
                     lastZoomDis = currentZoomDis;
                     float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
                     float oldDisy =lastCenter.y - (screenCenter.y +offsetY);
