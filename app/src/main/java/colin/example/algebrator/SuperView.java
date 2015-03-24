@@ -180,6 +180,21 @@ public abstract class SuperView extends View implements
 
         canvas.drawColor(0xFFFFFFFF, Mode.ADD);
 
+//        //color testing
+//        Rect rTest = new Rect(0,0,100,100);
+//        Paint pTest = new Paint();
+//        pTest.setColor(Algebrator.getAlgebrator().lightColor);
+//        canvas.drawRect(rTest,pTest);
+//        rTest = new Rect(0,100,100,200);
+//        pTest.setColor(Algebrator.getAlgebrator().darkColor);
+//        canvas.drawRect(rTest,pTest);
+//        rTest = new Rect(0,200,100,300);
+//        pTest.setColor(Algebrator.getAlgebrator().darkDarkColor);
+//        canvas.drawRect(rTest,pTest);
+//        rTest = new Rect(0,300,100,400);
+//        pTest.setColor(Algebrator.getAlgebrator().veryDarkColor);
+//        canvas.drawRect(rTest,pTest);
+
 //        for (DragLocation dl:dragLocations){
 //            float dlx = dl.x + stupid.lastPoint.get(0).x;
 //            float dly = dl.y + stupid.lastPoint.get(0).y;

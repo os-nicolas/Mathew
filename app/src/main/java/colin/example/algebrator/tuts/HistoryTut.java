@@ -14,6 +14,15 @@ public class HistoryTut extends TutMessage {
         return "history";
     }
 
+    protected HistoryTut(){}
+//    private static HistoryTut instance;
+//    public static HistoryTut getInstance(){
+//        if (instance == null){
+//            instance = new HistoryTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView && ((ColinView)view).history.size() >1){

@@ -22,13 +22,13 @@ import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.VarEquation;
+import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
 public class ColinView extends SuperView {
     public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
-    public boolean alreadySolved= false;
 
     public ColinView(Context context) {
         super(context);
@@ -129,9 +129,8 @@ public class ColinView extends SuperView {
             Log.i("add to History", stupid.toString());
             changed = false;
 
-            if (isSolved()){//&& !alreadySolved
+            if (!alreadySolved && isSolved()){
                 showSolvedMessage();
-                alreadySolved = true;
             }
         }
 
@@ -349,7 +348,6 @@ public class ColinView extends SuperView {
     }
 
     //TODO these (left,rigth,top, bottom)est are all a bit wrong:
-        // 1 - we always know the bottomest and the topest not need to waste time
         // 2 - for left and right stupid get included even when it is not in the screeen
 
     private Physical rightest(){
@@ -506,7 +504,11 @@ public class ColinView extends SuperView {
         return false;
     }
 
+    private boolean alreadySolved = false;
     public boolean isSolved() {
+        if (alreadySolved){
+            return true;
+        }
         if (stupid.get(0) instanceof VarEquation){
             return Operations.sortaNumber(stupid.get(1)) || isNumDiv(stupid.get(1));
         }else if(stupid.get(1) instanceof VarEquation){
@@ -532,5 +534,7 @@ public class ColinView extends SuperView {
         }else if (i==3){
             this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_3));
         }
+        alreadySolved = true;
+        ((SolvedTut)TutMessage.getMessage(SolvedTut.class)).okToShow = true;
     }
 }

@@ -18,6 +18,15 @@ public class RootTut  extends PowerTut {
         return "root";
     }
 
+    protected RootTut(){};
+//    private static RootTut instance;
+//    public static RootTut getInstance(){
+//        if (instance == null){
+//            instance = new RootTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         Equation power=  getPower(view.stupid);

@@ -16,6 +16,15 @@ public class MultiTut extends WriteMessage {
         return "multi";
     }
 
+    protected MultiTut(){};
+//    private static MultiTut instance;
+//    public static MultiTut getInstance(){
+//        if (instance == null){
+//            instance = new MultiTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){

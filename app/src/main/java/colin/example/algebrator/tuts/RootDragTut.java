@@ -18,6 +18,15 @@ public class RootDragTut  extends PowerTut {
         return "rootDrag";
     }
 
+    protected RootDragTut(){};
+//    private static RootDragTut instance;
+//    public static RootDragTut getInstance(){
+//        if (instance == null){
+//            instance = new RootDragTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         Equation power=  getPower(view.stupid);

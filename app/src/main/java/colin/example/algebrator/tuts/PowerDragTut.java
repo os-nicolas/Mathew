@@ -18,6 +18,15 @@ public class PowerDragTut extends PowerTut {
         return "powerDrag";
     }
 
+    protected PowerDragTut(){};
+//    private static PowerDragTut instance;
+//    public static PowerDragTut getInstance(){
+//        if (instance == null){
+//            instance = new PowerDragTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         Equation power=  getPower(view.stupid);

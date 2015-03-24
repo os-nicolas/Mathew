@@ -14,16 +14,23 @@ public class WriteMessage extends TutMessage {
         return "write";
     }
 
+    protected WriteMessage(){}
+//    private static WriteMessage instance;
+//    public static WriteMessage getInstance(){
+//        if (instance == null){
+//            instance = new WriteMessage();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        return view instanceof EmilyView;
+        return (view instanceof EmilyView && view.message.isOpen());
     }
 
     @Override
     protected void privateShow(SuperView view) {
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_1));
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_2));
-        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_3));
-        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_4));
     }
 }

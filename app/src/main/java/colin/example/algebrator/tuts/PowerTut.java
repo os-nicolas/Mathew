@@ -17,6 +17,15 @@ public class PowerTut extends TutMessage {
         return "power";
     }
 
+    protected PowerTut(){};
+//    private static PowerTut instance;
+//    public static PowerTut getInstance(){
+//        if (instance == null){
+//            instance = new PowerTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         Equation power = getPower(view.stupid);

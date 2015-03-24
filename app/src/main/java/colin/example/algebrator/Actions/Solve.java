@@ -11,6 +11,8 @@ import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.SolveScreen;
+import colin.example.algebrator.tuts.HitSolveMessage;
+import colin.example.algebrator.tuts.TutMessage;
 
 
 public class Solve extends Action {
@@ -47,7 +49,7 @@ public class Solve extends Action {
         if (mine instanceof WritingEquation) {
 
             if (((WritingEquation) mine).deepLegal() && countEquals(mine) == 1) {
-
+                TutMessage.getMessage(HitSolveMessage.class).alreadyDone();
                 AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
                     Intent myIntent;
                     Context myContext;

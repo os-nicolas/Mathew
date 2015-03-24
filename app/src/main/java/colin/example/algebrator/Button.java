@@ -8,6 +8,8 @@ import android.text.TextPaint;
 import android.view.MotionEvent;
 
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.tuts.TutMessage;
+import colin.example.algebrator.tuts.TypeEqTut;
 
 public class Button implements  Physical {
     // in percent of width (1 = full width)
@@ -141,6 +143,7 @@ public class Button implements  Physical {
         if (event.getX() < right() && event.getX() > left() && event.getY() < bottom() && event.getY() > top()) {
             bkgPaint.setColor(highlightColor);
             if (myAction != null) {
+                TutMessage.getMessage(TypeEqTut.class).alreadyDone();
                 myAction.act();
             }
         }

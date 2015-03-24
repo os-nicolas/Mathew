@@ -18,6 +18,16 @@ public class AddTut extends TutMessage {
         return "add";
     }
 
+    protected AddTut(){}
+//    private static AddTut instance;
+//    public static AddTut getInstance(){
+//        if (instance == null){
+//            instance = new AddTut();
+//        }
+//        return instance;
+//    }
+
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){

@@ -24,7 +24,6 @@ public abstract class Action {
 
     abstract public void act();
 
-
     protected boolean hasMatch() {
         int depth = 1;
         Equation current = emilyView.selected;

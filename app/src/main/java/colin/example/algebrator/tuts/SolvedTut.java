@@ -21,22 +21,21 @@ public class SolvedTut extends TutMessage {
         return "solved";
     }
 
+    protected SolvedTut(){};
+//    private static SolvedTut instance;
+//    public static SolvedTut getInstance(){
+//        if (instance == null){
+//            instance = new SolvedTut();
+//        }
+//        return instance;
+//    }
+
+    public boolean okToShow= false;
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
-//        if (alreadyShown(view)){
-//            return false;
-//        }
-        if (view instanceof ColinView){
-            // is one side a VarEq?
-            return ((ColinView)view).isSolved();
-
-        }
-        return false;
+        return okToShow;
     }
-
-//    @Override
-//    protected void privateAlwaysShow(SuperView view){
-//    }
 
     @Override
     protected void privateShow(SuperView view) {

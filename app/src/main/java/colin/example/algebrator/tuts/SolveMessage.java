@@ -14,6 +14,15 @@ public class SolveMessage extends TutMessage{
         return "solve";
     }
 
+    protected SolveMessage(){};
+//    private static SolveMessage instance;
+//    public static SolveMessage getInstance(){
+//        if (instance == null){
+//            instance = new SolveMessage();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         return view instanceof ColinView;

@@ -18,6 +18,15 @@ public class HitSolveMessage extends TutMessage {
         return "hitSolved";
     }
 
+    protected HitSolveMessage(){};
+//    private static HitSolveMessage instance;
+//    public static HitSolveMessage getInstance(){
+//        if (instance == null){
+//            instance = new HitSolveMessage();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof EmilyView && view.stupid instanceof WritingEquation && ((WritingEquation)view.stupid).deepLegal() && Action.countEquals(view.stupid) == 1 &&

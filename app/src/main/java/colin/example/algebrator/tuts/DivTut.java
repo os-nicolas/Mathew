@@ -16,6 +16,15 @@ public class DivTut extends WriteMessage {
         return "div";
     }
 
+    protected DivTut(){}
+//    private static DivTut instance;
+//    public static DivTut getInstance(){
+//        if (instance == null){
+//            instance = new DivTut();
+//        }
+//        return instance;
+//    }
+
     @Override
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){

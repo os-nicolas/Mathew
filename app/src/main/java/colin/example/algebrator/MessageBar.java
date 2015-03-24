@@ -10,6 +10,9 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
+import colin.example.algebrator.tuts.TapToSkip;
+import colin.example.algebrator.tuts.TutMessage;
+
 /**
  * Created by Colin on 2/24/2015.
  */
@@ -151,6 +154,7 @@ public class MessageBar {
 
     public void onClick(MotionEvent event){
         if (inBar(event)){
+            TutMessage.getMessage(TapToSkip.class).alreadyDone();
             quit();
         }
     }

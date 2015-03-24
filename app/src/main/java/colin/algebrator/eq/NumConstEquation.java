@@ -67,7 +67,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
         }else {
             DecimalFormat df;
             if (((getValue().abs().compareTo(new BigDecimal(.001)) <0) && !(getValue().doubleValue() == 0)) ||(getValue().compareTo(new BigDecimal(100000)) >0)){
-                df = new DecimalFormat("0.000e0");
+                df = new DecimalFormat("0.000E0");
             }else{
                 df = new DecimalFormat();
             }

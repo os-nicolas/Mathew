@@ -1,6 +1,7 @@
 package colin.example.algebrator;
 
 import android.app.Application;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -15,6 +16,8 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.Random;
 
 import colin.algebrator.eq.Equation;
+import colin.example.algebrator.tuts.AddTut;
+import colin.example.algebrator.tuts.TutMessage;
 
 /**
  * Created by Colin on 12/30/2014.
@@ -147,23 +150,55 @@ public class Algebrator extends Application {
     public void initColors() {
         Random r = new Random();
         // we only want light colors for the main color
-//        lightColor = 0xff000000 +                //alpha
-//                (r.nextInt(0x65) + 0xff-0x65) * 0x010000      // red
-//                + (r.nextInt(0x65)+ 0xff-0x65) * 0x000100    // green
-//                + (r.nextInt(0x65)+ 0xff-0x65) * 0x000001;   //blue
-        lightColor = 0xffddd7d7;
-//        darkColor = lightColor- 0x454545 // take the light color and shift darker
-//                -r.nextInt(0x55) * 0x010000    // add some random red
-//                - r.nextInt(0x55) * 0x000100    // add some random green
-//                - r.nextInt(0x55) * 0x000001;  // add some random blue
-        darkColor =0xffd5080b;
+        int redShift =  (r.nextInt(0x35) + 0x05);
+        int greenShift =  (r.nextInt(0x35) + 0x05);
+        int blueShift =  (r.nextInt(0x35) + 0x05) ;
+
+        lightColor = 0xffffffff                //alpha and a lower bound
+                - redShift * 0x010000    // red
+                - greenShift * 0x000100    // green
+                - blueShift * 0x000001;   //blue
+        //lightColor = 0xffddd7d7;
+        darkColor = lightColor
+                // we shift again so you can tell the colors apart
+                - (redShift*2) * 0x010000     // red
+                - (greenShift*2)  * 0x000100   // green
+                - (blueShift*2) * 0x000001  //blue
+                - r.nextInt(0x60) * 0x010000    // add some random red
+                - r.nextInt(0x60) * 0x000100    // add some random green
+                - r.nextInt(0x60) * 0x000001;  // add some random blue
+        if (useOGColors() || r.nextInt(10) ==0){
+            lightColor = 0xffddd7d7;
+            darkColor =0xffd5080b;
+        }
+
+        //darkColor =0xffd5080b;
         darkDarkColor = darkColor;
         darkDarkColor = Algebrator.colorFade(darkDarkColor, Color.BLACK);
         darkDarkColor = Algebrator.colorFade(darkDarkColor, Color.BLACK);
         darkDarkColor = Algebrator.colorFade(darkDarkColor, Color.BLACK);
-        veryDarkColor = Algebrator.colorFade(darkDarkColor, Color.BLACK);
+        veryDarkColor=lightColor;
         veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
         veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+        veryDarkColor = Algebrator.colorFade(veryDarkColor, Color.BLACK);
+
+    }
+
+    private boolean useOGColors() {
+        SharedPreferences settings = getSharedPreferences("First", 0);
+        boolean alreadyShown = settings.getBoolean("UseOGColors", true);
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("UseOGColors", false);
+
+        editor.commit();
+
+        return alreadyShown;
     }
 
     private Tracker myTracker = null;
