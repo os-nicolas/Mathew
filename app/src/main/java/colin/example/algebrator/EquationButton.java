@@ -94,7 +94,7 @@ public class EquationButton extends Button {
     public void drawBkg(Canvas canvas, float x, float y) {
 
         //TODO scale by dpi
-        float buffer = 10*Algebrator.getAlgebrator().getDpi();
+        float buffer = (float) (10*Algebrator.getAlgebrator().getDpi()*Algebrator.getAlgebrator().zoom);
 
         float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
         float leftEnd = x - (middle / 2) - myEq.get(0).measureWidth() - buffer;
@@ -146,7 +146,7 @@ public class EquationButton extends Button {
             }
         }
 
-        if (event.getAction() == MotionEvent.ACTION_UP) {
+        if (event.getAction() == MotionEvent.ACTION_UP ||  event.getPointerCount() == 2) {
             lastLongTouch = null;
         }
 

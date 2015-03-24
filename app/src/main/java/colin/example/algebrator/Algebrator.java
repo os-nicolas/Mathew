@@ -36,6 +36,7 @@ public class Algebrator extends Application {
     public Paint bkgPaint = new Paint();
     public EmilyView writeView  = null;
     public ColinView solveView  = null;
+    public double zoom = 1;
     public int at=0;
     private float dpi;
     public int veryDarkColor;
@@ -47,42 +48,42 @@ public class Algebrator extends Application {
     }
 
     public float getStrokeWidth(Equation eq) {
-        return (float)(1.5f*getDpi()*eq.owner.zoom);
+        return (float)(1.5f*getDpi()*zoom);
     }
 
     public float getPranIn(Equation eq) {
-        return (float)(9*getDpi()*eq.owner.zoom);
+        return (float)(9*getDpi()*zoom);
     }
 
     public float getPranEdgeX(Equation eq) {
-        return (float)((eq.owner instanceof ColinView?7*getDpi():7*getDpi())*eq.owner.zoom);
+        return (float)((eq.owner instanceof ColinView?7*getDpi():7*getDpi())*zoom);
     }
 
     public float getPranEdgeY(Equation eq) {
-        return (float)((eq.owner instanceof ColinView?2*getDpi():2*getDpi())*eq.owner.zoom);
+        return (float)((eq.owner instanceof ColinView?2*getDpi():2*getDpi())*zoom);
     }
 
     public float getSqrtHeightAdd(Equation eq) {
-        return(float)( 20*getDpi()*eq.owner.zoom);
+        return(float)( 20*getDpi()*zoom);
     }
 
     public float getSqrtWidthAdd(Equation eq) {
-        return(float)( 40*getDpi()*eq.owner.zoom);
+        return(float)( 40*getDpi()*zoom);
     }
 
     public float getCornor(Equation eq) {
-        return (float)(getCornor()*eq.owner.zoom);
+        return (float)(getCornor()*zoom);
     }
     public float getCornor() {
         return (float)(10*Algebrator.getAlgebrator().getDpi());
     }
 
     public float getbkgBuffer(Equation eq) {
-        return (float)(5*getDpi()*eq.owner.zoom);
+        return (float)(5*getDpi()*zoom);
     }
 
     public float getDivWidthAdd(Equation eq) {
-        return (float)(20*getDpi()*eq.owner.zoom);
+        return (float)(20*getDpi()*zoom);
     }
 
     public int getTopLineWidth() {
@@ -94,7 +95,7 @@ public class Algebrator extends Application {
     }
 
     public float getBuffer(Equation eq) {
-        return (float)(getBuffer()*eq.owner.zoom);
+        return (float)(getBuffer()*zoom);
     }
     public float getBuffer() {
         return 10*getDpi();
@@ -115,9 +116,6 @@ public class Algebrator extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
-
-
-
 
         initColors();
 

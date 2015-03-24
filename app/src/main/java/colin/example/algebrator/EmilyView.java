@@ -270,7 +270,7 @@ public class EmilyView extends SuperView {
             }
         //}
         if (selected != null) {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
+            if (event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() != 1) {
                 ((PlaceholderEquation) selected).drawBkg = false;
             } else {
                 ((PlaceholderEquation) selected).drawBkg = true;

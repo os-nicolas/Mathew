@@ -25,7 +25,7 @@ import colin.example.algebrator.SuperView;
 abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected float PARN_HEIGHT_ADDITION(){
-        return (float) (6 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
+        return (float) (6 * Algebrator.getAlgebrator().getDpi()*Algebrator.getAlgebrator().zoom);
     }
 
     private static int idBacker = 0;
@@ -38,14 +38,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected boolean selected = false;
     private int myWidth;
     protected int getMyWidth(){
-        return (int) (myWidth*owner.zoom);
+        return (int) (myWidth*Algebrator.getAlgebrator().zoom);
     }
     protected void setMyWidth(int newWidth) {
         myWidth=newWidth;
     }
     private int myHeight;
     protected int getMyHeight(){
-        return (int) (myHeight*owner.zoom);
+        return (int) (myHeight*Algebrator.getAlgebrator().zoom);
     }
     public SuperView owner;
     private int id;
@@ -223,11 +223,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public float measureWidth() {
-        if (Algebrator.getAlgebrator().at == lastMeasureWidthAt || (!active && lastMeasureWidth != -1)) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureWidthAt || (!active && lastMeasureWidth != -1)) && !needsUpdate) {
             return lastMeasureWidth;
         } else {
             lastMeasureWidth = privateMeasureWidth();
             lastMeasureWidthAt = Algebrator.getAlgebrator().at;
+            needsUpdate = false;
             return lastMeasureWidth;
         }
     }
@@ -323,14 +324,21 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
+    public void deepNeedsUpdate(){
+        needsUpdate = true;
+        for (Equation e: this){
+            e.deepNeedsUpdate();
+        }
+    }
 
+    public boolean needsUpdate =false;
     public float measureHeightLower() {
-        if (Algebrator.getAlgebrator().at == lastMeasureHeightLowerAt || (!active && lastMeasureHeightLower != -1)) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightLowerAt || (!active && lastMeasureHeightLower != -1)) && !needsUpdate) {
             return lastMeasureHeightLower;
         } else {
-
             lastMeasureHeightLower = privateMeasureHeightLower();
             lastMeasureHeightLowerAt = Algebrator.getAlgebrator().at;
+            needsUpdate = false;
             return lastMeasureHeightLower;
         }
     }
@@ -351,11 +359,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public float measureHeightUpper() {
-        if (Algebrator.getAlgebrator().at == lastMeasureHeightUpperAt || (!active && lastMeasureHeightUpper != -1)) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightUpperAt || (!active && lastMeasureHeightUpper != -1)) && !needsUpdate) {
             return lastMeasureHeightUpper;
         } else {
             lastMeasureHeightUpper = privateMeasureHeightUpper();
             lastMeasureHeightUpperAt = Algebrator.getAlgebrator().at;
+            needsUpdate = false;
             return lastMeasureHeightUpper;
         }
 
@@ -396,11 +405,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public float measureHeight() {
-        if (Algebrator.getAlgebrator().at == lastMeasureHeightAt || (!active && lastMeasureHeight != -1)) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightAt || (!active && lastMeasureHeight != -1)) && !needsUpdate) {
             return lastMeasureHeight;
         } else {
             lastMeasureHeight = privateMeasureHeight();
             lastMeasureHeightAt = Algebrator.getAlgebrator().at;
+            needsUpdate = false;
             return lastMeasureHeight;
         }
 
@@ -631,7 +641,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 targetTextSize = MIN_TEXT_SIZE;
             }
         }
-        mPaint.setTextSize((float) (targetTextSize*owner.zoom));
+        mPaint.setTextSize((float) (targetTextSize*Algebrator.getAlgebrator().zoom));
         return mPaint;
     }
 
@@ -1529,9 +1539,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
         if (owner instanceof EmilyView) {
-            return (float) (48 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
+            return (float) (48 * Algebrator.getAlgebrator().getDpi()*Algebrator.getAlgebrator().zoom);
         } else {
-            return (float) (28 * Algebrator.getAlgebrator().getDpi()*owner.zoom);
+            return (float) (28 * Algebrator.getAlgebrator().getDpi()*Algebrator.getAlgebrator().zoom);
         }
     }
 

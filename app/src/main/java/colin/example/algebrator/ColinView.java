@@ -65,13 +65,20 @@ public class ColinView extends SuperView {
     float baseBuffer = 75 * Algebrator.getAlgebrator().getDpi();
     float fade = 0.4f;
 
+
+    double lastZoom = Algebrator.getAlgebrator().zoom;
     private void drawHistory(Canvas canvas) {
-        float buffer = (float)(baseBuffer*zoom);
+        float buffer = (float)(baseBuffer*Algebrator.getAlgebrator().zoom);
+
+
 
         float atHeight = -stupid.measureHeightUpper() - buffer;
         float currentPercent = fade;
         for (EquationButton eb : history) {
             if (!eb.equals(history.get(0))) {
+                if (lastZoom != Algebrator.getAlgebrator().zoom){
+                    eb.myEq.deepNeedsUpdate();
+                }
                 atHeight -= eb.myEq.measureHeightLower();
                 eb.targetColor = getHistoryColor(0xff000000, Algebrator.getAlgebrator().darkColor, currentPercent);
                 eb.x = 0;
@@ -89,6 +96,7 @@ public class ColinView extends SuperView {
                 currentPercent *= fade;
             }
         }
+        lastZoom = Algebrator.getAlgebrator().zoom;
     }
 
     private int getHistoryColor(int currentColor, int targetColor, float percent) {
@@ -114,7 +122,7 @@ public class ColinView extends SuperView {
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if (!message.inBar(event)) {
+        if (!message.inBar(event) ) {
             for (int i = 0; i < history.size(); i++) {
                 history.get(i).click(event);
             }

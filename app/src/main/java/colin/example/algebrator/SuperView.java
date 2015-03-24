@@ -60,7 +60,7 @@ public abstract class SuperView extends View implements
     public float trackFingerX = -1;
     public float trackFingerY = -1;
 
-    public double zoom = 1;
+
     private double lastZoomDis;
 
     public boolean disabled = false;
@@ -352,7 +352,7 @@ public abstract class SuperView extends View implements
     }
 
     //TODO scale by dpi
-    int buffer = (int) (50 * Algebrator.getAlgebrator().getDpi() *zoom);
+    int buffer = (int) (50 * Algebrator.getAlgebrator().getDpi() *Algebrator.getAlgebrator().zoom);
 
 
     protected float outTop() {
@@ -692,15 +692,15 @@ public abstract class SuperView extends View implements
                     double currentZoomDis = getPointerDistance(event);
                     Point touchCenter = getCenter(event);
                     Point screenCenter = getCenter();
-                    double oldZoom = zoom;
-                    zoom = zoom*(currentZoomDis/lastZoomDis);
-                    if (zoom < .25){zoom = .25;}
-                    if (zoom > 2){zoom = 2;}
+                    double oldZoom = Algebrator.getAlgebrator().zoom;
+                    Algebrator.getAlgebrator().zoom = Algebrator.getAlgebrator().zoom*(currentZoomDis/lastZoomDis);
+                    if (Algebrator.getAlgebrator().zoom < .7){Algebrator.getAlgebrator().zoom = .7;}
+                    if (Algebrator.getAlgebrator().zoom > 1.5){Algebrator.getAlgebrator().zoom = 1.5;}
                     lastZoomDis = currentZoomDis;
                     float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
                     float oldDisy =lastCenter.y - (screenCenter.y +offsetY);
-                    offsetX =(float) -((zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
-                    offsetY =(float) -((zoom/oldZoom)*(oldDisy)-touchCenter.y + screenCenter.y);
+                    offsetX =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
+                    offsetY =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisy)-touchCenter.y + screenCenter.y);
                     lastCenter =touchCenter;
                 }
             } else{
