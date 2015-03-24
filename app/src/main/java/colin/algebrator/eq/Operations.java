@@ -290,9 +290,12 @@ public class Operations {
             }
         }
 
+        Equation oneEq = NumConstEquation.create(1,Algebrator.getAlgebrator().solveView);
         for (EquationCounts ec:leftCopy){
             if (!ec.isEmpty()) {
-                result.addToKey(ec.getEquation());
+                if (!ec.getEquation().same(oneEq)) {
+                    result.addToKey(ec.getEquation());
+                }
             }
         }
 

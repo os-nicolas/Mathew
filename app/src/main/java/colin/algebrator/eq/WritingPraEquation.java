@@ -42,7 +42,7 @@ public class WritingPraEquation extends WritingLeafEquation {
         float totalWidth = measureWidth();
         float currentX = 0;
         Paint temp = getPaint();
-        MyPoint point = new MyPoint(myWidth, myHeight);
+        MyPoint point = new MyPoint(getMyWidth(), getMyHeight());
         point.x = (int) x;
         point.y = (int) y;
         lastPoint.add(point);
@@ -66,8 +66,8 @@ public class WritingPraEquation extends WritingLeafEquation {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp, boolean left) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth());
-            float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd() : 0) + (getMatch() instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd() : 0);
+            ptemp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(this));
+            float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd(this) : 0) + (getMatch() instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd(this) : 0);
             float lh = measureHeightLower();
 
 
@@ -88,7 +88,7 @@ public class WritingPraEquation extends WritingLeafEquation {
     }
 
     public float measureHeightHelper(boolean upper) {
-        float totalHeight = myHeight / 2;
+        float totalHeight = getMyHeight() / 2;
 
         // if left
         // move left through parent
@@ -104,7 +104,7 @@ public class WritingPraEquation extends WritingLeafEquation {
                     if (current instanceof WritingPraEquation) {
                         if (((WritingPraEquation) current).left) {
                             if (depth == 1) {
-                                totalHeight = Math.max(totalHeight, (upper ? current.measureHeightUpper() : current.measureHeightLower()) + PARN_HEIGHT_ADDITION / 2);
+                                totalHeight = Math.max(totalHeight, (upper ? current.measureHeightUpper() : current.measureHeightLower()) + PARN_HEIGHT_ADDITION() / 2);
                             }
                             depth++;
                         } else {
@@ -115,7 +115,7 @@ public class WritingPraEquation extends WritingLeafEquation {
                         }
                     } else {
                         if (depth == 1) {
-                            totalHeight = Math.max(totalHeight, (upper ? current.measureHeightUpper() : current.measureHeightLower()) + PARN_HEIGHT_ADDITION / 2);
+                            totalHeight = Math.max(totalHeight, (upper ? current.measureHeightUpper() : current.measureHeightLower()) + PARN_HEIGHT_ADDITION() / 2);
                         }
                     }
                     current = current.right();

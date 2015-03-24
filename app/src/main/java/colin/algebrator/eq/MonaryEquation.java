@@ -23,9 +23,10 @@ public abstract class MonaryEquation extends Equation {
     }
 
     private void init() {
-        myWidth = (int)(Algebrator.getAlgebrator().getDefaultSize()*.75);
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
+        setMyWidth((int)(Algebrator.getAlgebrator().getDefaultSize()*.75));
+
     }
+
 
     public MonaryEquation(SuperView owner, MonaryEquation monEq) {
         super(owner,monEq);
@@ -48,15 +49,15 @@ public abstract class MonaryEquation extends Equation {
             float h = out.height();
 
             // draw the minus sign
-            MyPoint point = new MyPoint(myWidth,myHeight);
-            point.x = (int) (x - (totalWidth / 2) + currentX + (myWidth / 2));
+            MyPoint point = new MyPoint(getMyWidth(),getMyHeight());
+            point.x = (int) (x - (totalWidth / 2) + currentX + (getMyWidth() / 2));
             point.y = (int) (y + (h / 2));
             if (canvas != null) {
                 canvas.drawText(getDisplay(0), point.x, point.y, temp);
             }
             point.y = (int) (y);
             lastPoint.add(point);
-            currentX += myWidth;
+            currentX += getMyWidth();
 
             //draw the contence
             float currentWidth = get(0).measureWidth();
@@ -88,7 +89,7 @@ public abstract class MonaryEquation extends Equation {
         // if we are not the first element in an add equation
         float result;
         if (drawSign()) {
-            result= myWidth + super.privateMeasureWidth();
+            result= (float) (getMyWidth() + super.privateMeasureWidth());
         }else{
             result=super.privateMeasureWidth();
         }

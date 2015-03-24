@@ -114,6 +114,16 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
             return new NumConstEquation(number,o);
         }
     }
+
+    public static Equation create(double number, SuperView o) {
+        if (number < 0){
+            return new NumConstEquation(-number,o).negate();
+        }else{
+            return new NumConstEquation(number,o);
+        }
+    }
+
+
 }
 
 

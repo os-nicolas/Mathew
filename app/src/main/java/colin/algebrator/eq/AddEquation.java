@@ -81,14 +81,12 @@ public class AddEquation extends FlexOperation {
 
     private void init() {
         display = "+";
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     // addition is a little more spread out
     @Override
     protected float myWidthAdd() {
-        return 16*Algebrator.getAlgebrator().getDpi();
+        return (float) (16*Algebrator.getAlgebrator().getDpi()*owner.zoom);
     }
 
     public void tryOperator(ArrayList<Equation> eqs) {

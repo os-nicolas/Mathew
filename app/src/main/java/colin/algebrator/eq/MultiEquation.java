@@ -80,9 +80,6 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
     private void init() {
         char[] timesUnicode = { '\u00D7'};
         display = new String(timesUnicode);
-
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     public void tryOperator(ArrayList<Equation> eqs) {

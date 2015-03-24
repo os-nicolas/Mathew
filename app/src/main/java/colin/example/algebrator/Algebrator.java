@@ -46,54 +46,61 @@ public class Algebrator extends Application {
         return scale;
     }
 
-    public float getStrokeWidth() {
-        return 1.5f*getDpi();
+    public float getStrokeWidth(Equation eq) {
+        return (float)(1.5f*getDpi()*eq.owner.zoom);
     }
 
-    public float getPranIn() {
-        return 9*getDpi();
+    public float getPranIn(Equation eq) {
+        return (float)(9*getDpi()*eq.owner.zoom);
     }
 
     public float getPranEdgeX(Equation eq) {
-        return (eq.owner instanceof ColinView?7*getDpi():7*getDpi());
+        return (float)((eq.owner instanceof ColinView?7*getDpi():7*getDpi())*eq.owner.zoom);
     }
 
     public float getPranEdgeY(Equation eq) {
-        return (eq.owner instanceof ColinView?2*getDpi():2*getDpi());
+        return (float)((eq.owner instanceof ColinView?2*getDpi():2*getDpi())*eq.owner.zoom);
     }
 
-    public float getSqrtHeightAdd() {
-        return 20*getDpi();
+    public float getSqrtHeightAdd(Equation eq) {
+        return(float)( 20*getDpi()*eq.owner.zoom);
     }
 
-    public float getSqrtWidthAdd() {
-        return 40*getDpi();
+    public float getSqrtWidthAdd(Equation eq) {
+        return(float)( 40*getDpi()*eq.owner.zoom);
     }
 
+    public float getCornor(Equation eq) {
+        return (float)(getCornor()*eq.owner.zoom);
+    }
     public float getCornor() {
-        return 10*Algebrator.getAlgebrator().getDpi();
+        return (float)(10*Algebrator.getAlgebrator().getDpi());
     }
 
-    public float getbkgBuffer() {
-        return 5*getDpi();
+    public float getbkgBuffer(Equation eq) {
+        return (float)(5*getDpi()*eq.owner.zoom);
     }
 
-    public float getDivWidthAdd() {
-        return 20*getDpi();
+    public float getDivWidthAdd(Equation eq) {
+        return (float)(20*getDpi()*eq.owner.zoom);
     }
 
     public int getTopLineWidth() {
-        return (int)(6*getDpi());
+        return (int)((int)(6*getDpi()));
     }
 
     public float getShadowFade() {
         return (float)(1 + .3/Algebrator.getAlgebrator().getDpi());
     }
 
+    public float getBuffer(Equation eq) {
+        return (float)(getBuffer()*eq.owner.zoom);
+    }
     public float getBuffer() {
         return 10*getDpi();
     }
 
+    // TODO we zoom in get paint for this is that wrong?
     public int getTextSize(){
         return this.TEXT_SIZE;
     }

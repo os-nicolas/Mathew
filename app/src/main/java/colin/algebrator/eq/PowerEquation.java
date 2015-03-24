@@ -27,8 +27,6 @@ public class PowerEquation extends Operation implements BinaryEquation {
 
     private void init() {
         display = "^";
-        myWidth = Algebrator.getAlgebrator().getDefaultSize();
-        myHeight = Algebrator.getAlgebrator().getDefaultSize();
     }
 
     public PowerEquation(SuperView owner, PowerEquation equations) {
@@ -72,7 +70,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
     }
 
     private float sqrtMeasureWidth() {
-        return get(0).measureWidth() + Algebrator.getAlgebrator().getSqrtWidthAdd();
+        return get(0).measureWidth() + Algebrator.getAlgebrator().getSqrtWidthAdd(this);
     }
 
     @Override
@@ -413,7 +411,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
                         //green.setColor(Color.GREEN);
                         //green.setAlpha(0x80);
                         if (canvas != null) {
-                            Rect r = new Rect(point.x - myWidth / 2, point.y - myHeight / 2, point.x + myWidth / 2, point.y + myHeight / 2);
+                            Rect r = new Rect(point.x - getMyWidth() / 2, point.y - getMyHeight() / 2, point.x + getMyWidth() / 2, point.y + getMyHeight() / 2);
                             //.drawRect(r, green);
                         }
                     }
@@ -424,15 +422,15 @@ public class PowerEquation extends Operation implements BinaryEquation {
     }
 
     public static void sqrtSignDraw(Canvas canvas, float atX, float y, Paint p, Equation e) {
-        sqrtSignDraw(canvas, atX, y, p, e.measureHeightLower(), e.measureHeightUpper(), e.x + e.measureWidth() / 2);
+        sqrtSignDraw(canvas, atX, y, p, e.measureHeightLower(), e.measureHeightUpper(), e.x + e.measureWidth() / 2,e);
     }
 
-    public static void sqrtSignDraw(Canvas canvas, float atX, float y, Paint p, float lower, float upper, float end) {
+    public static void sqrtSignDraw(Canvas canvas, float atX, float y, Paint p, float lower, float upper, float end,Equation equation) {
         if (canvas != null) {
             // TODO scale by dpi
-            float width_addition = Algebrator.getAlgebrator().getSqrtWidthAdd();
-            float height_addition = Algebrator.getAlgebrator().getSqrtHeightAdd();
-            p.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth());
+            float width_addition = Algebrator.getAlgebrator().getSqrtWidthAdd(equation);
+            float height_addition = Algebrator.getAlgebrator().getSqrtHeightAdd(equation);
+            p.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(equation));
             atX += width_addition / 5f;
             canvas.drawLine(atX, y, atX + width_addition / 5f, y, p);
             atX += width_addition / 5f;
@@ -453,11 +451,11 @@ public class PowerEquation extends Operation implements BinaryEquation {
         sqrtSignDraw(canvas, atX, y, p, this);
 
         // now let's draw the content
-        get(0).draw(canvas, x + Algebrator.getAlgebrator().getSqrtWidthAdd() / 2, y);
+        get(0).draw(canvas, x + Algebrator.getAlgebrator().getSqrtWidthAdd(this) / 2, y);
 
         // now we need to put the last point
-        MyPoint point = new MyPoint(Algebrator.getAlgebrator().getSqrtWidthAdd(), measureHeight());
-        point.x = (int) (x - measureWidth() / 2 + Algebrator.getAlgebrator().getSqrtWidthAdd() / 2);
+        MyPoint point = new MyPoint(Algebrator.getAlgebrator().getSqrtWidthAdd(this), measureHeight());
+        point.x = (int) (x - measureWidth() / 2 + Algebrator.getAlgebrator().getSqrtWidthAdd(this) / 2);
         point.y = (int) (y - measureHeightUpper() + (measureHeight() / 2));
         //canvas.drawLine(point.x + 3, point.y, point.x - 3, point.y, p);
         lastPoint.add(point);
@@ -484,22 +482,22 @@ public class PowerEquation extends Operation implements BinaryEquation {
             Paint p = new Paint();
             p.setColor(Algebrator.getAlgebrator().lightColor);
             p.setAlpha(mybkgAlpha);
-            p.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth());
+            p.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(this));
 
-            float bkgBuffer = Algebrator.getAlgebrator().getbkgBuffer();
+            float bkgBuffer = Algebrator.getAlgebrator().getbkgBuffer(this);
 
             // we use a path to draw this weird shape
             float top = (y - measureHeightUpper() - bkgBuffer);
             float left = (x - (measureWidth() / 2f) - bkgBuffer);
             float bot1 = (y + measureHeightLower() + bkgBuffer);
-            float right1 = ((x - measureWidth() / 2) + Algebrator.getAlgebrator().getSqrtWidthAdd());//+ bkgBuffer/4
-            float bot2 = ((y - measureHeightUpper()) + Algebrator.getAlgebrator().getSqrtHeightAdd()); //+bkgBuffer/4
+            float right1 = ((x - measureWidth() / 2) + Algebrator.getAlgebrator().getSqrtWidthAdd(this));//+ bkgBuffer/4
+            float bot2 = ((y - measureHeightUpper()) + Algebrator.getAlgebrator().getSqrtHeightAdd(this)); //+bkgBuffer/4
             float right2 = ((x + measureWidth() / 2) + bkgBuffer);
 
             Path path = new Path();
             //p.setStyle(Paint.Style.FILL);
 
-            float rounded = Algebrator.getAlgebrator().getCornor();
+            float rounded = Algebrator.getAlgebrator().getCornor(this);
 
             // start top left right of the first curve
             path.moveTo(left + rounded, top);
@@ -558,7 +556,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
         } else {
             float result = get(0).measureHeightLower();
             if (parenthesis()) {
-                result += PARN_HEIGHT_ADDITION / 2f;
+                result += PARN_HEIGHT_ADDITION() / 2f;
             }
             return result;
         }
@@ -581,14 +579,14 @@ public class PowerEquation extends Operation implements BinaryEquation {
 
             float result = Math.max(r0, r1);
             if (parenthesis()) {
-                result += PARN_HEIGHT_ADDITION / 2f;
+                result += PARN_HEIGHT_ADDITION() / 2f;
             }
             return result;
         }
     }
 
     private float sqrtMeasureHeightUpper() {
-        return get(0).measureHeightUpper() + Algebrator.getAlgebrator().getSqrtHeightAdd();
+        return get(0).measureHeightUpper() + Algebrator.getAlgebrator().getSqrtHeightAdd(this);
     }
 
     @Override

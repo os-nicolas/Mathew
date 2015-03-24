@@ -24,22 +24,22 @@ public class MyPoint extends Point implements Physical {
         this.myWidth =  myWidth;
     }
 
-    public boolean on(float x, float y) {
+    public boolean on(float x, float y,Equation equation) {
         // we use 1.9 instead of 2 to make the target a little bigger
         double scale =2;
 
-        return x < this.x + (Algebrator.getAlgebrator().getBuffer()/2) + (this.myWidth / scale)
-                && x > this.x - (Algebrator.getAlgebrator().getBuffer()/2) - (this.myWidth / scale)
-                && y < this.y+ (Algebrator.getAlgebrator().getBuffer()/2)  + (this.myHeight / scale)
-                && y > this.y - (Algebrator.getAlgebrator().getBuffer()/2) - (this.myHeight / scale);
+        return x < this.x + (Algebrator.getAlgebrator().getBuffer(equation)/2) + (this.myWidth / scale)
+                && x > this.x - (Algebrator.getAlgebrator().getBuffer(equation)/2) - (this.myWidth / scale)
+                && y < this.y+ (Algebrator.getAlgebrator().getBuffer(equation)/2)  + (this.myHeight / scale)
+                && y > this.y - (Algebrator.getAlgebrator().getBuffer(equation)/2) - (this.myHeight / scale);
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas,Equation equation) {
         if (canvas != null) {
-            RectF r = new RectF(x - (myWidth / 2) - (Algebrator.getAlgebrator().getBuffer()/2),
-                    y - (myHeight / 2) - (Algebrator.getAlgebrator().getBuffer()/2),
-                    x + (myWidth / 2)+ (Algebrator.getAlgebrator().getBuffer()/2),
-                    y + (myHeight / 2)+ (Algebrator.getAlgebrator().getBuffer()/2));
+            RectF r = new RectF(x - (myWidth / 2) - (Algebrator.getAlgebrator().getBuffer(equation)/2),
+                    y - (myHeight / 2) - (Algebrator.getAlgebrator().getBuffer(equation)/2),
+                    x + (myWidth / 2)+ (Algebrator.getAlgebrator().getBuffer(equation)/2),
+                    y + (myHeight / 2)+ (Algebrator.getAlgebrator().getBuffer(equation)/2));
             Paint p = new Paint();
             p.setAlpha(0x40);
             canvas.drawRect(r, p);
@@ -47,7 +47,7 @@ public class MyPoint extends Point implements Physical {
     }
 
     public boolean near(float x, float y) {
-        float near = 75* Algebrator.getAlgebrator().getDpi();
+        float near = 75* Algebrator.getAlgebrator().getDpi(); // we don't scale by zoom
         return x < this.x + near + this.myWidth / 2
                 && x > this.x - near - this.myWidth / 2
                 && y < this.y + near + this.myHeight / 2
