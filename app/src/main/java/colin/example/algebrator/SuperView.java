@@ -92,6 +92,8 @@ public abstract class SuperView extends View implements
         init(context);
     }
 
+    public void resume() {}
+
     private void init(Context context) {
         //surfaceHolder = getHolder();
         this.setOnTouchListener(this);
@@ -485,7 +487,9 @@ public abstract class SuperView extends View implements
     private float vy = 0;
 
     public void updateOwner() {
-        stupid.updateOwner(this);
+        if (stupid!=null) {
+            stupid.updateOwner(this);
+        }
     }
 
     public void removeSelected() {

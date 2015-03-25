@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import colin.example.algebrator.tuts.TapToSkip;
 import colin.example.algebrator.tuts.TutMessage;
@@ -151,10 +152,24 @@ public class MessageBar {
         Message newMessage = new Message(text,runTime);
         que.add(newMessage);
     }
+    public void enQue(long runTime,String text,Callable func){
+        Message newMessage = new Message(new String[]{text},runTime,func);
+        que.add(newMessage);
+    }
+    public void enQue(long runTime,String[] text,Callable func){
+        Message newMessage = new Message(text,runTime,func);
+        que.add(newMessage);
+    }
 
     public void onClick(MotionEvent event){
         if (inBar(event)){
+            // we don't need to show tap to skip
             TutMessage.getMessage(TapToSkip.class).alreadyDone();
+            //
+            if (current() != null){
+                current().click();
+            }
+
             quit();
         }
     }

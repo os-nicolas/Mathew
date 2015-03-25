@@ -97,5 +97,6 @@ public class SuperScreen extends Activity{
         //setContentView(R.layout.menu);
         view.measureScreen(this);
         myView = view;
+        myView.resume();
     }
 }

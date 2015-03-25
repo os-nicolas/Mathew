@@ -64,4 +64,6 @@
     <string name="tut_writemessage_3">Go ahead and type an equation.</string>
     <string name="tut_writemessage_4">You can tap on these messages to skip them.</string>
 
+    <string name="clear">Clear?</string>
+
 </resources>

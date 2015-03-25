@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.concurrent.Callable;
 
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.EquationDis;
@@ -29,6 +30,7 @@ import colin.example.algebrator.Actions.Solve;
 import colin.example.algebrator.Actions.SqrtAction;
 import colin.example.algebrator.Actions.TimesAction;
 import colin.example.algebrator.Actions.VarAction;
+import colin.example.algebrator.tuts.TutMessage;
 
 public class EmilyView extends SuperView {
 
@@ -51,15 +53,39 @@ public class EmilyView extends SuperView {
         //Equation yo = new PowerEquation(this);
         //yo.add(new NumConstEquation(2.0,this));
         //yo.add(new NumConstEquation(2.0,this));
+
+        addButtons();
+
+        buttonsPercent = 4f / 6f;
+    }
+
+    @Override
+    public void resume() {
+        final EmilyView ev =this;
+        if (stupid == null) {
+            initEq();
+        }else {
+            message.enQue(TutMessage.aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.clear),new Callable() {
+                @Override
+                public Object call() throws Exception {
+                    ev.initEq();
+                    return null;
+                }
+            });
+        }
+    }
+
+    public void initEq() {
+        // umm i totally don't need this
+        if (selected != null){
+            selected.setSelected(false);
+        }
+
         stupid = new WritingEquation(this);
         Equation empty = new PlaceholderEquation(this);
         //stupid.add(yo);
         stupid.add(empty);
         empty.setSelected(true);
-
-        addButtons();
-
-        buttonsPercent = 4f / 6f;
     }
 
     private void addButtons() {
