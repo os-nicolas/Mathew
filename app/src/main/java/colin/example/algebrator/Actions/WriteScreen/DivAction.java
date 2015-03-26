@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.DivEquation;
 import colin.algebrator.eq.Equation;
@@ -11,10 +11,10 @@ public class DivAction extends BinaryAction {
     }
 
     @Override
-    public void act() {
-        Equation newEq = new DivEquation(emilyView);
+    protected void privateAct() {
+        Equation newEq = new DivEquation(myView);
 
-        act(newEq);
+        super.privateAct(newEq);
     }
 
 }

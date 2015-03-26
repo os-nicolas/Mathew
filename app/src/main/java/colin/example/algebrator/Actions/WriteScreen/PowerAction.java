@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PowerEquation;
@@ -13,9 +13,9 @@ public class PowerAction extends BinaryAction {
     }
 
     @Override
-    public void act() {
-        Equation newEq = new PowerEquation(emilyView);
+    protected void privateAct() {
+        Equation newEq = new PowerEquation(myView);
 
-        act(newEq);
+        privateAct(newEq);
     }
 }

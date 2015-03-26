@@ -222,13 +222,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return result;
     }
 
+    private boolean needsUpdateWidth = false;
     public float measureWidth() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureWidthAt || (!active && lastMeasureWidth != -1)) && !needsUpdate) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureWidthAt || (!active && lastMeasureWidth != -1)) && !needsUpdateWidth) {
             return lastMeasureWidth;
         } else {
             lastMeasureWidth = privateMeasureWidth();
             lastMeasureWidthAt = Algebrator.getAlgebrator().at;
-            needsUpdate = false;
+            needsUpdateWidth = false;
             return lastMeasureWidth;
         }
     }
@@ -325,20 +326,23 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public void deepNeedsUpdate(){
-        needsUpdate = true;
+        needsUpdateHeightLower = true;
+        needsUpdateHeightUpper = true;
+        needsUpdateHeight= true;
+        needsUpdateWidth = true;
         for (Equation e: this){
             e.deepNeedsUpdate();
         }
     }
 
-    public boolean needsUpdate =false;
+    public boolean needsUpdateHeightLower =false;
     public float measureHeightLower() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightLowerAt || (!active && lastMeasureHeightLower != -1)) && !needsUpdate) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightLowerAt || (!active && lastMeasureHeightLower != -1)) && !needsUpdateHeightLower) {
             return lastMeasureHeightLower;
         } else {
             lastMeasureHeightLower = privateMeasureHeightLower();
             lastMeasureHeightLowerAt = Algebrator.getAlgebrator().at;
-            needsUpdate = false;
+            needsUpdateHeightLower = false;
             return lastMeasureHeightLower;
         }
     }
@@ -358,13 +362,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return totalHeight;
     }
 
+    private boolean needsUpdateHeightUpper = false;
     public float measureHeightUpper() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightUpperAt || (!active && lastMeasureHeightUpper != -1)) && !needsUpdate) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightUpperAt || (!active && lastMeasureHeightUpper != -1)) && !needsUpdateHeightUpper) {
             return lastMeasureHeightUpper;
         } else {
             lastMeasureHeightUpper = privateMeasureHeightUpper();
             lastMeasureHeightUpperAt = Algebrator.getAlgebrator().at;
-            needsUpdate = false;
+            needsUpdateHeightUpper = false;
             return lastMeasureHeightUpper;
         }
 
@@ -404,13 +409,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
+    private boolean needsUpdateHeight = false;
     public float measureHeight() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightAt || (!active && lastMeasureHeight != -1)) && !needsUpdate) {
+        if ((Algebrator.getAlgebrator().at == lastMeasureHeightAt || (!active && lastMeasureHeight != -1)) && !needsUpdateHeight) {
             return lastMeasureHeight;
         } else {
             lastMeasureHeight = privateMeasureHeight();
             lastMeasureHeightAt = Algebrator.getAlgebrator().at;
-            needsUpdate = false;
+            needsUpdateHeight = false;
             return lastMeasureHeight;
         }
 
@@ -1232,7 +1238,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return toInsert2;
     }
 
-    protected Equation negate() {
+    public Equation negate() {
         Equation result = new MinusEquation(owner);
         result.add(this.copy());
         return result;
@@ -1473,6 +1479,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
 
+
+
     private class Clostest {
         public float dis;
         public HashSet<Equation> eqs;
@@ -1487,6 +1495,18 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return closetOn(x, y, new Clostest(9999999, new HashSet<Equation>())).eqs;
     }
 
+    public boolean containsSame(Equation lookingFor) {
+        if (this.same(lookingFor) || this.removeNeg().same(lookingFor)){
+            return true;
+        }
+        for (Equation e: this){
+            if (e.same(lookingFor) || e.removeNeg().same(lookingFor)){
+                return true;
+            }
+        }
+
+        return false;
+    }
     private Clostest closetOn(float x, float y, Clostest clostest) {
         for (int i = 0; i < lastPoint.size(); i++) {
             if (lastPoint.get(i).on(x, y,this)) {

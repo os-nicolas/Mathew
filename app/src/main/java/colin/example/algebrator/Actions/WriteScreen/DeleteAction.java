@@ -1,13 +1,14 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.BinaryEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
+import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.EmilyView;
 
-public class DeleteAction extends Action {
+public class DeleteAction extends Action<EmilyView> {
 
     public String num;
 
@@ -16,22 +17,22 @@ public class DeleteAction extends Action {
     }
 
     @Override
-    public void act() {
-        if (emilyView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation)emilyView.selected).goDark();
-            Equation l = emilyView.left();
+    protected void privateAct() {
+        if (myView.selected instanceof PlaceholderEquation) {
+            ((PlaceholderEquation)myView.selected).goDark();
+            Equation l = myView.left();
             if (l != null) {
                 if (l.parent instanceof BinaryEquation) {
                     l.parent.replace(l);
                     // didn't we just check this? confusing i know but since the replace our l.parent has changed
                     if (!(l.parent instanceof  BinaryEquation)) {
                         int pos = l.parent.indexOf(l);
-                        l.parent.add(pos + 1, emilyView.selected);
+                        l.parent.add(pos + 1, myView.selected);
                     }else{
-                        Equation write = new WritingEquation(emilyView);
+                        Equation write = new WritingEquation(myView);
                         l.replace(write);
                         write.add(l);
-                        write.add(emilyView.selected);
+                        write.add(myView.selected);
                     }
                 } else if (l instanceof NumConstEquation) {
                     if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
@@ -49,23 +50,23 @@ public class DeleteAction extends Action {
                     l.remove();
                 }
             }
-        } else if (emilyView.selected != null) {
+        } else if (myView.selected != null) {
             // if they have a stack of stuff selected kill it all and replace it wiht a new Placeholder
-            Equation newEq = new PlaceholderEquation(emilyView);
-            if (emilyView.selected.parent == null) {
-                Equation writeEq = new WritingEquation(emilyView);
+            Equation newEq = new PlaceholderEquation(myView);
+            if (myView.selected.parent == null) {
+                Equation writeEq = new WritingEquation(myView);
                 writeEq.add(newEq);
                 newEq = writeEq;
             }
-            emilyView.selected.replace(newEq);
+            myView.selected.replace(newEq);
             if (newEq instanceof PlaceholderEquation) {
                 newEq.setSelected(true);
             } else if (newEq.get(0) instanceof PlaceholderEquation) {
                 newEq.get(0).setSelected(true);
             }
         }
-        //else if (emilyView.selected instanceof EqualsEquation){
-        //	emilyView.selected.remove();
+        //else if (myView.selected instanceof EqualsEquation){
+        //	myView.selected.remove();
         //}
     }
 

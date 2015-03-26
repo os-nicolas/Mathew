@@ -22,6 +22,8 @@ import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.VarEquation;
+import colin.example.algebrator.Actions.SovleScreen.SolveQuadratic;
+import colin.example.algebrator.Actions.WriteScreen.Solve;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
@@ -49,6 +51,10 @@ public class ColinView extends SuperView {
         canDrag = true;
         buttonsPercent = 1f;
         alreadySolved = false;
+
+        Button quadratic = new Button("Use quadratic formula", new SolveQuadratic(this));
+        quadratic.setLocation(0f, 1f, 8f / 9f, 9f / 9f);
+        buttons.add(quadratic);
     }
 
     @Override

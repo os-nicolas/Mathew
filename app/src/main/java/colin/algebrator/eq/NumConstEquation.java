@@ -124,6 +124,9 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
     }
 
 
+    public boolean isZero() {
+        return getValue().doubleValue() == 0.0;
+    }
 }
 
 

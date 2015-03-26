@@ -220,7 +220,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
 
     @Override
-    protected Equation negate() {
+    public Equation negate() {
         Equation result = this.copy();
         result.set(0,result.get(0).negate());
         return result;

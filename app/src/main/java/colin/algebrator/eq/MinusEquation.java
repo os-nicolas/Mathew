@@ -15,7 +15,7 @@ public class MinusEquation extends MonaryEquation {
     }
 
     @Override
-    protected Equation negate() {
+    public Equation negate() {
         return this.get(0).copy();
     }
 

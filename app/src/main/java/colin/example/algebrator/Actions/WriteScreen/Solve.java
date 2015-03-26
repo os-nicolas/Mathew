@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.SolveScreen;
 import colin.example.algebrator.tuts.HitSolveMessage;
 import colin.example.algebrator.tuts.TutMessage;
+import colin.example.algebrator.Actions.Action;
 
 
 public class Solve extends Action {
@@ -24,16 +25,16 @@ public class Solve extends Action {
     public static Equation mine;
 
     @Override
-    public void act() {
+    protected void privateAct() {
         // we need to copy stupid
-        mine = emilyView.stupid.copy();
+        mine = myView.stupid.copy();
 
         // we want to remove the place holder
-        if (emilyView.selected instanceof PlaceholderEquation) {
-            Equation at = emilyView.stupid;
+        if (myView.selected instanceof PlaceholderEquation) {
+            Equation at = myView.stupid;
             Equation myAt = mine;
-            while (!at.equals(emilyView.selected)) {
-                int index = at.deepIndexOf(emilyView.selected);
+            while (!at.equals(myView.selected)) {
+                int index = at.deepIndexOf(myView.selected);
                 at = at.get(index);
                 myAt = myAt.get(index);
             }
@@ -59,7 +60,7 @@ public class Solve extends Action {
 
                         Equation newEq = ((WritingEquation) Solve.mine).convert();
 
-                        myContext = emilyView.getContext();
+                        myContext = myView.getContext();
                         ColinView colinView = new ColinView(myContext);
                         colinView.stupid = newEq;
                         colinView.centerEq();
@@ -77,7 +78,7 @@ public class Solve extends Action {
                     protected void onPostExecute(Long v) {
                     }
                 };
-                emilyView.disabled = true;
+                myView.disabled = true;
                 task.execute();
             }
         }

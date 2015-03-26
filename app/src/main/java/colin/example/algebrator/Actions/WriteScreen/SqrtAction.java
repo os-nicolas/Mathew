@@ -1,9 +1,6 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
-import colin.algebrator.eq.BinaryEquation;
 import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingSqrtEquation;
 import colin.example.algebrator.EmilyView;
 
@@ -16,8 +13,8 @@ public class SqrtAction extends MonaryAction {
     }
 
     @Override
-    public void act() {
-        Equation newEq = new WritingSqrtEquation(emilyView);
+    protected void privateAct() {
+        Equation newEq = new WritingSqrtEquation(myView);
         monaryInsert(newEq);
     }
 

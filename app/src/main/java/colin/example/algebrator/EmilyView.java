@@ -15,21 +15,21 @@ import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.EquationDis;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
-import colin.example.algebrator.Actions.DecimalAction;
-import colin.example.algebrator.Actions.DeleteAction;
-import colin.example.algebrator.Actions.DivAction;
-import colin.example.algebrator.Actions.EqualsAction;
-import colin.example.algebrator.Actions.LeftAction;
-import colin.example.algebrator.Actions.MinusAction;
-import colin.example.algebrator.Actions.NumberAction;
-import colin.example.algebrator.Actions.ParenthesesAction;
-import colin.example.algebrator.Actions.PlusAction;
-import colin.example.algebrator.Actions.PowerAction;
-import colin.example.algebrator.Actions.RightAction;
-import colin.example.algebrator.Actions.Solve;
-import colin.example.algebrator.Actions.SqrtAction;
-import colin.example.algebrator.Actions.TimesAction;
-import colin.example.algebrator.Actions.VarAction;
+import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
+import colin.example.algebrator.Actions.WriteScreen.DeleteAction;
+import colin.example.algebrator.Actions.WriteScreen.DivAction;
+import colin.example.algebrator.Actions.WriteScreen.EqualsAction;
+import colin.example.algebrator.Actions.WriteScreen.LeftAction;
+import colin.example.algebrator.Actions.WriteScreen.MinusAction;
+import colin.example.algebrator.Actions.WriteScreen.NumberAction;
+import colin.example.algebrator.Actions.WriteScreen.ParenthesesAction;
+import colin.example.algebrator.Actions.WriteScreen.PlusAction;
+import colin.example.algebrator.Actions.WriteScreen.PowerAction;
+import colin.example.algebrator.Actions.WriteScreen.RightAction;
+import colin.example.algebrator.Actions.WriteScreen.Solve;
+import colin.example.algebrator.Actions.WriteScreen.SqrtAction;
+import colin.example.algebrator.Actions.WriteScreen.TimesAction;
+import colin.example.algebrator.Actions.WriteScreen.VarAction;
 import colin.example.algebrator.tuts.TutMessage;
 
 public class EmilyView extends SuperView {
@@ -64,7 +64,7 @@ public class EmilyView extends SuperView {
         final EmilyView ev =this;
         if (stupid == null) {
             initEq();
-        }else {
+        }else if (stupid.size() != 1 && stupid instanceof WritingEquation){
             message.enQue(TutMessage.aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.clear),new Callable() {
                 @Override
                 public Object call() throws Exception {
@@ -140,24 +140,7 @@ public class EmilyView extends SuperView {
         addButtonsRow(thridRow, 8f / 9f, 9f / 9f);
     }
 
-    private void addButtonsRow(ArrayList<Button> row, float top, float bottum) {
-        addButtonsRow(row, 0, 1, top, bottum);
 
-    }
-
-    private void addButtonsRow(ArrayList<Button> row, float left, float right, float top, float bottum) {
-        float count = row.size();
-        float at = left;
-        float step = (right - left) / count;
-
-        for (float i = 0; i < count; i++) {
-            Button b = row.get((int) i);
-            b.setLocation(at, at + step, top, bottum);
-            buttons.add(b);
-            at += step;
-        }
-
-    }
 
     @Override
     protected void onDraw(Canvas canvas) {

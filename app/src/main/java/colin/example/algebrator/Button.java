@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.view.MotionEvent;
 
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.Actions.WriteScreen.VarAction;
 import colin.example.algebrator.tuts.TutMessage;
 import colin.example.algebrator.tuts.TypeEqTut;
 

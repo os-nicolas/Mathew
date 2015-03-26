@@ -7,26 +7,34 @@ import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
-import colin.example.algebrator.EmilyView;
-
+import colin.example.algebrator.SuperView;
 
 /**
- * How <b>b</b>u<i>t</i>t<b><i>o</b></i>ns know what to do
- *
- * @author Emily
+ * Created by Colin_000 on 3/25/2015.
  */
-public abstract class Action {
-    public EmilyView emilyView;
 
-    public Action(EmilyView emilyView) {
-        this.emilyView = emilyView;
+public abstract class Action<myView extends SuperView> {
+    public myView myView;
+
+    public Action(myView myView) {
+        this.myView = myView;
     }
 
-    abstract public void act();
+    public boolean canAct(){
+        return true;
+    }
+
+    public void act(){
+        if (canAct()){
+            privateAct();
+        }
+    }
+
+    protected abstract void privateAct();
 
     protected boolean hasMatch() {
         int depth = 1;
-        Equation current = emilyView.selected;
+        Equation current = myView.selected;
         current = current.left();
         while (true) {
             if (current != null) {
@@ -50,23 +58,23 @@ public abstract class Action {
 
 
     protected void addToBlock(Equation numEq) {
-        PlaceholderEquation phe = new PlaceholderEquation(emilyView);
-        if (emilyView.selected.parent instanceof WritingEquation) {
+        PlaceholderEquation phe = new PlaceholderEquation(myView);
+        if (myView.selected.parent instanceof WritingEquation) {
             // add to the parent
-            int at = emilyView.selected.parent.indexOf(emilyView.selected);
-            emilyView.selected.parent.add(at + 1, numEq);
-            emilyView.selected.parent.add(at + 2, phe);
+            int at = myView.selected.parent.indexOf(myView.selected);
+            myView.selected.parent.add(at + 1, numEq);
+            myView.selected.parent.add(at + 2, phe);
             phe.setSelected(true);
-        } else if (emilyView.selected instanceof WritingEquation) {
+        } else if (myView.selected instanceof WritingEquation) {
             // add to what is selected
-            emilyView.selected.add(numEq);
-            emilyView.selected.add(phe);
+            myView.selected.add(numEq);
+            myView.selected.add(phe);
             phe.setSelected(true);
         } else {
             // replace selected with a new WritingEqution that contains selects
-            Equation write = new WritingEquation(emilyView);
-            Equation oldEq = emilyView.selected;
-            emilyView.selected.replace(write);
+            Equation write = new WritingEquation(myView);
+            Equation oldEq = myView.selected;
+            myView.selected.replace(write);
             write.add(oldEq);
             write.add(numEq);
             write.add(phe);
@@ -78,14 +86,14 @@ public abstract class Action {
         tryMove(false);
     }
 
-    void tryMoveLeft() {
+    public void tryMoveLeft() {
         tryMove(true);
     }
 
     void tryMove(boolean left) {
         Equation current = getMoveCurrent(left);
         if (current != null){
-            Equation oldEq = emilyView.selected;
+            Equation oldEq = myView.selected;
             oldEq.remove();
             int at = current.parent.indexOf(current);
             if (current.parent instanceof BinaryEquation) {
@@ -102,14 +110,14 @@ public abstract class Action {
                 current.parent.add(at +(left?0:1), oldEq);
             }
         }else {
-            Equation next = (left?emilyView.selected.left():emilyView.selected.right());
+            Equation next = (left? myView.selected.left(): myView.selected.right());
             if (next != null) {
-                Equation oldEq = emilyView.selected;
+                Equation oldEq = myView.selected;
 
                 while (next.size() != 0) {
                     next = next.get((left?next.size() - 1:0));
                 }
-                if (next.parent.equals(emilyView.selected.parent)) {
+                if (next.parent.equals(myView.selected.parent)) {
                     int at = next.parent.indexOf(next);
                     oldEq.justRemove();
                     // at does not need to be adjusted since we remove the old equation
@@ -117,7 +125,7 @@ public abstract class Action {
                 } else {
                     if (next.parent instanceof BinaryEquation || next instanceof MonaryEquation) {
                         Equation oldNext = next;
-                        Equation newEq = new WritingEquation(emilyView);
+                        Equation newEq = new WritingEquation(myView);
                         next.replace(newEq);
                         if (left){
                             newEq.add(oldNext);
@@ -141,7 +149,7 @@ public abstract class Action {
 
 
     private Equation getMoveCurrent(boolean left) {
-        Equation current = emilyView.selected;
+        Equation current = myView.selected;
         while (current.parent != null && current.parent.indexOf(current) == (left?0:current.parent.size()-1)) {
             current = current.parent;
             if (current instanceof BinaryEquation) {

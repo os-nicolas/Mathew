@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.NumConstEquation;
@@ -10,20 +10,21 @@ import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
 import colin.algebrator.eq.WritingSqrtEquation;
 import colin.example.algebrator.EmilyView;
+import colin.example.algebrator.Actions.Action;
 
 /**
  * Created by Colin on 1/13/2015.
  */
-public abstract class BinaryAction extends Action {
+public abstract class BinaryAction extends Action<EmilyView> {
 
     public BinaryAction(EmilyView emilyView) {
         super(emilyView);
     }
 
-    protected void act(Equation newEq) {
-        if (emilyView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) emilyView.selected).goDark();
-            Equation l = emilyView.left();
+    protected void privateAct(Equation newEq) {
+        if (myView.selected instanceof PlaceholderEquation) {
+            ((PlaceholderEquation) myView.selected).goDark();
+            Equation l = myView.left();
             boolean can = l != null;
             if (can && (l instanceof WritingLeafEquation || l instanceof VarEquation || l instanceof NumConstEquation)) {
                 can = !l.isOpLeft();
@@ -41,26 +42,26 @@ public abstract class BinaryAction extends Action {
                 }
             }
             if (can) {
-                emilyView.selected.justRemove();
+                myView.selected.justRemove();
                 Equation oldEq = l;
 
                 oldEq.replace(newEq);
                 newEq.add(oldEq);
-                newEq.add(emilyView.selected);
+                newEq.add(myView.selected);
             }
         }
 
-        if (!(emilyView.selected instanceof PlaceholderEquation)) {
-            if (emilyView.selected != null) {
-                boolean can = countEquals(emilyView.selected) == 0;
-                if (emilyView.selected instanceof WritingEquation) {
-                    Equation eq = emilyView.selected.get(0);
+        if (!(myView.selected instanceof PlaceholderEquation)) {
+            if (myView.selected != null) {
+                boolean can = countEquals(myView.selected) == 0;
+                if (myView.selected instanceof WritingEquation) {
+                    Equation eq = myView.selected.get(0);
                     if (eq instanceof WritingLeafEquation || eq instanceof NumConstEquation || eq instanceof VarEquation) {
                         can = can && !eq.isOpRight();
                     }
                 }
-                if (emilyView.selected instanceof WritingEquation) {
-                    Equation eq = emilyView.selected.get(emilyView.selected.size() - 1);
+                if (myView.selected instanceof WritingEquation) {
+                    Equation eq = myView.selected.get(myView.selected.size() - 1);
                     if (eq instanceof WritingLeafEquation || eq instanceof NumConstEquation || eq instanceof VarEquation) {
                         can = can && !eq.isOpLeft();
                     }
@@ -68,7 +69,7 @@ public abstract class BinaryAction extends Action {
 
                 if (can) {
 
-                    Equation oldEq = emilyView.selected;
+                    Equation oldEq = myView.selected;
                     if (newEq instanceof PowerEquation && !(oldEq.get(0) instanceof WritingSqrtEquation)) {
                         oldEq.remove(0);
                         Equation swap = oldEq;
@@ -80,14 +81,14 @@ public abstract class BinaryAction extends Action {
                     }
 
                     if (oldEq.parent == null) {
-                        Equation writeEq = new WritingEquation(emilyView);
+                        Equation writeEq = new WritingEquation(myView);
                         writeEq.add(newEq);
                         oldEq.replace(writeEq);
                     } else {
                         oldEq.replace(newEq);
                     }
                     newEq.add(oldEq);
-                    Equation placeHolder = new PlaceholderEquation(emilyView);
+                    Equation placeHolder = new PlaceholderEquation(myView);
                     newEq.add(placeHolder);
                     placeHolder.setSelected(true);
                 }

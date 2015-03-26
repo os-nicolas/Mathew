@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.BinaryEquation;
 import colin.algebrator.eq.Equation;
@@ -6,8 +6,9 @@ import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.example.algebrator.EmilyView;
+import colin.example.algebrator.Actions.Action;
 
-public class DecimalAction extends Action {
+public class DecimalAction extends Action<EmilyView> {
 
     public String dec;
 
@@ -17,17 +18,17 @@ public class DecimalAction extends Action {
     }
 
     @Override
-    public void act() {
-        if (emilyView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation)emilyView.selected).goDark();
-            Equation l = emilyView.left();
+    protected void privateAct() {
+        if (myView.selected instanceof PlaceholderEquation) {
+            ((PlaceholderEquation) myView.selected).goDark();
+            Equation l = myView.left();
             if ((l != null) && (l instanceof NumConstEquation && l.getDisplay(-1).contains(".") == false)) {
                 if (!(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
                     String toSet = ((NumConstEquation)l).getDisplaySimple() + dec;
                     l.setDisplay(toSet);
                 } else {
-                    Equation oldEq = emilyView.selected;
-                    Equation holder = new WritingEquation(emilyView);
+                    Equation oldEq = myView.selected;
+                    Equation holder = new WritingEquation(myView);
                     Equation newEq = getEq();
                     oldEq.replace(holder);
                     holder.add(newEq);
@@ -36,10 +37,10 @@ public class DecimalAction extends Action {
                 }
             } else {
                 if (l == null || !(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
-                    emilyView.insert(getEq());
+                    myView.insert(getEq());
                 }else{
-                    Equation oldEq = emilyView.selected;
-                    Equation holder = new WritingEquation(emilyView);
+                    Equation oldEq = myView.selected;
+                    Equation holder = new WritingEquation(myView);
                     Equation newEq = getEq();
                     oldEq.replace(holder);
                     holder.add(newEq);
@@ -48,7 +49,7 @@ public class DecimalAction extends Action {
                 }
             }
         } else {
-            //if (emilyView.selected != null) {
+            //if (myView.selected != null) {
             //    addToBlock(getEq());
             //}
 
@@ -56,7 +57,7 @@ public class DecimalAction extends Action {
     }
 
     private Equation getEq() {
-        NumConstEquation numEq = new NumConstEquation(0, emilyView);
+        NumConstEquation numEq = new NumConstEquation(0, myView);
         numEq.setDisplay(numEq.getDisplay(0) + ".");
         return numEq;
     }

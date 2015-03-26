@@ -946,4 +946,23 @@ public abstract class SuperView extends View implements
 
     protected abstract void resolveSelected(MotionEvent event);
 
+    protected void addButtonsRow(ArrayList<Button> row, float top, float bottum) {
+        addButtonsRow(row, 0, 1, top, bottum);
+
+    }
+
+    protected void addButtonsRow(ArrayList<Button> row, float left, float right, float top, float bottum) {
+        float count = row.size();
+        float at = left;
+        float step = (right - left) / count;
+
+        for (float i = 0; i < count; i++) {
+            Button b = row.get((int) i);
+            b.setLocation(at, at + step, top, bottum);
+            buttons.add(b);
+            at += step;
+        }
+
+    }
+
 }

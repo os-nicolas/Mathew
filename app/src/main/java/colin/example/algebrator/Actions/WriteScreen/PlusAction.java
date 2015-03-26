@@ -1,4 +1,4 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.WritingLeafEquation;
@@ -12,8 +12,8 @@ public class PlusAction extends InlineOpAction {
     }
 
     @Override
-    public void act() {
-        Equation newEq = new WritingLeafEquation("+", emilyView);
+    protected void privateAct() {
+        Equation newEq = new WritingLeafEquation("+", myView);
 
         inlineInsert(newEq);
     }

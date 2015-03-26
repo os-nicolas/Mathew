@@ -1,24 +1,25 @@
-package colin.example.algebrator.Actions;
+package colin.example.algebrator.Actions.WriteScreen;
 
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
+import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.EmilyView;
 
 /**
  * Created by Colin on 2/22/2015.
  */
-public abstract class InlineOpAction extends Action {
+public abstract class InlineOpAction extends Action<EmilyView> {
     public InlineOpAction(EmilyView emilyView) {
         super(emilyView);
     }
 
     protected void inlineInsert(Equation newEq) {
-        if (emilyView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation)emilyView.selected).goDark();
+        if (myView.selected instanceof PlaceholderEquation) {
+            ((PlaceholderEquation) myView.selected).goDark();
 
-            Equation l = emilyView.left();
+            Equation l = myView.left();
             boolean can = true;
             if (l instanceof WritingLeafEquation) {
                 can = !((WritingLeafEquation) l).isOpLeft();
@@ -29,7 +30,7 @@ public abstract class InlineOpAction extends Action {
 
             if (can) {
 
-                emilyView.insert(newEq);
+                myView.insert(newEq);
             }
         }
     }

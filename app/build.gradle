@@ -8,8 +8,8 @@ android {
         applicationId "colin.example.algebrator"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 19
-        versionName "0.19"
+        versionCode 20
+        versionName "0.20"
     }
     buildTypes {
         release {

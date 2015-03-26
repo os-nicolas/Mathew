@@ -23,7 +23,7 @@ public class PlusMinusEquation extends MonaryEquation {
     }
 
     @Override
-    protected Equation negate() {
+    public Equation negate() {
         return copy();
     }
 

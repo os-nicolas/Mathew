@@ -234,7 +234,7 @@ public class Operations {
     }
 
 
-    private static MultiCountData remainder(MultiCountData left, MultiCountData common) {
+    public static MultiCountData remainder(MultiCountData left, MultiCountData common) {
         MultiCountData result = new MultiCountData();
 
         ArrayList<EquationCounts> leftCopy = new ArrayList<EquationCounts>();
