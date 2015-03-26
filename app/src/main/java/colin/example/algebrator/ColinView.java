@@ -49,12 +49,13 @@ public class ColinView extends SuperView {
 
     protected void init(Context context) {
         canDrag = true;
-        buttonsPercent = 1f;
+        BASE_BUTTON_PERCENT = 1f;
+        buttonsPercent = BASE_BUTTON_PERCENT;
         alreadySolved = false;
 
-        Button quadratic = new Button("Use quadratic formula", new SolveQuadratic(this));
-        quadratic.setLocation(0f, 1f, 8f / 9f, 9f / 9f);
-        buttons.add(quadratic);
+        PopUpButton quadratic = new PopUpButton(this,"Use quadratic formula", new SolveQuadratic(this));
+        quadratic.setTargets(1f / 9f,0f,1f);
+        popUpButtons.add(quadratic);
     }
 
     @Override

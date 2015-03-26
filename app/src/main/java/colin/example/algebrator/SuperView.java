@@ -39,7 +39,8 @@ import colin.algebrator.eq.WritingLeafEquation;
 import colin.example.algebrator.tuts.TutMessage;
 
 public abstract class SuperView extends View implements
-        OnTouchListener {//Runnable,
+        OnTouchListener {
+    protected float BASE_BUTTON_PERCENT=1f;
 
     public MessageBar message = new MessageBar(this);
     public Equation selected;
@@ -55,11 +56,11 @@ public abstract class SuperView extends View implements
     protected float buttonsPercent;
     public ArrayList<Animation> animation = new ArrayList<Animation>();
     public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
+    public ArrayList<PopUpButton> popUpButtons = new ArrayList<PopUpButton>();
     public boolean trackFinger = false;
     public boolean trackFingerUp = true;
     public float trackFingerX = -1;
     public float trackFingerY = -1;
-
 
     private double lastZoomDis;
 
@@ -340,7 +341,12 @@ public abstract class SuperView extends View implements
             buttons.get(i).draw(canvas);
         }
 
-
+        buttonsPercent = BASE_BUTTON_PERCENT;
+        for (int i = 0; i < popUpButtons.size(); i++) {
+            PopUpButton myPUB = popUpButtons.get(i);
+            myPUB.updateLocation();
+            myPUB.draw(canvas);
+        }
 
         for (int i = 0; i < animation.size(); i++) {
             animation.get(i).draw(canvas);

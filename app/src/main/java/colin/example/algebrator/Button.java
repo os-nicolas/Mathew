@@ -32,13 +32,16 @@ public class Button implements  Physical {
     String text;
     Action myAction;
 
+    SuperView owner;
+
     public Button() {
 
     }
 
-    public Button(String text, Action myAction) {
+    public Button(SuperView owner, String text, Action myAction) {
         super();
 
+        this.owner = owner;
         this.myAction = myAction;
         this.text = text;
         this.bkgPaint = new TextPaint(Algebrator.getAlgebrator().bkgPaint);
@@ -56,8 +59,8 @@ public class Button implements  Physical {
         this.bottom = bottom;
     }
 
-    public Button(String text, Action myAction, float left, float right, float top, float bottom) {
-        this(text, myAction);
+    public Button(SuperView owner,String text, Action myAction, float left, float right, float top, float bottom) {
+        this(owner,text, myAction);
         setLocation(left, right, top, bottom);
     }
 
