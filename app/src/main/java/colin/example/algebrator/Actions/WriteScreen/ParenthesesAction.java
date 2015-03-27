@@ -6,8 +6,8 @@ import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
-import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.EmilyView;
 
 public class ParenthesesAction extends Action<EmilyView> {
 
@@ -19,13 +19,9 @@ public class ParenthesesAction extends Action<EmilyView> {
     }
 
     @Override
-    protected void privateAct() {
+    public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
             ((PlaceholderEquation) myView.selected).goDark();
-
-
-            Equation newEq = new WritingPraEquation(left, myView);
-
 
             boolean can = true;
             boolean op = false;
@@ -33,26 +29,36 @@ public class ParenthesesAction extends Action<EmilyView> {
 
 
             if (next instanceof WritingLeafEquation) {
-                if (left){
+                if (left) {
                     op = ((WritingLeafEquation) next).isOpRight();
-                }else {
+                } else {
                     op = ((WritingLeafEquation) next).isOpLeft();
                 }
             }
             can &= !op;
 
-            if (can) {
-                if (!(myView.selected.parent instanceof BinaryEquation)) {
-                    myView.insert(newEq);
-                } else {
-                    Equation oldEq = myView.selected;
-                    Equation holder = new WritingEquation(myView);
-                    oldEq.replace(holder);
-                    holder.add(newEq);
-                    holder.add(oldEq);
-                    oldEq.setSelected(true);
-                }
-            }
+            return can;
+        }
+        return false;
+
+    }
+
+    @Override
+    protected void privateAct() {
+
+
+        Equation newEq = new WritingPraEquation(left, myView);
+
+
+        if (!(myView.selected.parent instanceof BinaryEquation)) {
+            myView.insert(newEq);
+        } else {
+            Equation oldEq = myView.selected;
+            Equation holder = new WritingEquation(myView);
+            oldEq.replace(holder);
+            holder.add(newEq);
+            holder.add(oldEq);
+            oldEq.setSelected(true);
         }
     }
 

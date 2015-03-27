@@ -33,7 +33,7 @@ public class PlaceholderEquation extends LeafEquation {
 
     @Override
 	public Equation copy() {
-		Log.e("copy", "this should prolly not be called");
+		//Log.e("copy", "this should prolly not be called");
 		Equation result = new PlaceholderEquation(this.owner,this);
 		return result;
 	}

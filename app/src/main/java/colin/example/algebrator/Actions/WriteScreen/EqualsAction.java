@@ -4,8 +4,8 @@ import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
-import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.EmilyView;
 
 /**
  * Created by Colin on 1/7/2015.
@@ -16,7 +16,7 @@ public class EqualsAction extends Action<EmilyView> {
     }
 
     @Override
-    protected void privateAct() {
+    public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
             ((PlaceholderEquation) myView.selected).goDark();
 
@@ -34,26 +34,29 @@ public class EqualsAction extends Action<EmilyView> {
             can = can && !(l instanceof WritingPraEquation && ((WritingPraEquation) l).left);
             // we can't add if we are not adding to the rootWriteEquation
             if (can) {
-                can = can && l.parent.parent == null;
+                can = l.parent.parent == null;
                 // but we can move out
                 if (myView.selected.right() == null) {
                     can = true;
-                    while (canMoveRight()) {
-                        tryMoveRight();
-                    }
                 }
             }
+            return can;
+        }
+        return false;
 
-            // TODO we should moveright if that would help
+    }
 
-            if (can) {
-                Equation newEq = new WritingLeafEquation("=", myView);
-                myView.insert(newEq);
+    @Override
+    protected void privateAct() {
+        if (myView.selected.right() == null) {
+            while (canMoveRight()) {
+                tryMoveRight();
             }
         }
 
-        //TODO this probably want's an else
+        Equation newEq = new WritingLeafEquation("=", myView);
+        myView.insert(newEq);
     }
-
-
 }
+
+

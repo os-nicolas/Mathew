@@ -21,6 +21,7 @@ import colin.algebrator.eq.MonaryEquation;
 import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.Operations;
+import colin.algebrator.eq.PowerEquation;
 import colin.algebrator.eq.VarEquation;
 import colin.example.algebrator.Actions.SovleScreen.SolveQuadratic;
 import colin.example.algebrator.Actions.WriteScreen.Solve;
@@ -176,7 +177,9 @@ public class ColinView extends SuperView {
             if (selected != null) {
                 myMode = TouchMode.DRAG;
                 // we need to take all the - signs with us
-                while (selected.parent instanceof MonaryEquation) {
+                // you can't do anything with the contents of a power equation so if they have that selected let's get the whole power equation
+                while (selected.parent instanceof MonaryEquation
+                        || (selected.parent instanceof PowerEquation && selected.parent.indexOf(selected)==0) ) {
                     selected.parent.setSelected(true);
                 }
                 //if (selected.canPop()) {
@@ -232,7 +235,7 @@ public class ColinView extends SuperView {
         Log.d("resolving selected, will select: ", db1);
         Log.d("resolving selected, selected: ", (selected == null ? "null" : selected.toString()));
 
-        ArrayList<Equation> selectingSet = new ArrayList<Equation>();
+        ArrayList<Equation> selectingSet;
 
         if (event.getAction() == MotionEvent.ACTION_DOWN){
             willRemove = false;
@@ -242,7 +245,6 @@ public class ColinView extends SuperView {
                 // if they did not click anything let's not select anything
                 selectingSet = new ArrayList<>();
             }else {
-
                 // if everything we are adding is deep contained by selected we want to remove
                 // otherwise we want to add what is not already contained
 

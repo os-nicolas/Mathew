@@ -9,11 +9,12 @@ public class PopUpButton extends Button {
 
     float startAtX=0f;
     float endAtX=1f;
-    float targetHeight=1/9f;
+    float targetHeight=1f/9f;
     float currentHeight=0f;
 
     public PopUpButton(SuperView owner, String text, Action myAction) {
-        super(owner,text,myAction);
+        super(owner, text, myAction);
+        this.textPaint.setAlpha((int) 0);
     }
 
     public void setTargets(float targetHeight, float startAtX, float endAtX){
@@ -24,15 +25,47 @@ public class PopUpButton extends Button {
 
     public void updateLocation(){
 
-            float ybot = owner.buttonsPercent;
+        float ybot = owner.buttonsPercent;
+        float rate = Algebrator.getAlgebrator().getRate();
             if (myAction.canAct()){
-                float rate = Algebrator.getAlgebrator().getRate();
-                currentHeight = (currentHeight*(rate-1) + targetHeight)/rate;
+                if (currentHeight < targetHeight) {
+                    currentHeight = (currentHeight * (rate - 1) + targetHeight) / rate;
+                    if ((int)(currentHeight*100)==(int)((currentHeight * (rate - 1) + targetHeight)*100 / rate)){
+                        currentHeight=targetHeight;
+                    }
+                }else {
+                    float currentAlpha = this.textPaint.getAlpha();
+                    currentAlpha = ((float)(currentAlpha * (rate - 1) + 0xff)) / rate;
+                    if ((int)(currentAlpha)==(int)((currentAlpha * (rate - 1) + 0xff) / rate)){
+                        currentAlpha=0xff;
+                    }
+                    this.textPaint.setAlpha((int) currentAlpha);
+                }
+            }else{
+                float currentAlpha = this.textPaint.getAlpha();
+                if (0 < currentAlpha) {
+                    currentAlpha = (currentAlpha * (rate - 1) ) / rate;
+                    if ((int)currentAlpha==(int)((currentAlpha * (rate - 1)) / rate)){
+                        currentAlpha=0;
+                    }
+                    this.textPaint.setAlpha((int) currentAlpha);
+                }else {
+                    currentHeight = (currentHeight * (rate - 1) + 0) / rate;
+                    if ((int)currentHeight*100==(int)((currentHeight * (rate - 1) + 0)*100 / rate)){
+                        currentHeight=0;
+                    }
+                }
             }
             float ytop = ybot-currentHeight;
 
             owner.buttonsPercent = ytop;
 
             setLocation(startAtX,endAtX,ytop,ybot);
+
+
+    }
+
+    protected float targetHeight() {
+        return targetHeight*canvasHeight;
     }
 }

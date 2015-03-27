@@ -17,57 +17,48 @@ public class DeleteAction extends Action<EmilyView> {
     }
 
     @Override
-    protected void privateAct() {
+    public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation)myView.selected).goDark();
+            ((PlaceholderEquation) myView.selected).goDark();
             Equation l = myView.left();
             if (l != null) {
-                if (l.parent instanceof BinaryEquation) {
-                    l.parent.replace(l);
-                    // didn't we just check this? confusing i know but since the replace our l.parent has changed
-                    if (!(l.parent instanceof  BinaryEquation)) {
-                        int pos = l.parent.indexOf(l);
-                        l.parent.add(pos + 1, myView.selected);
-                    }else{
-                        Equation write = new WritingEquation(myView);
-                        l.replace(write);
-                        write.add(l);
-                        write.add(myView.selected);
-                    }
-                } else if (l instanceof NumConstEquation) {
-                    if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
-                        String display =((NumConstEquation) l).getDisplaySimple();
-                        String toSet = (String) display.subSequence(0, display.length() - 1);
-                        if (toSet.length() != 0 && toSet.charAt(0) == '-') {
-                            toSet = toSet.substring(1, toSet.length());
-                        }
-                        ((NumConstEquation) l).setDisplay(toSet);
-                    }
-                    if (((NumConstEquation) l).getDisplaySimple().length() == 0) {
-                        l.remove();
-                    }
-                } else {
-                    l.remove();
-                }
-            }
-        } else if (myView.selected != null) {
-            // if they have a stack of stuff selected kill it all and replace it wiht a new Placeholder
-            Equation newEq = new PlaceholderEquation(myView);
-            if (myView.selected.parent == null) {
-                Equation writeEq = new WritingEquation(myView);
-                writeEq.add(newEq);
-                newEq = writeEq;
-            }
-            myView.selected.replace(newEq);
-            if (newEq instanceof PlaceholderEquation) {
-                newEq.setSelected(true);
-            } else if (newEq.get(0) instanceof PlaceholderEquation) {
-                newEq.get(0).setSelected(true);
+                return true;
             }
         }
-        //else if (myView.selected instanceof EqualsEquation){
-        //	myView.selected.remove();
-        //}
+        return false;
+    }
+
+    @Override
+    protected void privateAct() {
+        Equation l = myView.left();
+        ((PlaceholderEquation) myView.selected).goDark();
+        if (l.parent instanceof BinaryEquation) {
+            l.parent.replace(l);
+            // didn't we just check this? confusing i know but since the replace our l.parent has changed
+            if (!(l.parent instanceof BinaryEquation)) {
+                int pos = l.parent.indexOf(l);
+                l.parent.add(pos + 1, myView.selected);
+            } else {
+                Equation write = new WritingEquation(myView);
+                l.replace(write);
+                write.add(l);
+                write.add(myView.selected);
+            }
+        } else if (l instanceof NumConstEquation) {
+            if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
+                String display = ((NumConstEquation) l).getDisplaySimple();
+                String toSet = (String) display.subSequence(0, display.length() - 1);
+                if (toSet.length() != 0 && toSet.charAt(0) == '-') {
+                    toSet = toSet.substring(1, toSet.length());
+                }
+                ((NumConstEquation) l).setDisplay(toSet);
+            }
+            if (((NumConstEquation) l).getDisplaySimple().length() == 0) {
+                l.remove();
+            }
+        } else {
+            l.remove();
+        }
     }
 
 }

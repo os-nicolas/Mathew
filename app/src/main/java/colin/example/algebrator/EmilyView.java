@@ -15,6 +15,7 @@ import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.EquationDis;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
+import colin.example.algebrator.Actions.WriteScreen.ClearAction;
 import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
 import colin.example.algebrator.Actions.WriteScreen.DeleteAction;
 import colin.example.algebrator.Actions.WriteScreen.DivAction;
@@ -64,14 +65,6 @@ public class EmilyView extends SuperView {
         final EmilyView ev =this;
         if (stupid == null) {
             initEq();
-        }else if (stupid.size() != 1 && stupid instanceof WritingEquation){
-            message.enQue(TutMessage.aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.clear),new Callable() {
-                @Override
-                public Object call() throws Exception {
-                    ev.initEq();
-                    return null;
-                }
-            });
         }
     }
 
@@ -89,6 +82,8 @@ public class EmilyView extends SuperView {
     }
 
     private void addButtons() {
+
+        popUpButtons.add(new PopUpButton(this,getResources().getString(R.string.clear)  ,new ClearAction(this)));
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button(this,"7", new NumberAction(this, "7")));
@@ -146,29 +141,9 @@ public class EmilyView extends SuperView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        drawShadow(canvas);
-
         onDrawAfter(canvas);
     }
 
-
-    private void drawShadow(Canvas canvas) {
-        Paint p = new Paint();
-        int color = Algebrator.getAlgebrator().darkDarkColor;
-        p.setColor(color);
-        p.setAlpha(0xff);
-        int at = ((int) buttonLine());
-//        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
-//            canvas.drawLine(0,at,width,at,p);
-//            at--;
-//        }
-        p.setAlpha(0x8f);
-        while (p.getAlpha() > 1) {
-            canvas.drawLine(0, at, width, at, p);
-            p.setAlpha((int) (p.getAlpha() / Algebrator.getAlgebrator().getShadowFade()));
-            at--;
-        }
-    }
 
     @Override
     public boolean onTouch(View view, MotionEvent event) {

@@ -5,8 +5,8 @@ import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
-import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.EmilyView;
 
 public class DecimalAction extends Action<EmilyView> {
 
@@ -18,41 +18,39 @@ public class DecimalAction extends Action<EmilyView> {
     }
 
     @Override
+    public boolean canAct() {
+        return myView.selected instanceof PlaceholderEquation;
+    }
+
+    @Override
     protected void privateAct() {
-        if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
-            Equation l = myView.left();
-            if ((l != null) && (l instanceof NumConstEquation && l.getDisplay(-1).contains(".") == false)) {
-                if (!(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
-                    String toSet = ((NumConstEquation)l).getDisplaySimple() + dec;
-                    l.setDisplay(toSet);
-                } else {
-                    Equation oldEq = myView.selected;
-                    Equation holder = new WritingEquation(myView);
-                    Equation newEq = getEq();
-                    oldEq.replace(holder);
-                    holder.add(newEq);
-                    holder.add(oldEq);
-                    oldEq.setSelected(true);
-                }
+        ((PlaceholderEquation) myView.selected).goDark();
+        Equation l = myView.left();
+        if ((l != null) && (l instanceof NumConstEquation && l.getDisplay(-1).contains(".") == false)) {
+            if (!(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
+                String toSet = ((NumConstEquation) l).getDisplaySimple() + dec;
+                l.setDisplay(toSet);
             } else {
-                if (l == null || !(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
-                    myView.insert(getEq());
-                }else{
-                    Equation oldEq = myView.selected;
-                    Equation holder = new WritingEquation(myView);
-                    Equation newEq = getEq();
-                    oldEq.replace(holder);
-                    holder.add(newEq);
-                    holder.add(oldEq);
-                    oldEq.setSelected(true);
-                }
+                Equation oldEq = myView.selected;
+                Equation holder = new WritingEquation(myView);
+                Equation newEq = getEq();
+                oldEq.replace(holder);
+                holder.add(newEq);
+                holder.add(oldEq);
+                oldEq.setSelected(true);
             }
         } else {
-            //if (myView.selected != null) {
-            //    addToBlock(getEq());
-            //}
-
+            if (l == null || !(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
+                myView.insert(getEq());
+            } else {
+                Equation oldEq = myView.selected;
+                Equation holder = new WritingEquation(myView);
+                Equation newEq = getEq();
+                oldEq.replace(holder);
+                holder.add(newEq);
+                holder.add(oldEq);
+                oldEq.setSelected(true);
+            }
         }
     }
 

@@ -15,23 +15,31 @@ public abstract class InlineOpAction extends Action<EmilyView> {
         super(emilyView);
     }
 
-    protected void inlineInsert(Equation newEq) {
+    @Override
+    public boolean canAct(){
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
+
 
             Equation l = myView.left();
             boolean can = true;
             if (l instanceof WritingLeafEquation) {
                 can = !((WritingLeafEquation) l).isOpLeft();
             }
-            if (l instanceof WritingPraEquation && ((WritingPraEquation) l).left){
+            if (l instanceof WritingPraEquation && ((WritingPraEquation) l).left) {
                 can = false;
             }
 
-            if (can) {
-
-                myView.insert(newEq);
+            if (l==null){
+                can = false;
             }
+
+            return can;
         }
+        return false;
+    }
+
+    protected void inlineInsert(Equation newEq) {
+        ((PlaceholderEquation) myView.selected).goDark();
+        myView.insert(newEq);
     }
 }

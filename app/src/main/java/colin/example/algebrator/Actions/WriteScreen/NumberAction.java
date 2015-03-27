@@ -18,8 +18,12 @@ public class NumberAction extends Action<EmilyView> {
     }
 
     @Override
+    public boolean canAct(){
+        return myView.selected instanceof PlaceholderEquation;
+    }
+
+    @Override
     protected void privateAct() {
-        if (myView.selected instanceof PlaceholderEquation) {
             ((PlaceholderEquation) myView.selected).goDark();
 
             Equation l = myView.left();
@@ -84,7 +88,6 @@ public class NumberAction extends Action<EmilyView> {
                     myView.insert(newEq);
                 }
             }
-        }
     }
 
 }

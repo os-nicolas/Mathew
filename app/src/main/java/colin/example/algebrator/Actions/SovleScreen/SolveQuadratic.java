@@ -44,40 +44,55 @@ public class SolveQuadratic extends Action<ColinView> {
             newStupid.add(x1);
             Equation result = new DivEquation(stuffSide.owner);
             newStupid.add(result);
-                Equation top = new AddEquation(stuffSide.owner);
-                result.add(top);
-                    top.add(b.copy().negate());
-                    Equation plusMinus = new PlusMinusEquation(stuffSide.owner);
-                    top.add(plusMinus);
-                        Equation sqrt = new PowerEquation(stuffSide.owner);
-                        plusMinus.add(sqrt);
-        if (c!= null){
-                            Equation add = new AddEquation(stuffSide.owner);
-                            sqrt.add(add);
-                                Equation squaredB = new PowerEquation(stuffSide.owner);
-                                add.add(squaredB);
-                                    Equation b2 = b.copy();
-                                    squaredB.add(b2);
-                                    Equation two = NumConstEquation.create(2, stuffSide.owner);
-                                    squaredB.add(two);
-                                Equation multi4AC = new MultiEquation(stuffSide.owner);
-                                        Equation four = NumConstEquation.create(4, stuffSide.owner);
-                                        multi4AC.add(four);
-                                        Equation a1 = a.copy();
-                                        multi4AC.add(a1);
-                                        Equation c1 = c.copy();
-                                        multi4AC.add(c1);
-                                add.add(multi4AC.negate());
+        if (b!= null) {
+            Equation top = new AddEquation(stuffSide.owner);
+            result.add(top);
+            top.add(b.copy().negate());
+            Equation plusMinus = new PlusMinusEquation(stuffSide.owner);
+            top.add(plusMinus);
+            Equation sqrt = new PowerEquation(stuffSide.owner);
+            plusMinus.add(sqrt);
+            if (c != null) {
+                Equation add = new AddEquation(stuffSide.owner);
+                sqrt.add(add);
+                Equation squaredB = new PowerEquation(stuffSide.owner);
+                add.add(squaredB);
+                Equation b2 = b.copy();
+                squaredB.add(b2);
+                Equation two = NumConstEquation.create(2, stuffSide.owner);
+                squaredB.add(two);
+                Equation multi4AC = new MultiEquation(stuffSide.owner);
+                Equation four = NumConstEquation.create(4, stuffSide.owner);
+                multi4AC.add(four);
+                Equation a1 = a.copy();
+                multi4AC.add(a1);
+                Equation c1 = c.copy();
+                multi4AC.add(c1);
+                add.add(multi4AC.negate());
+            } else {
+                Equation squaredB = new PowerEquation(stuffSide.owner);
+                sqrt.add(squaredB);
+                Equation b2 = b.copy();
+                squaredB.add(b2);
+                Equation two = NumConstEquation.create(2, stuffSide.owner);
+                squaredB.add(two);
+            }
+            Equation half = NumConstEquation.create(.5, stuffSide.owner);
+            sqrt.add(half);
         }else{
-                            Equation squaredB = new PowerEquation(stuffSide.owner);
-                            sqrt.add(squaredB);
-                                Equation b2 = b.copy();
-                                squaredB.add(b2);
-                                Equation two = NumConstEquation.create(2, stuffSide.owner);
-                                squaredB.add(two);
+            Equation top = new PowerEquation(stuffSide.owner);
+            result.add(top);
+            Equation multi4AC = new MultiEquation(stuffSide.owner);
+            Equation four = NumConstEquation.create(4, stuffSide.owner);
+            multi4AC.add(four);
+            Equation a1 = a.copy();
+            multi4AC.add(a1);
+            Equation c1 = c.copy();
+            multi4AC.add(c1);
+            top.add(multi4AC.negate());
+            Equation half = NumConstEquation.create(.5, stuffSide.owner);
+            top.add(half);
         }
-                        Equation half = NumConstEquation.create(.5, stuffSide.owner);
-                        sqrt.add(half);
                 Equation bot = new MultiEquation(stuffSide.owner);
                 result.add(bot);
                     Equation two = NumConstEquation.create(2, stuffSide.owner);

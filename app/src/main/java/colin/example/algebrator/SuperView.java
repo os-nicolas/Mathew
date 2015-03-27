@@ -348,6 +348,8 @@ public abstract class SuperView extends View implements
             myPUB.draw(canvas);
         }
 
+        drawShadow(canvas);
+
         for (int i = 0; i < animation.size(); i++) {
             animation.get(i).draw(canvas);
         }
@@ -629,6 +631,12 @@ public abstract class SuperView extends View implements
                             ((PlaceholderEquation)selected).goDark();
                         }
                     }
+
+                    if (myMode == TouchMode.BUTTON) {
+                        for (int i = 0; i < buttons.size(); i++) {
+                            buttons.get(i).hover(event);
+                        }
+                    }
                 }
 
                 if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -803,6 +811,11 @@ public abstract class SuperView extends View implements
                 return true;
             }
         }
+        for (Button b : popUpButtons) {
+            if (b.couldClick(event)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -816,6 +829,9 @@ public abstract class SuperView extends View implements
         if (myMode == TouchMode.BUTTON) {
             for (int i = 0; i < buttons.size(); i++) {
                 buttons.get(i).click(event);
+            }
+            for (PopUpButton pub: popUpButtons) {
+                pub.click(event);
             }
         } else if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
@@ -850,15 +866,16 @@ public abstract class SuperView extends View implements
             for (int i2 = i1 + 1; i2 < selectingSet.size(); i2++) {
                 Equation eq2 = selectingSet.get(i2);
                 if (!(eq1.equals(eq2)) && eq1.deepContains(eq2)) {
-                    Log.i("removed", eq2.toString());
-                    selectingSet.remove(eq2);
+                    Log.i("removed eq2", eq2.toString() +" killed by: "+ eq1.toString());
+                    selectingSet.remove(i2);
                     i2--;
                 }
                 if (!(eq1.equals(eq2)) && eq2.deepContains(eq1)) {
-                    Log.i("removed", eq1.toString());
-                    selectingSet.remove(eq1);
+                    Log.i("removed eq1", eq1.toString()+" killed by: "+ eq2.toString());
+                    selectingSet.remove(i1);
                     i2--;
                     i1--;
+                    break;
                 }
             }
         }
@@ -947,7 +964,6 @@ public abstract class SuperView extends View implements
                 lcp.setSelected(true);
             }
         }
-        selectingSet = new ArrayList<Equation>();
     }
 
     protected abstract void resolveSelected(MotionEvent event);
@@ -969,6 +985,24 @@ public abstract class SuperView extends View implements
             at += step;
         }
 
+    }
+
+    protected void drawShadow(Canvas canvas) {
+        Paint p = new Paint();
+        int color = Algebrator.getAlgebrator().darkDarkColor;
+        p.setColor(color);
+        p.setAlpha(0xff);
+        int at = ((int) buttonLine());
+//        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
+//            canvas.drawLine(0,at,width,at,p);
+//            at--;
+//        }
+        p.setAlpha(0x8f);
+        while (p.getAlpha() > 1) {
+            canvas.drawLine(0, at, width, at, p);
+            p.setAlpha((int) (p.getAlpha() / Algebrator.getAlgebrator().getShadowFade()));
+            at--;
+        }
     }
 
 }

@@ -1351,7 +1351,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 while (at instanceof MonaryEquation) {
                     at = at.get(0);
                 }
-                if (at instanceof MultiDivSuperEquation) {
+                if (at instanceof MultiDivSuperEquation && !dragging.deepContains(at)) {
                     eqTop = ((MultiDivSuperEquation) at).onTop(dragging);
                 }
                 result = ((myTop != eqTop) == multi);
@@ -1499,9 +1499,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (this.same(lookingFor) || this.removeNeg().same(lookingFor)){
             return true;
         }
-        for (Equation e: this){
-            if (e.same(lookingFor) || e.removeNeg().same(lookingFor)){
-                return true;
+        if (this instanceof  MultiEquation) {
+            for (Equation e : this) {
+                if (e.same(lookingFor) || e.removeNeg().same(lookingFor)) {
+                    return true;
+                }
             }
         }
 

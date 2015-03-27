@@ -7,13 +7,13 @@ import android.os.AsyncTask;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
+import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.SolveScreen;
 import colin.example.algebrator.tuts.HitSolveMessage;
 import colin.example.algebrator.tuts.TutMessage;
-import colin.example.algebrator.Actions.Action;
 
 
 public class Solve extends Action {
@@ -25,7 +25,7 @@ public class Solve extends Action {
     public static Equation mine;
 
     @Override
-    protected void privateAct() {
+    public boolean canAct() {
         // we need to copy stupid
         mine = myView.stupid.copy();
 
@@ -40,8 +40,8 @@ public class Solve extends Action {
             }
             if (myAt.parent != null && myAt.parent.size() != 1) {
                 myAt.remove();
-            }else{
-                return;
+            } else {
+                return false;
             }
         }
 
@@ -51,36 +51,44 @@ public class Solve extends Action {
 
             if (((WritingEquation) mine).deepLegal() && countEquals(mine) == 1) {
                 TutMessage.getMessage(HitSolveMessage.class).alreadyDone();
-                AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
-                    Intent myIntent;
-                    Context myContext;
 
-                    protected Long doInBackground(Void... v) {
-
-
-                        Equation newEq = ((WritingEquation) Solve.mine).convert();
-
-                        myContext = myView.getContext();
-                        ColinView colinView = new ColinView(myContext);
-                        colinView.stupid = newEq;
-                        colinView.centerEq();
-                        Algebrator.getAlgebrator().solveView = colinView;
-                        //((MainActivity) c).lookAt(colinView);
-
-                        myIntent = new Intent(myContext, SolveScreen.class);
-                        myContext.startActivity(myIntent);
-                        return 1L;
-                    }
-
-                    protected void onProgressUpdate(Void v) {
-                    }
-
-                    protected void onPostExecute(Long v) {
-                    }
-                };
-                myView.disabled = true;
-                task.execute();
+                return true;
             }
         }
+        return false;
+    }
+
+    @Override
+    protected void privateAct() {
+        AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
+            Intent myIntent;
+            Context myContext;
+
+            protected Long doInBackground(Void... v) {
+
+
+                Equation newEq = ((WritingEquation) Solve.mine).convert();
+
+                myContext = myView.getContext();
+                ColinView colinView = new ColinView(myContext);
+                colinView.stupid = newEq;
+                colinView.centerEq();
+                Algebrator.getAlgebrator().solveView = colinView;
+                //((MainActivity) c).lookAt(colinView);
+
+                myIntent = new Intent(myContext, SolveScreen.class);
+                myContext.startActivity(myIntent);
+                return 1L;
+            }
+
+            protected void onProgressUpdate(Void v) {
+            }
+
+            protected void onPostExecute(Long v) {
+            }
+        };
+        myView.disabled = true;
+        task.execute();
+
     }
 }

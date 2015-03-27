@@ -11,11 +11,15 @@ public class LeftAction extends Action<EmilyView> {
     public LeftAction(EmilyView emilyView) {
         super(emilyView);
     }
+
+    @Override
+    public boolean canAct(){
+        return myView.selected instanceof PlaceholderEquation && myView.left() != null;
+    }
+
     @Override
     protected void privateAct() {
-        if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
-            tryMoveLeft();
-        }
+        ((PlaceholderEquation) myView.selected).goDark();
+        tryMoveLeft();
     }
 }

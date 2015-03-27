@@ -9,8 +9,8 @@ import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
 import colin.algebrator.eq.WritingPraEquation;
 import colin.algebrator.eq.WritingSqrtEquation;
-import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;
+import colin.example.algebrator.EmilyView;
 
 /**
  * Created by Colin on 1/13/2015.
@@ -21,39 +21,56 @@ public abstract class BinaryAction extends Action<EmilyView> {
         super(emilyView);
     }
 
-    protected void privateAct(Equation newEq) {
+    @Override
+    public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
             Equation l = myView.left();
             boolean can = l != null;
             if (can && (l instanceof WritingLeafEquation || l instanceof VarEquation || l instanceof NumConstEquation)) {
                 can = !l.isOpLeft();
             }
-
             if (can && l instanceof WritingPraEquation) {
                 if (((WritingPraEquation) l).left) {
                     can = false;
                 } else {
                     // we need to select the hole ( .. )
-                    can = false;
-                    if (((WritingPraEquation) l).getMatch() != null) {
-                        ((WritingPraEquation) l).selectBlock();
-                    }
+                    can = (((WritingPraEquation) l).getMatch() != null) ;
                 }
             }
-            if (can) {
-                myView.selected.justRemove();
-                Equation oldEq = l;
+            return can;
+        }
+        return false;
+    }
 
-                oldEq.replace(newEq);
-                newEq.add(oldEq);
-                newEq.add(myView.selected);
+    protected void privateAct(Equation newEq) {
+        ((PlaceholderEquation) myView.selected).goDark();
+        Equation l = myView.left();
+        boolean can = true;
+
+        if (can && l instanceof WritingPraEquation) {
+            if (((WritingPraEquation) l).left) {
+                can = false;
+            } else {
+                // we need to select the hole ( .. )
+                can = false;
+                if (((WritingPraEquation) l).getMatch() != null) {
+                    ((WritingPraEquation) l).selectBlock();
+                }
             }
         }
+        if (can) {
+            myView.selected.justRemove();
+            Equation oldEq = l;
 
+            oldEq.replace(newEq);
+            newEq.add(oldEq);
+            newEq.add(myView.selected);
+        }
+
+        // I am not using an else here for good reason
         if (!(myView.selected instanceof PlaceholderEquation)) {
             if (myView.selected != null) {
-                boolean can = countEquals(myView.selected) == 0;
+                can = countEquals(myView.selected) == 0;
                 if (myView.selected instanceof WritingEquation) {
                     Equation eq = myView.selected.get(0);
                     if (eq instanceof WritingLeafEquation || eq instanceof NumConstEquation || eq instanceof VarEquation) {

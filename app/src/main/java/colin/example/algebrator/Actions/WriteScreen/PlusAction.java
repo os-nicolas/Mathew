@@ -17,7 +17,4 @@ public class PlusAction extends InlineOpAction {
 
         inlineInsert(newEq);
     }
-
-
-
 }
