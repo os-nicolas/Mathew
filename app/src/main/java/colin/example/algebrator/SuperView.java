@@ -69,6 +69,11 @@ public abstract class SuperView extends View implements
     public boolean hasUpdated;
     private Point lastCenter;
 
+    public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
+    protected boolean skipZero = true;
+
+    abstract protected void addButtons();
+
 
     protected float buttonLine() {
         return height * buttonsPercent;
@@ -104,6 +109,8 @@ public abstract class SuperView extends View implements
         highlight = Algebrator.getAlgebrator().darkColor;
 
         Log.i("lifeCycle", "SuperView-init");
+
+        addButtons();
     }
 
     public void measureScreen(Context context) {
@@ -337,13 +344,12 @@ public abstract class SuperView extends View implements
             lastLog = stupid.toString();
         }
 
-        for (int i = 0; i < buttons.size(); i++) {
-            buttons.get(i).draw(canvas);
+        for (Button myBut: buttons) {
+            myBut.draw(canvas);
         }
 
         buttonsPercent = BASE_BUTTON_PERCENT;
-        for (int i = 0; i < popUpButtons.size(); i++) {
-            PopUpButton myPUB = popUpButtons.get(i);
+        for (PopUpButton myPUB: popUpButtons) {
             myPUB.updateLocation();
             myPUB.draw(canvas);
         }
@@ -583,6 +589,7 @@ public abstract class SuperView extends View implements
                     // figure out the mode;
                     if (inButtons(event)) {
                         myMode = TouchMode.BUTTON;
+                        doButtons(event);
                     } else if (stupid.nearAny(event.getX(), event.getY())) {
                         myMode = TouchMode.SELECT;
                         resolveSelected(event);
@@ -633,9 +640,7 @@ public abstract class SuperView extends View implements
                     }
 
                     if (myMode == TouchMode.BUTTON) {
-                        for (int i = 0; i < buttons.size(); i++) {
-                            buttons.get(i).hover(event);
-                        }
+                        doButtons(event);
                     }
                 }
 
@@ -827,12 +832,7 @@ public abstract class SuperView extends View implements
 
     private void endOnePointer(MotionEvent event) {
         if (myMode == TouchMode.BUTTON) {
-            for (int i = 0; i < buttons.size(); i++) {
-                buttons.get(i).click(event);
-            }
-            for (PopUpButton pub: popUpButtons) {
-                pub.click(event);
-            }
+            doButtons(event);
         } else if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
         } else if (myMode == TouchMode.DRAG) {
@@ -856,6 +856,24 @@ public abstract class SuperView extends View implements
             message.onClick(event);
         }
         stupid.updateLocation();
+    }
+
+    private void doButtons(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_UP) {
+            for (Button myBut : buttons) {
+                myBut.click(event);
+            }
+            for (PopUpButton pub : popUpButtons) {
+                pub.click(event);
+            }
+        }else{
+            for (Button myBut : buttons) {
+                myBut.hover(event);
+            }
+            for (PopUpButton pub : popUpButtons) {
+                pub.hover(event);
+            }
+        }
     }
 
     protected void selectSet(ArrayList<Equation> selectingSet) {
@@ -966,11 +984,71 @@ public abstract class SuperView extends View implements
         }
     }
 
+    double lastZoom = Algebrator.getAlgebrator().zoom;
+    float baseBuffer = 75 * Algebrator.getAlgebrator().getDpi();
+    float fade = 0.4f;
+    protected void drawHistory(Canvas canvas) {
+        float buffer = (float)(baseBuffer*Algebrator.getAlgebrator().zoom);
+
+        float atHeight = -stupid.measureHeightUpper() - buffer;
+        float currentPercent = fade;
+        for (EquationButton eb : history) {
+            if ( (!skipZero) || (!eb.equals(history.get(0)))) {
+                if (lastZoom != Algebrator.getAlgebrator().zoom){
+                    eb.myEq.deepNeedsUpdate();
+                }
+                atHeight -= eb.myEq.measureHeightLower();
+                eb.targetColor = getHistoryColor(0xff000000, Algebrator.getAlgebrator().darkColor, currentPercent);
+                eb.x = 0;
+                eb.targetY = atHeight;
+                int centerX;
+                int centerY;
+                if (stupid instanceof EqualsEquation){
+                    centerX= stupid.lastPoint.get(0).x;
+                    centerY= stupid.lastPoint.get(0).y;
+                }else{
+                    centerX= (int) stupid.getX();
+                    centerY= (int) stupid.getY();
+                }
+
+                eb.update(centerX,centerY);
+                if ((centerY + atHeight + eb.myEq.measureHeightLower()) > 0 &&
+                        (centerY + atHeight - eb.myEq.measureHeightUpper()) < height) {
+                    eb.draw(canvas, centerX, centerY);
+                } else  if (  centerY > -(height/4)*Algebrator.getAlgebrator().getDpi()
+                        || centerY < (height*5/4)*Algebrator.getAlgebrator().getDpi()){
+                    // update the locations
+                    eb.updateLocations(centerX, centerY);
+                }
+                atHeight -= eb.myEq.measureHeightUpper() + buffer;
+                currentPercent *= fade;
+            }
+        }
+        lastZoom = Algebrator.getAlgebrator().zoom;
+    }
+
+    private int getHistoryColor(int currentColor, int targetColor, float percent) {
+        int currentRed = android.graphics.Color.red(currentColor);
+        int currentGreen = android.graphics.Color.green(currentColor);
+        int currentBlue = android.graphics.Color.blue(currentColor);
+
+        int targetRed = android.graphics.Color.red(targetColor);
+        int targetGreen = android.graphics.Color.green(targetColor);
+        int targetBlue = android.graphics.Color.blue(targetColor);
+
+        currentColor = android.graphics.Color.argb(
+                0xff,
+                (int) ((percent * currentRed) + ((1 - percent) * targetRed)),
+                (int) ((percent * currentGreen) + ((1 - percent) * targetGreen)),
+                (int) ((percent * currentBlue) + ((1 - percent) * targetBlue)));
+
+        return currentColor;
+    }
+
     protected abstract void resolveSelected(MotionEvent event);
 
     protected void addButtonsRow(ArrayList<Button> row, float top, float bottum) {
         addButtonsRow(row, 0, 1, top, bottum);
-
     }
 
     protected void addButtonsRow(ArrayList<Button> row, float left, float right, float top, float bottum) {
