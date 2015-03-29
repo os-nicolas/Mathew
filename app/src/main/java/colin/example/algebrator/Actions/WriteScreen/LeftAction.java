@@ -1,5 +1,6 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
+import colin.algebrator.eq.BinaryEquation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;
@@ -14,7 +15,7 @@ public class LeftAction extends Action<EmilyView> {
 
     @Override
     public boolean canAct(){
-        return myView.selected instanceof PlaceholderEquation && myView.left() != null;
+        return canMoveLeft() || myView.left() != null;
     }
 
     @Override

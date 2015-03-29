@@ -33,14 +33,14 @@ public class EquationButton extends Button {
     private int targetAlpha = 0xff;
     int bkgCurrentAlpha = 0x0;
     int bkgTargetAlpha = 0x0;
-    ColinView cv;
+    SuperView cv;
     public int targetColor;
     public int currentColor = Color.BLACK;
     private boolean warn = false;
     private Equation warnEq = null;
 
 
-    public EquationButton(Equation e, ColinView cv) {
+    public EquationButton(Equation e, SuperView cv) {
         myEq = e;
         e.active = false;
         this.cv = cv;

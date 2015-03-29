@@ -23,13 +23,18 @@ import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.PowerEquation;
 import colin.algebrator.eq.VarEquation;
+import colin.example.algebrator.Actions.SovleScreen.BothSides;
 import colin.example.algebrator.Actions.SovleScreen.SolveQuadratic;
+import colin.example.algebrator.Actions.WriteScreen.DivAction;
+import colin.example.algebrator.Actions.WriteScreen.NumberAction;
 import colin.example.algebrator.Actions.WriteScreen.Solve;
+import colin.example.algebrator.Actions.WriteScreen.TimesAction;
+import colin.example.algebrator.Actions.WriteScreen.VarAction;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
 public class ColinView extends SuperView {
-    public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
+
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
 
@@ -50,7 +55,7 @@ public class ColinView extends SuperView {
 
     protected void init(Context context) {
         canDrag = true;
-        BASE_BUTTON_PERCENT = 1f;
+        BASE_BUTTON_PERCENT = 8f/9f;
         buttonsPercent = BASE_BUTTON_PERCENT;
         alreadySolved = false;
 
@@ -69,61 +74,27 @@ public class ColinView extends SuperView {
         onDrawAfter(canvas);
     }
 
-    // TODO scale with dpi
-    float baseBuffer = 75 * Algebrator.getAlgebrator().getDpi();
-    float fade = 0.4f;
-
-
-    double lastZoom = Algebrator.getAlgebrator().zoom;
-    private void drawHistory(Canvas canvas) {
-        float buffer = (float)(baseBuffer*Algebrator.getAlgebrator().zoom);
 
 
 
-        float atHeight = -stupid.measureHeightUpper() - buffer;
-        float currentPercent = fade;
-        for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))) {
-                if (lastZoom != Algebrator.getAlgebrator().zoom){
-                    eb.myEq.deepNeedsUpdate();
-                }
-                atHeight -= eb.myEq.measureHeightLower();
-                eb.targetColor = getHistoryColor(0xff000000, Algebrator.getAlgebrator().darkColor, currentPercent);
-                eb.x = 0;
-                eb.targetY = atHeight;
-                eb.update(stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
-                if ((stupid.lastPoint.get(0).y + atHeight + eb.myEq.measureHeightLower()) > 0 &&
-                        (stupid.lastPoint.get(0).y + atHeight - eb.myEq.measureHeightUpper()) < height) {
-                    eb.draw(canvas, stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
-                } else  if (  stupid.lastPoint.get(0).y > -(height/4)*Algebrator.getAlgebrator().getDpi()
-                        || stupid.lastPoint.get(0).y < (height*5/4)*Algebrator.getAlgebrator().getDpi()){
-                    // update the locations
-                    eb.updateLocations(stupid.lastPoint.get(0).x, stupid.lastPoint.get(0).y);
-                }
-                atHeight -= eb.myEq.measureHeightUpper() + buffer;
-                currentPercent *= fade;
-            }
-        }
-        lastZoom = Algebrator.getAlgebrator().zoom;
+    @Override
+    protected void addButtons() {
+        ArrayList<Button> firstRow = new ArrayList<Button>();
+        firstRow.add(new Button(this,"+", new BothSides(this)));
+        firstRow.add(new Button(this,"-", new BothSides(this)));
+        char[] timesUnicode = {'\u00D7'};
+        firstRow.add(new Button(this,new String(timesUnicode), new BothSides(this)));
+        char[] divisionUnicode = {'\u00F7'};
+        firstRow.add(new Button(this,new String(divisionUnicode), new BothSides(this)));
+
+        addButtonsRow(firstRow, 8f / 9f, 9f / 9f);
+
     }
 
-    private int getHistoryColor(int currentColor, int targetColor, float percent) {
-        int currentRed = android.graphics.Color.red(currentColor);
-        int currentGreen = android.graphics.Color.green(currentColor);
-        int currentBlue = android.graphics.Color.blue(currentColor);
 
-        int targetRed = android.graphics.Color.red(targetColor);
-        int targetGreen = android.graphics.Color.green(targetColor);
-        int targetBlue = android.graphics.Color.blue(targetColor);
 
-        currentColor = android.graphics.Color.argb(
-                0xff,
-                (int) ((percent * currentRed) + ((1 - percent) * targetRed)),
-                (int) ((percent * currentGreen) + ((1 - percent) * targetGreen)),
-                (int) ((percent * currentBlue) + ((1 - percent) * targetBlue)));
 
-        return currentColor;
-    }
+
 
 
     public boolean changed = false;

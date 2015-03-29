@@ -55,7 +55,7 @@ public class EmilyView extends SuperView {
         //yo.add(new NumConstEquation(2.0,this));
         //yo.add(new NumConstEquation(2.0,this));
 
-        addButtons();
+
         BASE_BUTTON_PERCENT = 4f / 6f;
         buttonsPercent = BASE_BUTTON_PERCENT;
     }
@@ -81,7 +81,8 @@ public class EmilyView extends SuperView {
         empty.setSelected(true);
     }
 
-    private void addButtons() {
+    @Override
+    protected void addButtons() {
 
         popUpButtons.add(new PopUpButton(this,getResources().getString(R.string.clear)  ,new ClearAction(this)));
 

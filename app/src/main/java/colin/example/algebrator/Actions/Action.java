@@ -163,6 +163,10 @@ public abstract class Action<myView extends SuperView> {
         return canMove(false);
     }
 
+    protected boolean canMoveLeft() {
+        return canMove(true);
+    }
+
     private boolean canMove(boolean left){
         return getMoveCurrent(left) instanceof BinaryEquation;
     }

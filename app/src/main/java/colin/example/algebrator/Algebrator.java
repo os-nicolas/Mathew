@@ -36,6 +36,7 @@ public class Algebrator extends Application {
     public Paint bkgPaint = new Paint();
     public EmilyView writeView  = null;
     public ColinView solveView  = null;
+    public BothSidesView addBothView = null;
     public double zoom = 1;
     public int at=0;
     private float dpi;

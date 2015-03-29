@@ -14,7 +14,7 @@ public class RightAction extends Action {
 
     @Override
     public boolean canAct() {
-        return myView.selected instanceof PlaceholderEquation && myView.selected.right() != null;
+        return canMoveRight()|| myView.selected.right() != null;
 
     }
 
