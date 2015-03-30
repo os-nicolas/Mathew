@@ -2,7 +2,6 @@ package colin.example.algebrator;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,24 +11,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
-import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.DivEquation;
 import colin.algebrator.eq.DragEquation;
 import colin.algebrator.eq.DragLocations;
+import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MonaryEquation;
 import colin.algebrator.eq.MultiEquation;
-import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.PowerEquation;
 import colin.algebrator.eq.VarEquation;
 import colin.example.algebrator.Actions.SovleScreen.BothSides;
 import colin.example.algebrator.Actions.SovleScreen.SolveQuadratic;
-import colin.example.algebrator.Actions.WriteScreen.DivAction;
-import colin.example.algebrator.Actions.WriteScreen.NumberAction;
-import colin.example.algebrator.Actions.WriteScreen.Solve;
-import colin.example.algebrator.Actions.WriteScreen.TimesAction;
-import colin.example.algebrator.Actions.WriteScreen.VarAction;
+import colin.example.algebrator.Actions.SovleScreen.SqrtBothSides;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
@@ -55,19 +49,19 @@ public class ColinView extends SuperView {
 
     protected void init(Context context) {
         canDrag = true;
-        BASE_BUTTON_PERCENT = 8f/9f;
+        BASE_BUTTON_PERCENT = 8f / 9f;
         buttonsPercent = BASE_BUTTON_PERCENT;
         alreadySolved = false;
 
-        PopUpButton quadratic = new PopUpButton(this,"Use quadratic formula", new SolveQuadratic(this));
-        quadratic.setTargets(1f / 9f,0f,1f);
+        PopUpButton quadratic = new PopUpButton(this, "Use quadratic formula", new SolveQuadratic(this));
+        quadratic.setTargets(1f / 9f, 0f, 1f);
         popUpButtons.add(quadratic);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawHistory(canvas);
+
         for (EquationButton eb : history) {
             eb.tryRevert(canvas);
         }
@@ -75,33 +69,33 @@ public class ColinView extends SuperView {
     }
 
 
-
-
     @Override
     protected void addButtons() {
         ArrayList<Button> firstRow = new ArrayList<Button>();
-        firstRow.add(new Button(this,"+", new BothSides(this)));
-        firstRow.add(new Button(this,"-", new BothSides(this)));
+        firstRow.add(new Button(this, "+", new BothSides(BothSidesView.BothSidesMode.ADD, this)));
+        firstRow.add(new Button(this, "-", new BothSides(BothSidesView.BothSidesMode.SUB, this)));
         char[] timesUnicode = {'\u00D7'};
-        firstRow.add(new Button(this,new String(timesUnicode), new BothSides(this)));
+        firstRow.add(new Button(this, new String(timesUnicode), new BothSides(BothSidesView.BothSidesMode.MULTI, this)));
         char[] divisionUnicode = {'\u00F7'};
-        firstRow.add(new Button(this,new String(divisionUnicode), new BothSides(this)));
-
+        firstRow.add(new Button(this, new String(divisionUnicode), new BothSides(BothSidesView.BothSidesMode.DIV, this)));
+        firstRow.add(new Button(this, "cⁿ", new BothSides(BothSidesView.BothSidesMode.POWER, this)));
+        char[] sqrtUnicode = {'\u221A'};
+        firstRow.add(new Button(this, new String(sqrtUnicode), new SqrtBothSides(this)));
         addButtonsRow(firstRow, 8f / 9f, 9f / 9f);
 
     }
 
 
-
-
-
-
-
     public boolean changed = false;
 
     @Override
+    public void resume() {
+        updateHistory();
+    }
+
+    @Override
     public boolean onTouch(View view, MotionEvent event) {
-        if (!message.inBar(event) ) {
+        if (!message.inBar(event)) {
             for (int i = 0; i < history.size(); i++) {
                 history.get(i).click(event);
             }
@@ -109,69 +103,73 @@ public class ColinView extends SuperView {
 
         boolean result = super.onTouch(view, event);
 
+        updateHistory();
+
+        return result;
+    }
+
+    private void updateHistory() {
         if (changed) {
             // if they could have divided by 0 we need to warn them
             // we don't have to worry warn checks for null
             history.get(0).warn(changedEq);
-            changedEq=null;
+            changedEq = null;
 
             // add a new Equation to history
             history.add(0, new EquationButton(stupid.copy(), this));
             Log.i("add to History", stupid.toString());
             changed = false;
 
-            if (!alreadySolved && isSolved()){
+            if (!alreadySolved && isSolved()) {
                 showSolvedMessage();
             }
         }
-
-        return result;
     }
 
     @Override
-    protected void selectMoved(MotionEvent event){
-            // if they get too far from were they started we are going to start dragging
-            //TODO scale by dpi
-            float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
-            float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
-            if (maxMovement < distance) {
-                boolean pass = true;
-                if (selected != null) {
-                    startDragging();
-                } else {
-                    myMode = TouchMode.MOVE;
-                }
-            }
-    }
-
-    private void startDragging() {
+    protected void selectMoved(MotionEvent event) {
+        // if they get too far from were they started we are going to start dragging
+        //TODO scale by dpi
+        float maxMovement = 50 * Algebrator.getAlgebrator().getDpi();
+        float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
+        if (maxMovement < distance) {
+            boolean pass = true;
             if (selected != null) {
-                myMode = TouchMode.DRAG;
-                // we need to take all the - signs with us
-                // you can't do anything with the contents of a power equation so if they have that selected let's get the whole power equation
-                while (selected.parent instanceof MonaryEquation
-                        || (selected.parent instanceof PowerEquation && selected.parent.indexOf(selected)==0) ) {
-                    selected.parent.setSelected(true);
-                }
-                //if (selected.canPop()) {
-                dragging = new DragEquation(selected);
-                dragging.eq.x = lastX;
-                dragging.eq.y = lastY;
-                selected.isDemo(true);
-
-                selected.setSelected(false);
-
-                getDragLocations();
-
-                Log.d("Drag Locations", "#######################");
-                for (DragLocation dl : dragLocations) {
-                    Log.d("Drag Locations", dl.myStupid.toString());
-                }
-                //}
-
+                startDragging();
             } else {
                 myMode = TouchMode.MOVE;
             }
+        }
+    }
+
+    private void startDragging() {
+        if (selected != null) {
+            myMode = TouchMode.DRAG;
+            // we need to take all the - signs with us
+            // you can't do anything with the contents of a power equation so if they have that selected let's get the whole power equation
+            while (selected.parent instanceof MonaryEquation
+                    || (selected.parent instanceof PowerEquation && selected.parent.indexOf(selected) == 0)) {
+                selected.parent.setSelected(true);
+            }
+            //if (selected.canPop()) {
+            dragging = new DragEquation(selected);
+            dragging.eq.x = lastX;
+            dragging.eq.y = lastY;
+            selected.isDemo(true);
+
+            selected.setSelected(false);
+
+            getDragLocations();
+
+            Log.d("Drag Locations", "#######################");
+            for (DragLocation dl : dragLocations) {
+                Log.d("Drag Locations", dl.myStupid.toString());
+            }
+            //}
+
+        } else {
+            myMode = TouchMode.MOVE;
+        }
     }
 
     //update DragLocations
@@ -180,7 +178,7 @@ public class ColinView extends SuperView {
         stupid.getDragLocations(dragging.demo, dragLocations, dragging.ops);
     }
 
-    private boolean willRemove= false;
+    private boolean willRemove = false;
 
     @Override
     protected void resolveSelected(MotionEvent event) {
@@ -188,11 +186,11 @@ public class ColinView extends SuperView {
         HashSet<Equation> willSelect = stupid.closetOn(event.getX(),
                 event.getY());
 
-        int side=-1;
-        for (Equation e:willSelect){
-            if (side==-1){
-                side =e.side();
-            }else if (side != e.side()){
+        int side = -1;
+        for (Equation e : willSelect) {
+            if (side == -1) {
+                side = e.side();
+            } else if (side != e.side()) {
                 willSelect = new HashSet<>();
                 break;
             }
@@ -208,14 +206,14 @@ public class ColinView extends SuperView {
 
         ArrayList<Equation> selectingSet;
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             willRemove = false;
         }
         if (selected != null) {
             if (willSelect.isEmpty()) {
                 // if they did not click anything let's not select anything
                 selectingSet = new ArrayList<>();
-            }else {
+            } else {
                 // if everything we are adding is deep contained by selected we want to remove
                 // otherwise we want to add what is not already contained
 
@@ -328,7 +326,7 @@ public class ColinView extends SuperView {
         Equation closest = stupid;
         float dis = disToCenter(stupid.x, stupid.y);
         for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0)) ) {
+            if (!eb.equals(history.get(0))) {
                 float myDis = disToCenter(eb.myEq.x, eb.myEq.y);
                 if (myDis < dis) {
                     dis = myDis;
@@ -340,14 +338,14 @@ public class ColinView extends SuperView {
     }
 
     //TODO these (left,rigth,top, bottom)est are all a bit wrong:
-        // 2 - for left and right stupid get included even when it is not in the screeen
+    // 2 - for left and right stupid get included even when it is not in the screeen
 
-    private Physical rightest(){
+    private Physical rightest() {
         Physical closest = stupid;
-        float dis = stupid.x + stupid.measureWidth()/2;
+        float dis = stupid.x + stupid.measureWidth() / 2;
         for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0)) && disToCenter(eb.myEq.x, eb.myEq.y) < width/2) {
-                float myDis = eb.myEq.x+ eb.myEq.measureWidth()/2;
+            if (!eb.equals(history.get(0)) && disToCenter(eb.myEq.x, eb.myEq.y) < width / 2) {
+                float myDis = eb.myEq.x + eb.myEq.measureWidth() / 2;
                 if (myDis > dis) {
                     dis = myDis;
                     closest = eb.myEq;
@@ -358,12 +356,12 @@ public class ColinView extends SuperView {
     }
 
 
-    private Physical leftest(){
+    private Physical leftest() {
         Physical closest = stupid;
-        float dis = stupid.getX() - stupid.measureWidth()/2;
+        float dis = stupid.getX() - stupid.measureWidth() / 2;
         for (EquationButton eb : history) {
-            if (!eb.equals(history.get(0))  && disToCenter(eb.getX(), eb.getY()) < width/2) {
-                float myDis = eb.getX()- (eb.measureWidth()/2);
+            if (!eb.equals(history.get(0)) && disToCenter(eb.getX(), eb.getY()) < width / 2) {
+                float myDis = eb.getX() - (eb.measureWidth() / 2);
                 if (myDis < dis) {
                     dis = myDis;
                     closest = eb;
@@ -373,7 +371,7 @@ public class ColinView extends SuperView {
         return closest;
     }
 
-    private Physical topest(){
+    private Physical topest() {
 //        Physical closest = stupid;
 //        float dis = stupid.y - stupid.measureHeightUpper();
 //        for (EquationButton eb : history) {
@@ -386,15 +384,15 @@ public class ColinView extends SuperView {
 //            }
 //        }
         Physical closest;
-        if (history.isEmpty()){
+        if (history.isEmpty()) {
             closest = stupid;
-        }else{
-            closest = history.get(history.size()-1);
+        } else {
+            closest = history.get(history.size() - 1);
         }
         return closest;
     }
 
-    private Physical bottumest(){
+    private Physical bottumest() {
         Physical closest = stupid;
 //        float dis = stupid.y + stupid.measureHeightLower();
 //        for (EquationButton eb : history) {
@@ -425,10 +423,10 @@ public class ColinView extends SuperView {
     protected float outTop() {
         Physical top = topest();//getCenterEq();
         Physical bot = bottumest();
-        if (top.getY() + top.measureHeight()/2 - buffer < 0 && bot.getY() + (bot.measureHeight()/2)  < buttonLine() - (height*(3f/4f))) {
+        if (top.getY() + top.measureHeight() / 2 - buffer < 0 && bot.getY() + (bot.measureHeight() / 2) < buttonLine() - (height * (3f / 4f))) {
             Log.d("out,top", "closest");
             //message.db("outtop, closest");
-            return -(top.getY() + top.measureHeight()/2 - buffer);
+            return -(top.getY() + top.measureHeight() / 2 - buffer);
         }
         return super.outTop();
     }
@@ -449,10 +447,10 @@ public class ColinView extends SuperView {
     protected float outBottom() {
         Physical bot = bottumest();//getCenterEq();
         Physical top = topest();
-        if (bot.getY() - (bot.measureHeight()/2) + buffer > buttonLine() && top.getY() - (top.measureHeight()/2) > (height*(3f/4f))) {
+        if (bot.getY() - (bot.measureHeight() / 2) + buffer > buttonLine() && top.getY() - (top.measureHeight() / 2) > (height * (3f / 4f))) {
             Log.d("out,bot", "closest");
             //message.db("outbot, closest");
-            return (bot.getY() - (bot.measureHeight()/2) + buffer) - buttonLine();
+            return (bot.getY() - (bot.measureHeight() / 2) + buffer) - buttonLine();
         }
         return super.outBottom();
     }
@@ -461,7 +459,7 @@ public class ColinView extends SuperView {
     protected float outRight() {
         Physical left = leftest();//getCenterEq();
         Physical right = rightest();
-        if (right.getX() - (right.measureWidth() / 2) + buffer > width && left.getX() - (left.measureWidth() / 2 )- buffer > 0) {
+        if (right.getX() - (right.measureWidth() / 2) + buffer > width && left.getX() - (left.measureWidth() / 2) - buffer > 0) {
             Log.d("out,right", "closest");
             //message.db("outright, closest");
             return (right.getX() - (right.measureWidth() / 2) + buffer) - width;
@@ -475,10 +473,10 @@ public class ColinView extends SuperView {
             if (warnEq != null) {
                 changedEq = warnEq;
             }
-        }else{
+        } else {
             Equation warnEq = equation.CouldBeZero();
             if (warnEq != null) {
-                if (!(changedEq instanceof MultiEquation)){
+                if (!(changedEq instanceof MultiEquation)) {
                     Equation old = changedEq;
                     changedEq = new MultiEquation(this);
                     changedEq.add(old);
@@ -486,7 +484,7 @@ public class ColinView extends SuperView {
                 }
                 if (warnEq instanceof MultiEquation) {
                     changedEq.addAll(warnEq);
-                }else{
+                } else {
                     changedEq.add(warnEq);
                 }
             }
@@ -496,36 +494,41 @@ public class ColinView extends SuperView {
     }
 
     private boolean alreadySolved = false;
+
     public boolean isSolved() {
-        if (alreadySolved){
+        if (alreadySolved) {
             return true;
         }
-        if (stupid.get(0) instanceof VarEquation){
-            return Operations.sortaNumber(stupid.get(1)) || isNumDiv(stupid.get(1));
-        }else if(stupid.get(1) instanceof VarEquation){
-            return Operations.sortaNumber(stupid.get(0)) || isNumDiv(stupid.get(0));
+        if (stupid instanceof EqualsEquation) {
+            if (stupid.get(0) instanceof VarEquation) {
+                return Operations.sortaNumber(stupid.get(1)) || isNumDiv(stupid.get(1));
+            } else if (stupid.get(1) instanceof VarEquation) {
+                return Operations.sortaNumber(stupid.get(0)) || isNumDiv(stupid.get(0));
+            }
+        } else if (Operations.sortaNumber(stupid)) {
+            return true;
         }
         return false;
     }
 
-    private boolean isNumDiv(Equation eq){
+    private boolean isNumDiv(Equation eq) {
         return (eq instanceof DivEquation && Operations.sortaNumber(eq.get(0)) && Operations.sortaNumber(eq.get(1)));
     }
 
-    public void showSolvedMessage(){
-        Log.i("show solved message","trying");
+    public void showSolvedMessage() {
+        Log.i("show solved message", "trying");
         Random r = new Random();
-        int i = Math.abs(r.nextInt())%4;
-        if (i==0) {
+        int i = Math.abs(r.nextInt()) % 4;
+        if (i == 0) {
             this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_0));
-        }else if (i==1){
+        } else if (i == 1) {
             this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_1));
-        }else if (i==2){
+        } else if (i == 2) {
             this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_2));
-        }else if (i==3){
+        } else if (i == 3) {
             this.message.enQue(TutMessage.shortTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solved_1_3));
         }
         alreadySolved = true;
-        ((SolvedTut)TutMessage.getMessage(SolvedTut.class)).okToShow = true;
+        ((SolvedTut) TutMessage.getMessage(SolvedTut.class)).okToShow = true;
     }
 }

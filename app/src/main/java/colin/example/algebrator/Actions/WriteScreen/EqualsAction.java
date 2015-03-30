@@ -18,7 +18,6 @@ public class EqualsAction extends Action<EmilyView> {
     @Override
     public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
 
             Equation l = myView.left();
             // we can't add it if there is nothing to the left
@@ -48,6 +47,7 @@ public class EqualsAction extends Action<EmilyView> {
 
     @Override
     protected void privateAct() {
+        ((PlaceholderEquation) myView.selected).goDark();
         if (myView.selected.right() == null) {
             while (canMoveRight()) {
                 tryMoveRight();

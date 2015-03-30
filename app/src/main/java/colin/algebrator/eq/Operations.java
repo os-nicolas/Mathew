@@ -735,7 +735,7 @@ public class Operations {
             }
     }
 
-    protected static BigDecimal getValue(Equation e) {
+    public static BigDecimal getValue(Equation e) {
         BigDecimal minus = BigDecimal.ONE;
         while (e instanceof MinusEquation || e instanceof PlusMinusEquation) {
             e = e.get(0);

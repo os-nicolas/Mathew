@@ -62,6 +62,8 @@ public abstract class SuperView extends View implements
     public float trackFingerX = -1;
     public float trackFingerY = -1;
 
+    public Activity myActivity = null;
+
     private double lastZoomDis;
 
     public boolean disabled = false;
@@ -256,8 +258,14 @@ public abstract class SuperView extends View implements
             stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
             stupid.setAlpha(stupidAlpha);
             Point stupidCenter = getStupidCenter();
-            ((EqualsEquation) stupid).drawCentered(canvas, stupidCenter.x, stupidCenter.y);
+            if (stupid instanceof EqualsEquation) {
+                ((EqualsEquation) stupid).drawCentered(canvas, stupidCenter.x, stupidCenter.y);
+            }else{
+                stupid.draw(canvas,stupidCenter.x,stupidCenter.y);
+            }
         }
+
+        drawHistory(canvas);
 
         // keep selected on the screen
         long now = System.currentTimeMillis();

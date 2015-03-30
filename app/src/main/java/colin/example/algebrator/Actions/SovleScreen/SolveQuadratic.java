@@ -106,31 +106,32 @@ public class SolveQuadratic extends Action<ColinView> {
 
     @Override
     public boolean canAct() {
-        Equation stuffSide;
-        if (myView.stupid.get(0) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(0)).isZero()) {
-            stuffSide = myView.stupid.get(1);
-        } else if (myView.stupid.get(1) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(1)).isZero()) {
-            stuffSide = myView.stupid.get(0);
-        } else {
-            return false;
-        }
-        if (getVarString(stuffSide).equals("")) {
-            return false;
-        }
+        if (myView.stupid instanceof EqualsEquation) {
+            Equation stuffSide;
+            if (myView.stupid.get(0) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(0)).isZero()) {
+                stuffSide = myView.stupid.get(1);
+            } else if (myView.stupid.get(1) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(1)).isZero()) {
+                stuffSide = myView.stupid.get(0);
+            } else {
+                return false;
+            }
+            if (getVarString(stuffSide).equals("")) {
+                return false;
+            }
 
-        if (stuffSide instanceof AddEquation &&
-                stuffSide.size() == 2 &&
-                null != getA(stuffSide) &&
-                (getC(stuffSide) != null || getB(stuffSide) != null)) {
-            return true;
-        } else if (stuffSide instanceof AddEquation &&
-                stuffSide.size() == 3 &&
-                null != getA(stuffSide) &&
-                getC(stuffSide) != null &&
-                getB(stuffSide) != null) {
-            return true;
+            if (stuffSide instanceof AddEquation &&
+                    stuffSide.size() == 2 &&
+                    null != getA(stuffSide) &&
+                    (getC(stuffSide) != null || getB(stuffSide) != null)) {
+                return true;
+            } else if (stuffSide instanceof AddEquation &&
+                    stuffSide.size() == 3 &&
+                    null != getA(stuffSide) &&
+                    getC(stuffSide) != null &&
+                    getB(stuffSide) != null) {
+                return true;
+            }
         }
-
         return false;
     }
 

@@ -788,6 +788,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (at instanceof WritingEquation) {
                 return null;
             }
+            if (at == null){
+                return null;
+            }
             at = at.parent;
         }
         return ((EqualsEquation) at);
@@ -827,6 +830,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public Equation remove(int pos) {
         Equation result = super.remove(pos);
         if (result != null) {
+            result.parent = null;
             if (this.size() == 1 && this.parent != null) {
                 this.replace(get(0));
             } else if (size() == 0) {
@@ -886,6 +890,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 this.parent.set(index, eq);
             }
         } else {
+            eq.parent = null;
             owner.stupid = eq;
         }
     }
@@ -1009,8 +1014,6 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (!parent.deepContains(this)) {
                 Log.e("ic", "parent does not contain this");
             }
-        } else if (!(this instanceof EqualsEquation || this instanceof WritingEquation)) {
-            Log.e("ic", "has no parent");
         }
         for (Equation e : this) {
             e.integrityCheckOuter();
@@ -1078,8 +1081,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public Equation tryOp(Equation dragging, boolean right, Op op) {
         Log.i("try", this.hashCode() + " " + this.display);
 
-        if (parent.indexOf(this) == -1) {
-            Log.i("", "dead on arival");
+        if (parent != null && parent.indexOf(this) == -1) {
+            Log.i("", "dead on arrival");
         }
         boolean can = false;
         if (op == Op.ADD) {

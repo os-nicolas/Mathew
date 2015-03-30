@@ -17,8 +17,13 @@ import colin.example.algebrator.EquationButton;
  */
 public class BothSides extends Action<ColinView> {
 
-    public BothSides(ColinView colinView) {
+
+    private BothSidesView.BothSidesMode myBothSidesMode;
+
+    public BothSides(BothSidesView.BothSidesMode myBothSidesMode,
+                             ColinView colinView) {
         super(colinView);
+        this.myBothSidesMode = myBothSidesMode;
     }
 
     public static Equation mine = null;
@@ -33,8 +38,9 @@ public class BothSides extends Action<ColinView> {
 
             protected Long doInBackground(Void... v) {
 
-                myContext = myView.getContext();
+                myContext = myView.myActivity;
                 BothSidesView bothSidesView = new BothSidesView(myContext);
+                bothSidesView.myBothSidesMode =myBothSidesMode;
                 bothSidesView.setOGmodie(BothSides.mine);
                 //bothSidesView.centerEq();
                 Algebrator.getAlgebrator().addBothView = bothSidesView;
@@ -51,7 +57,6 @@ public class BothSides extends Action<ColinView> {
             protected void onPostExecute(Long v) {
             }
         };
-        myView.disabled = true;
         task.execute();
     }
 

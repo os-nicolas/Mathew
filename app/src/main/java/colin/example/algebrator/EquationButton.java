@@ -4,18 +4,17 @@ import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import java.util.ArrayList;
 
 import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.NumConstEquation;
 import colin.algebrator.eq.WritingEquation;
 import colin.algebrator.eq.WritingLeafEquation;
-
-import java.util.ArrayList;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -46,11 +45,11 @@ public class EquationButton extends Button {
         this.cv = cv;
     }
 
-    public EquationButton warn(Equation bot){
-        if (bot!=null) {
+    public EquationButton warn(Equation bot) {
+        if (bot != null) {
             warn = true;
             warnEq = new WritingEquation(cv);
-            warnEq.add(new WritingLeafEquation( Algebrator.getAlgebrator().getResources().getString(R.string.assume)+": ", cv));
+            warnEq.add(new WritingLeafEquation(Algebrator.getAlgebrator().getResources().getString(R.string.assume) + ": ", cv));
             warnEq.add(bot);
             warnEq.add(new WritingLeafEquation("\u2260", cv));
             warnEq.add(new NumConstEquation(0, cv));
@@ -63,12 +62,16 @@ public class EquationButton extends Button {
         drawBkg(canvas, x + stupidX, y + stupidY);
         myEq.setColor(currentColor);
         myEq.setAlpha(currentAlpha);
-        ((EqualsEquation) myEq).drawCentered(canvas, x + stupidX, y + stupidY);
+        if (myEq instanceof EqualsEquation) {
+            ((EqualsEquation) myEq).drawCentered(canvas, x + stupidX, y + stupidY);
+        } else {
+            myEq.draw(canvas, x + stupidX, y + stupidY);
+        }
 
         // if there is a warning show that too
-        if (warn && canvas !=null){
+        if (warn && canvas != null) {
             // we need to find the right end
-            float at =myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE*Algebrator.getAlgebrator().getDpi();
+            float at = myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE * Algebrator.getAlgebrator().getDpi();
             Paint p = new Paint(Algebrator.getAlgebrator().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);
@@ -83,10 +86,10 @@ public class EquationButton extends Button {
 //            canvas.drawText(s,at,y + stupidY,p);
 //            at+= w/2;
             //at += 10*Algebrator.getAlgebrator().getDpi();
-            at += warnEq.measureWidth()/2;
+            at += warnEq.measureWidth() / 2;
             warnEq.setAlpha(currentAlpha);
             warnEq.setColor(currentColor);
-            warnEq.draw(canvas,at,y + stupidY);
+            warnEq.draw(canvas, at, y + stupidY);
         }
     }
 
@@ -94,17 +97,25 @@ public class EquationButton extends Button {
     public void drawBkg(Canvas canvas, float x, float y) {
 
         //TODO scale by dpi
-        float buffer = (float) (10*Algebrator.getAlgebrator().getDpi()*Algebrator.getAlgebrator().zoom);
+        float buffer = (float) (10 * Algebrator.getAlgebrator().getDpi() * Algebrator.getAlgebrator().zoom);
 
-        float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-        float leftEnd = x - (middle / 2) - myEq.get(0).measureWidth() - buffer;
-        float rightEnd = x + (middle / 2) + myEq.get(1).measureWidth() + buffer;
-        float topEnd = y - myEq.measureHeightUpper() - buffer;
-        float bottomEnd = y + myEq.measureHeightLower() + buffer;
+        float leftEnd;
+        float rightEnd;
+        float topEnd = (y ) - myEq.measureHeightUpper()- buffer;
+        float bottomEnd = (y) + myEq.measureHeightLower()+ buffer;
+
+        if (myEq instanceof EqualsEquation) {
+            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
+            leftEnd = (x ) - (middle / 2) - myEq.get(0).measureWidth()- buffer;
+            rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
+        } else {
+            leftEnd = (x ) - myEq.measureWidth() / 2;
+            rightEnd = (x ) + myEq.measureWidth() / 2;
+        }
 
         Paint temp = new Paint();
         //TODO scale by dpi - also do i really want to blurr this?
-        temp.setMaskFilter(new BlurMaskFilter(32*Algebrator.getAlgebrator().getDpi(), BlurMaskFilter.Blur.NORMAL));
+        temp.setMaskFilter(new BlurMaskFilter(32 * Algebrator.getAlgebrator().getDpi(), BlurMaskFilter.Blur.NORMAL));
 
         temp.setColor(Algebrator.getAlgebrator().lightColor);
         temp.setAlpha(bkgCurrentAlpha);
@@ -146,7 +157,7 @@ public class EquationButton extends Button {
             }
         }
 
-        if (event.getAction() == MotionEvent.ACTION_UP ||  event.getPointerCount() == 2) {
+        if (event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() == 2) {
             lastLongTouch = null;
         }
 
@@ -156,11 +167,20 @@ public class EquationButton extends Button {
         float stupidX = cv.stupid.lastPoint.get(0).x;
         float stupidY = cv.stupid.lastPoint.get(0).y;
 
-        float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-        float leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth();
-        float rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth();
+        float leftEnd;
+        float rightEnd;
         float topEnd = (y + stupidY) - myEq.measureHeightUpper();
         float bottomEnd = (y + stupidY) + myEq.measureHeightLower();
+
+        if (myEq instanceof EqualsEquation) {
+            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
+            leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth();
+            rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth();
+        } else {
+            leftEnd = (x + stupidX) - myEq.measureWidth() / 2;
+            rightEnd = (x + stupidX) + myEq.measureWidth() / 2;
+        }
+
         if (event.getX() < rightEnd && event.getX() > leftEnd && event.getY() > topEnd && event.getY() < bottomEnd) {
             return true;
         }
@@ -172,7 +192,7 @@ public class EquationButton extends Button {
         cv.offsetX += x;
         cv.offsetY += y;
 
-        if (cv.selected !=null){
+        if (cv.selected != null) {
             cv.selected.setSelected(false);
         }
 
@@ -184,7 +204,6 @@ public class EquationButton extends Button {
         // at time is writing copy does not change active but it might someday so let's be safe
         cv.stupid.active = true;
         cv.stupid.updateLocation();
-
 
 
         // we need to remove all history and including this
@@ -205,18 +224,18 @@ public class EquationButton extends Button {
 
     public void update(int stupidX, int stupidY) {
         if (lastLongTouch == null) {
-            if (current!=null && current.equals( this)){
+            if (current != null && current.equals(this)) {
                 current = null;
             }
             bkgTargetAlpha = 0x00;
             // current copy
-            if (current!= null && current.lastLongTouch!= null && cv.history.indexOf(this) < cv.history.indexOf(current)){
-                currentAlpha = (int)(Math.max(((.7f-current.lastLongTouch.percent()) ),0)*0xff);
+            if (current != null && current.lastLongTouch != null && cv.history.indexOf(this) < cv.history.indexOf(current)) {
+                currentAlpha = (int) (Math.max(((.7f - current.lastLongTouch.percent())), 0) * 0xff);
                 targetAlpha = currentAlpha;
-            }else{
+            } else {
                 targetAlpha = 0xff;
             }
-        } else if (lastLongTouch.started()){
+        } else if (lastLongTouch.started()) {
             bkgTargetAlpha = 0xff;
             targetColor = Color.BLACK;
             current = this;
@@ -226,7 +245,7 @@ public class EquationButton extends Button {
 
         currentAlpha = (currentAlpha * rate + targetAlpha) / (rate + 1);
         bkgCurrentAlpha = (bkgCurrentAlpha * rate + bkgTargetAlpha) / (rate + 1);
-        currentColor = Algebrator.colorFade(currentColor,targetColor);
+        currentColor = Algebrator.colorFade(currentColor, targetColor);
 
 
         x = (x * rate + targetX) / (rate + 1);
@@ -235,32 +254,36 @@ public class EquationButton extends Button {
     }
 
     public void updateLocations(int stupidX, int stupidY) {
-        ((EqualsEquation) myEq).drawCentered(null, x + stupidX, y + stupidY);
+        if (myEq instanceof EqualsEquation) {
+            ((EqualsEquation) myEq).drawCentered(null, x + stupidX, y + stupidY);
+        } else {
+            myEq.draw(null, x + stupidX, y + stupidY);
+        }
     }
 
     //TODO these are not tatally right
-        // stupid should have a get equals center function these should call
+    // stupid should have a get equals center function these should call
 
     @Override
     protected float top() {
-        return y +cv.stupid.lastPoint.get(0).getY() -myEq.measureHeightUpper();
+        return y + cv.stupid.lastPoint.get(0).getY() - myEq.measureHeightUpper();
     }
 
     @Override
     protected float left() {
-        return x +cv.stupid.lastPoint.get(0).getX() -(myEq.measureWidth()/2);
+        return x + cv.stupid.lastPoint.get(0).getX() - (myEq.measureWidth() / 2);
     }
 
     @Override
     protected float bottom() {
-        return y +cv.stupid.lastPoint.get(0).getY() +myEq.measureHeightLower();
+        return y + cv.stupid.lastPoint.get(0).getY() + myEq.measureHeightLower();
     }
 
     @Override
     protected float right() {
-        float base= x +cv.stupid.lastPoint.get(0).getX() + (myEq.measureWidth()/2);
-        if (warn){
-            return base + warnEq.measureWidth()+ WARN_SPACE*Algebrator.getAlgebrator().getDpi();
+        float base = x + cv.stupid.lastPoint.get(0).getX() + (myEq.measureWidth() / 2);
+        if (warn) {
+            return base + warnEq.measureWidth() + WARN_SPACE * Algebrator.getAlgebrator().getDpi();
         }
         return base;
     }

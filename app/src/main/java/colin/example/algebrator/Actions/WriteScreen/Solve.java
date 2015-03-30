@@ -49,7 +49,7 @@ public class Solve extends Action {
         // and remove it from mine
         if (mine instanceof WritingEquation) {
 
-            if (((WritingEquation) mine).deepLegal() && countEquals(mine) == 1) {
+            if (((WritingEquation) mine).deepLegal() ) {//&& countEquals(mine) == 1
                 TutMessage.getMessage(HitSolveMessage.class).alreadyDone();
 
                 return true;
@@ -69,7 +69,7 @@ public class Solve extends Action {
 
                 Equation newEq = ((WritingEquation) Solve.mine).convert();
 
-                myContext = myView.getContext();
+                myContext = myView.myActivity;
                 ColinView colinView = new ColinView(myContext);
                 colinView.stupid = newEq;
                 colinView.centerEq();
@@ -87,7 +87,7 @@ public class Solve extends Action {
             protected void onPostExecute(Long v) {
             }
         };
-        myView.disabled = true;
+        //myView.disabled = true;
         task.execute();
 
     }

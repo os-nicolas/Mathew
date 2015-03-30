@@ -303,6 +303,7 @@ public class WritingEquation extends Equation {
         }
         if (root == null) {
             Log.i("conversion result-left", left.toString());
+            left.parent = null;
             return left;
         } else {
 
@@ -313,6 +314,7 @@ public class WritingEquation extends Equation {
                 root = root.get(0);
             }
             Log.i("conversion result", root.toString());
+            root.parent = null;
             return root;
         }
     }

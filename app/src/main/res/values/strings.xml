@@ -4,6 +4,7 @@
     <string name="app_name">Mathilda</string>
     <string name="action_settings">Settings</string>
     <string name="solve">Solve</string>
+    <string name="ok">Ok</string>
     <string name="assume">Assuming</string>
 
     <string-array name="tut_history">

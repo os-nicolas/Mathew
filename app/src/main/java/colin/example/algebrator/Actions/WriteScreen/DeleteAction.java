@@ -19,7 +19,7 @@ public class DeleteAction extends Action<EmilyView> {
     @Override
     public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
+
             Equation l = myView.left();
             if (l != null) {
                 return true;
@@ -30,6 +30,7 @@ public class DeleteAction extends Action<EmilyView> {
 
     @Override
     protected void privateAct() {
+        ((PlaceholderEquation) myView.selected).goDark();
         Equation l = myView.left();
         ((PlaceholderEquation) myView.selected).goDark();
         if (l.parent instanceof BinaryEquation) {

@@ -21,7 +21,7 @@ public class ParenthesesAction extends Action<EmilyView> {
     @Override
     public boolean canAct() {
         if (myView.selected instanceof PlaceholderEquation) {
-            ((PlaceholderEquation) myView.selected).goDark();
+
 
             boolean can = true;
             boolean op = false;
@@ -48,7 +48,7 @@ public class ParenthesesAction extends Action<EmilyView> {
 
 
         Equation newEq = new WritingPraEquation(left, myView);
-
+        ((PlaceholderEquation) myView.selected).goDark();
 
         if (!(myView.selected.parent instanceof BinaryEquation)) {
             myView.insert(newEq);
