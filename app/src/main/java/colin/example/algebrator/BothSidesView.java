@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
+import android.view.View;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.DivEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MultiEquation;
+import colin.algebrator.eq.PlaceholderEquation;
+import colin.algebrator.eq.WritingEquation;
 import colin.example.algebrator.Actions.SovleScreen.BothSides;
 import colin.example.algebrator.Actions.WriteScreen.ClearAction;
 import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
@@ -34,6 +38,14 @@ import colin.example.algebrator.Actions.WriteScreen.VarAction;
  * Created by Colin_000 on 3/28/2015.
  */
 public class BothSidesView extends EmilyView {
+
+    public void setOGmodie( Equation newOGModie){
+        OGmodie = newOGModie;
+        history.add(new EquationButton(OGmodie,this));
+    }
+
+
+    private Equation OGmodie;
 
     public enum BothSidesMode {ADD,SUB,MULTI,DIV};
 
@@ -58,70 +70,114 @@ public class BothSidesView extends EmilyView {
         super(context, attrs, defStyle);
         init(context);
     }
-@Override
+
+    @Override
     public void initEq() {
         super.initEq();
-        Equation modie = getModie();
-
-        if (myBothSidesMode == BothSidesMode.ADD){
-
-            for (int i =0;i<2;i++){
-                if (!(modie.get(i) instanceof  AddEquation)){
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new AddEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
-                }
-                modie.get(i).add(stupid);
-            }
 
 
-        }else if (myBothSidesMode == BothSidesMode.SUB){
-
-            for (int i =0;i<2;i++){
-                if (!(modie.get(i) instanceof  AddEquation))
-                {
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new AddEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
-                }
-                modie.get(i).add(stupid);
-            }
-
-
-        }else if (myBothSidesMode == BothSidesMode.MULTI){
-
-            for (int i =0;i<2;i++){
-                if (!(modie.get(i) instanceof MultiEquation)){
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new MultiEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
-                }
-                modie.get(i).add(stupid);
-            }
-
-
-        }else if (myBothSidesMode == BothSidesMode.DIV){
-
-            for (int i =0;i<2;i++){
-                if (!(modie.get(i) instanceof DivEquation)){
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new DivEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
-                }
-                modie.get(i).add(stupid);
-            }
-
-
-        }
+        updateModie();
 
     }
 
-    private Equation getModie() {
-        return history.get(0).myEq;
+
+
+    private void updateModie() {
+        Equation modie = OGmodie.copy();
+        Equation toBothSides = convert(stupid.copy());
+
+
+        if (toBothSides!= null) {
+            toBothSides.demo = true;
+            if (myBothSidesMode == BothSidesMode.ADD) {
+
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof AddEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new AddEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides);
+                }
+
+
+            } else if (myBothSidesMode == BothSidesMode.SUB) {
+
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof AddEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new AddEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides);
+                }
+
+
+            } else if (myBothSidesMode == BothSidesMode.MULTI) {
+
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof MultiEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new MultiEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides);
+                }
+
+
+            } else if (myBothSidesMode == BothSidesMode.DIV) {
+
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof DivEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new DivEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides);
+                }
+            }
+        }
+        setModie(modie);
+    }
+
+    private Equation convert(Equation eq) {
+        // we want to remove |
+        if (eq instanceof WritingEquation && eq.size() ==1){
+            return null;
+        }else{
+            return removePlaceHolder(eq);
+        }
+    }
+
+    private Equation removePlaceHolder(Equation eq) {
+        if (eq instanceof PlaceholderEquation){
+            eq.remove();
+        }else{
+            // we iterate backword so we can remove
+            for (int i = eq.size() -1;0<i;i--){
+                removePlaceHolder(eq.get(i));
+            }
+        }
+        return eq;
+    }
+
+//    private Equation getModie() {
+//        return history.get(0).myEq;
+//    }
+
+    private Equation setModie(Equation newModie) {
+        return history.get(0).myEq= newModie;
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent event) {
+        boolean toReturn = super.onTouch(view, event);
+        updateModie();
+        return toReturn;
     }
 
     @Override

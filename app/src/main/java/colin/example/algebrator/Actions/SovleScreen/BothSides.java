@@ -33,12 +33,9 @@ public class BothSides extends Action<ColinView> {
 
             protected Long doInBackground(Void... v) {
 
-
-                Equation newEq = BothSides.mine;
-
                 myContext = myView.getContext();
                 BothSidesView bothSidesView = new BothSidesView(myContext);
-               bothSidesView.history.add(new EquationButton(newEq,bothSidesView));
+                bothSidesView.setOGmodie(BothSides.mine);
                 //bothSidesView.centerEq();
                 Algebrator.getAlgebrator().addBothView = bothSidesView;
                 //((MainActivity) c).lookAt(colinView);
