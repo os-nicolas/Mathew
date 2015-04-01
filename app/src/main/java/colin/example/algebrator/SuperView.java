@@ -738,6 +738,8 @@ public abstract class SuperView extends View implements
                     myMode = TouchMode.ZOOM;
                     lastZoomDis = getPointerDistance(event);
                     lastCenter = getCenter(event);
+                    // we need to tell the buttons to turn off hover
+                    doButtons(event);
                 }else{
                     double currentZoomDis = getPointerDistance(event);
                     Point touchCenter = getCenter(event);
@@ -1022,10 +1024,11 @@ public abstract class SuperView extends View implements
         float atHeight = -stupid.measureHeightUpper() - buffer;
         float currentPercent = fade;
         for (EquationButton eb : history) {
+            if (lastZoom != Algebrator.getAlgebrator().zoom){
+                eb.myEq.deepNeedsUpdate();
+            }
             if ( (!skipZero) || (!eb.equals(history.get(0)))) {
-                if (lastZoom != Algebrator.getAlgebrator().zoom){
-                    eb.myEq.deepNeedsUpdate();
-                }
+
                 atHeight -= eb.myEq.measureHeightLower();
                 eb.targetColor = getHistoryColor(0xff000000, Algebrator.getAlgebrator().darkColor, currentPercent);
                 eb.x = 0;

@@ -3,6 +3,7 @@ package colin.example.algebrator;
 
 import android.util.Log;
 
+import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 
 
@@ -68,8 +69,13 @@ public class DragLocation implements Comparable<DragLocation> {
         myDemo = equation;
 
         //myStupid.updateLocation();
-        this.x = equation.x - myStupid.lastPoint.get(0).x;
-        this.y = equation.y - myStupid.lastPoint.get(0).y;
+        if (myStupid instanceof EqualsEquation) {
+            this.x = equation.x - myStupid.lastPoint.get(0).x;
+            this.y = equation.y - myStupid.lastPoint.get(0).y;
+        }else{
+            this.x = equation.x - myStupid.getX();
+            this.y = equation.y - myStupid.getY();
+        }
 
         myDemo.demo = true;
     }
@@ -81,10 +87,18 @@ public class DragLocation implements Comparable<DragLocation> {
     }
 
     public void updateDis(float eventX, float eventY) {
-        this.dis = (float) Math.sqrt((x + owner.stupid.lastPoint.get(0).x- eventX) *
-                (x + owner.stupid.lastPoint.get(0).x - eventX) +
-                (y + owner.stupid.lastPoint.get(0).y - eventY) *
-                (y + owner.stupid.lastPoint.get(0).y - eventY));
+        if (myStupid instanceof EqualsEquation) {
+            this.dis = (float) Math.sqrt((x + owner.stupid.lastPoint.get(0).x- eventX) *
+                    (x + owner.stupid.lastPoint.get(0).x - eventX) +
+                    (y + owner.stupid.lastPoint.get(0).y - eventY) *
+                            (y + owner.stupid.lastPoint.get(0).y - eventY));
+        }else{
+            this.dis = (float) Math.sqrt((x + owner.stupid.getX()- eventX) *
+                    (x + owner.stupid.getX() - eventX) +
+                    (y + owner.stupid.getY() - eventY) *
+                            (y + owner.stupid.getY() - eventY));
+        }
+
     }
 
     @Override

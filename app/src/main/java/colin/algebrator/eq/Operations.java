@@ -457,6 +457,8 @@ public class Operations {
                     int eeInt = (int) Math.floor(getValue(ee).doubleValue());
                     int myGcd = gcd(eInt, eeInt);
                     if (getValue(e).doubleValue() == eInt
+                            && 0 != eInt
+                            && 0 != eeInt
                             && getValue(ee).doubleValue() == eeInt
                             && Math.abs(myGcd) != 1 && myGcd!=0 ) {
                         result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));

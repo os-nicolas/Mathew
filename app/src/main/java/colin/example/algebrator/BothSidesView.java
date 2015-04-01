@@ -57,16 +57,30 @@ public class BothSidesView extends EmilyView {
         this.myBothSidesMode  =myBothSidesMode;
 
         setOGmodie(mine);
-        if (myBothSidesMode == BothSidesMode.ADD){
-            history.add(new EquationButton(new VarEquation("Add to Both Sides",this), this));
-        }else if (myBothSidesMode == BothSidesMode.SUB){
-            history.add(new EquationButton(new VarEquation("Subtract from Both Sides",this), this));
-        }else if (myBothSidesMode == BothSidesMode.MULTI){
-            history.add(new EquationButton(new VarEquation("Multiply Both Sides",this), this));
-        }else if (myBothSidesMode == BothSidesMode.DIV){
-            history.add(new EquationButton(new VarEquation("Divide Both Sides",this), this));
-        }else if (myBothSidesMode == BothSidesMode.POWER){
-            history.add(new EquationButton(new VarEquation("Raise Both Sides to a Power",this), this));
+        if (mine instanceof EqualsEquation){
+            if (myBothSidesMode == BothSidesMode.ADD){
+                history.add(new EquationButton(new VarEquation( getResources().getString(R.string.bothsides_equals_add),this), this));
+            }else if (myBothSidesMode == BothSidesMode.SUB){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_equals_sub),this), this));
+            }else if (myBothSidesMode == BothSidesMode.MULTI){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_equals_multi),this), this));
+            }else if (myBothSidesMode == BothSidesMode.DIV){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_equals_div),this), this));
+            }else if (myBothSidesMode == BothSidesMode.POWER){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_equals_power),this), this));
+            }
+        }else{
+            if (myBothSidesMode == BothSidesMode.ADD){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_add),this), this));
+            }else if (myBothSidesMode == BothSidesMode.SUB){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_sub),this), this));
+            }else if (myBothSidesMode == BothSidesMode.MULTI){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_multi),this), this));
+            }else if (myBothSidesMode == BothSidesMode.DIV){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_div),this), this));
+            }else if (myBothSidesMode == BothSidesMode.POWER){
+                history.add(new EquationButton(new VarEquation(getResources().getString(R.string.bothsides_power),this), this));
+            }
         }
     }
 
@@ -214,10 +228,16 @@ public class BothSidesView extends EmilyView {
         ArrayList<Equation> toBothSides = new ArrayList<>();
         toBothSides.add(convert(stupid.copy()));
         toBothSides.add(convert(stupid.copy()));
-//        for (Equation e : toBothSides) {
+       for (Equation e : toBothSides) {
+           if (myBothSidesMode == BothSidesMode.MULTI &&
+                   e.get(0) instanceof WritingPraEquation && ((WritingPraEquation)e.get(0)).left &&
+                   e.get(e.size() -1) instanceof WritingPraEquation && !((WritingPraEquation)e.get(e.size() -1)).left  ){
+               e.remove(0);
+               e.remove(e.size() -1);
+           }
 //            e.demo = true;
 //            e.bkgAlpha = 0xff;
-//        }
+       }
         return toBothSides;
     }
 

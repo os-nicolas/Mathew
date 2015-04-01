@@ -71,7 +71,7 @@ public class EquationButton extends Button {
         // if there is a warning show that too
         if (warn && canvas != null) {
             // we need to find the right end
-            float at = myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE * Algebrator.getAlgebrator().getDpi();
+            float at =(float)( myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE * Algebrator.getAlgebrator().getDpi() * Algebrator.getAlgebrator().zoom);
             Paint p = new Paint(Algebrator.getAlgebrator().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);

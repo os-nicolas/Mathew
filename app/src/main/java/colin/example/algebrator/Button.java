@@ -158,7 +158,7 @@ public class Button implements Physical {
     }
 
     public boolean couldClick(MotionEvent event) {
-        return (event.getX() < right() && event.getX() > left() && event.getY() < bottom() && event.getY() > top());
+        return (event.getX() < right() && event.getX() > left() && event.getY() < bottom() && event.getY() > top() && event.getPointerCount() == 1);
     }
 
 

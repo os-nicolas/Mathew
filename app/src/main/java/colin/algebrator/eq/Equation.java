@@ -1192,6 +1192,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (this instanceof DivEquation && dragging.equals(this.get(1))) {
             return false;
         }
+        // we also don't allow a/b -> a/b
+        if (this.parent instanceof DivEquation && this.parent.get(0).equals(this) && this.parent.get(1).equals(dragging)) {
+            return false;
+        }
         return true;
     }
 

@@ -40,11 +40,11 @@
 
     <string name="tut_solvemessage_1">This is the Solve screen.</string>
     <string-array name="tut_solvemessage_2">
-        <item>To move numbers or variables around,</item>
+        <item>To move terms around,</item>
         <item>simply drag and drop them.</item>
     </string-array>
     <string-array name="tut_solvemessage_3">
-        <item>Use the + bottom at the bottom of the screen</item>
+        <item>Use the + button at the bottom of the screen</item>
         <item>to add a new term to both sides</item>
     </string-array>
     <string-array name="tut_solvemessage_4">
@@ -82,15 +82,26 @@
        Type in what power you want to raise both sides to
     </string>
 
+    <string name="bothsides_equals_add">Add to Both Sides</string>
+    <string name="bothsides_equals_sub">Subtract from Both Sides</string>
+    <string name="bothsides_equals_multi">Multiply Both Sides</string>
+    <string name="bothsides_equals_div">Divide Both Sides</string>
+    <string name="bothsides_equals_power">Raise Both Sides to a Power</string>
+    <string name="bothsides_add">Add to</string>
+    <string name="bothsides_sub">Subtract from</string>
+    <string name="bothsides_multi">Multiply</string>
+    <string name="bothsides_div">Divide</string>
+    <string name="bothsides_power">Raise to a Power</string>
+
 
     <string-array name="tut_both_2">
         <item>Then, tap Ok to accept your changes</item>
-        <item>and bring them back to the solve screen</item>
+        <item>and bring them back to the Solve Screen</item>
     </string-array>
 
     <string-array name="tut_both_3">
-        <item>Or, tap Cancel or hit back to reject your changes</item>
-        <item>and go back to the solve screen</item>
+        <item>Or, tap Cancel or back to reject your changes</item>
+        <item>and go back to the Solve Screen</item>
     </string-array>
 
 </resources>
