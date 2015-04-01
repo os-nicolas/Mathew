@@ -29,10 +29,11 @@ public class RootDragTut  extends PowerTut {
 
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        Equation power=  getPower(view.stupid);
+        Equation power=  getPower(view.getStupid());
         if (view instanceof ColinView && power!= null
                 && ((PowerEquation)power).isSqrt() == true
                 && power.parent instanceof EqualsEquation
+                && view.getStupid() instanceof EqualsEquation
                 && !view.active()
                 && !((ColinView)view).isSolved()
                 && view.message.isOpen()){

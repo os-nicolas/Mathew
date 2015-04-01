@@ -29,7 +29,7 @@ public class PowerDragTut extends PowerTut {
 
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        Equation power=  getPower(view.stupid);
+        Equation power=  getPower(view.getStupid());
         if (view instanceof ColinView && power!= null
                 && ((PowerEquation)power).isSqrt() == false
                 && power.parent instanceof EqualsEquation

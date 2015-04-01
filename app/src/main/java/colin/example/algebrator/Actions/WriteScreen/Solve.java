@@ -27,11 +27,11 @@ public class Solve extends Action {
     @Override
     public boolean canAct() {
         // we need to copy stupid
-        mine = myView.stupid.copy();
+        mine = myView.getStupid().copy();
 
         // we want to remove the place holder
         if (myView.selected instanceof PlaceholderEquation) {
-            Equation at = myView.stupid;
+            Equation at = myView.getStupid();
             Equation myAt = mine;
             while (!at.equals(myView.selected)) {
                 int index = at.deepIndexOf(myView.selected);
@@ -71,7 +71,7 @@ public class Solve extends Action {
 
                 myContext = myView.myActivity;
                 ColinView colinView = new ColinView(myContext);
-                colinView.stupid = newEq;
+                colinView.setStupid(newEq);
                 colinView.centerEq();
                 Algebrator.getAlgebrator().solveView = colinView;
                 //((MainActivity) c).lookAt(colinView);

@@ -3,6 +3,7 @@ package colin.example.algebrator.tuts;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.PowerEquation;
+import colin.algebrator.eq.VarEquation;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;
 import colin.example.algebrator.R;
@@ -28,10 +29,11 @@ public class PowerTut extends TutMessage {
 
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        Equation power = getPower(view.stupid);
+        PowerEquation power =  getPower(view.getStupid());
         if (view instanceof ColinView
                 && power!= null
-                && ((PowerEquation)power).isSqrt() == false
+                && power.isSqrt() == false
+                && !(power.get(0) instanceof VarEquation)
                 && !view.active()
                 && !((ColinView)view).isSolved()
                 && view.message.isOpen()){
@@ -40,12 +42,12 @@ public class PowerTut extends TutMessage {
         return false;
     }
 
-    protected Equation getPower(Equation eq) {
+    protected PowerEquation getPower(Equation eq) {
         if (eq instanceof PowerEquation){//&& Operations.sortaNumber(eq.get(1)
-            return eq;
+            return (PowerEquation)eq;
         }
         for (Equation e:eq){
-            Equation result = getPower(e);
+            PowerEquation result = getPower(e);
             if (result != null){
                 return result;
             }

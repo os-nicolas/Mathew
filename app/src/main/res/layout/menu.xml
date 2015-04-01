@@ -1,54 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        >
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:layout_weight="1"
+        android:id="@+id/editText"
+        android:layout_gravity="center_horizontal" />
 
-    <colin.example.algebrator.EmilyView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="75dp">
 
-        <LinearLayout
-            android:background="@android:drawable/dialog_holo_light_frame"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="fill_parent"
-            android:layout_margin="50dp"
-            android:padding="10dp">
+            android:text="Send Feedback"
+            android:layout_weight="1"
+            android:id="@+id/button" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
-                android:ems="10"
-                android:layout_weight="1"
-                android:id="@+id/editText"
-                android:layout_gravity="center_horizontal"
-                 />
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                >
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:text="New Button"
-                    android:layout_weight="1"
-                    android:id="@+id/button" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:text="New Button"
-                    android:id="@+id/button2" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </FrameLayout>
+    </LinearLayout>
+</LinearLayout>

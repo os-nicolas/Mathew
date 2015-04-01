@@ -2,6 +2,7 @@ package colin.example.algebrator.tuts;
 
 import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.DivEquation;
+import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Operations;
 import colin.algebrator.eq.VarEquation;
 import colin.example.algebrator.Algebrator;
@@ -32,8 +33,9 @@ public class AddTut extends TutMessage {
     protected boolean privateShouldShow(SuperView view) {
         if (view instanceof ColinView){
             // is one of the roots an add?
-            if ((view.stupid.get(0) instanceof AddEquation || view.stupid.get(1) instanceof AddEquation)
+            if ((view.getStupid().get(0) instanceof AddEquation || view.getStupid().get(1) instanceof AddEquation)
                     && !view.active()
+                    && view.getStupid() instanceof EqualsEquation
                     && !((ColinView)view).isSolved()
                     && view.message.isOpen()) {
                 return true;
@@ -44,6 +46,13 @@ public class AddTut extends TutMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(longTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_add));
+        //view.message.enQue(longTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_add));
+
+
+//        <string-array name="tut_add">
+//        <item>To add/subtract a term from both sides, </item>
+//        <item>drag the term to the other side.</item>
+//        </string-array>
+
     }
 }

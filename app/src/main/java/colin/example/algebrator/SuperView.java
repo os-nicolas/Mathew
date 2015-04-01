@@ -48,7 +48,7 @@ public abstract class SuperView extends View implements
     //SurfaceHolder surfaceHolder;
     Thread thread = null;
     volatile boolean running = false;
-    public Equation stupid;
+    protected Equation stupid;
     int width;
     int height;
     float offsetX = 0;
@@ -100,7 +100,12 @@ public abstract class SuperView extends View implements
         init(context);
     }
 
-    public void resume() {}
+    public void resume() {
+        // stupid is null when we are first creating the view
+        if (stupid != null) {
+            stupid.deepNeedsUpdate();
+        }
+    }
 
     private void init(Context context) {
         //surfaceHolder = getHolder();
@@ -258,7 +263,7 @@ public abstract class SuperView extends View implements
             stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
             stupid.setAlpha(stupidAlpha);
             Point stupidCenter = getStupidCenter();
-            if (stupid instanceof EqualsEquation) {
+            if (this instanceof ColinView && stupid instanceof EqualsEquation) {
                 ((EqualsEquation) stupid).drawCentered(canvas, stupidCenter.x, stupidCenter.y);
             }else{
                 stupid.draw(canvas,stupidCenter.x,stupidCenter.y);
@@ -533,6 +538,20 @@ public abstract class SuperView extends View implements
         }
     }
 
+    public void setStupid(Equation newStupid) {
+        this.stupid = newStupid;
+
+        this.stupid.parent = null;
+        if (!this.stupid.owner.equals(this)){
+            this.stupid.updateOwner(this);
+            this.stupid.deepNeedsUpdate();
+        }
+    }
+
+    public Equation getStupid(){
+        return stupid;
+    }
+
     enum TouchMode {BUTTON, DRAG, SELECT, MOVE, ZOOM, DEAD, MESSAGE}
 
     public boolean canDrag = false;
@@ -733,6 +752,8 @@ public abstract class SuperView extends View implements
                     offsetX =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
                     offsetY =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisy)-touchCenter.y + screenCenter.y);
                     lastCenter =touchCenter;
+
+                    stupid.deepNeedsUpdate();
                 }
             } else{
                 myMode = TouchMode.DEAD;

@@ -458,7 +458,7 @@ public class Operations {
                     int myGcd = gcd(eInt, eeInt);
                     if (getValue(e).doubleValue() == eInt
                             && getValue(ee).doubleValue() == eeInt
-                            && Math.abs(myGcd) != 1) {
+                            && Math.abs(myGcd) != 1 && myGcd!=0 ) {
                         result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));
                         if (eInt == myGcd) {
                             leftNumCopy.remove(i);

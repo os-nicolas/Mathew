@@ -52,14 +52,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private int buffer = 10;
 
 
-    protected float lastMeasureWidth = -1;
-    protected float lastMeasureHeight = -1;
-    protected float lastMeasureHeightUpper = -1;
-    protected float lastMeasureHeightLower = -1;
-    protected long lastMeasureWidthAt = -1;
-    protected long lastMeasureHeightAt = -1;
-    protected long lastMeasureHeightUpperAt = -1;
-    protected long lastMeasureHeightLowerAt = -1;
+
     private int bkgColor = Algebrator.getAlgebrator().lightColor;
     public boolean active = true;
 
@@ -104,13 +97,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (this.parent!= null && !this.parent.contains(this)){
             Log.e("kid not in parent",this.toString() + " " + parent.toString());
         }
-        if (parent != null && owner.stupid.deepContains(this) && ! owner.stupid.deepContains(parent)){
+        if (parent != null && owner.getStupid().deepContains(this) && ! owner.getStupid().deepContains(parent)){
             Log.e("parent is wrong",this.toString() + " " + parent.toString());
         }
     }
 
     public void setDisplay(String display) {
         this.display = display;
+        needsUpdate();
     }
 
     public String getDisplay(int pos) {
@@ -152,6 +146,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             for (Equation e : this) {
                 parent.add(at++, e);
             }
+            needsUpdate();
             return true;
         }
         return false;
@@ -161,6 +156,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public boolean add(Equation equation) {
         boolean result = super.add(equation);
         equation.parent = this;
+        equation.needsUpdate();
         return result;
     }
 
@@ -186,6 +182,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public void add(int i, Equation equation) {
         super.add(i, equation);
         equation.parent = this;
+        equation.needsUpdate();
     }
 
     //public abstract boolean isFlex();
@@ -222,35 +219,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return result;
     }
 
-    private boolean needsUpdateWidth = false;
-    public float measureWidth() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureWidthAt || (!active && lastMeasureWidth != -1)) && !needsUpdateWidth) {
-            return lastMeasureWidth;
-        } else {
-            lastMeasureWidth = privateMeasureWidth();
-            lastMeasureWidthAt = Algebrator.getAlgebrator().at;
-            needsUpdateWidth = false;
-            return lastMeasureWidth;
-        }
-    }
 
-    protected float privateMeasureWidth() {
-        float totalWidth = 0;
-        for (int i = 0; i < size() - 1; i++) {
-            if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                totalWidth += getMyWidth() + myWidthAdd();
-            }
-        }
-
-        for (int i = 0; i < size(); i++) {
-            totalWidth += get(i).measureWidth();
-        }
-
-        if (parenthesis()) {
-            totalWidth += getParnWidthAddition();
-        }
-        return totalWidth;
-    }
 
     protected float myWidthAdd() {
         return 2*Algebrator.getAlgebrator().getDpi();
@@ -325,70 +294,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
-    public void deepNeedsUpdate(){
-        needsUpdateHeightLower = true;
-        needsUpdateHeightUpper = true;
-        needsUpdateHeight= true;
-        needsUpdateWidth = true;
-        for (Equation e: this){
-            e.deepNeedsUpdate();
-        }
-    }
 
-    public boolean needsUpdateHeightLower =false;
-    public float measureHeightLower() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightLowerAt || (!active && lastMeasureHeightLower != -1)) && !needsUpdateHeightLower) {
-            return lastMeasureHeightLower;
-        } else {
-            lastMeasureHeightLower = privateMeasureHeightLower();
-            lastMeasureHeightLowerAt = Algebrator.getAlgebrator().at;
-            needsUpdateHeightLower = false;
-            return lastMeasureHeightLower;
-        }
-    }
-
-    protected float privateMeasureHeightLower() {
-
-        float totalHeight = (float) (getMyHeight() / 2);
-
-        for (int i = 0; i < size(); i++) {
-            if (get(i).measureHeightLower() > totalHeight) {
-                totalHeight = get(i).measureHeightLower();
-            }
-        }
-        if (parenthesis()) {
-            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
-        }
-        return totalHeight;
-    }
-
-    private boolean needsUpdateHeightUpper = false;
-    public float measureHeightUpper() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightUpperAt || (!active && lastMeasureHeightUpper != -1)) && !needsUpdateHeightUpper) {
-            return lastMeasureHeightUpper;
-        } else {
-            lastMeasureHeightUpper = privateMeasureHeightUpper();
-            lastMeasureHeightUpperAt = Algebrator.getAlgebrator().at;
-            needsUpdateHeightUpper = false;
-            return lastMeasureHeightUpper;
-        }
-
-
-    }
-
-    protected float privateMeasureHeightUpper() {
-        float totalHeight = (float)(getMyHeight()) / 2f;
-
-        for (int i = 0; i < size(); i++) {
-            if (get(i).measureHeightUpper() > totalHeight) {
-                totalHeight = get(i).measureHeightUpper();
-            }
-        }
-        if (parenthesis()) {
-            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
-        }
-        return totalHeight;
-    }
 
     public boolean deepContains(Equation equation) {
         Equation current = equation;
@@ -409,22 +315,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
-    private boolean needsUpdateHeight = false;
-    public float measureHeight() {
-        if ((Algebrator.getAlgebrator().at == lastMeasureHeightAt || (!active && lastMeasureHeight != -1)) && !needsUpdateHeight) {
-            return lastMeasureHeight;
-        } else {
-            lastMeasureHeight = privateMeasureHeight();
-            lastMeasureHeightAt = Algebrator.getAlgebrator().at;
-            needsUpdateHeight = false;
-            return lastMeasureHeight;
-        }
 
-    }
-
-    protected float privateMeasureHeight() {
-        return measureHeightLower() + measureHeightUpper();
-    }
 
     public HashSet<Equation> on(float x, float y) {
 
@@ -514,9 +405,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         }
 
-        owner.stupid.updateLocation();
+        owner.getStupid().updateLocation();
         Object[] ons = on(x, y).toArray();
-        Equation old = owner.stupid.copy();
+        Equation old = owner.getStupid().copy();
 
         String db = "";
         for (Object o : ons) {
@@ -546,8 +437,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
             if (owner instanceof ColinView) {
                 MyPoint myPoint = getLastPoint(x, y);
-                Log.i("did it change?",old.toString() + " " + owner.stupid.toString());
-                if (!(old.same(owner.stupid))) {
+                Log.i("did it change?",old.toString() + " " + owner.getStupid().toString());
+                if (!(old.same(owner.getStupid()))) {
                     ((ColinView) owner).changed = true;
 
                     // we are moving this code anyway
@@ -829,6 +720,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     @Override
     public Equation remove(int pos) {
         Equation result = super.remove(pos);
+        needsUpdate();
         if (result != null) {
             result.parent = null;
             if (this.size() == 1 && this.parent != null) {
@@ -844,6 +736,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public Equation set(int index, Equation eq) {
         Equation result = super.set(index, eq);
         eq.parent = this;
+        eq.needsUpdate();
 
         return result;
 
@@ -891,7 +784,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         } else {
             eq.parent = null;
-            owner.stupid = eq;
+            owner.setStupid(eq);
         }
     }
 
@@ -1602,4 +1495,147 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public enum Op {ADD, DIV, POWER, MULTI}
+
+
+    // ######################## Measure stuff ########################################
+
+        protected float lastMeasureWidth;
+    protected float lastMeasureHeight;
+    protected float lastMeasureHeightUpper;
+    protected float lastMeasureHeightLower;
+//    protected long lastMeasureWidthAt = -1;
+//    protected long lastMeasureHeightAt = -1;
+//    protected long lastMeasureHeightUpperAt = -1;
+//    protected long lastMeasureHeightLowerAt = -1;
+
+    private boolean needsUpdateWidth = true;
+    public float measureWidth() {
+        if (!needsUpdateWidth) {
+            return lastMeasureWidth;
+        } else {
+            // order matters for the next two lines
+            // this way private measure can assert that it should be measured on every frame
+            needsUpdateWidth = false;
+            lastMeasureWidth = privateMeasureWidth();
+            return lastMeasureWidth;
+        }
+    }
+
+    protected float privateMeasureWidth() {
+        float totalWidth = 0;
+        for (int i = 0; i < size() - 1; i++) {
+            if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
+                totalWidth += getMyWidth() + myWidthAdd();
+            }
+        }
+
+        for (int i = 0; i < size(); i++) {
+            totalWidth += get(i).measureWidth();
+        }
+
+        if (parenthesis()) {
+            totalWidth += getParnWidthAddition();
+        }
+        return totalWidth;
+    }
+
+    public void needsUpdate(){
+        needsUpdateHeightLower = true;
+        needsUpdateHeightUpper = true;
+        needsUpdateHeight= true;
+        needsUpdateWidth = true;
+        if (parent != null){
+            parent.needsUpdate();
+        }
+
+    }
+
+    public void deepNeedsUpdate(){
+        needsUpdateHeightLower = true;
+        needsUpdateHeightUpper = true;
+        needsUpdateHeight= true;
+        needsUpdateWidth = true;
+        for (Equation e: this){
+            e.deepNeedsUpdate();
+        }
+    }
+
+    private boolean needsUpdateHeightLower =true;
+    public float measureHeightLower() {
+        if (!needsUpdateHeightLower) {
+            return lastMeasureHeightLower;
+        } else {
+            // order matters for the next two lines
+            // this way private measure can assert that it should be measured on every frame
+            needsUpdateHeightLower = false;
+            lastMeasureHeightLower = privateMeasureHeightLower();
+            return lastMeasureHeightLower;
+        }
+    }
+
+    protected float privateMeasureHeightLower() {
+
+        float totalHeight = (float) (getMyHeight() / 2);
+
+        for (int i = 0; i < size(); i++) {
+            if (get(i).measureHeightLower() > totalHeight) {
+                totalHeight = get(i).measureHeightLower();
+            }
+        }
+        if (parenthesis()) {
+            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
+        }
+        return totalHeight;
+    }
+
+    private boolean needsUpdateHeightUpper = true;
+    public float measureHeightUpper() {
+        if (!needsUpdateHeightUpper) {
+            return lastMeasureHeightUpper;
+        } else {
+            // order matters for the next two lines
+            // this way private measure can assert that it should be measured on every frame
+            needsUpdateHeightUpper = false;
+            lastMeasureHeightUpper = privateMeasureHeightUpper();
+
+            return lastMeasureHeightUpper;
+        }
+
+
+    }
+
+    protected float privateMeasureHeightUpper() {
+        float totalHeight = (float)(getMyHeight()) / 2f;
+
+        for (int i = 0; i < size(); i++) {
+            if (get(i).measureHeightUpper() > totalHeight) {
+                totalHeight = get(i).measureHeightUpper();
+            }
+        }
+        if (parenthesis()) {
+            totalHeight += PARN_HEIGHT_ADDITION() / 2f;
+        }
+        return totalHeight;
+    }
+
+    private boolean needsUpdateHeight = true;
+    public float measureHeight() {
+        if (!needsUpdateHeight) {
+            return lastMeasureHeight;
+        } else {
+            // order matters for the next two lines
+            // this way private measure can assert that it should be measured on every frame
+            needsUpdateHeight = false;
+            lastMeasureHeight = privateMeasureHeight();
+
+            return lastMeasureHeight;
+        }
+
+    }
+
+    protected float privateMeasureHeight() {
+        return measureHeightLower() + measureHeightUpper();
+    }
+
+
 }

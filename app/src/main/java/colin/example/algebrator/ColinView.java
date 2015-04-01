@@ -47,15 +47,57 @@ public class ColinView extends SuperView {
         init(context);
     }
 
+    @Override
+    public void setStupid(Equation newStupid){
+        super.setStupid(newStupid);
+        if (!hasInitedVars){
+            initVars();
+        }
+
+    }
+
+    private boolean hasInitedVars = false;
+    private void initVars() {
+        ArrayList<String> myVars = getMyVars(stupid);
+//        for (int i =popUpButtons.size()-1;i>-1;i--){
+//            if (popUpButtons.get(i).myAction instanceof SolveQuadratic){
+//                popUpButtons.remove(i);
+//            }
+//        }
+        for (String myVar:myVars) {
+            //TODO strings are bad
+            PopUpButton quadratic = new PopUpButton(this, "Use quadratic formula" + (myVars.size()==1?"":" for "+myVar), new SolveQuadratic(myVar,this));
+            quadratic.setTargets(1f / 9f, 0f, 1f);
+            popUpButtons.add(quadratic);
+        }
+        hasInitedVars = true;
+    }
+
+
+
+
     protected void init(Context context) {
         canDrag = true;
         BASE_BUTTON_PERCENT = 8f / 9f;
         buttonsPercent = BASE_BUTTON_PERCENT;
         alreadySolved = false;
+    }
 
-        PopUpButton quadratic = new PopUpButton(this, "Use quadratic formula", new SolveQuadratic(this));
-        quadratic.setTargets(1f / 9f, 0f, 1f);
-        popUpButtons.add(quadratic);
+    // get's the var in stupid
+    private ArrayList<String> getMyVars(Equation stupid) {
+        ArrayList<String> result = new ArrayList<>();
+        if (stupid instanceof VarEquation){
+            result.add(stupid.getDisplay(-1));
+        }
+        for (Equation e: stupid){
+            ArrayList<String> innerResult = getMyVars(e);
+            for (String s: innerResult){
+                if (!result.contains(s)){
+                    result.add(s);
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -71,6 +113,9 @@ public class ColinView extends SuperView {
 
     @Override
     protected void addButtons() {
+
+
+
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button(this, "+", new BothSides(BothSidesView.BothSidesMode.ADD, this)));
         firstRow.add(new Button(this, "-", new BothSides(BothSidesView.BothSidesMode.SUB, this)));
@@ -90,6 +135,7 @@ public class ColinView extends SuperView {
 
     @Override
     public void resume() {
+        super.resume();
         updateHistory();
     }
 

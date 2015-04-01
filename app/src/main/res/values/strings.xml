@@ -44,21 +44,18 @@
         <item>simply drag and drop them.</item>
     </string-array>
     <string-array name="tut_solvemessage_3">
-        <item>To add, subtract, multiply or divide,</item>
-        <item>double tap on +, -, × or ÷.</item>
+        <item>Use the + bottom at the bottom of the screen</item>
+        <item>to add a new term to both sides</item>
     </string-array>
-    <string-array name="tut_add">
-        <item>To add/subtract a term from both sides, </item>
-        <item>drag the term to the other side.</item>
+    <string-array name="tut_solvemessage_4">
+        <item>The other symbols at the bottom of the screen will</item>
+        <item>perform their respective operations to both sides</item>
     </string-array>
-    <string-array name="tut_div">
-        <item>To multiply both sides by a term,</item>
-        <item>drag the term to the other side.</item>
+    <string-array name="tut_solvemessage_5">
+        <item>To add, subtract, multiply or divide two terms,</item>
+        <item>double tap the +, -, × or ÷ symbol separating them.</item>
     </string-array>
-    <string-array name="tut_multi">
-        <item>To divide both sides by a term</item>
-        <item>drag the term to the other side.</item>
-    </string-array>
+
 
     <string name="tut_writemessage_1">Hi!</string>
     <string name="tut_writemessage_2">Thanks for installing Mathilda.</string>
@@ -66,5 +63,34 @@
     <string name="tut_writemessage_4">You can tap on these messages to skip them.</string>
 
     <string name="clear">Clear?</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string name="tut_both_1_add">
+       Type in what you want to add to both sides
+    </string>
+    <string name="tut_both_1_sub">
+       Type in what you want to subtract from both sides
+    </string>
+    <string name="tut_both_1_multi">
+       Type in what you want to multiply both sides by
+    </string>
+    <string name="tut_both_1_div">
+       Type in what you want to divide both sides by
+    </string>
+    <string name="tut_both_1_power">
+       Type in what power you want to raise both sides to
+    </string>
+
+
+    <string-array name="tut_both_2">
+        <item>Then, tap Ok to accept your changes</item>
+        <item>and bring them back to the solve screen</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>Or, tap Cancel or hit back to reject your changes</item>
+        <item>and go back to the solve screen</item>
+    </string-array>
 
 </resources>

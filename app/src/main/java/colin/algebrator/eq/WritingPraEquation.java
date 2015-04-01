@@ -79,11 +79,19 @@ public class WritingPraEquation extends WritingLeafEquation {
 
     @Override
     protected float privateMeasureHeightUpper() {
+        // unfortunately, we always need to remeasure these
+        // since it can resize when it siblings resize
+        // it should not be a problem since it only on the write screen
+        this.needsUpdate();
         return measureHeightHelper(true);
     }
 
     @Override
     protected float privateMeasureHeightLower() {
+        // unfortunately, we always need to remeasure these
+        // since it can resize when it siblings resize
+        // it should not be a problem since it only on the write screen
+        this.needsUpdate();
         return measureHeightHelper(false);
     }
 
@@ -100,8 +108,8 @@ public class WritingPraEquation extends WritingLeafEquation {
         if (left) {
             current = current.right();
             while (go && depth != 0) {
-                if (current != null) {
-                    if (current instanceof WritingPraEquation) {
+                if (current != null && this.parent.deepContains(current)) {
+                    if (current instanceof WritingPraEquation ) {
                         if (((WritingPraEquation) current).left) {
                             if (depth == 1) {
                                 totalHeight = Math.max(totalHeight, (upper ? current.measureHeightUpper() : current.measureHeightLower()) + PARN_HEIGHT_ADDITION() / 2);
@@ -129,7 +137,7 @@ public class WritingPraEquation extends WritingLeafEquation {
         } else {
             current = current.left();
             while (go && depth != 0) {
-                if (current != null) {
+                if (current != null && this.parent.deepContains(current)) {
                     if (current instanceof WritingPraEquation) {
                         if (!((WritingPraEquation) current).left) {
                             depth++;
@@ -184,7 +192,7 @@ public class WritingPraEquation extends WritingLeafEquation {
         Equation current = this;
         if (left) {
             current = current.right();
-            while (depth != 0 && current != null) {
+            while (depth != 0 && current != null && this.parent.deepContains(current)) {
                 if (current instanceof WritingPraEquation) {
                     if (((WritingPraEquation) current).left) {
                         depth++;
@@ -202,7 +210,7 @@ public class WritingPraEquation extends WritingLeafEquation {
             }
         } else {
             current = current.left();
-            while (depth != 0 && current != null) {
+            while (depth != 0 && current != null && this.parent.deepContains(current)) {
                 if (current instanceof WritingPraEquation) {
                     if (!((WritingPraEquation) current).left) {
                         depth++;

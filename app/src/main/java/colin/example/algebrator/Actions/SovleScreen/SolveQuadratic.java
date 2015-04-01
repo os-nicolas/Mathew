@@ -1,5 +1,7 @@
 package colin.example.algebrator.Actions.SovleScreen;
 
+import java.util.ArrayList;
+
 import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.DivEquation;
 import colin.algebrator.eq.EqualsEquation;
@@ -21,25 +23,26 @@ import colin.example.algebrator.ColinView;
  */
 public class SolveQuadratic extends Action<ColinView> {
 
+    String varName="";
 
-    public SolveQuadratic(ColinView colinView) {
+    public SolveQuadratic(String varName, ColinView colinView) {
         super(colinView);
+        this.varName = varName;
     }
 
     @Override
     protected void privateAct() {
         Equation stuffSide= null;
-        if (myView.stupid.get(0) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(0)).isZero()) {
-            stuffSide = myView.stupid.get(1);
-        } else if (myView.stupid.get(1) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(1)).isZero()) {
-            stuffSide = myView.stupid.get(0);
+        if (myView.getStupid().get(0) instanceof NumConstEquation && ((NumConstEquation) myView.getStupid().get(0)).isZero()) {
+            stuffSide = myView.getStupid().get(1);
+        } else if (myView.getStupid().get(1) instanceof NumConstEquation && ((NumConstEquation) myView.getStupid().get(1)).isZero()) {
+            stuffSide = myView.getStupid().get(0);
         }
-
         Equation a = getA(stuffSide);
         Equation b = getB(stuffSide);
         Equation c = getC(stuffSide);
         Equation newStupid = new EqualsEquation(stuffSide.owner);
-            String varName= getVarString(stuffSide);
+
             Equation x1 = new VarEquation(varName, stuffSide.owner);
             newStupid.add(x1);
             Equation result = new DivEquation(stuffSide.owner);
@@ -99,60 +102,64 @@ public class SolveQuadratic extends Action<ColinView> {
                     bot.add(two);
                     Equation a2 = a.copy();
                     bot.add(a2);
-        stuffSide.owner.stupid = newStupid;
+        stuffSide.owner.setStupid(newStupid);
         ((ColinView)newStupid.owner).changed =true;
 
     }
 
     @Override
     public boolean canAct() {
-        if (myView.stupid instanceof EqualsEquation) {
+        if (myView.getStupid() instanceof EqualsEquation) {
             Equation stuffSide;
-            if (myView.stupid.get(0) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(0)).isZero()) {
-                stuffSide = myView.stupid.get(1);
-            } else if (myView.stupid.get(1) instanceof NumConstEquation && ((NumConstEquation) myView.stupid.get(1)).isZero()) {
-                stuffSide = myView.stupid.get(0);
+            if (myView.getStupid().get(0) instanceof NumConstEquation && ((NumConstEquation) myView.getStupid().get(0)).isZero()) {
+                stuffSide = myView.getStupid().get(1);
+            } else if (myView.getStupid().get(1) instanceof NumConstEquation && ((NumConstEquation) myView.getStupid().get(1)).isZero()) {
+                stuffSide = myView.getStupid().get(0);
             } else {
                 return false;
             }
-            if (getVarString(stuffSide).equals("")) {
-                return false;
-            }
 
-            if (stuffSide instanceof AddEquation &&
-                    stuffSide.size() == 2 &&
-                    null != getA(stuffSide) &&
-                    (getC(stuffSide) != null || getB(stuffSide) != null)) {
-                return true;
-            } else if (stuffSide instanceof AddEquation &&
-                    stuffSide.size() == 3 &&
-                    null != getA(stuffSide) &&
-                    getC(stuffSide) != null &&
-                    getB(stuffSide) != null) {
-                return true;
-            }
+                if (worksFor(stuffSide)) {
+                    return true;
+                }
         }
         return false;
     }
 
-    private String getVarString(Equation stuffSide) {
-        String result = "";
-        if (stuffSide instanceof VarEquation) {
-            return stuffSide.getDisplay(-1);
-        } else {
-            for (Equation e : stuffSide) {
-                String myResult = getVarString(e);
-                if (!myResult.equals("")) {
-                    if (!myResult.equals(result) && !result.equals("")) {
-                        return "~bad var name";
-                    } else {
-                        result = myResult;
-                    }
-                }
-            }
+    private boolean worksFor(Equation stuffSide) {
+        if (stuffSide instanceof AddEquation &&
+                stuffSide.size() == 2 &&
+                getA(stuffSide) != null &&
+                (getC(stuffSide) != null || getB(stuffSide) != null)) {
+            return true;
+        } else if (stuffSide instanceof AddEquation &&
+                stuffSide.size() == 3 &&
+                getA(stuffSide) != null &&
+                getB(stuffSide) != null &&
+                getC(stuffSide) != null) {
+            return true;
         }
-        return result;
+        return false;
     }
+
+//    private String getVarString(Equation stuffSide) {
+//        String result = "";
+//        if (stuffSide instanceof VarEquation) {
+//            return stuffSide.getDisplay(-1);
+//        } else {
+//            for (Equation e : stuffSide) {
+//                String myResult = getVarString(e);
+//                if (!myResult.equals("")) {
+//                    if (!myResult.equals(result) && !result.equals("")) {
+//                        return "~bad var name";
+//                    } else {
+//                        result = myResult;
+//                    }
+//                }
+//            }
+//        }
+//        return result;
+//    }
 
     // TODO redo this all match MultiCountData
 
@@ -160,7 +167,6 @@ public class SolveQuadratic extends Action<ColinView> {
     private Equation getA(Equation stuffSide) {
         Equation result = null;
         Equation lookingFor = new PowerEquation(stuffSide.owner);
-        String varName = getVarString(stuffSide);
         lookingFor.add(new VarEquation(varName, stuffSide.owner));
         lookingFor.add(NumConstEquation.create(2,stuffSide.owner));
         if (stuffSide instanceof AddEquation) {
@@ -192,7 +198,6 @@ public class SolveQuadratic extends Action<ColinView> {
     // b*x
     private Equation getB(Equation stuffSide) {
         Equation result = null;
-        String varName = getVarString(stuffSide);
         Equation lookingFor = new VarEquation(varName,stuffSide.owner);
         if (stuffSide instanceof AddEquation) {
             for (Equation eq : stuffSide) {

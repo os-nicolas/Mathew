@@ -18,7 +18,7 @@ public class SqrtBothSides extends Action<ColinView> {
 
     @Override
     protected void privateAct() {
-        Equation myStupid =  myView.stupid.copy();
+        Equation myStupid =  myView.getStupid().copy();
         for (Equation e: myStupid){
             Equation old = e;
             Equation newEq = new PowerEquation(myView);
@@ -26,7 +26,7 @@ public class SqrtBothSides extends Action<ColinView> {
             newEq.add(old);
             newEq.add(NumConstEquation.create(.5,myView));
         }
-        myView.stupid=myStupid;
+        myView.setStupid(myStupid);
         myView.changed = true;
 
     }

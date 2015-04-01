@@ -33,5 +33,7 @@ public class SolveMessage extends TutMessage{
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_solvemessage_1));
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_solvemessage_2));
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_solvemessage_3));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_solvemessage_4));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_solvemessage_5));
     }
 }

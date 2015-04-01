@@ -176,6 +176,10 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         if (right instanceof PlusMinusEquation){
             return true;
         }
+        // this matter in bothsides screen
+        if (right instanceof WritingEquation){
+            return true;
+        }
 
         return false;
     }

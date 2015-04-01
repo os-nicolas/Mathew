@@ -30,7 +30,7 @@ public class BothSides extends Action<ColinView> {
     @Override
     protected void privateAct() {
 
-        mine = myView.stupid.copy();
+        mine = myView.getStupid().copy();
 
         AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
             Intent myIntent;
@@ -40,8 +40,7 @@ public class BothSides extends Action<ColinView> {
 
                 myContext = myView.myActivity;
                 BothSidesView bothSidesView = new BothSidesView(myContext);
-                bothSidesView.myBothSidesMode =myBothSidesMode;
-                bothSidesView.setOGmodie(BothSides.mine);
+                bothSidesView.setUp(myBothSidesMode,BothSides.mine);
                 //bothSidesView.centerEq();
                 Algebrator.getAlgebrator().addBothView = bothSidesView;
                 //((MainActivity) c).lookAt(colinView);

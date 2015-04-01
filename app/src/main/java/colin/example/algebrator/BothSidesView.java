@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import colin.algebrator.eq.AddEquation;
 import colin.algebrator.eq.BinaryEquation;
 import colin.algebrator.eq.DivEquation;
+import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.MultiEquation;
 import colin.algebrator.eq.PlaceholderEquation;
@@ -48,11 +49,31 @@ public class BothSidesView extends EmilyView {
 
     private Equation OGmodie;
 
+    public BothSidesMode getBothSidesMode(){
+        return myBothSidesMode;
+    }
+
+    public void setUp(BothSidesMode myBothSidesMode, Equation mine) {
+        this.myBothSidesMode  =myBothSidesMode;
+
+        setOGmodie(mine);
+        if (myBothSidesMode == BothSidesMode.ADD){
+            history.add(new EquationButton(new VarEquation("Add to Both Sides",this), this));
+        }else if (myBothSidesMode == BothSidesMode.SUB){
+            history.add(new EquationButton(new VarEquation("Subtract from Both Sides",this), this));
+        }else if (myBothSidesMode == BothSidesMode.MULTI){
+            history.add(new EquationButton(new VarEquation("Multiply Both Sides",this), this));
+        }else if (myBothSidesMode == BothSidesMode.DIV){
+            history.add(new EquationButton(new VarEquation("Divide Both Sides",this), this));
+        }else if (myBothSidesMode == BothSidesMode.POWER){
+            history.add(new EquationButton(new VarEquation("Raise Both Sides to a Power",this), this));
+        }
+    }
+
     public enum BothSidesMode {ADD, SUB, MULTI, DIV, POWER}
 
-    ;
 
-    public BothSidesMode myBothSidesMode = BothSidesMode.ADD;
+    private BothSidesMode myBothSidesMode;
 
     public BothSidesView(Context context) {
         super(context);
@@ -62,6 +83,9 @@ public class BothSidesView extends EmilyView {
     protected void init(Context context) {
         skipZero = false;
         BASE_BUTTON_PERCENT = 4f / 6f;
+        // we want our equation to be a litle closer together
+        baseBuffer = 60 * Algebrator.getAlgebrator().getDpi();
+        offsetY = baseBuffer;
         buttonsPercent = BASE_BUTTON_PERCENT;
     }
 
@@ -84,63 +108,101 @@ public class BothSidesView extends EmilyView {
     public Equation makeModie(ArrayList<Equation> toBothSides) {
         Equation modie = OGmodie.copy();
 
+
         if (myBothSidesMode == BothSidesMode.ADD) {
 
-            for (int i = 0; i < 2; i++) {
-                if (!(modie.get(i) instanceof AddEquation)) {
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new AddEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
+            if (modie instanceof EqualsEquation) {
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof AddEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new AddEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides.get(i));
                 }
-                modie.get(i).add(toBothSides.get(i));
+            } else {
+                if (!(modie instanceof AddEquation)) {
+                    Equation oldEq = modie;
+                    modie = new AddEquation(this);
+                    modie.add(oldEq);
+                }
+                modie.add(toBothSides.get(0));
             }
 
 
         } else if (myBothSidesMode == BothSidesMode.SUB) {
-
-            for (int i = 0; i < 2; i++) {
-                if (!(modie.get(i) instanceof AddEquation)) {
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new AddEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
+            if (modie instanceof EqualsEquation) {
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof AddEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new AddEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides.get(i).negate());
                 }
-                modie.get(i).add(toBothSides.get(i).negate());
+            } else {
+                if (!(modie instanceof AddEquation)) {
+                    Equation oldEq = modie;
+                    modie = new AddEquation(this);
+                    modie.add(oldEq);
+                }
+                modie.add(toBothSides.get(0).negate());
             }
 
 
         } else if (myBothSidesMode == BothSidesMode.MULTI) {
-
-            for (int i = 0; i < 2; i++) {
-                if (!(modie.get(i) instanceof MultiEquation)) {
-                    Equation oldEq = modie.get(i);
-                    Equation toAdd = new MultiEquation(this);
-                    modie.get(i).replace(toAdd);
-                    toAdd.add(oldEq);
+            if (modie instanceof EqualsEquation) {
+                for (int i = 0; i < 2; i++) {
+                    if (!(modie.get(i) instanceof MultiEquation)) {
+                        Equation oldEq = modie.get(i);
+                        Equation toAdd = new MultiEquation(this);
+                        modie.get(i).replace(toAdd);
+                        toAdd.add(oldEq);
+                    }
+                    modie.get(i).add(toBothSides.get(i));
                 }
-                modie.get(i).add(toBothSides.get(i));
+            } else {
+                if (!(modie instanceof MultiEquation)) {
+                    Equation oldEq = modie;
+                    modie = new MultiEquation(this);
+                    modie.add(oldEq);
+                }
+                modie.add(toBothSides.get(0));
             }
 
 
         } else if (myBothSidesMode == BothSidesMode.DIV) {
+            if (modie instanceof EqualsEquation) {
+                for (int i = 0; i < 2; i++) {
 
-            for (int i = 0; i < 2; i++) {
-
-                Equation oldEq = modie.get(i);
-                Equation toAdd = new DivEquation(this);
-                modie.get(i).replace(toAdd);
-                toAdd.add(oldEq);
-                modie.get(i).add(toBothSides.get(i));
+                    Equation oldEq = modie.get(i);
+                    Equation toAdd = new DivEquation(this);
+                    modie.get(i).replace(toAdd);
+                    toAdd.add(oldEq);
+                    modie.get(i).add(toBothSides.get(i));
+                }
+            } else {
+                Equation oldEq = modie;
+                modie = new DivEquation(this);
+                modie.add(oldEq);
+                modie.add(toBothSides.get(0));
             }
         } else if (myBothSidesMode == BothSidesMode.POWER) {
-
-            for (int i = 0; i < 2; i++) {
-                Equation oldEq = modie.get(i);
-                Equation toAdd = new PowerEquation(this);
-                modie.get(i).replace(toAdd);
-                toAdd.add(oldEq);
-                modie.get(i).add(toBothSides.get(i));
+            if (modie instanceof EqualsEquation) {
+                for (int i = 0; i < 2; i++) {
+                    Equation oldEq = modie.get(i);
+                    Equation toAdd = new PowerEquation(this);
+                    modie.get(i).replace(toAdd);
+                    toAdd.add(oldEq);
+                    modie.get(i).add(toBothSides.get(i));
+                }
+            } else {
+                Equation oldEq = modie;
+                modie = new PowerEquation(this);
+                modie.add(oldEq);
+                modie.add(toBothSides.get(0));
             }
         }
 
@@ -152,10 +214,10 @@ public class BothSidesView extends EmilyView {
         ArrayList<Equation> toBothSides = new ArrayList<>();
         toBothSides.add(convert(stupid.copy()));
         toBothSides.add(convert(stupid.copy()));
-        for (Equation e : toBothSides) {
-            e.demo = true;
-            e.bkgAlpha = 0xff;
-        }
+//        for (Equation e : toBothSides) {
+//            e.demo = true;
+//            e.bkgAlpha = 0xff;
+//        }
         return toBothSides;
     }
 
@@ -218,7 +280,6 @@ public class BothSidesView extends EmilyView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        drawHistory(canvas);
 
         onDrawAfter(canvas);
     }
@@ -233,13 +294,9 @@ public class BothSidesView extends EmilyView {
         firstRow.add(new Button(this, "b", new VarAction(this, "b")));
         firstRow.add(new Button(this, "+", new PlusAction(this)));
         firstRow.add(new Button(this, "-", new MinusAction(this)));
-        firstRow.add(new Button(this, "CANCEL", new CancelAction(this)));
+
         //TODO this does not work since my font does not support this
-        char[] backSpaceUnicode = {'\u232B'};
-        Button del = new Button(this, new String(backSpaceUnicode), new DeleteAction(this));
-        Typeface myTypeface = Typeface.createFromAsset(Algebrator.getAlgebrator().getAssets(), "fonts/DejaVuSans.ttf");
-        del.textPaint.setTypeface(myTypeface);
-        firstRow.add(del);//
+
 
         ArrayList<Button> secondRow = new ArrayList<Button>();
         secondRow.add(new Button(this, "4", new NumberAction(this, "4")));
@@ -262,16 +319,26 @@ public class BothSidesView extends EmilyView {
         thridRow.add(new Button(this, "cⁿ", new PowerAction(this)));
         char[] sqrtUnicode = {'\u221A'};
         thridRow.add(new Button(this, new String(sqrtUnicode), new SqrtAction(this)));
-        char[] leftUnicode = {'\u2190'};
-        thridRow.add(new Button(this, new String(leftUnicode), new LeftAction(this)));
-        char[] rightUnicode = {'\u2192'};
-        thridRow.add(new Button(this, new String(rightUnicode), new RightAction(this)));
 
-        addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
+
+
+
+        addButtonsRow(firstRow, 0f, 7f / 9f,6f / 9f, 7f / 9f);
+        char[] backSpaceUnicode = {'\u232B'};
+        Button del = new Button(this, new String(backSpaceUnicode), new DeleteAction(this));
+        Typeface myTypeface = Typeface.createFromAsset(Algebrator.getAlgebrator().getAssets(), "fonts/DejaVuSans.ttf");
+        del.textPaint.setTypeface(myTypeface);
+        del.setLocation(7f / 9f, 1f, 6f / 9f, 7f / 9f);
+        buttons.add(del);
+
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
         Button solve = new Button(this, getResources().getString(R.string.ok), new CheckAction(this));
         solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(solve);
-        addButtonsRow(thridRow, 8f / 9f, 9f / 9f);
+        addButtonsRow(thridRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
+
+        Button cancel =new Button(this, getResources().getString(R.string.cancel), new CancelAction(this));
+        cancel.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
+        buttons.add(cancel);
     }
 }

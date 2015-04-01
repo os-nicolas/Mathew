@@ -24,11 +24,11 @@ public class CheckAction extends Action<BothSidesView> {
     public boolean canAct(){
         // if stupid is legal
         // we need to copy stupid
-        mine = myView.stupid.copy();
+        mine = myView.getStupid().copy();
 
         // we want to remove the place holder
         if (myView.selected instanceof PlaceholderEquation) {
-            Equation at = myView.stupid;
+            Equation at = myView.getStupid();
             Equation myAt = mine;
             while (!at.equals(myView.selected)) {
                 int index = at.deepIndexOf(myView.selected);
@@ -63,7 +63,7 @@ public class CheckAction extends Action<BothSidesView> {
 
         Equation newStupid =  myView.makeModie(converted);
 
-        Algebrator.getAlgebrator().solveView.stupid = newStupid;
+        Algebrator.getAlgebrator().solveView.setStupid(newStupid);
 
         myView.myActivity.finish();
     }

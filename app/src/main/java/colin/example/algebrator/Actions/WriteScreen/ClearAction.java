@@ -29,7 +29,7 @@ public class ClearAction extends Action<EmilyView> {
     @Override
     public boolean canAct(){
         long now = System.currentTimeMillis();
-        if (now - lastCalled > timeOut  && myView.stupid.size() != 1 && myView.stupid instanceof WritingEquation){
+        if (now - lastCalled > timeOut  && myView.getStupid().size() != 1 && myView.getStupid() instanceof WritingEquation){
             lastShown= now;
             lastCalled = now;
             return true;

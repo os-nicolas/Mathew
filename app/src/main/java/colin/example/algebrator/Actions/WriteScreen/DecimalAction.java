@@ -28,6 +28,7 @@ public class DecimalAction extends Action<EmilyView> {
         Equation l = myView.left();
         if ((l != null) && (l instanceof NumConstEquation && l.getDisplay(-1).contains(".") == false)) {
             if (!(l.parent instanceof BinaryEquation && l.parent.indexOf(l) == 0)) {
+
                 String toSet = ((NumConstEquation) l).getDisplaySimple() + dec;
                 l.setDisplay(toSet);
             } else {

@@ -62,6 +62,7 @@ public class EmilyView extends SuperView {
 
     @Override
     public void resume() {
+        super.resume();
         final EmilyView ev =this;
         if (stupid == null) {
             initEq();

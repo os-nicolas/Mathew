@@ -27,7 +27,7 @@ public class EqualsAction extends Action<EmilyView> {
                 can = can && !((WritingLeafEquation) l).isOpLeft();
             }
             // if the root equation only hold one
-            can = can && countEquals(myView.stupid) == 0;
+            can = can && countEquals(myView.getStupid()) == 0;
 
             // we can't add if we have (|
             can = can && !(l instanceof WritingPraEquation && ((WritingPraEquation) l).left);
