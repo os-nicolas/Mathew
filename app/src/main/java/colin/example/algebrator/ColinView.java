@@ -66,7 +66,7 @@ public class ColinView extends SuperView {
 //        }
         for (String myVar:myVars) {
             //TODO strings are bad
-            PopUpButton quadratic = new PopUpButton(this, "Use quadratic formula" + (myVars.size()==1?"":" for "+myVar), new SolveQuadratic(myVar,this));
+            PopUpButton quadratic = new PopUpButton(this, getContext().getString(R.string.quadratic) + (myVars.size()==1?"":getContext().getString(R.string.quadratic_for)+myVar), new SolveQuadratic(myVar,this));
             quadratic.setTargets(1f / 9f, 0f, 1f);
             popUpButtons.add(quadratic);
         }

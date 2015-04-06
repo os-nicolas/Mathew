@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mathilda</string>
+    <string name="action_settings">सेटिंग्स</string>
+    <string name="solve">सुलझाओ</string>
+    <string name="ok">ओके यू तब</string>
+    <string name="assume">मान लिया जाये</string>
+
+    <string-array name="tut_history">
+        <item>पिछले एक कदम पर वापस लौटने के </item>
+        <item>लिए, चरण स्पर्श करके रखें।</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>अपने समीकरण जोड़ तोड़ शुरू करने के लिए समाधान नल।</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>दोनों पक्षों की जड़ ले , दूसरे पक्ष के  </item>
+        <item>लिए एक प्रतिपादक खींचें।</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>इसके प्रतिपादक , डबल नल को </item>
+        <item>प्रतिपादक एक अवधि बढ़ाने के लिए।</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>दोनों पक्षों के वर्ग के लिए ,</item>
+        <item>दूसरी तरफ एक वर्गमूल साइन खींचें।</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>डबल नल वर्गमूल इसकी सामग्री के </item>
+        <item>लिए एक वर्गमूल हस्ताक्षर ।</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">अच्छा काम!</string>
+    <string name="tut_solved_1_1">शाबाश!</string>
+    <string name="tut_solved_1_2">बहुत बढ़िया!</string>
+    <string name="tut_solved_1_3">अच्छा है!</string>
+    <string name="tut_solved_2">एक और समीकरण में प्रवेश करने के लिए वापस बटन मारा।</string>
+
+    <string name="tut_solvemessage_1">इस स्क्रीन का समाधान है ।</string>
+    <string-array name="tut_solvemessage_2">
+        <item>चारों ओर दृष्टि से स्थानांतरित करने के </item>
+        <item>लिए , बस खींचें और उन्हें छोड़ ।</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>दोनों पक्षों के लिए एक नया शब्द जोड़ने के लिए </item>
+        <item>स्क्रीन के नीचे + बटन का प्रयोग करें।</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>स्क्रीन के नीचे अन्य प्रतीकों दोनों पक्षों के लिए </item>
+        <item>उनके संबंधित आपरेशनों प्रदर्शन करेंगे।</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>जोड़ घटाना , गुणा या दो शब्दों , डबल</item>
+        <item>नल + विभाजित - उन्हें अलग करने , × या ÷ प्रतीक ।</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">हाय!</string>
+    <string name="tut_writemessage_2">Mathilda स्थापित करने के लिए धन्यवाद।</string>
+    <string name="tut_writemessage_3">आगे बढ़ो और एक समीकरण लिखें।</string>
+    <string name="tut_writemessage_4">आप उन्हें छोड़ करने के लिए इन संदेशों पर नल कर सकते हैं ।</string>
+
+    <string name="clear">साफ?</string>
+    <string name="cancel">रद्द करें</string>
+
+
+    <string name="tut_both_1_add">
+       आप दोनों पक्षों में जोड़ना चाहते हैं क्या में टाइप करें।
+    </string>
+    <string name="tut_both_1_sub">
+       आप दोनों पक्षों से घटाना चाहते हैं क्या में टाइप करें।
+    </string>
+    <string name="tut_both_1_multi">
+       आपके द्वारा दोनों पक्षों गुणा करने के लिए क्या चाहते हैं में टाइप करें।
+    </string>
+    <string name="tut_both_1_div">
+       आपके द्वारा दोनों पक्षों को विभाजित करने के लिए क्या चाहते हैं में टाइप करें।
+    </string>
+    <string name="tut_both_1_power">
+       क्या सत्ता में टाइप करने के लिए आप दोनों पक्षों को उठाना चाहते हैं ।
+    </string>
+
+    <string name="bothsides_equals_add">दोनों पक्षों के लिए जोड़ें</string>
+    <string name="bothsides_equals_sub">दोनों पक्षों से घटाना</string>
+    <string name="bothsides_equals_multi">दोनों पक्षों गुणा</string>
+    <string name="bothsides_equals_div">दोनों साइड फूट डालो</string>
+    <string name="bothsides_equals_power">एक पावर के लिए दोनों पक्षों उठाएँ</string>
+    <string name="bothsides_add">इसमें जोड़ें</string>
+    <string name="bothsides_sub">से घटाना</string>
+    <string name="bothsides_multi">गुणा</string>
+    <string name="bothsides_div">फूट डालो</string>
+    <string name="bothsides_power">एक पावर तक बढ़ाएं</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">द्विघात फार्मूला का प्रयोग करें</string>
+
+    <string-array name="tut_both_2">
+        <item>फिर, अपने परिवर्तनों को स्वीकार करते हैं और वापस समाधान</item>
+        <item>स्क्रीन करने के लिए उन्हें लाने के लिए ठीक टैप करें।</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>या, नल रद्द या वापस बटन अपने परिवर्तनों को अस्वीकार</item>
+        <item>और वापस समाधान स्क्रीन पर जाने के लिए।</item>
+    </string-array>
+
+</resources>

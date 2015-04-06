@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">เฉียบคม</string>
+    <string name="action_settings">การตั้งค่า</string>
+    <string name="solve">แก้</string>
+    <string name="ok">ตกลง</string>
+    <string name="assume">ทะลึ่ง</string>
+
+    <string-array name="tut_history">
+        <item>เพื่อกลับไป ขั้นตอนก่อนหน้าแตะที่ </item>
+        <item>ขั้นตอนที่ค้างไว้</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>เคาะ แก้ ที่จะเริ่มต้น การจัดการกับ สมการ ของคุณ</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>เพื่อที่จะใช้ รากของ ทั้งสองฝ่าย ให้</item>
+        <item>ลาก สัญลักษณ์ในด้านอื่น ๆ</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>เพื่อยกระดับ ระยะในการ ยกกำลัง  </item>
+        <item>ของ สองครั้งที่แตะ สัญลักษณ์</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>ไปที่ตาราง ทั้งสองข้าง ลาก</item>
+        <item>เครื่องหมายรากที่สอง ในด้านอื่น ๆ</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>คู่แตะที่เครื่องหมายรากที่สอง ไปยัง</item>
+        <item>ราก ตาราง เนื้อหา</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">การทำงาน ที่ดี!</string>
+    <string name="tut_solved_1_1">ทำได้ดี !</string>
+    <string name="tut_solved_1_2">งาน ดี!</string>
+    <string name="tut_solved_1_3">ที่ดี!</string>
+    <string name="tut_solved_2">กดปุ่ม กลับไป ใส่สมการ อื่น</string>
+
+    <string name="tut_solvemessage_1">นี่คือหน้าจอ แก้</string>
+    <string-array name="tut_solvemessage_2">
+        <item>ต้องการย้าย แง่ รอบ เพียงแค่ลาก </item>
+        <item>และวางพวกเขา</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>ใช้ ปุ่ม + ที่ด้านล่างของ หน้าจอเพื่อ </item>
+        <item>เพิ่มคำใหม่ ให้กับ ทั้งสองฝ่าย</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>สัญลักษณ์อื่น ๆ ที่ด้านล่าง ของหน้า</item>
+        <item>จอจะดำเนินการ การดำเนินงาน ของตน ทั้งสองด้าน</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>ในการเพิ่ม ลบคูณ หรือหาร สองคำ </item>
+        <item>แตะ คู่+, -, × หรือ สัญลักษณ์ ÷ แยกพวกเขา.</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">สวัสดี !</string>
+    <string name="tut_writemessage_2">ขอขอบคุณ สำหรับการติดตั้ง เฉียบคม</string>
+    <string name="tut_writemessage_3">ไปข้างหน้าและ พิมพ์ สมการ</string>
+    <string name="tut_writemessage_4">คุณสามารถ แตะที่ ข้อความเหล่านี้ไป ข้ามพวกเขา</string>
+
+    <string name="clear">ที่ชัดเจน ?</string>
+    <string name="cancel">ยกเลิก</string>
+
+
+    <string name="tut_both_1_add">
+       พิมพ์ สิ่งที่คุณ ต้องการเพิ่มให้กับ ทั้งสองฝ่าย
+    </string>
+    <string name="tut_both_1_sub">
+       พิมพ์ สิ่งที่คุณ ต้องการที่จะ ลบออกจาก ทั้งสองฝ่าย
+    </string>
+    <string name="tut_both_1_multi">
+       พิมพ์ สิ่งที่คุณต้องการ ในการคูณ ทั้งสองข้างด้วย
+    </string>
+    <string name="tut_both_1_div">
+       พิมพ์ สิ่งที่คุณต้องการ ที่จะแบ่ง ทั้งสองข้างด้วย
+    </string>
+    <string name="tut_both_1_power">
+       พิมพ์ ในอำนาจ สิ่งที่คุณต้องการ ที่จะยกระดับ ทั้งสองฝ่าย
+    </string>
+
+    <string name="bothsides_equals_add">เพิ่มลงใน ทั้งสองด้าน</string>
+    <string name="bothsides_equals_sub">ลบ จากทั้งสองฝ่าย</string>
+    <string name="bothsides_equals_multi">คูณทั้งสองข้าง</string>
+    <string name="bothsides_equals_div">หารทั้งสองข้าง</string>
+    <string name="bothsides_equals_power">ยก ทั้งสองฝ่ายจะ พาวเวอร์</string>
+    <string name="bothsides_add">เพิ่มลงใน</string>
+    <string name="bothsides_sub">ลบออกจาก</string>
+    <string name="bothsides_multi">คูณ</string>
+    <string name="bothsides_div">แบ่ง</string>
+    <string name="bothsides_power">เพิ่ม พลัง</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">ใช้ สูตร สมการกำลังสอง</string>
+
+
+    <string-array name="tut_both_2">
+        <item>จากนั้น แตะ ตกลง เพื่อยอมรับการ</item>
+        <item>เปลี่ยนแปลง ของคุณ และนำพวกเขา กลับไปที่ หน้าจอ แก้ไข</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>หรือ แตะ ยกเลิก หรือ ปุ่มย้อนกลับ ที่จะปฏิเสธ การเปลี่ยนแปลงของคุณ </item>
+        <item>และกลับไปที่หน้าจอ แก้ไข</item>
+    </string-array>
+
+</resources>

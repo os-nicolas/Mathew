@@ -5,7 +5,7 @@ import colin.example.algebrator.SuperView;
 /**
  * Created by Colin on 1/28/2015.
  */
-public class PlusMinusEquation extends MonaryEquation {
+public class PlusMinusEquation extends MonaryEquation implements SignEquation {
 
     public static int plusMinusId = 0;
     public int myPlusMinusId;

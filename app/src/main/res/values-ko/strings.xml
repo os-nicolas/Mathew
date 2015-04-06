@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">마틸다</string>
+    <string name="action_settings">설정</string>
+    <string name="solve">해결</string>
+    <string name="ok">확인</string>
+    <string name="assume">가정</string>
+
+    <string-array name="tut_history">
+        <item>이전 단계로 돌아가려면,</item>
+        <item>단계를 길게 누릅니다.</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>방정식 을 조작 시작 해결 누릅니다.</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>양쪽 의 루트를 사용하려면 ,</item>
+        <item>다른쪽으로지수를 끌어옵니다.</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>그 지수 , 더블 탭 에 지수를 </item>
+        <item>용어를 높이려면.</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>양쪽 광장 , </item>
+        <item>다른쪽에제곱근 기호를 드래그합니다.</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>더블 탭 제곱근 의</item>
+        <item>내용 에 제곱근 기호 .</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">잘 했어 !</string>
+    <string name="tut_solved_1_1">잘 했어 !</string>
+    <string name="tut_solved_1_2">잘 했어 !</string>
+    <string name="tut_solved_1_3">잘 했어 !</string>
+    <string name="tut_solved_2">다른 식을 입력 할 수있는 뒤로 가기 버튼 을 누르십시오.</string>
+
+    <string name="tut_solvemessage_1">이화면 을 해결 합니다.</string>
+    <string-array name="tut_solvemessage_2">
+        <item>주변 조건을 이동 하려면</item>
+        <item>드래그 앤 드롭합니다.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>양쪽 에 새로운 용어 를 추가 하려면 </item>
+        <item>화면 하단의 + 버튼을 사용합니다.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>화면 하단의다른 기호 양쪽</item>
+        <item>에 각각의 작업을 수행 한다.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>추가, 빼기 곱하기 또는 두 용어, </item>
+        <item>더블 탭+ , 분할 - 로 구분 , × 또는 ÷ 기호를.</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">안녕하세요!</string>
+    <string name="tut_writemessage_2">마틸다 를 설치 주셔서 감사합니다.</string>
+    <string name="tut_writemessage_3">어서 수식 을 입력합니다.</string>
+    <string name="tut_writemessage_4">당신이 그들을 건너 이러한 메시지 에 활용할 수.</string>
+
+    <string name="clear">Clear?</string>
+    <string name="cancel">Cancel</string>
+
+
+    <string name="tut_both_1_add">
+       당신이 양쪽 에 추가 할 것을 입력합니다.
+    </string>
+    <string name="tut_both_1_sub">
+       당신이 양쪽에서 빼기 원하는 것을 입력합니다.
+    </string>
+    <string name="tut_both_1_multi">
+       당신은 에 의해 양쪽을 곱하면 원하는 것을 입력합니다.
+    </string>
+    <string name="tut_both_1_div">
+       당신은 에 의해 양쪽을 나눌 것을 입력합니다.
+    </string>
+    <string name="tut_both_1_power">
+       무엇 전원 입력 당신은 에 양쪽을 제기 하고 싶다.
+    </string>
+
+    <string name="bothsides_equals_add">양면 에 추가</string>
+    <string name="bothsides_equals_sub">양면 에서 빼기</string>
+    <string name="bothsides_equals_multi">양면 을 곱</string>
+    <string name="bothsides_equals_div">양면 을 분할</string>
+    <string name="bothsides_equals_power">전원 에 양면 을 올립니다</string>
+    <string name="bothsides_add">에 추가</string>
+    <string name="bothsides_sub">에서 빼기</string>
+    <string name="bothsides_multi">곱하기</string>
+    <string name="bothsides_div">분할</string>
+    <string name="bothsides_power">전원 에 올리기</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">차 공식을 사용</string>
+
+
+    <string-array name="tut_both_2">
+        <item>그런 다음, 변경 사항을 적용하고 다시 해결 화면</item>
+        <item>에 그들을 데리고 확인을 누릅니다.</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>또는 탭 취소 또는 뒤로 버튼 변경 사항을 거부하고 </item>
+        <item>다시 해결 화면으로 이동합니다.</item>
+    </string-array>
+
+</resources>

@@ -445,7 +445,11 @@ public class Operations {
             Equation e = leftNumCopy.get(i);
             for (int ii = 0; ii < rightNumCopy.size(); ii++) {
                 Equation ee = rightNumCopy.get(ii);
-                if (e.removeNeg().same(ee.removeNeg()) && getValue(e).doubleValue() != 0) {
+                // TODO i am checking for zero and one here but really i think we should just not be able to add them to numbers in the first place
+                if (e.removeNeg().same(ee.removeNeg()) &&
+                        getValue(e).doubleValue() != 0 &&
+                        getValue(e).doubleValue() != 1
+                        ) {
                     boolean neg = e.isNeg() && ee.isNeg();
                     result.numbers.add((!neg?e.removeNeg():e));
                     leftNumCopy.remove(i);
@@ -459,6 +463,8 @@ public class Operations {
                     if (getValue(e).doubleValue() == eInt
                             && 0 != eInt
                             && 0 != eeInt
+                            && 1 != eInt
+                            && 1 != eeInt
                             && getValue(ee).doubleValue() == eeInt
                             && Math.abs(myGcd) != 1 && myGcd!=0 ) {
                         result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));

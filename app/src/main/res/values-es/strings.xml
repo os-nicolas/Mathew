@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mathilda</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="solve">Resolver</string>
+    <string name="ok">Ok</string>
+    <string name="assume">Suponiendo</string>
+
+    <string-array name="tut_history">
+        <item>Para volver a un paso anterior, </item>
+        <item>toque el paso y mantener.</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>Toque Resuelva para iniciar la manipulación de su ecuación.</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>To take the root of both sides, </item>
+        <item>drag an exponent to the other side.</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>Para tomar la raíz de ambos lados, </item>
+        <item>arrastre un exponente para el otro lado.</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>Para cuadrar ambos lados,</item>
+        <item>arrastre un signo de la raíz cuadrada para el otro lado.</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>Doble toque en un signo de la raíz cuadrada</item>
+        <item>de la raíz cuadrada de su contenido.</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">Buen trabajo!</string>
+    <string name="tut_solved_1_1">Well done!</string>
+    <string name="tut_solved_1_2">Bien hecho!</string>
+    <string name="tut_solved_1_3">Nice!</string>
+    <string name="tut_solved_2">Pulse el botón de nuevo para entrar en otra ecuación.</string>
+
+    <string name="tut_solvemessage_1">Esta es la pantalla de resolver.</string>
+    <string-array name="tut_solvemessage_2">
+        <item>Para mover términos alrededor,</item>
+        <item>basta con arrastrar y soltar.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>Utilice el botón + en la parte inferior de la pantalla para </item>
+        <item>agregar un nuevo término para ambas partes.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>Los otros símbolos en la parte inferior de la pantalla realizarán </item>
+        <item>sus respectivas operaciones a ambos lados.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>Para sumar, restar, multiplicar o dividir dos términos,</item>
+        <item>doble toque en el signo + , - símbolo , × o ÷ separa.</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">Hola!</string>
+    <string name="tut_writemessage_2">Gracias por instalar Mathilda.</string>
+    <string name="tut_writemessage_3">Seguir adelante y escribir una ecuación.</string>
+    <string name="tut_writemessage_4">Puede tocar en estos mensajes a omitirlos.</string>
+
+    <string name="clear">Claro?</string>
+    <string name="cancel">Cancelar</string>
+
+
+    <string name="tut_both_1_add">
+       Escriba lo que usted desea agregar a ambos lados.
+    </string>
+    <string name="tut_both_1_sub">
+       Escriba lo que desea restar de ambos lados.
+    </string>
+    <string name="tut_both_1_multi">
+       Escriba lo que desea multiplicar ambos lados por.
+    </string>
+    <string name="tut_both_1_div">
+       Escriba lo que desea dividir ambos lados por.
+    </string>
+    <string name="tut_both_1_power">
+       Escriba lo que el poder quiere elevar a ambas partes a.
+    </string>
+
+    <string name="bothsides_equals_add">Añadir a ambos lados</string>
+    <string name="bothsides_equals_sub">Subtract from Both Sides</string>
+    <string name="bothsides_equals_multi">Restar de ambos lados</string>
+    <string name="bothsides_equals_div">Divide Both Sides</string>
+    <string name="bothsides_equals_power">Divide ambos lados</string>
+    <string name="bothsides_add">Añadir</string>
+    <string name="bothsides_sub">Restar de</string>
+    <string name="bothsides_multi">Multiplicar</string>
+    <string name="bothsides_div">Divisoria</string>
+    <string name="bothsides_power">Elevar a una potencia</string>
+    <string name="quadratic_for"> por un </string>
+    <string name="quadratic">Utilice la fórmula cuadrática</string>
+
+
+    <string-array name="tut_both_2">
+        <item>A continuación , pulsa en Aceptar para aceptar los </item>
+        <item>cambios y llevarlos de vuelta a la pantalla de Solve.</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>O bien, pulse Cancelar o el botón de retroceso para rechazar los </item>
+        <item>cambios y volver a la pantalla de Solve.</item>
+    </string-array>
+
+</resources>

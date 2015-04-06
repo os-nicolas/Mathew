@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">马蒂尔达</string>
+    <string name="action_settings">设置</string>
+    <string name="solve">解决</string>
+    <string name="ok">行</string>
+    <string name="assume">假设</string>
+
+    <string-array name="tut_history">
+        <item>要恢复到以前的一步，</item>
+        <item>触摸步按住。</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>轻按解决，开始操纵你的公式。</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>采取双方的根本，</item>
+        <item>拖累指数的另一边。</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>为了提高术语其指数，</item>
+        <item>双击该指数。</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>方两侧，</item>
+        <item>将一个平方根标志的另一边。</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>双击平方根迹</item>
+        <item>象平方根其内容。</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">不错的工作！</string>
+    <string name="tut_solved_1_1">做得好！</string>
+    <string name="tut_solved_1_2">好工作！</string>
+    <string name="tut_solved_1_3">好！</string>
+    <string name="tut_solved_2">打后退按钮进入另一个公式。</string>
+
+    <string name="tut_solvemessage_1">这是解决屏幕。</string>
+    <string-array name="tut_solvemessage_2">
+        <item>要四处移动而言，</item>
+        <item>只需将它们拖放。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>使用+按钮在屏幕的底部，以一个</item>
+        <item>新的术语添加到两侧。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>在屏幕的底部，其它符号将执行</item>
+        <item>它们各自的操作，以两侧。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>加，减，乘或除两个名词，双击</item>
+        <item>的+ ， - ， × ÷或符号隔开。</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">嗨！</string>
+    <string name="tut_writemessage_2">感谢您安装马蒂尔达。</string>
+    <string name="tut_writemessage_3">来吧，键入一个公式。</string>
+    <string name="tut_writemessage_4">你可以对这些信息挖掘跳过他们。</string>
+
+    <string name="clear">清楚了吗？</string>
+    <string name="cancel">取消</string>
+
+
+    <string name="tut_both_1_add">
+       你要添加到双方键入。
+    </string>
+    <string name="tut_both_1_sub">
+       你想从两边减去什么类型的。
+    </string>
+    <string name="tut_both_1_multi">
+       要通过乘双方什么类型的。
+    </string>
+    <string name="tut_both_1_div">
+       你想通过划分双方什么类型的。
+    </string>
+    <string name="tut_both_1_power">
+       在什么功率型要双方都提高到。
+    </string>
+
+    <string name="bothsides_equals_add">加入双方</string>
+    <string name="bothsides_equals_sub">双方减</string>
+    <string name="bothsides_equals_multi">乘双面</string>
+    <string name="bothsides_equals_div">分两面</string>
+    <string name="bothsides_equals_power">提高双面到电源</string>
+    <string name="bothsides_add">添加</string>
+    <string name="bothsides_sub">从减</string>
+    <string name="bothsides_multi">乘</string>
+    <string name="bothsides_div">分</string>
+    <string name="bothsides_power">提高到一个电源</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">使用二次方程式</string>
+
+
+    <string-array name="tut_both_2">
+        <item>然后，点击确定接受更改，并把</item>
+        <item>他们带回的解决屏幕。</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>或者，点击取消或后退按钮拒绝</item>
+        <item>更改，并返回到解决画面。</item>
+    </string-array>
+
+</resources>

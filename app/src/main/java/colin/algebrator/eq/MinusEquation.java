@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by Colin on 1/4/2015.
  */
-public class MinusEquation extends MonaryEquation {
+public class MinusEquation extends MonaryEquation implements SignEquation{
 
     public MinusEquation(SuperView owner2) {
         super(owner2);

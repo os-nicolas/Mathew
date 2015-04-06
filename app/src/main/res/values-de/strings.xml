@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mathilda</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="solve">lösen</string>
+    <string name="ok">Ok</string>
+    <string name="assume">Unter der Annahme,</string>
+
+    <string-array name="tut_history">
+        <item>Um zu einem vorherigen Schritt zurückzukehren,</item>
+        <item>drücken Sie die Schritt halten.</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>Tippen Sie lösen beginnen Manipulation Ihrer Gleichung.</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>Um das root beider Seiten nehmen , </item>
+        <item>ziehen Sie einen Exponenten auf die andere Seite.</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>Um einen Begriff in seiner Exponenten, </item>
+        <item>doppelt tippen erhöhen den Exponenten.</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>Um beide Seiten zu quadrieren , </item>
+        <item>ziehen Sie ein Wurzelzeichen auf die andere Seite.</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>Tippen Sie zweimal auf ein Wurzelzeichen</item>
+        <item> zu Quadratwurzel ihren Inhalt handeln.</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">Gute Arbeit!</string>
+    <string name="tut_solved_1_1">Well done!</string>
+    <string name="tut_solved_1_2">Gut gemacht!</string>
+    <string name="tut_solved_1_3">Gut gemacht!</string>
+    <string name="tut_solved_2">Drücken Sie die Zurück-Taste , um eine andere Gleichung eingeben.</string>
+
+    <string name="tut_solvemessage_1">Dies ist das Lösen Bildschirm.</string>
+    <string-array name="tut_solvemessage_2">
+        <item>Für von sich zu bewegen, </item>
+        <item>einfach per Drag &amp; Drop .</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>Verwenden Sie die + Taste am unteren Rand des Bildschirms,</item>
+        <item>um einen neuen Begriff zu beiden Seiten hinzuzufügen.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>Die anderen Symbole die im unteren Teil des Bildschirms</item>
+        <item>werden ihre jeweiligen Operationen zu beiden Seiten durchzuführen.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>Addieren, subtrahieren , multiplizieren oder dividieren zwei Begriffe ,</item>
+        <item> tippen Sie zweimal auf das +, -, × oder ÷ Symbol trennen.</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">Hallo !</string>
+    <string name="tut_writemessage_2">Danke für die Installation Mathilda .</string>
+    <string name="tut_writemessage_3">Gehen Sie voran und geben Sie eine Gleichung.</string>
+    <string name="tut_writemessage_4">Sie können auf diese Nachrichten tippen , um sie zu springen.</string>
+
+    <string name="clear">Klar ?</string>
+    <string name="cancel">der rücken</string>
+
+
+    <string name="tut_both_1_add">
+       Geben Sie , was Sie auf beide Seiten aufnehmen wollen .
+    </string>
+    <string name="tut_both_1_sub">
+       Geben Sie , was Sie von beiden Seiten abziehen wollen .
+    </string>
+    <string name="tut_both_1_multi">
+       Geben Sie , was Sie beide Seiten durch multiplizieren möchten.
+    </string>
+    <string name="tut_both_1_div">
+       Geben Sie , was Sie beide Seiten mit teilen möchten.
+    </string>
+    <string name="tut_both_1_power">
+       Geben Sie , welche Macht Sie wollen , um beide Seiten zu erhöhen.
+    </string>
+
+    <string name="bothsides_equals_add">In den beiden Seiten</string>
+    <string name="bothsides_equals_sub">Subtrahieren von beiden Seiten</string>
+    <string name="bothsides_equals_multi">Multiplizieren Sie beide Seiten</string>
+    <string name="bothsides_equals_div">Dividieren Sie beide Seiten</string>
+    <string name="bothsides_equals_power">Heben Sie beide Seiten zu einer Leistungs</string>
+    <string name="bothsides_add">Ergänzen</string>
+    <string name="bothsides_sub">Subtract from</string>
+    <string name="bothsides_multi">Ziehen Sie aus</string>
+    <string name="bothsides_div">Sich Teilen</string>
+    <string name="bothsides_power">Heben Sie an eine Strom</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">Verwenden quadratische Formel</string>
+
+
+    <string-array name="tut_both_2">
+        <item>Tippen Sie dann auf OK, um die Änderungen zu übernehmen</item>
+        <item>und bringen sie zurück zu dem Lösen Bildschirm .</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>Oder tippen Sie auf Abbrechen oder die Zurück-Taste , </item>
+        <item> um Ihre Änderungen zu verwerfen und zurück zum Lösen Bildschirm .</item>
+    </string-array>
+
+</resources>

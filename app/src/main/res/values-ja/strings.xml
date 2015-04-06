@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">マチルダ</string>
+    <string name="action_settings">設定</string>
+    <string name="solve">解決する</string>
+    <string name="ok">Ok</string>
+    <string name="assume">仮定すると、</string>
+
+    <string-array name="tut_history">
+        <item>前のステップに戻すには、手順に</item>
+        <item>手を触れたままにします。</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>あなたの方程式を操作開始するために解決をタップします。</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>両側のルートを取るために、反対</item>
+        <item>側に指数をドラッグします。</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>その指数、ダブルタップに指数を</item>
+        <item>言葉を上げるに。</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>両側を広場に、もう一方の側に平,</item>
+        <item>方根記号をドラッグします。</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>ダブルタップ平方根その内容への</item>
+        <item>平方根記号。</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">ニースの仕事！</string>
+    <string name="tut_solved_1_1">よくやった！</string>
+    <string name="tut_solved_1_2">よくやった！</string>
+    <string name="tut_solved_1_3">ニース！</string>
+    <string name="tut_solved_2">別の式を入力するには[戻る]ボタンを押してください。</string>
+
+    <string name="tut_solvemessage_1">これは画面を解決です。</string>
+    <string-array name="tut_solvemessage_2">
+        <item>周りの条件を移動するには、ドラッ</item>
+        <item>グアンドドロップします。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>両側に新しい用語を追加するために、</item>
+        <item>画面の下部にある+ボタンを使用します。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>画面の下部にある他の記号は両側に、</item>
+        <item>それぞれの操作を実行します。</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>、加算、減算するために乗算または二つの用語、ダブルタップ+ 、</item>
+        <item>分割 - それらを分離する、 ×または÷記号を。</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">こんにちは！</string>
+    <string name="tut_writemessage_2">マチルダをインストールしていただきありがとうございます。</string>
+    <string name="tut_writemessage_3">前方に移動し、式を入力します。</string>
+    <string name="tut_writemessage_4">あなたはそれらをスキップし、これらのメッセージをタップすることができます。</string>
+
+    <string name="clear">クリア？</string>
+    <string name="cancel">キャンセル</string>
+
+
+    <string name="tut_both_1_add">
+       あなたは、両側に追加するものを入力します。
+    </string>
+    <string name="tut_both_1_sub">
+       あなたが両側から減算したいもので入力します。
+    </string>
+    <string name="tut_both_1_multi">
+       あなたが両側を掛けたいものを入力します。
+    </string>
+    <string name="tut_both_1_div">
+       あなたが両側を分割したいもので入力します。
+    </string>
+    <string name="tut_both_1_power">
+       何パワーの種類は、あなたがに両サイドを上げたい。
+    </string>
+
+    <string name="bothsides_equals_add">両側に追加</string>
+    <string name="bothsides_equals_sub">両側から引く</string>
+    <string name="bothsides_equals_multi">両面を掛け</string>
+    <string name="bothsides_equals_div">両面を割り</string>
+    <string name="bothsides_equals_power">電源への両面を上げる</string>
+    <string name="bothsides_add">追加</string>
+    <string name="bothsides_sub">引く</string>
+    <string name="bothsides_multi">乗算</string>
+    <string name="bothsides_div">分割</string>
+    <string name="bothsides_power">電源へのレイズ</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">次の式を使用します</string>
+
+
+    <string-array name="tut_both_2">
+        <item>その後、あなたの変更を確定し、</item>
+        <item>戻って解決の画面にそれらをもたらすには、[OK]をタップします。</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>または、タップは、 [キャンセル]または[戻る]ボタンは、あなたの変更</item>
+        <item>を拒否し、戻って解決画面に進みます。</item>
+    </string-array>
+
+</resources>

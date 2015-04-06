@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ماتيلدا</string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="solve">حل</string>
+    <string name="ok">طب كويس</string>
+    <string name="assume">على افتراض</string>
+
+    <string-array name="tut_history">
+        <item>للعودة إلى الخطوة السابقة ،</item>
+        <item>المس الخطوة مع الاستمرار على.</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>صنبور حل لبدء التلاعب المعادلة الخاصة بك.</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>لاتخاذ جذر كلا الجانبين ،</item>
+        <item>اسحب داعية إلى الجانب الآخر .</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>لرفع المصطلح ل الأس ،</item>
+        <item>انقر على ضعف الأس.</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>الى المربع كلا الجانبين ،</item>
+        <item>اسحب علامة الجذر التربيعي إلى الجانب الآخر .</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>الاستفادة من ضعف علامة الجذر</item>
+        <item>التربيعي ل الجذر التربيعي محتوياته .</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">عمل جيد!</string>
+    <string name="tut_solved_1_1">مية مية!</string>
+    <string name="tut_solved_1_2">عمل رائع!</string>
+    <string name="tut_solved_1_3">عمل رائع!</string>
+    <string name="tut_solved_2">اضغط على زر العودة لدخول معادلة أخرى.</string>
+
+    <string name="tut_solvemessage_1">هذا هو حل الشاشة.</string>
+    <string-array name="tut_solvemessage_2">
+        <item>للتحرك حيث حولها،</item>
+        <item>ببساطة سحب وإسقاط لهم</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>استخدم زر + في الجزء السفلي من</item>
+        <item>الشاشة ل إضافة مصطلح جديد لكلا الجانبين .</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>سوف رموز أخرى في الجزء السفلي من</item>
+        <item>الشاشة تنفيذ عمليات كل منها لكلا الجانبين .</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>لإضافة أو طرح، ضرب أو تقسيم ولايتين ، </item>
+        <item>الصنبور ضعف + ، - رمز ، × ÷ أو تفصل بينها.</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">مرحبا !</string>
+    <string name="tut_writemessage_2">شكرا ل تركيب ماتيلدا .</string>
+    <string name="tut_writemessage_3">المضي قدما و اكتب معادلة.</string>
+    <string name="tut_writemessage_4">يمكنك الاستفادة من هذه الرسائل لتخطي لهم .</string>
+
+    <string name="clear">واضح؟</string>
+    <string name="cancel">الغاء الامر</string>
+
+
+    <string name="tut_both_1_add">
+       اكتب في ما تريد أن تضيف إلى كلا الجانبين.
+    </string>
+    <string name="tut_both_1_sub">
+       اكتب في ما تريد طرح من كلا الجانبين.
+    </string>
+    <string name="tut_both_1_multi">
+       اكتب في ما تريد أن تتضاعف كلا الجانبين من قبل .
+    </string>
+    <string name="tut_both_1_div">
+       اكتب في ما تريد تقسيم كلا الجانبين من قبل .
+    </string>
+    <string name="tut_both_1_power">
+       اكتب في ما تريد السلطة لرفع كلا الجانبين ل .
+    </string>
+
+    <string name="bothsides_equals_add">أضف إلى كلا الجانبين</string>
+    <string name="bothsides_equals_sub">طرح من الجانبين</string>
+    <string name="bothsides_equals_multi">مضاعفة كلا الجانبين</string>
+    <string name="bothsides_equals_div">تقسيم كلا الجانبين</string>
+    <string name="bothsides_equals_power">رفع كلا الجانبين إلى السلطة</string>
+    <string name="bothsides_add">اضافة الى</string>
+    <string name="bothsides_sub">طرح من</string>
+    <string name="bothsides_multi">تتكاثر</string>
+    <string name="bothsides_div">فرق</string>
+    <string name="bothsides_power">رفع إلى السلطة</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">استخدام الصيغة التربيعية</string>
+
+
+    <string-array name="tut_both_2">
+        <item>م ، انقر فوق موافق لقبول التغييرات</item>
+        <item>و اعادتهم الى حل الشاشة .</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>أو ، انقر فوق إلغاء أو الزر الخلفي لرفض</item>
+        <item>التغييرات والعودة إلى حل الشاشة .</item>
+    </string-array>
+
+</resources>

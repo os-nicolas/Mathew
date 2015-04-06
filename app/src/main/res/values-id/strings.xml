@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Mathilda</string>
+    <string name="app_name">マチルダ</string>
     <string name="action_settings">Settings</string>
     <string name="solve">Solve</string>
     <string name="ok">Ok</string>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Матильда</string>
+    <string name="action_settings">настройки</string>
+    <string name="solve">решить</string>
+    <string name="ok">Хорошо</string>
+    <string name="assume">Предполагая</string>
+
+    <string-array name="tut_history">
+        <item>Чтобы вернуться к предыдущему шагу,</item>
+        <item>нажмите шаг и удерживайте кнопку.</item>
+    </string-array>
+    <string-array name="tut_hitsolve">
+        <item>Tap Решите начать манипулировать ваш уравнение.</item>
+    </string-array>
+    <string-array name="tut_powerdrag">
+        <item>Для того, чтобы корень обеих сторон ,</item>
+        <item>перетащить показатель к другой стороне .</item>
+    </string-array>
+    <string-array name="tut_power">
+        <item>Чтобы поднять срок его показателем ,</item>
+        <item>дважды нажмите на экспоненту.</item>
+    </string-array>
+    <string-array name="tut_rootdrag">
+        <item>До площади обе стороны, перетащите</item>
+        <item>подкоренное на другую сторону .</item>
+    </string-array>
+    <string-array name="tut_root">
+        <item>Дважды нажмитеквадратный корень знак</item>
+        <item>квадратного корня его содержимое.</item>
+    </string-array>
+
+
+    <string name="tut_solved_1_0">Хорошая работа!</string>
+    <string name="tut_solved_1_1">Хорошо!</string>
+    <string name="tut_solved_1_2">Ты молодец!</string>
+    <string name="tut_solved_1_3">Хорошо!</string>
+    <string name="tut_solved_2">Хит кнопку назад, чтобы войти в следующее уравнение.</string>
+
+    <string name="tut_solvemessage_1">Этоэкран решить.</string>
+    <string-array name="tut_solvemessage_2">
+        <item>Для перемещения термины вокруг ,</item>
+        <item>просто перетащите их.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_3">
+        <item>Используйте кнопку + в нижней части экрана,</item>
+        <item>чтобы добавить новый термин для обеих сторон.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_4">
+        <item>Другие символы в нижней части экрана будет выполнять </item>
+        <item>свои соответствующие операции с обеих сторон.</item>
+    </string-array>
+    <string-array name="tut_solvemessage_5">
+        <item>Для сложения, вычитания, умножения или разделить на два срока ,</item>
+        <item>дважды нажмите+, -, × или ÷ символов , разделяя их .</item>
+    </string-array>
+
+    <string name="tut_writemessage_1">Привет У!</string>
+    <string name="tut_writemessage_2">Спасибо за установку Матильда.</string>
+    <string name="tut_writemessage_3">Идем дальше и ввести уравнение.</string>
+    <string name="tut_writemessage_4">Вы можете нажать на эти сообщения , чтобы пропустить их.</string>
+
+    <string name="clear">Ясно ?</string>
+    <string name="cancel">Отменить</string>
+
+
+    <string name="tut_both_1_add">
+       Введите то, что вы хотите добавить для обеих сторон.
+    </string>
+    <string name="tut_both_1_sub">
+       Введите то, что вы хотите , чтобы вычесть из обеих сторон.
+    </string>
+    <string name="tut_both_1_multi">
+       Введите то, что вы хотите , чтобы умножить обе части на.
+    </string>
+    <string name="tut_both_1_div">
+       Введите то, что вы хотите разделить обе части уравнения на.
+    </string>
+    <string name="tut_both_1_power">
+       Введите то, что власти вы хотите поднять обе стороны.
+    </string>
+
+    <string name="bothsides_equals_add">Добавить для обеих сторон</string>
+    <string name="bothsides_equals_sub">Вычтем из обеих сторон</string>
+    <string name="bothsides_equals_multi">Умножим обе части</string>
+    <string name="bothsides_equals_div">Разделим обе части</string>
+    <string name="bothsides_equals_power">Поднимите обе стороны к Силе</string>
+    <string name="bothsides_add">добавить в</string>
+    <string name="bothsides_sub">Вычтем из</string>
+    <string name="bothsides_multi">Умножьте</string>
+    <string name="bothsides_div">разделение</string>
+    <string name="bothsides_power">Поднять в степень</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">Используйте квадратичной формулой</string>
+
+
+    <string-array name="tut_both_2">
+        <item>Затем, нажмите кнопку ОК, чтобы принять</item>
+        <item>изменения и вернуть их в Solve экране.</item>
+    </string-array>
+
+    <string-array name="tut_both_3">
+        <item>Или нажмите Отменить иликнопку Назад, чтобы </item>
+        <item>отклонить изменения и вернуться к Solve экране.</item>
+    </string-array>
+
+</resources>
