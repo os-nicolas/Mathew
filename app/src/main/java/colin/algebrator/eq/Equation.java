@@ -1169,9 +1169,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     private boolean CanAdd(Equation dragging,boolean right) {
         // if we are already added it's a bit silly
-        if (this.parent instanceof AddEquation && this.parent.contains(dragging) && this.parent.indexOf(this) == this.parent.indexOf(dragging) + (right?1:-1)){
-            return false;
-        }
+//        if (this.parent instanceof AddEquation && this.parent.contains(dragging) && this.parent.indexOf(this) == this.parent.indexOf(dragging) + (right?1:-1)){
+//            return false;
+//        }
 
         Equation lcc = lowestCommonContainer(dragging);
 

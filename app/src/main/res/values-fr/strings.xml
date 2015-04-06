@@ -9,22 +9,22 @@
 
     <string-array name="tut_history">
         <item>Pour revenir à une étape précédente,</item>
-        <item>appuyez et maintenez l'étape.</item>
+        <item>appuyez et maintenez l\'étape.</item>
     </string-array>
     <string-array name="tut_hitsolve">
         <item>Touchez Solve et commencer à manipuler votre équation .</item>
     </string-array>
     <string-array name="tut_powerdrag">
         <item>Pour prendre la racine des deux côtés ,</item>
-        <item>faites glisser un exposant à l'autre côté.</item>
+        <item>faites glisser un exposant à l\'autre côté.</item>
     </string-array>
     <string-array name="tut_power">
         <item>Pour prendre la racine des deux côtés, </item>
-        <item>faites glisser un exposant à l'autre côté .</item>
+        <item>faites glisser un exposant à l\'autre côté .</item>
     </string-array>
     <string-array name="tut_rootdrag">
         <item>Pour concilier les deux côtés ,</item>
-        <item>faites glisser un signe de racine carrée de l'autre côté.</item>
+        <item>faites glisser un signe de racine carrée de l\'autre côté.</item>
     </string-array>
     <string-array name="tut_root">
         <item>Double robinet une racine sig place en</item>
@@ -38,17 +38,17 @@
     <string name="tut_solved_1_3">Bien!</string>
     <string name="tut_solved_2">Appuyez sur le bouton de retour à entrer dans un autre équation.</string>
 
-    <string name="tut_solvemessage_1">Ce est l'écran Résoudre .</string>
+    <string name="tut_solvemessage_1">Ce est l\'écran Résoudre .</string>
     <string-array name="tut_solvemessage_2">
         <item>Pour déplacer autour termes ,</item>
         <item>il suffit de glisser-déposer.</item>
     </string-array>
     <string-array name="tut_solvemessage_3">
-        <item>Utilisez le bouton + en bas de l'écran pour ajouter</item>
+        <item>Utilisez le bouton + en bas de l\'écran pour ajouter</item>
         <item>un nouveau terme pour les deux côtés .</item>
     </string-array>
     <string-array name="tut_solvemessage_4">
-        <item>Les autres symboles au bas de l'écran se effectuer leurs </item>
+        <item>Les autres symboles au bas de l\'écran se effectuer leurs </item>
         <item>opérations respectives sur les deux faces .</item>
     </string-array>
     <string-array name="tut_solvemessage_5">
@@ -57,7 +57,7 @@
     </string-array>
 
     <string name="tut_writemessage_1">Salut !</string>
-    <string name="tut_writemessage_2">Merci d'avoir installé Mathilda .</string>
+    <string name="tut_writemessage_2">Merci d\'avoir installé Mathilda .</string>
     <string name="tut_writemessage_3">Allez-y et tapez une équation.</string>
     <string name="tut_writemessage_4">Vous pouvez taper sur ces messages pour les ignorer .</string>
 
@@ -97,12 +97,12 @@
 
     <string-array name="tut_both_2">
         <item>Ensuite , appuyez sur OK pour accepter vos modifications</item>
-        <item> et de les ramener à l'écran Résoudre .</item>
+        <item> et de les ramener à l\'écran Résoudre .</item>
     </string-array>
 
     <string-array name="tut_both_3">
         <item>Ou , appuyez sur Annuler ou sur le bouton de retour à rejeter vos</item>
-        <item>modifications et revenir à l'écran Résoudre .</item>
+        <item>modifications et revenir à l\'écran Résoudre .</item>
     </string-array>
 
 </resources>
