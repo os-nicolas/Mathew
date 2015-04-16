@@ -287,4 +287,9 @@ public class EquationButton extends Button {
         }
         return base;
     }
+
+    public void updateZoom(double lastZoom, double zoom) {
+        y= (float)(y*zoom/lastZoom);
+
+    }
 }

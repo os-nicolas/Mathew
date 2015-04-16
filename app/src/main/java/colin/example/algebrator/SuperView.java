@@ -498,7 +498,6 @@ public abstract class SuperView extends View implements
     }
 
 
-    private long startTime;
     private long lastTapTime;
     private Point lastTapPoint;
 
@@ -628,7 +627,7 @@ public abstract class SuperView extends View implements
                             removeSelected();
                         }
                     }
-                    startTime = System.currentTimeMillis();
+                    long startTime = System.currentTimeMillis();
                     lastX = event.getX();
                     lastY = event.getY();
                     // stop stupid sliding
@@ -749,9 +748,9 @@ public abstract class SuperView extends View implements
                     if (Algebrator.getAlgebrator().zoom < .7){Algebrator.getAlgebrator().zoom = .7;}
                     if (Algebrator.getAlgebrator().zoom > 1.5){Algebrator.getAlgebrator().zoom = 1.5;}
                     lastZoomDis = currentZoomDis;
-                    float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
+                    //float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
                     float oldDisy =lastCenter.y - (screenCenter.y +offsetY);
-                    offsetX =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
+                    //offsetX =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
                     offsetY =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisy)-touchCenter.y + screenCenter.y);
                     lastCenter =touchCenter;
 
@@ -1026,6 +1025,7 @@ public abstract class SuperView extends View implements
         for (EquationButton eb : history) {
             if (lastZoom != Algebrator.getAlgebrator().zoom){
                 eb.myEq.deepNeedsUpdate();
+                eb.updateZoom(lastZoom,Algebrator.getAlgebrator().zoom);
             }
             if ( (!skipZero) || (!eb.equals(history.get(0)))) {
 

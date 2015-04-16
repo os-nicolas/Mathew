@@ -9,8 +9,8 @@ public class LongTouch {
     // TODO scale by dpi
     private float distance=20*Algebrator.getAlgebrator().getDpi();
 
-    private float STARTED=20;
-    private float DONE=700;
+    private float STARTED=50;
+    private float DONE=1200;
 
     private final float x;
     private final float y;

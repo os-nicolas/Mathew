@@ -135,3 +135,4 @@ public abstract class TutMessage {
     protected abstract void privateShow(SuperView view);
 
 }
+

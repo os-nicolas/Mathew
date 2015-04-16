@@ -789,7 +789,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         } else {
             eq.parent = null;
-            owner.setStupid(eq);
+            if (owner.getStupid().equals(this)) {
+                owner.setStupid(eq);
+            }
         }
     }
 
@@ -958,10 +960,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             debug();
         }
         while (at.parent != this) {
-            at = at.parent;
             if (at.parent == null) {
                 debug();
             }
+            at = at.parent;
+
         }
         int result = indexOf(at);
         if (result == -1) {
