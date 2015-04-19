@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import colin.algebrator.eq.EqualsEquation;
 import colin.algebrator.eq.Equation;
 import colin.algebrator.eq.PlaceholderEquation;
 import colin.algebrator.eq.WritingEquation;
@@ -72,7 +73,9 @@ public class Solve extends Action {
                 myContext = myView.myActivity;
                 ColinView colinView = new ColinView(myContext);
                 colinView.setStupid(newEq);
-                colinView.centerEq();
+                if (newEq instanceof EqualsEquation) {
+                    colinView.centerEq();
+                }
                 Algebrator.getAlgebrator().solveView = colinView;
                 //((MainActivity) c).lookAt(colinView);
 

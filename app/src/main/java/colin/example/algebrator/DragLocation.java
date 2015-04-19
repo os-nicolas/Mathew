@@ -44,16 +44,8 @@ public class DragLocation implements Comparable<DragLocation> {
 
             // try op with our copies
 
-            myDemo = ourEquation.tryOp(myDemo, right, op);
+            myStupid = ourEquation.tryOp(myDemo, right, op);
 
-            // we need to update myStupid since it is you might have just destoryed the root of it
-            // for example if you have (a/b)/6 and you drag the 6 to the top
-            // to get a/(6*b) the root devision is now empty or something bad
-            // but myStupid still points to it
-            myStupid = myDemo;
-            while (myStupid.parent != null){
-                myStupid = myStupid.parent;
-            }
 
 
             myStupid.x = 0;

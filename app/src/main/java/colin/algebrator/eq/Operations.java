@@ -17,7 +17,7 @@ public class Operations {
 
     // **************************** MULTIPLY *****************************************
 
-    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right) {
+    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify) {
         SuperView owner = Algebrator.getAlgebrator().solveView;
 
         MultiCountDatas result = new MultiCountDatas();
@@ -25,15 +25,17 @@ public class Operations {
             for (MultiCountData b : left) {
                 MultiCountData toAdd = Multiply(a, b);
                 boolean found = false;
-                for (MultiCountData mcd : result) {
-                    if (mcd.matches(toAdd)) {
-                        found = true;
-                        //this is bad:
-                        BigDecimal value = mcd.getValue().add(toAdd.getValue());
-                        mcd.numbers = new ArrayList<Equation>();
-                        Equation newValue = NumConstEquation.create(value, owner);
-                        mcd.numbers.add(newValue);
-                        break;
+                if (simplify) {
+                    for (MultiCountData mcd : result) {
+                        if (mcd.matches(toAdd)) {
+                            found = true;
+                            //this is bad:
+                            BigDecimal value = mcd.getValue().add(toAdd.getValue());
+                            mcd.numbers = new ArrayList<Equation>();
+                            Equation newValue = NumConstEquation.create(value, owner);
+                            mcd.numbers.add(newValue);
+                            break;
+                        }
                     }
                 }
                 if (!found) {
@@ -597,15 +599,16 @@ public class Operations {
             } else {
                 result = power;
             }
-
-        } else if (a instanceof AddEquation) {
+        //TODO this need to be able to handle negs on the addEquation
+        } else if (a.removeNeg() instanceof AddEquation) {
             result = new AddEquation(owner);
-            for (Equation e : a) {
+            for (Equation e : a.removeNeg()) {
                 Equation newEq = new DivEquation(owner);
                 newEq.add(e);
                 newEq.add(b.copy());
                 result.add(newEq);
             }
+            result = a.passNegs(result);
         } else {
             // figure out what is common
             MultiCountData top = new MultiCountData(a);
@@ -675,6 +678,21 @@ public class Operations {
 //                Equation botEq = bot.getEquation(owner);
 //                result = getResult(topEq, botEq);
 
+
+                // if we have sqrt(5)/23
+            }else if (a.removeNeg() instanceof PowerEquation){
+                result = new PowerEquation(owner);
+                // we raise b to the the same power as a and bring it inside
+                Equation newBot = new PowerEquation(owner);
+                newBot.add(b.copy());
+                newBot.add(Operations.flip(a.removeNeg().get(1).copy()));
+                Equation newTop = a.removeNeg().get(0).copy();
+                Equation inside = new DivEquation(owner);
+                inside.add(newTop);
+                inside.add(newBot);
+                result.add(inside);
+                result.add(a.removeNeg().get(1).copy());
+                result = a.passNegs(result);
                 // if we have a/b where a and b are sortaNumbers
             } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
                 int topInt = (int) Math.floor(top.getValue().doubleValue());

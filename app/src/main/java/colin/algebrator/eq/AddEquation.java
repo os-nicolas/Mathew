@@ -106,14 +106,21 @@ public class AddEquation extends FlexOperation {
 		 if (result instanceof AddEquation){
              int i=0;
              for (Equation e: result){
-                 add(at+i,e);
-                 i++;
+                 if ((this.size()==0 && result.indexOf(e) == result.size()-1 ) || !Operations.sortaNumber(result) || Operations.getValue(result).doubleValue() != 0) {
+                     add(at + i, e);
+                     i++;
+                 }
              }
-         }else{
+         }else if (this.size()==0 || !Operations.sortaNumber(result) || Operations.getValue(result).doubleValue() != 0){
              add(at, result);
          }
         if (this.size() ==1){
-            this.replace(this.get(0));
+            // if this is a zero
+            if (Operations.sortaNumber(this.get(0)) && Operations.getValue(this.get(0)).doubleValue() == 0 && this.parent instanceof AddEquation){
+                this.remove();
+            }else {
+                this.replace(this.get(0));
+            }
         }
 	}
 

@@ -727,12 +727,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         Equation result = super.remove(pos);
         needsUpdate();
         if (result != null) {
-            result.parent = null;
-            if (this.size() == 1 && this.parent != null) {
+            if (this.size() == 1) {
                 this.replace(get(0));
             } else if (size() == 0) {
                 remove();
             }
+            result.parent = null;
         }
         return result;
     }
@@ -818,6 +818,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return t.isInstance(at);
     }
 
+    /***
+     * takes care of +- too
+     * does not make a copy or change the actuall structure
+     * @return
+     */
     public Equation removeNeg() {
         Equation at = this;
         while (at instanceof MinusEquation || at instanceof PlusMinusEquation) {
@@ -1041,13 +1046,15 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 oldEq.replace(newEq);
                 newEq.add(this);
                 newEq.add(power);
+
+                dragging = power;
                 //dragging.getAndUpdateDemo(power);
                 //dragging.updateOps(dragging.demo);
             } else if (this instanceof NumConstEquation && ((NumConstEquation) this).getValue().doubleValue() == BigDecimal.ZERO.doubleValue() && op == Op.ADD) {
                 dragging.remove();
                 dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                 this.replace(dragging);
-                return dragging;
+                return dragging.root();
             } else if (this instanceof NumConstEquation && ((NumConstEquation) this).getValue().doubleValue() == BigDecimal.ONE.doubleValue() && op == Op.MULTI) {
                 dragging.remove();
                 dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
@@ -1058,7 +1065,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                     dragging.replace(me);
                     me.add(dragging);
                 }
-                return dragging;
+                return dragging.root();
             } else if ((parent instanceof AddEquation && op == Op.ADD) ||
                     (parent instanceof MultiEquation && op == Op.MULTI)) {
                 if (parent.equals(dragging.parent)) {
@@ -1121,7 +1128,20 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 me.add(at);
             }
         }
-        return dragging;
+        return dragging.root();
+    }
+
+    private Equation root() {
+
+        // we need to update myStupid since it is you might have just destoryed the root of it
+        // for example if you have (a/b)/6 and you drag the 6 to the top
+        // to get a/(6*b) the root devision is now empty or something bad
+        // but myStupid still points to it
+        Equation result = this;
+        while (result.parent != null){
+            result = result.parent;
+        }
+        return  result;
     }
 
     private Equation update(Equation dragging, boolean notSameSide, boolean thisNeg, boolean dragNeg, Op op) {
@@ -1427,7 +1447,24 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return false;
     }
 
-
+    public Equation passNegs(Equation eq) {
+        Equation at = this;
+        Equation result = null;
+        while (at instanceof MinusEquation || at instanceof PlusMinusEquation) {
+            Equation cpy = at.copy();
+            cpy.clear();
+            eq.replace(cpy);
+            cpy.add(eq);
+            if (result == null){
+                result = cpy;
+            }
+            at = at.get(0);
+        }
+        if (result == null){
+            result = eq;
+        }
+        return result;
+    }
 
 
     private class Clostest {

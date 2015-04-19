@@ -164,22 +164,29 @@ public class EquationButton extends Button {
     }
 
     private boolean inBox(MotionEvent event) {
-        float stupidX = cv.stupid.lastPoint.get(0).x;
-        float stupidY = cv.stupid.lastPoint.get(0).y;
+        float stupidX;
+        float stupidY;
 
         float leftEnd;
         float rightEnd;
-        float topEnd = (y + stupidY) - myEq.measureHeightUpper();
-        float bottomEnd = (y + stupidY) + myEq.measureHeightLower();
+
 
         if (myEq instanceof EqualsEquation) {
+
+            stupidX = cv.stupid.lastPoint.get(0).x;
+            stupidY = cv.stupid.lastPoint.get(0).y;
             float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
             leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth();
             rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth();
         } else {
-            leftEnd = (x + stupidX) - myEq.measureWidth() / 2;
-            rightEnd = (x + stupidX) + myEq.measureWidth() / 2;
+            stupidX = cv.stupid.getX();
+            stupidY = cv.stupid.getY();
+            leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f);
+            rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f);
         }
+
+        float topEnd = (y + stupidY) - myEq.measureHeightUpper();
+        float bottomEnd = (y + stupidY) + myEq.measureHeightLower();
 
         if (event.getX() < rightEnd && event.getX() > leftEnd && event.getY() > topEnd && event.getY() < bottomEnd) {
             return true;

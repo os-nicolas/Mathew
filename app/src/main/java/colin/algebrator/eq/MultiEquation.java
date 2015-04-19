@@ -104,8 +104,10 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         MultiCountDatas left= new MultiCountDatas(eqs.get(0));
 
         MultiCountDatas right= new MultiCountDatas(eqs.get(1));
+
+        boolean simplify = eqs.get(0).removeNeg() instanceof AddEquation && eqs.get(1).removeNeg() instanceof AddEquation;
             // multiply && combine like terms
-        MultiCountDatas fullSet = Operations.Multiply(left, right);
+        MultiCountDatas fullSet = Operations.Multiply(left, right,simplify);
 
         if (fullSet.size() == 1) {
             MultiCountData mine =  fullSet.get(0);

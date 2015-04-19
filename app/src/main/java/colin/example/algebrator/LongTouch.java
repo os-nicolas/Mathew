@@ -10,7 +10,7 @@ public class LongTouch {
     private float distance=20*Algebrator.getAlgebrator().getDpi();
 
     private float STARTED=50;
-    private float DONE=1200;
+    private float DONE=1000;
 
     private final float x;
     private final float y;

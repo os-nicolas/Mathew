@@ -121,7 +121,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
                         MultiCountDatas left = new MultiCountDatas(get(0).get(1).copy());
                         MultiCountDatas right = new MultiCountDatas(get(1).copy());
 
-                        left = Operations.Multiply(left, right);
+                        left = Operations.Multiply(left, right,true);
 
                         if (left.size() == 1) {
                             MultiCountData mine = ((MultiCountData) left.toArray()[0]);
@@ -248,7 +248,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
                                         left.add(new MultiCountData());
                                         for (int i = 0; i < val; i++) {
                                             MultiCountDatas right = new MultiCountDatas(get(0).copy());
-                                            left = Operations.Multiply(left, right);
+                                            left = Operations.Multiply(left, right,true);
                                         }
                                         if (left.size() == 1) {
                                             MultiCountData mine = ((MultiCountData) left.toArray()[0]);
