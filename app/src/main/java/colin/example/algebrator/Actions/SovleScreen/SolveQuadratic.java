@@ -1,20 +1,18 @@
 package colin.example.algebrator.Actions.SovleScreen;
 
-import java.util.ArrayList;
-
-import colin.algebrator.eq.AddEquation;
-import colin.algebrator.eq.DivEquation;
-import colin.algebrator.eq.EqualsEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.MinusEquation;
-import colin.algebrator.eq.MultiCountData;
-import colin.algebrator.eq.MultiCountDatas;
-import colin.algebrator.eq.MultiEquation;
-import colin.algebrator.eq.NumConstEquation;
-import colin.algebrator.eq.Operations;
-import colin.algebrator.eq.PlusMinusEquation;
-import colin.algebrator.eq.PowerEquation;
-import colin.algebrator.eq.VarEquation;
+import cube.d.n.commoncore.eq.AddEquation;
+import cube.d.n.commoncore.eq.DivEquation;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.MinusEquation;
+import cube.d.n.commoncore.eq.MultiCountData;
+import cube.d.n.commoncore.eq.MultiCountDatas;
+import cube.d.n.commoncore.eq.MultiEquation;
+import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.Operations;
+import cube.d.n.commoncore.eq.PlusMinusEquation;
+import cube.d.n.commoncore.eq.PowerEquation;
+import cube.d.n.commoncore.eq.VarEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.ColinView;
 

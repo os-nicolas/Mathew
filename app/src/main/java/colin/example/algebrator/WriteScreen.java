@@ -3,8 +3,8 @@ package colin.example.algebrator;
 import android.os.Bundle;
 import android.view.ViewGroup;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
 
 /**
  * Created by Colin on 2/6/2015.

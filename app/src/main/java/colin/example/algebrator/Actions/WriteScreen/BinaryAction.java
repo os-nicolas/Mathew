@@ -1,14 +1,14 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.NumConstEquation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.PowerEquation;
-import colin.algebrator.eq.VarEquation;
-import colin.algebrator.eq.WritingEquation;
-import colin.algebrator.eq.WritingLeafEquation;
-import colin.algebrator.eq.WritingPraEquation;
-import colin.algebrator.eq.WritingSqrtEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.PowerEquation;
+import cube.d.n.commoncore.eq.VarEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.WritingPraEquation;
+import cube.d.n.commoncore.eq.WritingSqrtEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.EmilyView;
 

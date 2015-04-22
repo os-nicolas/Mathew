@@ -1,12 +1,12 @@
 package colin.example.algebrator.Actions;
 
-import colin.algebrator.eq.BinaryEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.MonaryEquation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
-import colin.algebrator.eq.WritingLeafEquation;
-import colin.algebrator.eq.WritingPraEquation;
+import cube.d.n.commoncore.eq.BinaryEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.MonaryEquation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.WritingPraEquation;
 import colin.example.algebrator.SuperView;
 
 /**

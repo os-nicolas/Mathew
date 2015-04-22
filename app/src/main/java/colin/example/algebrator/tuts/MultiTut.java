@@ -1,11 +1,9 @@
 package colin.example.algebrator.tuts;
 
-import colin.algebrator.eq.DivEquation;
-import colin.algebrator.eq.EqualsEquation;
-import colin.algebrator.eq.MultiEquation;
-import colin.example.algebrator.Algebrator;
+import cube.d.n.commoncore.eq.DivEquation;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.MultiEquation;
 import colin.example.algebrator.ColinView;
-import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 
 /**

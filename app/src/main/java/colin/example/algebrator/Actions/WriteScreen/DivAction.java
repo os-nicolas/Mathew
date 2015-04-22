@@ -1,7 +1,7 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import colin.algebrator.eq.DivEquation;
-import colin.algebrator.eq.Equation;
+import cube.d.n.commoncore.eq.DivEquation;
+import cube.d.n.commoncore.eq.Equation;
 import colin.example.algebrator.EmilyView;
 
 public class DivAction extends BinaryAction {

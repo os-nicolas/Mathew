@@ -10,11 +10,11 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import colin.algebrator.eq.EqualsEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.NumConstEquation;
-import colin.algebrator.eq.WritingEquation;
-import colin.algebrator.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.WritingLeafEquation;
 
 /**
  * Created by Colin on 1/3/2015.

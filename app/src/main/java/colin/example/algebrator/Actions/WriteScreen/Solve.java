@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import colin.algebrator.eq.EqualsEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.ColinView;

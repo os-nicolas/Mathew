@@ -1,9 +1,8 @@
 package colin.example.algebrator.tuts;
 
-import colin.algebrator.eq.WritingEquation;
-import colin.algebrator.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.WritingLeafEquation;
 import colin.example.algebrator.Actions.Action;
-import colin.example.algebrator.Actions.WriteScreen.VarAction;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.R;

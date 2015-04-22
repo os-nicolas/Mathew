@@ -1,13 +1,10 @@
 package colin.example.algebrator.tuts;
 
-import java.util.Random;
-
-import colin.algebrator.eq.DivEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.Operations;
-import colin.algebrator.eq.VarEquation;
+import cube.d.n.commoncore.eq.DivEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.Operations;
+import cube.d.n.commoncore.eq.VarEquation;
 import colin.example.algebrator.Algebrator;
-import colin.example.algebrator.ColinView;
 import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
 

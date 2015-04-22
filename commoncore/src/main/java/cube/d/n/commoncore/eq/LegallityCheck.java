@@ -1,0 +1,9 @@
+package cube.d.n.commoncore.eq;
+
+/**
+ * Created by Colin_000 on 1/11/2015.
+ */
+public interface LegallityCheck {
+
+    boolean illegal();
+}

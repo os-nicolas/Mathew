@@ -2,17 +2,12 @@ package colin.example.algebrator;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Point;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -24,37 +19,35 @@ import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
-import colin.algebrator.eq.AddEquation;
-import colin.algebrator.eq.DragEquation;
-import colin.algebrator.eq.DragLocations;
-import colin.algebrator.eq.EqualsEquation;
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.MonaryEquation;
-import colin.algebrator.eq.MultiEquation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
-import colin.algebrator.eq.WritingLeafEquation;
 import colin.example.algebrator.tuts.TutMessage;
+import cube.d.n.commoncore.Animation;
+import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.DragLocation;
+import cube.d.n.commoncore.eq.AddEquation;
+import cube.d.n.commoncore.eq.DragEquation;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.MultiEquation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.WritingLeafEquation;
 
-public abstract class SuperView extends View implements
+public abstract class SuperView extends BaseView implements
         OnTouchListener {
     protected float BASE_BUTTON_PERCENT=1f;
 
     public MessageBar message = new MessageBar(this);
-    public Equation selected;
-    public DragEquation dragging;
+
     //SurfaceHolder surfaceHolder;
     Thread thread = null;
     volatile boolean running = false;
-    protected Equation stupid;
     int width;
     int height;
     float offsetX = 0;
     float offsetY = 0;
     protected float buttonsPercent;
-    public ArrayList<Animation> animation = new ArrayList<Animation>();
+
     public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<PopUpButton>();
     public boolean trackFinger = false;
@@ -68,7 +61,7 @@ public abstract class SuperView extends View implements
 
     public boolean disabled = false;
     int stupidAlpha = 0xff;
-    public boolean hasUpdated;
+
     private Point lastCenter;
 
     public ArrayList<EquationButton> history = new ArrayList<EquationButton>();
@@ -537,19 +530,9 @@ public abstract class SuperView extends View implements
         }
     }
 
-    public void setStupid(Equation newStupid) {
-        this.stupid = newStupid;
 
-        this.stupid.parent = null;
-        if (!this.stupid.owner.equals(this)){
-            this.stupid.updateOwner(this);
-            this.stupid.deepNeedsUpdate();
-        }
-    }
 
-    public Equation getStupid(){
-        return stupid;
-    }
+
 
     enum TouchMode {BUTTON, DRAG, SELECT, MOVE, ZOOM, DEAD, MESSAGE}
 

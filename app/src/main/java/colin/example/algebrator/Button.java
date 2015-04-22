@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.tuts.TutMessage;
 import colin.example.algebrator.tuts.TypeEqTut;
+import cube.d.n.commoncore.Physical;
 
 public class Button implements Physical {
     // in percent of width (1 = full width)

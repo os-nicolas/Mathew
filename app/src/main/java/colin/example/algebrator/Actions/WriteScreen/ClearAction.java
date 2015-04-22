@@ -1,12 +1,9 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.EmilyView;
-import colin.example.algebrator.MessageBar;
-import colin.example.algebrator.PopUpButton;
-import colin.example.algebrator.SuperView;
 import colin.example.algebrator.tuts.TutMessage;
 
 /**

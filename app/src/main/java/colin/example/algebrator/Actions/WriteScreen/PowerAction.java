@@ -1,7 +1,7 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.PowerEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.PowerEquation;
 import colin.example.algebrator.EmilyView;
 
 /**

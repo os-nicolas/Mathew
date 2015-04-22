@@ -1,17 +1,13 @@
 package colin.example.algebrator.Actions.BothSides;
 
-import android.app.Activity;
-
 import java.util.ArrayList;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.BothSidesView;
-import colin.example.algebrator.tuts.HitSolveMessage;
-import colin.example.algebrator.tuts.TutMessage;
 
 /**
  * Created by Colin_000 on 3/30/2015.

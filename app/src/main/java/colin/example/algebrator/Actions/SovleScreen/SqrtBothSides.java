@@ -1,11 +1,10 @@
 package colin.example.algebrator.Actions.SovleScreen;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.NumConstEquation;
-import colin.algebrator.eq.PowerEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.PowerEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.ColinView;
-import colin.example.algebrator.SolveScreen;
 
 /**
  * Created by Colin_000 on 3/30/2015.

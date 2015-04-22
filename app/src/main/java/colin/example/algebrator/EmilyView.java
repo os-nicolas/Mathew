@@ -2,19 +2,17 @@ package colin.example.algebrator;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
-import colin.algebrator.eq.Equation;
-import colin.algebrator.eq.EquationDis;
-import colin.algebrator.eq.PlaceholderEquation;
-import colin.algebrator.eq.WritingEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.EquationDis;
+import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.WritingEquation;
 import colin.example.algebrator.Actions.WriteScreen.ClearAction;
 import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
 import colin.example.algebrator.Actions.WriteScreen.DeleteAction;
@@ -31,7 +29,6 @@ import colin.example.algebrator.Actions.WriteScreen.Solve;
 import colin.example.algebrator.Actions.WriteScreen.SqrtAction;
 import colin.example.algebrator.Actions.WriteScreen.TimesAction;
 import colin.example.algebrator.Actions.WriteScreen.VarAction;
-import colin.example.algebrator.tuts.TutMessage;
 
 public class EmilyView extends SuperView {
 

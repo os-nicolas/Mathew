@@ -1,7 +1,8 @@
 package colin.example.algebrator;
 
 import android.graphics.Canvas;
-import android.util.Log;
+
+import cube.d.n.commoncore.Animation;
 
 /**
  * Created by Colin on 1/21/2015.
