@@ -22,7 +22,9 @@ import java.util.Collections;
 
 import colin.example.algebrator.tuts.TutMessage;
 import cube.d.n.commoncore.Animation;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.eq.AddEquation;
 import cube.d.n.commoncore.eq.DragEquation;
@@ -37,18 +39,15 @@ public abstract class SuperView extends BaseView implements
         OnTouchListener {
     protected float BASE_BUTTON_PERCENT=1f;
 
-    public MessageBar message = new MessageBar(this);
-
     //SurfaceHolder surfaceHolder;
     Thread thread = null;
     volatile boolean running = false;
-    int width;
-    int height;
+
     float offsetX = 0;
     float offsetY = 0;
     protected float buttonsPercent;
 
-    public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
+
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<PopUpButton>();
     public boolean trackFinger = false;
     public boolean trackFingerUp = true;
@@ -94,10 +93,9 @@ public abstract class SuperView extends BaseView implements
     }
 
     public void resume() {
+        super.resume();
         // stupid is null when we are first creating the view
-        if (stupid != null) {
-            stupid.deepNeedsUpdate();
-        }
+
     }
 
     private void init(Context context) {
@@ -449,38 +447,7 @@ public abstract class SuperView extends BaseView implements
         return 0f;
     }
 
-    public void drawProgress(Canvas canvas, float percent, float startAt) {
-        Paint p = new Paint();
-        p.setColor(Algebrator.getAlgebrator().darkColor - 0xff000000);
-        float targetAlpha = startAt;
-        p.setAlpha((int) targetAlpha);
-        float scaleBy = Algebrator.getAlgebrator().getShadowFade();
-        int at = Math.max(0, (int) message.currentBodyHeight());
-        for (int i = 0; i < Algebrator.getAlgebrator().getTopLineWidth(); i++) {
-            p.setAlpha((int) targetAlpha);
-            canvas.drawLine(0, at, width * percent, at, p);
-            float atX = ((int) (width * percent));
-            while (p.getAlpha() > 1) {
-                canvas.drawLine(atX, at, atX + 1, at, p);
-                p.setAlpha((int) (p.getAlpha() / scaleBy));
-                atX++;
-            }
-            at++;
-        }
-        p.setAlpha(0x7f);
-        while (targetAlpha > 1) {
-            p.setAlpha((int) targetAlpha);
-            canvas.drawLine(0, at, width * percent, at, p);
-            float atX = ((int) (width * percent));
-            while (p.getAlpha() > 1) {
-                canvas.drawLine(atX, at, atX + 1, at, p);
-                p.setAlpha((int) (p.getAlpha() / scaleBy));
-                atX++;
-            }
-            targetAlpha = targetAlpha / scaleBy;
-            at++;
-        }
-    }
+
 
     private void updateOffsetX(float vx) {
         offsetX += vx;
@@ -668,8 +635,8 @@ public abstract class SuperView extends BaseView implements
                             stupid.tryOperator(event.getX(),
                                     event.getY());
                             clicked = true;
-                            if (this instanceof ColinView) {
-                                if (((ColinView) this).changed == false) {
+                            if (this instanceof CanTrackChanges) {
+                                if (((CanTrackChanges) this).hasChanged()) {
                                     clicked = false;
                                     // TODO
                                     // TODO

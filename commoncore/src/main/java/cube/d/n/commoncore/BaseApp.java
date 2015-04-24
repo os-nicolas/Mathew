@@ -277,4 +277,14 @@ public abstract class  BaseApp extends Application{
         bkgPaint.setTextSize(TEXT_SIZE);
         textPaint.setTextSize(TEXT_SIZE);
     }
+
+    BaseView active= null;
+    public BaseView getActive() {
+        //TODO
+        return active;
+    }
+
+    public void setActive(BaseView baseView) {
+        active = baseView;
+    }
 }

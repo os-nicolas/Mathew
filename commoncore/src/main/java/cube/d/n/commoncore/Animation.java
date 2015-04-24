@@ -7,7 +7,7 @@ import android.graphics.Canvas;
  * Created by Colin on 1/21/2015.
  */
 public abstract class Animation {
-    final BaseView owner;
+    public final BaseView owner;
 
     public Animation(BaseView owner){
         this.owner =owner;

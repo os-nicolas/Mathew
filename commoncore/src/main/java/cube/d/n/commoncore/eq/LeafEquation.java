@@ -8,8 +8,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
-import colin.example.algebrator.Algebrator;
-import colin.example.algebrator.SuperView;
 import cube.d.n.commoncore.BaseView;
 
 public abstract class LeafEquation extends Equation {

@@ -15,6 +15,7 @@ import java.util.HashSet;
 
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.Pop;
@@ -436,11 +437,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 tryOperator(onsList);
             }
 
-            if (owner instanceof ColinView) {
+            if (owner instanceof CanTrackChanges) {
                 MyPoint myPoint = getLastPoint(x, y);
                 Log.i("did it change?",old.toString() + " " + owner.getStupid().toString());
                 if (!(old.same(owner.getStupid()))) {
-                    ((ColinView) owner).changed = true;
+                    ((CanTrackChanges)owner).changed();
 
                     // we are moving this code anyway
 //                    boolean samePower = (get(0).removeNeg() instanceof PowerEquation &&
@@ -583,7 +584,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             RectF r = new RectF((int) (x - measureWidth() / 2) - bkgBuffer,
                     (int) (y - measureHeightUpper()) - bkgBuffer,
                     (int) (x + measureWidth() / 2) + bkgBuffer, (int) (y + measureHeightLower() + bkgBuffer));
-            canvas.drawRoundRect(r, BaseApp.getAlgebrator().getCornor(this), BaseApp.getAlgebrator().getCornor(this), p);
+            canvas.drawRoundRect(r, BaseApp.getAlgebrator().getCornor(), BaseApp.getAlgebrator().getCornor(), p);
         }
     }
 
@@ -1542,7 +1543,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
-        if (owner instanceof EmilyView) {
+        if (owner.parentThesisMode() == BaseView.pm.WRITE) {
             return (float) (48 * BaseApp.getAlgebrator().getDpi()*BaseApp.getAlgebrator().zoom);
         } else {
             return (float) (28 * BaseApp.getAlgebrator().getDpi()*BaseApp.getAlgebrator().zoom);

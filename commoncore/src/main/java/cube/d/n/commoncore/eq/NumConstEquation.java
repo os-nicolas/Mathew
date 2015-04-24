@@ -46,11 +46,9 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     @Override
     public String getDisplay(int pos){
-        if (owner instanceof EmilyView) {
+        if (owner.parentThesisMode() == BaseView.pm.WRITE) {
             DecimalFormat df = new DecimalFormat();
-            if (owner instanceof ColinView) {
-                df.setMaximumFractionDigits(3);
-            }
+
             String result = df.format(getValue());
             // we need to deel with trailing zeros
             int at = display.length()-1;
@@ -70,9 +68,8 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
             }else{
                 df = new DecimalFormat();
             }
-            if (owner instanceof ColinView) {
-                df.setMaximumFractionDigits(3);
-            }
+            df.setMaximumFractionDigits(3);
+
             String result = df.format(getValue());
             return result;
         }

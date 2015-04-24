@@ -1,7 +1,5 @@
 package cube.d.n.commoncore.eq;
 
-
-import colin.example.algebrator.SuperView;
 import cube.d.n.commoncore.BaseView;
 
 /**

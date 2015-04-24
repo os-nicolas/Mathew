@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.DivEquation;
@@ -29,7 +30,7 @@ import colin.example.algebrator.Actions.SovleScreen.SqrtBothSides;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
-public class ColinView extends SuperView {
+public class ColinView extends SuperView implements CanTrackChanges {
 
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
@@ -133,7 +134,7 @@ public class ColinView extends SuperView {
     }
 
 
-    public boolean changed = false;
+    private boolean changed = false;
 
     @Override
     public void resume() {
@@ -579,4 +580,9 @@ public class ColinView extends SuperView {
         alreadySolved = true;
         ((SolvedTut) TutMessage.getMessage(SolvedTut.class)).okToShow = true;
     }
+
+    public void changed() {
+        this.changed = true;
+    }
+
 }

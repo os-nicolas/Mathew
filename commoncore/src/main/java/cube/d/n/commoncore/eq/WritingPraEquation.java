@@ -6,8 +6,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import colin.example.algebrator.Algebrator;
-import colin.example.algebrator.SuperView;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.BaseView;
 
 /**
@@ -67,8 +66,8 @@ public class WritingPraEquation extends WritingLeafEquation {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp, boolean left) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(Algebrator.getAlgebrator().getStrokeWidth(this));
-            float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd(this) : 0) + (getMatch() instanceof WritingSqrtEquation ? -Algebrator.getAlgebrator().getSqrtHeightAdd(this) : 0);
+            ptemp.setStrokeWidth(BaseApp.getAlgebrator().getStrokeWidth(this));
+            float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -BaseApp.getAlgebrator().getSqrtHeightAdd(this) : 0) + (getMatch() instanceof WritingSqrtEquation ? -BaseApp.getAlgebrator().getSqrtHeightAdd(this) : 0);
             float lh = measureHeightLower();
 
 
