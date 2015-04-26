@@ -101,7 +101,7 @@ public class SolveQuadratic extends Action<ColinView> {
                     Equation a2 = a.copy();
                     bot.add(a2);
         stuffSide.owner.setStupid(newStupid);
-        ((ColinView)newStupid.owner).changed =true;
+        ((ColinView)newStupid.owner).changed();
 
     }
 

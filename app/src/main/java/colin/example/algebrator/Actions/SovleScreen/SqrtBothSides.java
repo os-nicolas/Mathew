@@ -25,8 +25,10 @@ public class SqrtBothSides extends Action<ColinView> {
             newEq.add(old);
             newEq.add(NumConstEquation.create(.5,myView));
         }
-        myView.setStupid(myStupid);
-        myView.changed = true;
+
+
+        myView.setStupid(myStupid.root());
+        myView.changed();
 
     }
 }

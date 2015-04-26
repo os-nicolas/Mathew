@@ -1128,7 +1128,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return dragging.root();
     }
 
-    private Equation root() {
+    public Equation root() {
 
         // we need to update myStupid since it is you might have just destoryed the root of it
         // for example if you have (a/b)/6 and you drag the 6 to the top
