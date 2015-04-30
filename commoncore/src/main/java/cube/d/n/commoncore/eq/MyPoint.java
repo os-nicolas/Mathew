@@ -26,18 +26,18 @@ public class MyPoint extends Point implements Physical {
         // we use 1.9 instead of 2 to make the target a little bigger
         double scale =2;
 
-        return x < this.x + (BaseApp.getAlgebrator().getBuffer(equation)/2) + (this.myWidth / scale)
-                && x > this.x - (BaseApp.getAlgebrator().getBuffer(equation)/2) - (this.myWidth / scale)
-                && y < this.y+ (BaseApp.getAlgebrator().getBuffer(equation)/2)  + (this.myHeight / scale)
-                && y > this.y - (BaseApp.getAlgebrator().getBuffer(equation)/2) - (this.myHeight / scale);
+        return x < this.x + (BaseApp.getApp().getBuffer(equation)/2) + (this.myWidth / scale)
+                && x > this.x - (BaseApp.getApp().getBuffer(equation)/2) - (this.myWidth / scale)
+                && y < this.y+ (BaseApp.getApp().getBuffer(equation)/2)  + (this.myHeight / scale)
+                && y > this.y - (BaseApp.getApp().getBuffer(equation)/2) - (this.myHeight / scale);
     }
 
     public void draw(Canvas canvas,Equation equation) {
         if (canvas != null) {
-            RectF r = new RectF(x - (myWidth / 2) - (BaseApp.getAlgebrator().getBuffer(equation)/2),
-                    y - (myHeight / 2) - (BaseApp.getAlgebrator().getBuffer(equation)/2),
-                    x + (myWidth / 2)+ (BaseApp.getAlgebrator().getBuffer(equation)/2),
-                    y + (myHeight / 2)+ (BaseApp.getAlgebrator().getBuffer(equation)/2));
+            RectF r = new RectF(x - (myWidth / 2) - (BaseApp.getApp().getBuffer(equation)/2),
+                    y - (myHeight / 2) - (BaseApp.getApp().getBuffer(equation)/2),
+                    x + (myWidth / 2)+ (BaseApp.getApp().getBuffer(equation)/2),
+                    y + (myHeight / 2)+ (BaseApp.getApp().getBuffer(equation)/2));
             Paint p = new Paint();
             p.setAlpha(0x40);
             canvas.drawRect(r, p);
@@ -45,7 +45,7 @@ public class MyPoint extends Point implements Physical {
     }
 
     public boolean near(float x, float y) {
-        float near =(float)( 75* BaseApp.getAlgebrator().getDpi() * (BaseApp.getAlgebrator().zoom + 1)/2); // we only sort scale by zoom
+        float near =(float)( 75* BaseApp.getApp().getDpi() * (BaseApp.getApp().zoom + 1)/2); // we only sort scale by zoom
         return x < this.x + near + this.myWidth / 2
                 && x > this.x - near - this.myWidth / 2
                 && y < this.y + near + this.myHeight / 2

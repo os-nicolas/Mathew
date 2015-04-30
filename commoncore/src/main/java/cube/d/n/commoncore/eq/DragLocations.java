@@ -35,7 +35,7 @@ public class DragLocations implements Iterable<DragLocation> {
     }
 
     //TODO scale by Dpi
-    private float closeIs = 10* BaseApp.getAlgebrator().getDpi();
+    private float closeIs = 10* BaseApp.getApp().getDpi();
     private boolean close(DragLocation dl, DragLocation dragLocation) {
         float x1= dl.x;
         float x2= dragLocation.x;

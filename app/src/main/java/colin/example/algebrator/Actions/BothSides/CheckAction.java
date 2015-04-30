@@ -51,7 +51,7 @@ public class CheckAction extends Action<BothSidesView> {
 
     @Override
     protected void privateAct() {
-        Algebrator.getAlgebrator().solveView.changed = true;
+        Algebrator.getAlgebrator().solveView.changed();
 
         ArrayList<Equation> converted = new ArrayList<>();
         converted.add(((WritingEquation)mine.copy()).convert());

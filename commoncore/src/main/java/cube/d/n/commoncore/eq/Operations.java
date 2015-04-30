@@ -20,7 +20,7 @@ public class Operations {
     // **************************** MULTIPLY *****************************************
 
     public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify) {
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
 
         MultiCountDatas result = new MultiCountDatas();
         for (MultiCountData a : right) {
@@ -60,7 +60,7 @@ public class Operations {
     }
 
     private static void multiplyHelper(MultiCountData newMcd, MultiCountData result) {
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
 
         MultiCountData at = newMcd;
         MultiCountData target = result;
@@ -140,7 +140,7 @@ public class Operations {
         }
 
         //TODO get owner a different way?
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
 
         //if under == null we actully add
         if (under == null && !(left.key.isEmpty() &&
@@ -215,7 +215,7 @@ public class Operations {
     }
 
     private static Equation addHelper(MultiCountData left, MultiCountData right) {
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
         // if they are both just numbers make a NumConst
         if (left.key.size() == 0 && right.key.size() == 0 && right.numbers.size() <= 1 && left.numbers.size() <= 1 && !left.plusMinus && !right.plusMinus) {
             BigDecimal sum = right.getValue().add(left.getValue());
@@ -294,7 +294,7 @@ public class Operations {
             }
         }
 
-        Equation oneEq = NumConstEquation.create(1,BaseApp.getAlgebrator().getActive());
+        Equation oneEq = NumConstEquation.create(1,BaseApp.getApp().getActive());
         for (EquationCounts ec:leftCopy){
             if (!ec.isEmpty()) {
                 if (!ec.getEquation().same(oneEq)) {
@@ -575,7 +575,7 @@ public class Operations {
     // **************************** DIVIDE ****************************
 
     public static Equation divide(Equation a, Equation b) {
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
         Equation result = null;
 
         // we check to see if they are both power equations of the same power
@@ -696,7 +696,7 @@ public class Operations {
     }
 
     private static Equation getResult(Equation topEq, Equation botEq) {
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
         // if the top is 0 and the bottom is not
         if ((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0))) {
             if (owner instanceof CanWarn) {
@@ -739,7 +739,7 @@ public class Operations {
 
     public static Equation flip(Equation demo) {
 
-        BaseView owner = BaseApp.getAlgebrator().getActive();
+        BaseView owner = BaseApp.getApp().getActive();
         // if it's a div equation flip it over
         if (demo instanceof DivEquation) {
             if (demo.get(0) instanceof NumConstEquation && ((NumConstEquation) demo.get(0)).getValue().doubleValue() == 1) {

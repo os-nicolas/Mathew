@@ -23,7 +23,7 @@ public abstract class BaseView extends View {
     public DragEquation dragging;
     public ArrayList<Animation> animation = new ArrayList<Animation>();
     public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
-    protected Equation stupid;
+    public Equation stupid;
 
     protected int width;
     protected int height;
@@ -60,7 +60,7 @@ public abstract class BaseView extends View {
         if (stupid != null) {
             stupid.deepNeedsUpdate();
         }
-        BaseApp.getAlgebrator().setActive(this);
+        BaseApp.getApp().setActive(this);
     }
 
     public enum pm  {WRITE,BOTH,SOLVE}
@@ -69,12 +69,12 @@ public abstract class BaseView extends View {
 
     public void drawProgress(Canvas canvas, float percent, float startAt) {
         Paint p = new Paint();
-        p.setColor(BaseApp.getAlgebrator().darkColor - 0xff000000);
+        p.setColor(BaseApp.getApp().darkColor - 0xff000000);
         float targetAlpha = startAt;
         p.setAlpha((int) targetAlpha);
-        float scaleBy = BaseApp.getAlgebrator().getShadowFade();
+        float scaleBy = BaseApp.getApp().getShadowFade();
         int at = Math.max(0, (int) message.currentBodyHeight());
-        for (int i = 0; i < BaseApp.getAlgebrator().getTopLineWidth(); i++) {
+        for (int i = 0; i < BaseApp.getApp().getTopLineWidth(); i++) {
             p.setAlpha((int) targetAlpha);
             canvas.drawLine(0, at, width * percent, at, p);
             float atX = ((int) (width * percent));

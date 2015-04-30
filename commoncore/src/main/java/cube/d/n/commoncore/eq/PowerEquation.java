@@ -69,7 +69,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
     }
 
     private float sqrtMeasureWidth() {
-        return get(0).measureWidth() + BaseApp.getAlgebrator().getSqrtWidthAdd(this);
+        return get(0).measureWidth() + BaseApp.getApp().getSqrtWidthAdd(this);
     }
 
     @Override
@@ -427,9 +427,9 @@ public class PowerEquation extends Operation implements BinaryEquation {
     public static void sqrtSignDraw(Canvas canvas, float atX, float y, Paint p, float lower, float upper, float end,Equation equation) {
         if (canvas != null) {
             // TODO scale by dpi
-            float width_addition = BaseApp.getAlgebrator().getSqrtWidthAdd(equation);
-            float height_addition = BaseApp.getAlgebrator().getSqrtHeightAdd(equation);
-            p.setStrokeWidth(BaseApp.getAlgebrator().getStrokeWidth(equation));
+            float width_addition = BaseApp.getApp().getSqrtWidthAdd(equation);
+            float height_addition = BaseApp.getApp().getSqrtHeightAdd(equation);
+            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth(equation));
             atX += width_addition / 5f;
             canvas.drawLine(atX, y, atX + width_addition / 5f, y, p);
             atX += width_addition / 5f;
@@ -450,11 +450,11 @@ public class PowerEquation extends Operation implements BinaryEquation {
         sqrtSignDraw(canvas, atX, y, p, this);
 
         // now let's draw the content
-        get(0).draw(canvas, x + BaseApp.getAlgebrator().getSqrtWidthAdd(this) / 2, y);
+        get(0).draw(canvas, x + BaseApp.getApp().getSqrtWidthAdd(this) / 2, y);
 
         // now we need to put the last point
-        MyPoint point = new MyPoint(BaseApp.getAlgebrator().getSqrtWidthAdd(this), measureHeight());
-        point.x = (int) (x - measureWidth() / 2 + BaseApp.getAlgebrator().getSqrtWidthAdd(this) / 2);
+        MyPoint point = new MyPoint(BaseApp.getApp().getSqrtWidthAdd(this), measureHeight());
+        point.x = (int) (x - measureWidth() / 2 + BaseApp.getApp().getSqrtWidthAdd(this) / 2);
         point.y = (int) (y - measureHeightUpper() + (measureHeight() / 2));
         //canvas.drawLine(point.x + 3, point.y, point.x - 3, point.y, p);
         lastPoint.add(point);
@@ -469,7 +469,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
     private void drawSqrtBkg(Canvas canvas, float x, float y) {
         updateBkgColors();
 
-        int scale = BaseApp.getAlgebrator().getRate();
+        int scale = BaseApp.getApp().getRate();
 
         if (get(1).isSelected() || get(1).demo) {
             mybkgAlpha = (mybkgAlpha * (scale - 1) + 0xFF) / scale;
@@ -479,24 +479,24 @@ public class PowerEquation extends Operation implements BinaryEquation {
 
         if (canvas != null) {//&& mybkgAlpha >= getMaxBkgAlpha()
             Paint p = new Paint();
-            p.setColor(BaseApp.getAlgebrator().lightColor);
+            p.setColor(BaseApp.getApp().lightColor);
             p.setAlpha(mybkgAlpha);
-            p.setStrokeWidth(BaseApp.getAlgebrator().getStrokeWidth(this));
+            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
 
-            float bkgBuffer = BaseApp.getAlgebrator().getbkgBuffer(this);
+            float bkgBuffer = BaseApp.getApp().getbkgBuffer(this);
 
             // we use a path to draw this weird shape
             float top = (y - measureHeightUpper() - bkgBuffer);
             float left = (x - (measureWidth() / 2f) - bkgBuffer);
             float bot1 = (y + measureHeightLower() + bkgBuffer);
-            float right1 = ((x - measureWidth() / 2) + BaseApp.getAlgebrator().getSqrtWidthAdd(this));//+ bkgBuffer/4
-            float bot2 = ((y - measureHeightUpper()) + BaseApp.getAlgebrator().getSqrtHeightAdd(this)); //+bkgBuffer/4
+            float right1 = ((x - measureWidth() / 2) + BaseApp.getApp().getSqrtWidthAdd(this));//+ bkgBuffer/4
+            float bot2 = ((y - measureHeightUpper()) + BaseApp.getApp().getSqrtHeightAdd(this)); //+bkgBuffer/4
             float right2 = ((x + measureWidth() / 2) + bkgBuffer);
 
             Path path = new Path();
             //p.setStyle(Paint.Style.FILL);
 
-            float rounded = BaseApp.getAlgebrator().getCornor();
+            float rounded = BaseApp.getApp().getCornor();
 
             // start top left right of the first curve
             path.moveTo(left + rounded, top);
@@ -585,7 +585,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
     }
 
     private float sqrtMeasureHeightUpper() {
-        return get(0).measureHeightUpper() + BaseApp.getAlgebrator().getSqrtHeightAdd(this);
+        return get(0).measureHeightUpper() + BaseApp.getApp().getSqrtHeightAdd(this);
     }
 
     @Override

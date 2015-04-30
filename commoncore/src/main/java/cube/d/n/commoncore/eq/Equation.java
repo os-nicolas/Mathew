@@ -24,7 +24,7 @@ import cube.d.n.commoncore.BaseView;
 abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected float PARN_HEIGHT_ADDITION(){
-        return (float) (6 * BaseApp.getAlgebrator().getDpi()*BaseApp.getAlgebrator().zoom);
+        return (float) (6 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
     }
 
     private static int idBacker = 0;
@@ -37,14 +37,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected boolean selected = false;
     private int myWidth;
     protected int getMyWidth(){
-        return (int) (myWidth*BaseApp.getAlgebrator().zoom);
+        return (int) (myWidth*BaseApp.getApp().zoom);
     }
     protected void setMyWidth(int newWidth) {
         myWidth=newWidth;
     }
     private int myHeight;
     protected int getMyHeight(){
-        return (int) (myHeight*BaseApp.getAlgebrator().zoom);
+        return (int) (myHeight*BaseApp.getApp().zoom);
     }
     public BaseView owner;
     private int id;
@@ -52,7 +52,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
 
 
-    private int bkgColor = BaseApp.getAlgebrator().lightColor;
+    private int bkgColor = BaseApp.getApp().lightColor;
     public boolean active = true;
 
     public Equation(BaseView owner2, Equation eq) {
@@ -89,8 +89,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private void init(BaseView owner2) {
         owner = owner2;
         id = idBacker++;
-        myWidth = BaseApp.getAlgebrator().getDefaultSize();
-        myHeight = BaseApp.getAlgebrator().getDefaultSize();
+        myWidth = BaseApp.getApp().getDefaultSize();
+        myHeight = BaseApp.getApp().getDefaultSize();
     }
 
     // we could template this in C++ can we in java?
@@ -224,7 +224,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
 
     protected float myWidthAdd() {
-        return 2*BaseApp.getAlgebrator().getDpi();
+        return 2*BaseApp.getApp().getDpi();
     }
 
     public void draw(Canvas canvas, float x, float y) {
@@ -533,14 +533,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (mPaint == null) {
             updatePaint();
         }
-        float targetTextSize = BaseApp.getAlgebrator().textPaint.getTextSize();
+        float targetTextSize = BaseApp.getApp().textPaint.getTextSize();
         if (parent != null) {
             targetTextSize *= parent.getScale(this);
             if (targetTextSize < MIN_TEXT_SIZE) {
                 targetTextSize = MIN_TEXT_SIZE;
             }
         }
-        mPaint.setTextSize((float) (targetTextSize*BaseApp.getAlgebrator().zoom));
+        mPaint.setTextSize((float) (targetTextSize*BaseApp.getApp().zoom));
         return mPaint;
     }
 
@@ -549,7 +549,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             mPaint = new Paint(parent.getPaint());
         } else {
 
-            mPaint = new Paint(BaseApp.getAlgebrator().textPaint);
+            mPaint = new Paint(BaseApp.getApp().textPaint);
             // probably not needed
             mPaint.setAntiAlias(true);
             mPaint.setDither(true);
@@ -576,7 +576,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     protected void drawBkgBox(Canvas canvas, float x, float y) {
         updateBkgColors();
-        float bkgBuffer = BaseApp.getAlgebrator().getbkgBuffer(this);
+        float bkgBuffer = BaseApp.getApp().getbkgBuffer(this);
         if (canvas != null && bkgAlpha == getMaxBkgAlpha()) {
             Paint p = new Paint();
             p.setColor(bkgColor);
@@ -584,7 +584,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             RectF r = new RectF((int) (x - measureWidth() / 2) - bkgBuffer,
                     (int) (y - measureHeightUpper()) - bkgBuffer,
                     (int) (x + measureWidth() / 2) + bkgBuffer, (int) (y + measureHeightLower() + bkgBuffer));
-            canvas.drawRoundRect(r, BaseApp.getAlgebrator().getCornor(), BaseApp.getAlgebrator().getCornor(), p);
+            canvas.drawRoundRect(r, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), p);
         }
     }
 
@@ -595,8 +595,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         long now = System.currentTimeMillis();
         if (now - lastNoUpdate > noUpdateFor) {
 
-            bkgColor = BaseApp.colorFade(bkgColor, BaseApp.getAlgebrator().lightColor);
-            int scale = BaseApp.getAlgebrator().getRate();
+            bkgColor = BaseApp.colorFade(bkgColor, BaseApp.getApp().lightColor);
+            int scale = BaseApp.getApp().getRate();
 
             boolean dark = isSelected() || demo;
 
@@ -629,9 +629,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     protected static void drawParentheses(boolean left, Canvas canvas, float x, float y, Paint ptemp, float uh, float lh, Equation myEq) {
-        float edgeX = BaseApp.getAlgebrator().getPranEdgeX(myEq);
-        float edgeY = BaseApp.getAlgebrator().getPranEdgeY(myEq);
-        float in = BaseApp.getAlgebrator().getPranIn(myEq);
+        float edgeX = BaseApp.getApp().getPranEdgeX(myEq);
+        float edgeY = BaseApp.getApp().getPranEdgeY(myEq);
+        float in = BaseApp.getApp().getPranIn(myEq);
 
         if (left) {
             //left side
@@ -650,7 +650,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(BaseApp.getAlgebrator().getStrokeWidth(this));
+            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
             float w = measureWidth();
             float hu = measureHeightUpper();
             float hl = measureHeightLower();
@@ -1544,9 +1544,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
         if (owner.parentThesisMode() == BaseView.pm.WRITE) {
-            return (float) (48 * BaseApp.getAlgebrator().getDpi()*BaseApp.getAlgebrator().zoom);
+            return (float) (48 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
         } else {
-            return (float) (28 * BaseApp.getAlgebrator().getDpi()*BaseApp.getAlgebrator().zoom);
+            return (float) (28 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
         }
     }
 

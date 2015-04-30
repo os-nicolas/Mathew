@@ -85,7 +85,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			maxWidth += getParnWidthAddition();
 		}
 
-		return maxWidth + BaseApp.getAlgebrator().getDivWidthAdd(this);
+		return maxWidth + BaseApp.getApp().getDivWidthAdd(this);
 	}
 
 	@Override
@@ -104,12 +104,12 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			get(i).draw(canvas, x, currentY + get(i).measureHeightUpper() );
 			currentY += get(i).measureHeight();
 			if (i != size() - 1) {
-				MyPoint point = new MyPoint(measureWidth() - BaseApp.getAlgebrator().getDivWidthAdd(this),getMyHeight());
+				MyPoint point = new MyPoint(measureWidth() - BaseApp.getApp().getDivWidthAdd(this),getMyHeight());
 				point.x = (int) x;
 				point.y = (int) (currentY + (getMyHeight()) / 2);
                 // TODO scale by dpi
-				temp.setStrokeWidth(BaseApp.getAlgebrator().getStrokeWidth(this));
-				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getAlgebrator().getDivWidthAdd(this))) / 2);
+				temp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
+				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd(this))) / 2);
                 if (canvas !=null ) {
                     canvas.drawLine(point.x - halfwidth, point.y, point.x
                             + halfwidth, point.y, temp);

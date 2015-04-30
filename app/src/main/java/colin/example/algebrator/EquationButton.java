@@ -123,7 +123,7 @@ public class EquationButton extends Button {
         RectF r = new RectF(leftEnd, topEnd, rightEnd, bottomEnd);
 
 
-        canvas.drawRoundRect(r, Algebrator.getAlgebrator().getCornor(myEq), Algebrator.getAlgebrator().getCornor(myEq), temp);
+        canvas.drawRoundRect(r, Algebrator.getAlgebrator().getCornor(), Algebrator.getAlgebrator().getCornor(), temp);
 
     }
 

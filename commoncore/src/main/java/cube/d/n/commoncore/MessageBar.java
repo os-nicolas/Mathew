@@ -17,8 +17,8 @@ import java.util.concurrent.Callable;
  */
 public class MessageBar {
     float targetHeight = 0;
-    float shadowHeight = 20*BaseApp.getAlgebrator().getDpi();
-    float bodyHeight = 55*BaseApp.getAlgebrator().getDpi();
+    float shadowHeight = 20*BaseApp.getApp().getDpi();
+    float bodyHeight = 55*BaseApp.getApp().getDpi();
     float currentHeight = 0;
     final BaseView owner;
 
@@ -34,11 +34,11 @@ public class MessageBar {
     public MessageBar(BaseView owner){
         this.owner = owner;
         bkgPaint = new Paint();
-        bkgPaint.setColor(BaseApp.getAlgebrator().darkColor);
-        textPaint = new Paint(BaseApp.getAlgebrator().textPaint);
+        bkgPaint.setColor(BaseApp.getApp().darkColor);
+        textPaint = new Paint(BaseApp.getApp().textPaint);
         textPaint.setColor(Color.WHITE);
         shadowPaint = new Paint();
-        shadowPaint.setColor(BaseApp.getAlgebrator().lightColor);
+        shadowPaint.setColor(BaseApp.getApp().lightColor);
     }
 
     private Message current(){
@@ -72,7 +72,7 @@ public class MessageBar {
             current().start();
         }
 
-        float rate = BaseApp.getAlgebrator().getRate();
+        float rate = BaseApp.getApp().getRate();
         currentHeight = (currentHeight*(rate-1) + targetHeight)/rate;
         currentTextAlpha = (currentTextAlpha*(rate-1) + targetTextAlpha)/rate;
         if (currentTextAlpha <0x10 && targetTextAlpha == 0x00){
@@ -88,7 +88,7 @@ public class MessageBar {
             int at =0;
             for (String text : current().text) {
                 Rect out = new Rect();
-                float buffer = 1.5f*BaseApp.getAlgebrator().getBuffer();
+                float buffer = 1.5f*BaseApp.getApp().getBuffer();
                 textPaint.getTextBounds(text, 0, text.length(), out);
                 while (out.width() + 2*buffer > measureWidth() || out.height() + 2 * buffer > bodyHeight) {
                     textPaint.setTextSize(textPaint.getTextSize() - 1);
@@ -106,7 +106,7 @@ public class MessageBar {
         // a few solid lines
         shadowPaint.setAlpha(0xff);
         float at = (int)currentBodyHeight();
-        for (int i=0;i<2f/BaseApp.getAlgebrator().getDpi();i++){
+        for (int i=0;i<2f/BaseApp.getApp().getDpi();i++){
             canvas.drawLine(0,at,measureWidth(),at,shadowPaint);
             at++;
         }
@@ -115,7 +115,7 @@ public class MessageBar {
         shadowPaint.setAlpha(0x7f);
         while (at < currentHeight){
             canvas.drawLine(0,at,measureWidth(),at,shadowPaint);
-            shadowPaint.setAlpha((int) (shadowPaint.getAlpha() / BaseApp.getAlgebrator().getShadowFade()));
+            shadowPaint.setAlpha((int) (shadowPaint.getAlpha() / BaseApp.getApp().getShadowFade()));
             at++;
         }
     }

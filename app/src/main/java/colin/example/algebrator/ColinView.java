@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 import cube.d.n.commoncore.CanTrackChanges;
+import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.DivEquation;
@@ -30,7 +31,7 @@ import colin.example.algebrator.Actions.SovleScreen.SqrtBothSides;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
-public class ColinView extends SuperView implements CanTrackChanges {
+public class ColinView extends SuperView implements CanTrackChanges, CanWarn {
 
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
@@ -140,6 +141,11 @@ public class ColinView extends SuperView implements CanTrackChanges {
     public void resume() {
         super.resume();
         updateHistory();
+    }
+
+    @Override
+    public pm parentThesisMode() {
+        return pm.SOLVE;
     }
 
     @Override
@@ -583,6 +589,11 @@ public class ColinView extends SuperView implements CanTrackChanges {
 
     public void changed() {
         this.changed = true;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
     }
 
 }
