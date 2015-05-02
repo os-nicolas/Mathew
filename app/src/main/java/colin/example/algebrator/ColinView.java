@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import cube.d.n.commoncore.CanTrackChanges;
+import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.DivEquation;
@@ -29,7 +31,7 @@ import colin.example.algebrator.Actions.SovleScreen.SqrtBothSides;
 import colin.example.algebrator.tuts.SolvedTut;
 import colin.example.algebrator.tuts.TutMessage;
 
-public class ColinView extends SuperView {
+public class ColinView extends SuperView implements CanTrackChanges, CanWarn {
 
     protected DragLocations dragLocations = new DragLocations();
     public Equation changedEq;
@@ -68,7 +70,7 @@ public class ColinView extends SuperView {
 //        }
         for (String myVar:myVars) {
             //TODO strings are bad
-            PopUpButton quadratic = new PopUpButton(this, getContext().getString(R.string.quadratic) + (myVars.size()==1?"":getContext().getString(R.string.quadratic_for)+myVar), new SolveQuadratic(myVar,this));
+            PopUpButton quadratic = new PopUpButton(this, getContext().getString(R.string.quadratic) + (myVars.size()==1?"":" "+getContext().getString(R.string.quadratic_for)+" "+myVar), new SolveQuadratic(myVar,this));
             quadratic.setTargets(1f / 9f, 0f, 1f);
             popUpButtons.add(quadratic);
         }
@@ -133,12 +135,17 @@ public class ColinView extends SuperView {
     }
 
 
-    public boolean changed = false;
+    private boolean changed = false;
 
     @Override
     public void resume() {
         super.resume();
         updateHistory();
+    }
+
+    @Override
+    public pm parentThesisMode() {
+        return pm.SOLVE;
     }
 
     @Override
@@ -579,4 +586,14 @@ public class ColinView extends SuperView {
         alreadySolved = true;
         ((SolvedTut) TutMessage.getMessage(SolvedTut.class)).okToShow = true;
     }
+
+    public void changed() {
+        this.changed = true;
+    }
+
+    @Override
+    public boolean hasChanged() {
+        return changed;
+    }
+
 }

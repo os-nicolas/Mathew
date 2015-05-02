@@ -53,7 +53,7 @@ public abstract class  BaseApp extends Application{
 
         bkgPaint.setTextAlign(Paint.Align.CENTER);
         bkgPaint.setAntiAlias(true);
-        bkgPaint.setColor(BaseApp.getAlgebrator().lightColor);
+        bkgPaint.setColor(BaseApp.getApp().lightColor);
 
         textPaint.setTextAlign(Paint.Align.CENTER);
         textPaint.setAntiAlias(true);
@@ -144,7 +144,7 @@ public abstract class  BaseApp extends Application{
     }
 
 
-    public static BaseApp getAlgebrator(){
+    public static BaseApp getApp(){
         return instance;
     }
 
@@ -189,7 +189,7 @@ public abstract class  BaseApp extends Application{
 
         //if(currentAlpha > 0) {
         int lastColor = currentColor;
-        int scale = BaseApp.getAlgebrator().getRate();
+        int scale = BaseApp.getApp().getRate();
 
         currentColor = android.graphics.Color.argb(
                 0xff,
@@ -224,7 +224,7 @@ public abstract class  BaseApp extends Application{
     }
 
     public float getCornor() {
-        return (float)(10*BaseApp.getAlgebrator().getDpi());
+        return (float)(10*BaseApp.getApp().getDpi());
     }
 
     public float getPranIn(Equation eq) {
@@ -264,7 +264,7 @@ public abstract class  BaseApp extends Application{
     }
 
     public float getShadowFade() {
-        return (float)(1 + .3/BaseApp.getAlgebrator().getDpi());
+        return (float)(1 + .3/BaseApp.getApp().getDpi());
     }
 
     // TODO we zoom in get paint for this is that wrong?
@@ -276,5 +276,15 @@ public abstract class  BaseApp extends Application{
         this.TEXT_SIZE = newTextSize;
         bkgPaint.setTextSize(TEXT_SIZE);
         textPaint.setTextSize(TEXT_SIZE);
+    }
+
+    BaseView active= null;
+    public BaseView getActive() {
+        //TODO
+        return active;
+    }
+
+    public void setActive(BaseView baseView) {
+        active = baseView;
     }
 }

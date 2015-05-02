@@ -1,4 +1,4 @@
-package colin.example.algebrator;
+package cube.d.n.commoncore;
 
 import android.util.Log;
 

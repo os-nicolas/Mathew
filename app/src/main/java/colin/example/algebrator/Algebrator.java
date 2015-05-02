@@ -31,6 +31,10 @@ public class Algebrator extends BaseApp {
         return "UA-59613283-1";
     }
 
+    public static Algebrator getAlgebrator(){
+        return (Algebrator) BaseApp.getApp();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -232,5 +232,4 @@ public class Button implements Physical {
         return (top() + bottom()) / 2;
     }
 
-
 }

@@ -1,5 +1,6 @@
 package colin.example.algebrator.Actions.SovleScreen;
 
+import cube.d.n.commoncore.eq.EqualsEquation;
 import cube.d.n.commoncore.eq.Equation;
 import cube.d.n.commoncore.eq.NumConstEquation;
 import cube.d.n.commoncore.eq.PowerEquation;
@@ -18,15 +19,21 @@ public class SqrtBothSides extends Action<ColinView> {
     @Override
     protected void privateAct() {
         Equation myStupid =  myView.getStupid().copy();
-        for (Equation e: myStupid){
-            Equation old = e;
+        if (myStupid instanceof EqualsEquation) {
+            for (Equation e : myStupid) {
+                Equation old = e;
+                Equation newEq = new PowerEquation(myView);
+                old.replace(newEq);
+                newEq.add(old);
+                newEq.add(NumConstEquation.create(.5, myView));
+            }
+            myView.setStupid(myStupid);
+        }else{
             Equation newEq = new PowerEquation(myView);
-            old.replace(newEq);
-            newEq.add(old);
-            newEq.add(NumConstEquation.create(.5,myView));
+            newEq.add(myStupid);
+            newEq.add(NumConstEquation.create(.5, myView));
+            myView.setStupid(newEq);
         }
-        myView.setStupid(myStupid);
-        myView.changed = true;
-
+        myView.changed();
     }
 }

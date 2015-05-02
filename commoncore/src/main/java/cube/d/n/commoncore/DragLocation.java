@@ -121,7 +121,9 @@ public class DragLocation implements Comparable<DragLocation> {
     public void select() {
         owner.stupid = myStupid;
         if (!isOG()){
-            ((ColinView)owner).changed = true;
+            if (owner instanceof CanTrackChanges) {
+                ((CanTrackChanges)owner).changed();
+            }
         }else{
             myDemo.setSelected(true);
         }

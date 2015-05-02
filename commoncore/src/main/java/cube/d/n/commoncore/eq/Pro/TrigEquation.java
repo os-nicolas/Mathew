@@ -2,10 +2,10 @@ package cube.d.n.commoncore.eq.Pro;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.BaseView;
 import cube.d.n.commoncore.eq.Equation;
 import cube.d.n.commoncore.eq.MonaryEquation;
 import cube.d.n.commoncore.eq.Operations;
-import colin.example.algebrator.SuperView;
 
 /**
  * Created by Colin_000 on 3/30/2015.
@@ -13,11 +13,11 @@ import colin.example.algebrator.SuperView;
 public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquation {
 
 
-    public TrigEquation(SuperView owner) {
+    public TrigEquation(BaseView owner) {
         super(owner);
     }
 
-    protected  TrigEquation(SuperView owner, TrigEquation toCopy) {
+    protected  TrigEquation(BaseView owner, TrigEquation toCopy) {
         super(owner,toCopy);
     }
 

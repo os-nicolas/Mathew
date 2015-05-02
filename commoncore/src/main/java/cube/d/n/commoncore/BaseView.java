@@ -1,6 +1,8 @@
 package cube.d.n.commoncore;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -14,11 +16,17 @@ import cube.d.n.commoncore.eq.Equation;
  */
 public abstract class BaseView extends View {
 
+    public MessageBar message = new MessageBar(this);
+
     public Equation selected;
     public boolean hasUpdated;
     public DragEquation dragging;
     public ArrayList<Animation> animation = new ArrayList<Animation>();
-    protected Equation stupid;
+    public ArrayList<Animation> afterAnimations = new ArrayList<Animation>();
+    public Equation stupid;
+
+    protected int width;
+    protected int height;
 
     public BaseView(Context context) {
         super(context);
@@ -48,8 +56,47 @@ public abstract class BaseView extends View {
 
     public abstract void removeSelected();
 
+    public void resume() {
+        if (stupid != null) {
+            stupid.deepNeedsUpdate();
+        }
+        BaseApp.getApp().setActive(this);
+    }
 
     public enum pm  {WRITE,BOTH,SOLVE}
 
     public abstract pm parentThesisMode();
+
+    public void drawProgress(Canvas canvas, float percent, float startAt) {
+        Paint p = new Paint();
+        p.setColor(BaseApp.getApp().darkColor - 0xff000000);
+        float targetAlpha = startAt;
+        p.setAlpha((int) targetAlpha);
+        float scaleBy = BaseApp.getApp().getShadowFade();
+        int at = Math.max(0, (int) message.currentBodyHeight());
+        for (int i = 0; i < BaseApp.getApp().getTopLineWidth(); i++) {
+            p.setAlpha((int) targetAlpha);
+            canvas.drawLine(0, at, width * percent, at, p);
+            float atX = ((int) (width * percent));
+            while (p.getAlpha() > 1) {
+                canvas.drawLine(atX, at, atX + 1, at, p);
+                p.setAlpha((int) (p.getAlpha() / scaleBy));
+                atX++;
+            }
+            at++;
+        }
+        p.setAlpha(0x7f);
+        while (targetAlpha > 1) {
+            p.setAlpha((int) targetAlpha);
+            canvas.drawLine(0, at, width * percent, at, p);
+            float atX = ((int) (width * percent));
+            while (p.getAlpha() > 1) {
+                canvas.drawLine(atX, at, atX + 1, at, p);
+                p.setAlpha((int) (p.getAlpha() / scaleBy));
+                atX++;
+            }
+            targetAlpha = targetAlpha / scaleBy;
+            at++;
+        }
+    }
 }

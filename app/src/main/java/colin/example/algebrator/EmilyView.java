@@ -9,6 +9,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.BaseView;
 import cube.d.n.commoncore.eq.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
@@ -31,6 +32,7 @@ import colin.example.algebrator.Actions.WriteScreen.TimesAction;
 import colin.example.algebrator.Actions.WriteScreen.VarAction;
 
 public class EmilyView extends SuperView {
+
 
     public EmilyView(Context context) {
         super(context);
@@ -64,6 +66,11 @@ public class EmilyView extends SuperView {
         if (stupid == null) {
             initEq();
         }
+    }
+
+    @Override
+    public pm parentThesisMode() {
+        return pm.WRITE;
     }
 
     public void initEq() {

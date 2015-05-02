@@ -1,20 +1,20 @@
 package cube.d.n.commoncore.eq.Pro;
 
+import cube.d.n.commoncore.BaseView;
 import cube.d.n.commoncore.eq.Equation;
 import cube.d.n.commoncore.eq.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
-import colin.example.algebrator.SuperView;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
 public class TanEquation  extends TrigEquation<ATanEquation> {
 
-    public TanEquation(SuperView owner) {
+    public TanEquation(BaseView owner) {
         super(owner);
     }
 
-    protected TanEquation(SuperView owner, TrigEquation toCopy) {
+    protected TanEquation(BaseView owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }
 

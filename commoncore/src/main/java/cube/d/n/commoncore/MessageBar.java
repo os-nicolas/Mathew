@@ -1,4 +1,4 @@
-package colin.example.algebrator;
+package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,18 +11,16 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
-import colin.example.algebrator.tuts.TapToSkip;
-import colin.example.algebrator.tuts.TutMessage;
 
 /**
  * Created by Colin on 2/24/2015.
  */
 public class MessageBar {
     float targetHeight = 0;
-    float shadowHeight = 20*Algebrator.getAlgebrator().getDpi();
-    float bodyHeight = 55*Algebrator.getAlgebrator().getDpi();
+    float shadowHeight = 20*BaseApp.getApp().getDpi();
+    float bodyHeight = 55*BaseApp.getApp().getDpi();
     float currentHeight = 0;
-    final SuperView owner;
+    final BaseView owner;
 
     ArrayList<Message> que = new ArrayList<Message>();
 
@@ -33,14 +31,14 @@ public class MessageBar {
     int targetTextAlpha = 0xff;
     float currentTextAlpha = 0xff;
 
-    public MessageBar(SuperView owner){
+    public MessageBar(BaseView owner){
         this.owner = owner;
         bkgPaint = new Paint();
-        bkgPaint.setColor(Algebrator.getAlgebrator().darkColor);
-        textPaint = new Paint(Algebrator.getAlgebrator().textPaint);
+        bkgPaint.setColor(BaseApp.getApp().darkColor);
+        textPaint = new Paint(BaseApp.getApp().textPaint);
         textPaint.setColor(Color.WHITE);
         shadowPaint = new Paint();
-        shadowPaint.setColor(Algebrator.getAlgebrator().lightColor);
+        shadowPaint.setColor(BaseApp.getApp().lightColor);
     }
 
     private Message current(){
@@ -74,7 +72,7 @@ public class MessageBar {
             current().start();
         }
 
-        float rate = Algebrator.getAlgebrator().getRate();
+        float rate = BaseApp.getApp().getRate();
         currentHeight = (currentHeight*(rate-1) + targetHeight)/rate;
         currentTextAlpha = (currentTextAlpha*(rate-1) + targetTextAlpha)/rate;
         if (currentTextAlpha <0x10 && targetTextAlpha == 0x00){
@@ -90,7 +88,7 @@ public class MessageBar {
             int at =0;
             for (String text : current().text) {
                 Rect out = new Rect();
-                float buffer = 1.5f*Algebrator.getAlgebrator().getBuffer();
+                float buffer = 1.5f*BaseApp.getApp().getBuffer();
                 textPaint.getTextBounds(text, 0, text.length(), out);
                 while (out.width() + 2*buffer > measureWidth() || out.height() + 2 * buffer > bodyHeight) {
                     textPaint.setTextSize(textPaint.getTextSize() - 1);
@@ -108,7 +106,7 @@ public class MessageBar {
         // a few solid lines
         shadowPaint.setAlpha(0xff);
         float at = (int)currentBodyHeight();
-        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
+        for (int i=0;i<2f/BaseApp.getApp().getDpi();i++){
             canvas.drawLine(0,at,measureWidth(),at,shadowPaint);
             at++;
         }
@@ -117,7 +115,7 @@ public class MessageBar {
         shadowPaint.setAlpha(0x7f);
         while (at < currentHeight){
             canvas.drawLine(0,at,measureWidth(),at,shadowPaint);
-            shadowPaint.setAlpha((int) (shadowPaint.getAlpha() / Algebrator.getAlgebrator().getShadowFade()));
+            shadowPaint.setAlpha((int) (shadowPaint.getAlpha() / BaseApp.getApp().getShadowFade()));
             at++;
         }
     }
@@ -164,7 +162,7 @@ public class MessageBar {
     public void onClick(MotionEvent event){
         if (inBar(event)){
             // we don't need to show tap to skip
-            TutMessage.getMessage(TapToSkip.class).alreadyDone();
+//            TutMessage.getMessage(TapToSkip.class).alreadyDone();
             //
             if (current() != null){
                 current().click();
