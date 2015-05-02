@@ -9,7 +9,6 @@ import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
@@ -28,23 +27,13 @@ public class Algebrator extends BaseApp {
     public BothSidesView addBothView = null;
     public ColinView solveView  = null;
 
-
     public String getPropertyId(){
         return "UA-59613283-1";
     }
-
 
     @Override
     public void onCreate() {
         super.onCreate();
     }
-
-
-
-
-
-
-
-
 
 }
