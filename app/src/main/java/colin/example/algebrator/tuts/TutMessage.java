@@ -68,11 +68,11 @@ public abstract class TutMessage {
 
     protected TutMessage() {
         //for testing only so i can get my tut message all the time
-//        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.putBoolean(getSp_key(), false);
-//
-//        editor.commit();
+        SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(getSp_key(), false);
+
+        editor.commit();
     }
 
     public static void tryShowAll(SuperView view) {

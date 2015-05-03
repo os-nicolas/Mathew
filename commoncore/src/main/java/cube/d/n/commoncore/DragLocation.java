@@ -3,7 +3,6 @@ package cube.d.n.commoncore;
 
 import android.util.Log;
 
-
 import cube.d.n.commoncore.eq.EqualsEquation;
 import cube.d.n.commoncore.eq.Equation;
 
@@ -17,7 +16,7 @@ public class DragLocation implements Comparable<DragLocation> {
     public boolean og = false;
 
     public DragLocation(Equation.Op op, Equation dragging, Equation equation, boolean right) {
-        Log.d("dragLocation-input",op+ ", " + dragging.toString() + ", " + equation +", "+ right);
+        Log.d("dragLocation-input", op + ", " + dragging.toString() + ", " + equation + ", " + right);
 
         if (dragging.equals(equation)) {
             oGinit(equation);
@@ -41,12 +40,15 @@ public class DragLocation implements Comparable<DragLocation> {
                 at = at.get(index);
                 myAt = myAt.get(index);
             }
-            myDemo  = myAt;
+            myDemo = myAt;
 
             // try op with our copies
+            int lookingForId = myDemo.hashCode();
+            myDemo = ourEquation.tryOp(myDemo, right, op);
+            myStupid = myDemo.root();
 
-            myStupid = ourEquation.tryOp(myDemo, right, op);
-
+            // at this point myDemo can point someplace stupid
+            // so we need to find my demo again
 
 
             myStupid.x = 0;
@@ -59,7 +61,8 @@ public class DragLocation implements Comparable<DragLocation> {
 
             myDemo.demo = true;
 
-            Log.d("dragLocation-result",myStupid.toString());
+            Log.d("dragLocation-result", myStupid.toString() + " x: " + x + " y: " + y);
+            Log.d("dragLocation-result", " Dx: " + myDemo.x + " Dy: " + myDemo.y);
         }
 
     }
@@ -74,7 +77,7 @@ public class DragLocation implements Comparable<DragLocation> {
         if (myStupid instanceof EqualsEquation) {
             this.x = equation.x - myStupid.lastPoint.get(0).x;
             this.y = equation.y - myStupid.lastPoint.get(0).y;
-        }else{
+        } else {
             this.x = equation.x - myStupid.getX();
             this.y = equation.y - myStupid.getY();
         }
@@ -90,12 +93,12 @@ public class DragLocation implements Comparable<DragLocation> {
 
     public void updateDis(float eventX, float eventY) {
         if (myStupid instanceof EqualsEquation) {
-            this.dis = (float) Math.sqrt((x + owner.stupid.lastPoint.get(0).x- eventX) *
+            this.dis = (float) Math.sqrt((x + owner.stupid.lastPoint.get(0).x - eventX) *
                     (x + owner.stupid.lastPoint.get(0).x - eventX) +
                     (y + owner.stupid.lastPoint.get(0).y - eventY) *
                             (y + owner.stupid.lastPoint.get(0).y - eventY));
-        }else{
-            this.dis = (float) Math.sqrt((x + owner.stupid.getX()- eventX) *
+        } else {
+            this.dis = (float) Math.sqrt((x + owner.stupid.getX() - eventX) *
                     (x + owner.stupid.getX() - eventX) +
                     (y + owner.stupid.getY() - eventY) *
                             (y + owner.stupid.getY() - eventY));
@@ -120,11 +123,11 @@ public class DragLocation implements Comparable<DragLocation> {
 
     public void select() {
         owner.stupid = myStupid;
-        if (!isOG()){
+        if (!isOG()) {
             if (owner instanceof CanTrackChanges) {
-                ((CanTrackChanges)owner).changed();
+                ((CanTrackChanges) owner).changed();
             }
-        }else{
+        } else {
             myDemo.setSelected(true);
         }
         myStupid.deDemo();

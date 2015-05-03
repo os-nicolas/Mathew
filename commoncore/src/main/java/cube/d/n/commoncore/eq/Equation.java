@@ -49,6 +49,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public BaseView owner;
     private int id;
     private int buffer = 10;
+    public ArrayList<Integer> sorceIds = new ArrayList<Integer>();
 
 
 
@@ -61,6 +62,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         for (int i = 0; i < eq.size(); i++) {
             add(eq.get(i).copy());
         }
+        for (Integer i: eq.sorceIds) {
+            sorceIds.add(i);
+        }
+        sorceIds.add(eq.id);
     }
 
     public boolean parenthesis() {
@@ -724,7 +729,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         Equation result = super.remove(pos);
         needsUpdate();
         if (result != null) {
-            if (this.size() == 1) {
+            if (this.size() == 1 && !(this instanceof WritingEquation && owner.getStupid().equals(this) && this.get(0) instanceof PlaceholderEquation)) {
                 this.replace(get(0));
             } else if (size() == 0) {
                 remove();
@@ -1051,7 +1056,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 dragging.remove();
                 dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                 this.replace(dragging);
-                return dragging.root();
+                return dragging;
             } else if (this instanceof NumConstEquation && ((NumConstEquation) this).getValue().doubleValue() == BigDecimal.ONE.doubleValue() && op == Op.MULTI) {
                 dragging.remove();
                 dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
@@ -1062,7 +1067,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                     dragging.replace(me);
                     me.add(dragging);
                 }
-                return dragging.root();
+                return dragging;
             } else if ((parent instanceof AddEquation && op == Op.ADD) ||
                     (parent instanceof MultiEquation && op == Op.MULTI)) {
                 if (parent.equals(dragging.parent)) {
@@ -1125,7 +1130,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 me.add(at);
             }
         }
-        return dragging.root();
+        return dragging;
     }
 
     public Equation root() {
@@ -1329,7 +1334,6 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         draw(null, x, y);
     }
 
-
     public void getDragLocations(Equation dragging, DragLocations dragLocations, ArrayList<Op> ops) {
         if (this.parent != null && !dragging.deepContains(this)) {
             if (ops.contains(Op.MULTI) && canMuli(dragging,true) && !(this instanceof MultiEquation)) {
@@ -1461,6 +1465,23 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             result = eq;
         }
         return result;
+    }
+
+    // like same but order has to be the same too
+    public boolean reallySame(Equation other) {
+        if (!this.getClass().equals(other.getClass())) {
+            return false;
+        }
+        if (this.size() != other.size()) {
+            return false;
+        }
+
+        for (int i =0;i<size();i++){
+            if (!get(i).reallySame(other.get(i))){
+                return false;
+            }
+        }
+        return true;
     }
 
 

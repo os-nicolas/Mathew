@@ -15,24 +15,14 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Large Text"
         android:textColor="#000000"
-        android:id="@+id/textView" />
+        android:id="@+id/tut_title" />
 
-    <FrameLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:paddingTop="10dp"
-        android:layout_weight="1">
 
-        <VideoView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/videoView" />
+    <VideoView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tut_video" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageView" />
-    </FrameLayout>
 
     <TextView
         android:paddingTop="10dp"
@@ -41,7 +31,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="A layout animation is a pre-loaded animation that the system runs each time you make a change to the layout configuration. All you need to do is set an attribute in the layout to tell the Android"
         android:textColor="#000000"
-        android:id="@+id/textView2" />
+        android:id="@+id/tut_body" />
 
     <LinearLayout
         android:orientation="horizontal"

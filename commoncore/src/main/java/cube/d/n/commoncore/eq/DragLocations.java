@@ -17,7 +17,7 @@ public class DragLocations implements Iterable<DragLocation> {
     public void add(DragLocation dragLocation) {
         boolean pass = true;
         for (DragLocation dl:backEnd){
-            if (close(dl,dragLocation) && dl.myStupid.same(dragLocation.myStupid)){
+            if (dl.myStupid.reallySame(dragLocation.myStupid)){
                 pass = false;
                 if (dragLocation.og){
                     dl.og=true;

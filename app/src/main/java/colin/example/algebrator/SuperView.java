@@ -223,21 +223,6 @@ public abstract class SuperView extends BaseView implements
 //            canvas.drawCircle(dlx,dly,15,temp);
 //        }
 
-//        Picture pic = new Picture();
-//        Canvas c = pic.beginRecording(canvas.getWidth(),canvas.getHeight());
-//        Paint testP = new Paint();
-//        testP.setColor(0xffff00ff);
-//        c.drawRect(0,0,200,200,testP);
-//        pic.endRecording();
-//        pic.draw(canvas);
-
-//        Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-//        Canvas c = new Canvas(bmp);
-//        Paint testP = new Paint();
-//        testP.setColor(0xffff00ff);
-//        c.drawRect(0,0,200,200,testP);
-//        canvas.drawBitmap(bmp,10,10,testP);
-
         if (this instanceof EmilyView) {
             Point stupidCenter = getStupidCenter();
             stupid.draw(canvas, stupidCenter.x, stupidCenter.y);

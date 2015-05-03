@@ -121,6 +121,8 @@ public abstract class  BaseApp extends Application{
                 - r.nextInt(0x60) * 0x010000    // add some random red
                 - r.nextInt(0x60) * 0x000100    // add some random green
                 - r.nextInt(0x60) * 0x000001;  // add some random blue
+
+
         if (useOGColors() || r.nextInt(10) ==0){
             lightColor = 0xffddd7d7;
             darkColor =0xffd5080b;
