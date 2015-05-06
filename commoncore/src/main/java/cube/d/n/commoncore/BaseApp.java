@@ -123,10 +123,10 @@ public abstract class  BaseApp extends Application{
                 - r.nextInt(0x60) * 0x000001;  // add some random blue
 
 
-        if (useOGColors() || r.nextInt(10) ==0){
+        //if (useOGColors() || r.nextInt(10) ==0){
             lightColor = 0xffddd7d7;
             darkColor =0xffd5080b;
-        }
+        //}
 
         //darkColor =0xffd5080b;
         darkDarkColor = darkColor;
@@ -180,6 +180,12 @@ public abstract class  BaseApp extends Application{
     }
 
     public static int colorFade(int currentColor, int targetColor ) {
+
+       return colorFade(currentColor, targetColor ,BaseApp.getApp().getRate());
+
+    }
+
+    public static int colorFade(int currentColor, int targetColor,float scale ) {
         int currentRed = android.graphics.Color.red(currentColor);
         int currentGreen = android.graphics.Color.green(currentColor);
         int currentBlue = android.graphics.Color.blue(currentColor);
@@ -191,7 +197,6 @@ public abstract class  BaseApp extends Application{
 
         //if(currentAlpha > 0) {
         int lastColor = currentColor;
-        int scale = BaseApp.getApp().getRate();
 
         currentColor = android.graphics.Color.argb(
                 0xff,

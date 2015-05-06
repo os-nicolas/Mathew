@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/myrect"
+        android:layout_weight="1.5"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:paddingTop="4px"
+        android:paddingBottom="7px"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff0000"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <cube.d.n.commoncore.FadeInTextView
+                            android:padding="15dp"
+                            custom:timeOut="50"
+                            android:layout_weight=".5"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceLarge"
+                            android:text="Large Text"
+                            android:textSize="25sp"
+                            android:layout_gravity="center|bottom"
+                            android:gravity="end|bottom"
+                            android:background="#ff0000"
+                            android:textColor="#ffffff"
+                            android:id="@+id/tut_title" />
+
+
+                            <cube.d.n.commoncore.FadeInTextView
+                                android:padding="15dp"
+                                custom:timeOut="500"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:background="#ff0000"
+                                android:textColor="#ffffff"
+                                android:id="@+id/tut_body"
+                                android:text="A layout animation is a pre-loaded animation that the system runs each time you make a change to the layout configuration. All you need to do is set an attribute in the layout to tell the Android" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="fill_parent">
+
+                    <LinearLayout
+                        android:id="@+id/tut_video_holder"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/myrect"
+                        android:paddingTop="2px"
+                        android:layout_gravity="center_vertical"
+                        android:paddingBottom="3px"
+                        android:padding="5px">
+
+                        <VideoView
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_gravity="center"
+                            android:id="@+id/tut_video" />
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <cube.d.n.commoncore.FadeInTextView
+        android:padding="5dp"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        custom:timeOut="800"
+        android:layout_width="fill_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="1 of 5"
+        android:id="@+id/tut_at" />
+
+</LinearLayout>

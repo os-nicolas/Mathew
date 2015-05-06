@@ -1,0 +1,94 @@
+package cube.d.n.commoncore;
+
+import android.media.MediaPlayer;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.VideoView;
+
+/**
+ * Created by Colin_000 on 5/2/2015.
+ */
+public class TutVideoFrag extends TutFrag{
+
+    public String title;
+    public String body;
+    public String at;
+    //android.resource://com.pac.myapp/raw/master
+    public  String videoLocation;
+
+    public static TutVideoFrag make(String title,String body,String videoLocation,String at){
+        TutVideoFrag result = new TutVideoFrag();
+        Bundle args = new Bundle();
+        args.putString("TITLE",title);
+        args.putString("BODY",body);
+        args.putString("VIDEO_LOCATION",videoLocation);
+        args.putString("AT",at);
+        result.setArguments(args);
+        Log.i("make","set arguments " +result.hashCode() + " args "+ result.getArguments());
+        return result;
+    }
+
+
+
+
+    public void updateData(Bundle args){
+        this.title = args.getString("TITLE");
+        this.body = args.getString("BODY");
+        this.videoLocation = args.getString("VIDEO_LOCATION");
+        this.at = args.getString("AT");
+    }
+
+    @Override
+    protected void pstart(View rootView){
+        super.pstart(rootView);
+        ((FadeInTextView) rootView.findViewById(R.id.tut_body)).start();
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        Log.i("hey","create view "+this+"");
+        // The last two arguments ensure LayoutParams are inflated
+        // properly.
+        View rootView = inflater.inflate(
+                R.layout.tutscreen, container, false);
+
+
+        Log.i("make","got arguments " +hashCode() +" args "+getArguments());
+        updateData(getArguments());
+
+        ((TextView) rootView.findViewById(R.id.tut_title)).setText(title);
+        ((TextView) rootView.findViewById(R.id.tut_body)).setText(body);
+
+        ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
+
+//        String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
+//        Uri video = Uri.parse(vidAddress);
+        Uri video = Uri.parse(videoLocation);
+        Log.i("video",video.toString());
+
+        final VideoView vv = ((VideoView) rootView.findViewById(R.id.tut_video));
+        vv.setVideoURI(video);
+        vv.start();
+
+        vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mp) {
+                vv.start();
+            }
+        });
+
+        if (drawOnStart){start(rootView);}
+
+        return rootView;
+    }
+
+
+}

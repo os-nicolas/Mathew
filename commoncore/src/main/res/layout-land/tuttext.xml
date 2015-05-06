@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/myrect"
+        android:layout_weight="1.5"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="-10dp"
+        android:layout_marginRight="-10dp"
+        android:paddingTop="4px"
+        android:paddingBottom="7px"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff0000"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+
+            <LinearLayout
+                android:layout_height="fill_parent"
+                android:layout_width="fill_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <cube.d.n.commoncore.FadeInTextView
+                        android:padding="15dp"
+                        custom:timeOut="50"
+                        android:layout_weight=".5"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Large Text"
+                        android:textSize="25sp"
+                        android:layout_gravity="center|bottom"
+                        android:gravity="center|bottom"
+                        android:background="#ff0000"
+                        android:textColor="#ffffff"
+                        android:id="@+id/tut_title" />
+
+                    <cube.d.n.commoncore.FadeInTextView
+                        custom:timeOut="500"
+                        android:id="@+id/tut_text_body"
+                        android:background="#ff0000"
+                        android:textColor="#ffffff"
+                        android:text="yo yo yo yo yo yo yo"
+                        android:textSize="18sp"
+                        android:gravity="center|top"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <cube.d.n.commoncore.FadeInTextView
+        android:padding="5dp"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        custom:timeOut="800"
+        android:layout_width="fill_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="1 of 5"
+        android:id="@+id/tut_at" />
+
+</LinearLayout>

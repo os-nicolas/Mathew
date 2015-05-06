@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffffff"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="15px"
+        android:layout_height="0dp"
+        android:background="@drawable/myrect"
+        android:layout_weight="1.5"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="-10px"
+        android:layout_marginRight="0dp"
+        android:paddingTop="4px"
+
+        android:paddingRight="5px"
+        android:paddingBottom="7px"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff0000"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp">
+
+            </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <cube.d.n.commoncore.FadeInTextView
+        android:padding="5dp"
+        android:textSize="12sp"
+        android:textColor="#999999"
+        custom:timeOut="1100"
+        android:layout_width="fill_parent"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:text="" />
+
+</LinearLayout>
