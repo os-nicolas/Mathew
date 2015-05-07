@@ -1,6 +1,7 @@
 package colin.example.algebrator;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +21,35 @@ import cube.d.n.commoncore.TutFrag;
 public class TutActivity extends FragmentActivity {
         // When requested, this adapter returns a DemoObjectFragment,
         // representing an object in the collection.
+        ViewPager mViewPager;
 
+
+    public void onResume(){
+        super.onResume();
+        final TutSetAdapter adptr =  (TutSetAdapter)mViewPager.getAdapter();
+        final Activity that = this;
+        if (mViewPager.getCurrentItem() == adptr.getCount()-1 ) {
+            Thread th = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    Thread.sleep(500);
+                    that.runOnUiThread(new Runnable() {
+                        public void run() {
+                            mViewPager.setCurrentItem(adptr.getCount() - 2, true);
+                        }
+                    });
+
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+
+
+        }
+    }
 
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -38,7 +67,7 @@ public class TutActivity extends FragmentActivity {
             // ViewPager and its adapters use support library
             // fragments, so use getSupportFragmentManager.
 
-           final ViewPager mViewPager = (ViewPager) findViewById(R.id.pager);
+           mViewPager = (ViewPager) findViewById(R.id.pager);
 
             if (mViewPager.getAdapter()==null){
                 TutSetAdapter adapter =

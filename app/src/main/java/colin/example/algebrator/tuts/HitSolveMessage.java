@@ -1,5 +1,8 @@
 package colin.example.algebrator.tuts;
 
+import android.util.Log;
+
+import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.WritingEquation;
 import cube.d.n.commoncore.eq.WritingLeafEquation;
 import colin.example.algebrator.Actions.Action;
@@ -28,10 +31,17 @@ public class HitSolveMessage extends TutMessage {
 
     @Override
     protected boolean privateShouldShow(SuperView view) {
-        if (view instanceof EmilyView && view.getStupid() instanceof WritingEquation && ((WritingEquation)view.getStupid()).deepLegal() &&
-                Action.countEquals(view.getStupid()) == 1 &&
-                (view.selected == null || !(view.selected.left() instanceof WritingLeafEquation && ((WritingLeafEquation)view.selected.left()).getDisplay(-1).equals("=")))
-                && !view.active()){
+        if (
+                // they can hit solve
+                view instanceof EmilyView && view.getStupid() instanceof WritingEquation && ((WritingEquation)view.getStupid()).deepLegal()
+                && (view.selected == null || !(view.selected.left() instanceof WritingLeafEquation && ((WritingLeafEquation)view.selected.left()).getDisplay(-1).equals("=")))
+                // they are inactive
+                && !view.active()
+                // the message bar is very inactive
+                && view.message.veryOpen()
+                // they have entered something
+                &&  !(view.getStupid().size() ==1 &&  view.getStupid().get(0) instanceof PlaceholderEquation)
+                ){
             return true;
         }
         return false;

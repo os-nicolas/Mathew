@@ -31,6 +31,6 @@ public class WriteMessage extends TutMessage {
     @Override
     protected void privateShow(SuperView view) {
         view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_1));
-        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_2));
+        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getStringArray(R.array.tut_writemessage_2));
     }
 }

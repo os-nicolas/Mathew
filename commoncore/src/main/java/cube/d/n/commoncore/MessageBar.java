@@ -22,6 +22,9 @@ public class MessageBar {
     float currentHeight = 0;
     final BaseView owner;
 
+    private long lastShown =-1;
+    private long veryOpenFor = 300;
+
     ArrayList<Message> que = new ArrayList<Message>();
 
     Paint bkgPaint;
@@ -53,6 +56,17 @@ public class MessageBar {
         return current()==null;
     }
 
+    /**
+     *
+     * @return
+     */
+    public boolean veryOpen(){
+        if (isOpen()&& System.currentTimeMillis() - lastShown > veryOpenFor
+                ){
+            return true;
+        }
+        return false;
+    }
 
     public void draw(Canvas canvas){
 
@@ -75,7 +89,7 @@ public class MessageBar {
         float rate = BaseApp.getApp().getRate();
         currentHeight = (currentHeight*(rate-1) + targetHeight)/rate;
         currentTextAlpha = (currentTextAlpha*(rate-1) + targetTextAlpha)/rate;
-        if (currentTextAlpha <0x10 && targetTextAlpha == 0x00){
+        if (current() != null && currentTextAlpha <0x10 && targetTextAlpha == 0x00){
             next();
         }
 
@@ -136,8 +150,10 @@ public class MessageBar {
 
     }
 
+
     private void next() {
         if (current() != null) {
+            lastShown = System.currentTimeMillis();
             que.remove(0);
         }
     }

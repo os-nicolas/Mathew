@@ -17,6 +17,6 @@ public class TapToSkip extends WriteMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_4));
+//        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_4));
     }
 }

@@ -19,27 +19,34 @@ import cube.d.n.commoncore.TutVideoFrag;
 public class TutSetAdapter extends FragmentPagerAdapter {
 
     public ArrayList<Fragment> frags = new ArrayList<>();
-    public static int ID = 0;
-    public final int id;
+
 
     public TutSetAdapter(FragmentManager fm) {
         super(fm);
-        this.id = ID++;
-        frags.add(TutTextFrag.make("Hi!", "Thanks for installing Mathilda", "1 of 5, swipe right"));
-        frags.add(TutVideoFrag.make("Welcome", "To algebra without mistakes, busy-work and frustration", "android.resource://colin.example.algebrator/raw/" + R.raw.overview, "2 of 5"));
-        frags.add(TutVideoFrag.make("Double Tap", "To add, subtract, multiple, divide and much much more", "android.resource://colin.example.algebrator/raw/" + R.raw.doubletap, "3 of 5"));
-        frags.add(TutVideoFrag.make("Drag and Drop", "To move terms anywhere where they can legally be ", "android.resource://colin.example.algebrator/raw/" + R.raw.draganddrop, "4 of 5"));
-        frags.add(TutTextFrag.make("It's that Easy", "swipe right to get started", "5 of 5"));
+        frags.add(TutTextFrag.make(
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_1_title),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_1_body),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_1_at)).withExtaTimeOut(750));
+        frags.add(TutVideoFrag.make(
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_2_title),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_2_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.overview,
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_2_at)));
+        frags.add(TutVideoFrag.make(
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_3_title),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_3_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.doubletap,
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_3_at)));
+        frags.add(TutVideoFrag.make(
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_4_title),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_4_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.draganddrop,
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_4_at)));
+        frags.add(TutTextFrag.make(
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_5_title),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_5_body),
+                Algebrator.getAlgebrator().getResources().getString(R.string.tut_5_at)));
         frags.add(new TutEnd());
-    }
-
-
-//    protected Hashtable<Integer, WeakReference<Fragment>> fragmentReferences = new Hashtable<>();
-
-
-    @Override
-    public String toString() {
-        return "" + id;
     }
 
     @Override

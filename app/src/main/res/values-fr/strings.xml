@@ -56,10 +56,11 @@
         <item>le double tap + , - symbole , × ou ÷ les séparant .</item>
     </string-array>
 
-    <string name="tut_writemessage_1">Salut !</string>
-    <string name="tut_writemessage_2">Merci d\'avoir installé Mathilda .</string>
-    <string name="tut_writemessage_3">Allez-y et tapez une équation.</string>
-    <string name="tut_writemessage_4">Vous pouvez taper sur ces messages pour les ignorer .</string>
+    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string-array name="tut_writemessage_2">
+        <item>Use the buttons at the bottom of the screen</item>
+        <item> to enter an equation.</item>
+    </string-array>
 
     <string name="clear">Effacer ?</string>
     <string name="cancel">Annuler</string>
@@ -93,6 +94,21 @@
     <string name="bothsides_power">Élever à une puissance</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">Utilisez formule quadratique</string>
+    <string name="tut_1_title" >Hi!</string>
+    <string name="tut_1_body" >Thanks for installing Mathilda</string>
+    <string name="tut_1_at" >1 of 5, swipe right</string>
+    <string name="tut_2_title" >Welcome</string>
+    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
+    <string name="tut_2_at" >2 of 5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
+    <string name="tut_3_at" >3 of 5</string>
+    <string name="tut_4_title" >Drag and Drop</string>
+    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
+    <string name="tut_4_at" >4 of 5</string>
+    <string name="tut_5_title" >It\'s that Easy</string>
+    <string name="tut_5_body" >Swipe right to get started</string>
+    <string name="tut_5_at" >5 of 5</string>
 
 
     <string-array name="tut_both_2">

@@ -1,5 +1,6 @@
 package cube.d.n.commoncore;
 
+import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,9 +35,6 @@ public class TutVideoFrag extends TutFrag{
         return result;
     }
 
-
-
-
     public void updateData(Bundle args){
         this.title = args.getString("TITLE");
         this.body = args.getString("BODY");
@@ -48,8 +46,31 @@ public class TutVideoFrag extends TutFrag{
     protected void pstart(View rootView){
         super.pstart(rootView);
         ((FadeInTextView) rootView.findViewById(R.id.tut_body)).start();
-    }
 
+        if (extaTimeOut != -1){
+            ((FadeInTextView) rootView.findViewById(R.id.tut_body)).hangTime +=extaTimeOut;
+        }
+
+        final VideoView vv = ((VideoView) rootView.findViewById(R.id.tut_video));
+        final Activity that = getActivity();
+        Thread th = new Thread(){
+            @Override
+            public void run(){
+                try{
+                    Thread.sleep(1300);
+                    that.runOnUiThread(new Runnable() {
+                        public void run() {
+                            vv.start();
+                        }
+                    });
+
+                }catch(InterruptedException e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        th.start();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -77,7 +98,17 @@ public class TutVideoFrag extends TutFrag{
 
         final VideoView vv = ((VideoView) rootView.findViewById(R.id.tut_video));
         vv.setVideoURI(video);
-        vv.start();
+//        vv.seekTo(1);
+
+
+        vv.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.start();
+
+                mp.pause();
+            }
+        });
 
         vv.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             public void onCompletion(MediaPlayer mp) {
@@ -88,6 +119,14 @@ public class TutVideoFrag extends TutFrag{
         if (drawOnStart){start(rootView);}
 
         return rootView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        View rootView = getView();
+        final VideoView vv = ((VideoView) rootView.findViewById(R.id.tut_video));
+        vv.pause();
     }
 
 

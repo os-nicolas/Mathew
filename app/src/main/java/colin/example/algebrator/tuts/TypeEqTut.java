@@ -1,8 +1,12 @@
 package colin.example.algebrator.tuts;
 
 import colin.example.algebrator.Algebrator;
+import colin.example.algebrator.ColinView;
 import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
+import cube.d.n.commoncore.eq.EqualsEquation;
+import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.PowerEquation;
 
 /**
  * Created by Colin on 3/19/2015.
@@ -11,6 +15,14 @@ public class TypeEqTut extends WriteMessage {
     @Override
     protected String getSp_key() {
         return "writeEq";
+    }
+
+    @Override
+    protected boolean privateShouldShow(SuperView view) {
+        if (view.message.veryOpen()){
+            return true;
+        }
+        return false;
     }
 
     protected TypeEqTut(){}
@@ -24,7 +36,7 @@ public class TypeEqTut extends WriteMessage {
 
     @Override
     protected void privateShow(SuperView view) {
-        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_3));
+//        view.message.enQue(aveTime, Algebrator.getAlgebrator().getResources().getString(R.string.tut_writemessage_3));
      }
 
 }

@@ -56,10 +56,11 @@
         <item>더블 탭+ , 분할 - 로 구분 , × 또는 ÷ 기호를.</item>
     </string-array>
 
-    <string name="tut_writemessage_1">안녕하세요!</string>
-    <string name="tut_writemessage_2">마틸다 를 설치 주셔서 감사합니다.</string>
-    <string name="tut_writemessage_3">어서 수식 을 입력합니다.</string>
-    <string name="tut_writemessage_4">당신이 그들을 건너 이러한 메시지 에 활용할 수.</string>
+    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string-array name="tut_writemessage_2">
+        <item>Use the buttons at the bottom of the screen</item>
+        <item> to enter an equation.</item>
+    </string-array>
 
     <string name="clear">Clear?</string>
     <string name="cancel">Cancel</string>
@@ -93,6 +94,21 @@
     <string name="bothsides_power">전원 에 올리기</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">차 공식을 사용</string>
+    <string name="tut_1_title" >Hi!</string>
+    <string name="tut_1_body" >Thanks for installing Mathilda</string>
+    <string name="tut_1_at" >1 of 5, swipe right</string>
+    <string name="tut_2_title" >Welcome</string>
+    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
+    <string name="tut_2_at" >2 of 5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
+    <string name="tut_3_at" >3 of 5</string>
+    <string name="tut_4_title" >Drag and Drop</string>
+    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
+    <string name="tut_4_at" >4 of 5</string>
+    <string name="tut_5_title" >It\'s that Easy</string>
+    <string name="tut_5_body" >Swipe right to get started</string>
+    <string name="tut_5_at" >5 of 5</string>
 
 
     <string-array name="tut_both_2">

@@ -29,6 +29,13 @@ public void start(View rootView){
     ((FadeInTextView) rootView.findViewById(R.id.tut_at)).start();
 
 
+        if (extaTimeOut != -1){
+            ((FadeInTextView) rootView.findViewById(R.id.tut_title)).hangTime +=extaTimeOut;
+            ((FadeInTextView) rootView.findViewById(R.id.tut_at)).hangTime +=extaTimeOut;
+        }
+
+
+
     }
 
     protected boolean drawOnStart = false;
@@ -36,7 +43,11 @@ public void start(View rootView){
         drawOnStart = true;
     }
 
-
+    long extaTimeOut =-1;
+    public Fragment withExtaTimeOut(int i) {
+        extaTimeOut = i;
+        return this;
+    }
 
 
         @Override

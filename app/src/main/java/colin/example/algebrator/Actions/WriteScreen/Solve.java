@@ -51,8 +51,6 @@ public class Solve extends Action {
         if (mine instanceof WritingEquation) {
 
             if (((WritingEquation) mine).deepLegal() ) {//&& countEquals(mine) == 1
-                TutMessage.getMessage(HitSolveMessage.class).alreadyDone();
-
                 return true;
             }
         }
@@ -61,6 +59,7 @@ public class Solve extends Action {
 
     @Override
     protected void privateAct() {
+        TutMessage.getMessage(HitSolveMessage.class).alreadyDone();
         AsyncTask<Void, Void, Long> task = new AsyncTask<Void, Void, Long>() {
             Intent myIntent;
             Context myContext;

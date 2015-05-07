@@ -169,7 +169,7 @@ public class Button implements Physical {
             if (myAction.canAct()) {
                 bkgPaint.setColor(highlightColor);
                 if (myAction != null) {
-                    TutMessage.getMessage(TypeEqTut.class).alreadyDone();
+//                    TutMessage.getMessage(TypeEqTut.class).alreadyDone();
                     myAction.act();
                 }
             }else{

@@ -37,6 +37,9 @@ public class TutTextFrag extends TutFrag{
     protected void pstart(View rootView){
         super.pstart(rootView);
         ((FadeInTextView) rootView.findViewById(R.id.tut_text_body)).start();
+        if (extaTimeOut != -1){
+            ((FadeInTextView) rootView.findViewById(R.id.tut_text_body)).hangTime +=extaTimeOut;
+        }
     }
 
     public void updateData(Bundle args){
@@ -62,11 +65,12 @@ public class TutTextFrag extends TutFrag{
 
         ((TextView) rootView.findViewById(R.id.tut_title)).setText(title);
         ((TextView) rootView.findViewById(R.id.tut_text_body)).setText(videoSub);
-
         ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
 
         if (drawOnStart){start(rootView);}
 
         return rootView;
     }
+
+
 }

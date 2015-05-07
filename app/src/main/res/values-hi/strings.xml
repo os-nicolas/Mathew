@@ -56,10 +56,11 @@
         <item>नल + विभाजित - उन्हें अलग करने , × या ÷ प्रतीक ।</item>
     </string-array>
 
-    <string name="tut_writemessage_1">हाय!</string>
-    <string name="tut_writemessage_2">Mathilda स्थापित करने के लिए धन्यवाद।</string>
-    <string name="tut_writemessage_3">आगे बढ़ो और एक समीकरण लिखें।</string>
-    <string name="tut_writemessage_4">आप उन्हें छोड़ करने के लिए इन संदेशों पर नल कर सकते हैं ।</string>
+    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string-array name="tut_writemessage_2">
+        <item>Use the buttons at the bottom of the screen</item>
+        <item> to enter an equation.</item>
+    </string-array>
 
     <string name="clear">साफ?</string>
     <string name="cancel">रद्द करें</string>
@@ -93,6 +94,21 @@
     <string name="bothsides_power">एक पावर तक बढ़ाएं</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">द्विघात फार्मूला का प्रयोग करें</string>
+    <string name="tut_1_title" >Hi!</string>
+    <string name="tut_1_body" >Thanks for installing Mathilda</string>
+    <string name="tut_1_at" >1 of 5, swipe right</string>
+    <string name="tut_2_title" >Welcome</string>
+    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
+    <string name="tut_2_at" >2 of 5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
+    <string name="tut_3_at" >3 of 5</string>
+    <string name="tut_4_title" >Drag and Drop</string>
+    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
+    <string name="tut_4_at" >4 of 5</string>
+    <string name="tut_5_title" >It\'s that Easy</string>
+    <string name="tut_5_body" >Swipe right to get started</string>
+    <string name="tut_5_at" >5 of 5</string>
 
     <string-array name="tut_both_2">
         <item>फिर, अपने परिवर्तनों को स्वीकार करते हैं और वापस समाधान</item>
