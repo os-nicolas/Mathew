@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">マチルダ</string>
-    <string name="action_settings">Settings</string>
-    <string name="solve">Solve</string>
-    <string name="ok">Ok</string>
-    <string name="assume">Assuming</string>
+    <string name="app_name">Mathilda</string>
+    <string name="action_settings">pengaturan</string>
+    <string name="solve">memecahkan</string>
+    <string name="ok">Oke</string>
+    <string name="assume">Dengan asumsi</string>
 
     <string-array name="tut_history">
-        <item>To revert to a previous step,</item>
-        <item>touch the step and hold.</item>
+        <item>Untuk kembali ke langkah sebelumnya,</item>
+        <item>sentuh langkah dan tahan.</item>
     </string-array>
     <string-array name="tut_hitsolve">
-        <item>Tap Solve to start manipulating your equation.</item>
+        <item>Ketuk Memecahkan untuk memulai memanipulasi persamaan Anda .</item>
     </string-array>
     <string-array name="tut_powerdrag">
-        <item>To take the root of both sides, </item>
-        <item>drag an exponent to the other side.</item>
+        <item>Untuk mengambil akar dari kedua belah pihak ,</item>
+        <item>tarik eksponen ke sisi lain .</item>
     </string-array>
     <string-array name="tut_power">
-        <item>To raise a term to its exponent, </item>
-        <item>double tap the exponent.</item>
+        <item>ntuk meningkatkan istilah untuk eksponen, </item>
+        <item> double tap yang eksponen ..</item>
     </string-array>
     <string-array name="tut_rootdrag">
-        <item>To square both sides,</item>
-        <item>drag a square root sign to the other side.</item>
+        <item>Persegi kedua belah pihak ,</item>
+        <item>tarik tanda akar kuadrat ke sisi lain .</item>
     </string-array>
     <string-array name="tut_root">
-        <item>Double tap a square root sign</item>
-        <item>to square root its contents.</item>
+        <item>Ganda tekan tanda akar kuadrat </item>
+        <item>untuk akar kuadrat isinya.</item>
     </string-array>
 
 
-    <string name="tut_solved_1_0">Nice work!</string>
-    <string name="tut_solved_1_1">Well done!</string>
-    <string name="tut_solved_1_2">Good job!</string>
-    <string name="tut_solved_1_3">Nice!</string>
-    <string name="tut_solved_2">Hit the back button to enter another equation.</string>
+    <string name="tut_solved_1_0">Kerja bagus !</string>
+    <string name="tut_solved_1_1">Bagus!</string>
+    <string name="tut_solved_1_2">Nice!</string>
+    <string name="tut_solved_1_3">Baik !</string>
+    <string name="tut_solved_2">Tekan tombol kembali untuk masuk persamaan lain .</string>
 
-    <string name="tut_solvemessage_1">This is the Solve screen.</string>
+    <string name="tut_solvemessage_1">Ini adalah layar Memecahkan.</string>
     <string-array name="tut_solvemessage_2">
-        <item>To move terms around,</item>
-        <item>simply drag and drop them.</item>
+        <item>Untuk memindahkan hal sekitar , </item>
+        <item>cukup drag dan drop mereka.</item>
     </string-array>
     <string-array name="tut_solvemessage_3">
-        <item>Use the + button at the bottom of the screen</item>
-        <item>to add a new term to both sides.</item>
+        <item>Gunakan tombol + di bagian bawah layar untuk </item>
+        <item>menambahkan istilah baru untuk kedua belah pihak .</item>
     </string-array>
     <string-array name="tut_solvemessage_4">
-        <item>The other symbols at the bottom of the screen will</item>
-        <item>perform their respective operations to both sides.</item>
+        <item>Simbol-simbol lainnya di bagian bawah layar akan melakukan </item>
+        <item>operasi masing-masing untuk kedua belah pihak .</item>
     </string-array>
     <string-array name="tut_solvemessage_5">
-        <item>To add, subtract, multiply or divide two terms,</item>
-        <item>double tap the +, -, × or ÷ symbol separating them.</item>
+        <item>Untuk menambah , mengurangi, mengalikan atau membagi dua istilah ,</item>
+        <item>tekan dua kali + , - , × ÷ atau simbol yang memisahkan mereka .</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">Ini adalah layar Menulis </string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>Gunakan tombol di bagian bawah layar n</item>
+        <item>untuk memasukkan persamaan .</item>
     </string-array>
-    <string name="clear">Clear?</string>
-    <string name="cancel">Cancel</string>
+    <string name="clear">Jelas ?</string>
+    <string name="cancel">membatalkan</string>
 
 
     <string name="tut_both_1_add">
-       Type in what you want to add to both sides.
+       etik apa yang ingin Anda tambahkan ke kedua belah pihak
     </string>
     <string name="tut_both_1_sub">
-       Type in what you want to subtract from both sides.
+       Ketik apa yang ingin Anda kurangi dari kedua belah pihak .
     </string>
     <string name="tut_both_1_multi">
-       Type in what you want to multiply both sides by.
+       Ketik apa yang ingin Anda kalikan kedua sisi oleh .
     </string>
     <string name="tut_both_1_div">
-       Type in what you want to divide both sides by.
+       Ketik apa yang ingin membagi kedua sisi dengan .
     </string>
     <string name="tut_both_1_power">
-       Type in what power you want to raise both sides to.
+       Ketik apa kekuatan yang Anda ingin menaikkan kedua belah pihak untuk .
     </string>
 
-    <string name="bothsides_equals_add">Add to Both Sides</string>
-    <string name="bothsides_equals_sub">Subtract from Both Sides</string>
-    <string name="bothsides_equals_multi">Multiply Both Sides</string>
-    <string name="bothsides_equals_div">Divide Both Sides</string>
-    <string name="bothsides_equals_power">Raise Both Sides to a Power</string>
-    <string name="bothsides_add">Add to</string>
-    <string name="bothsides_sub">Subtract from</string>
+    <string name="bothsides_equals_add">Tambahkan ke Kedua Sisi</string>
+    <string name="bothsides_equals_sub">Kurangi dari Kedua Sisi</string>
+    <string name="bothsides_equals_multi">Multiply Kedua Sisi</string>
+    <string name="bothsides_equals_div">Membagi Kedua Sisi</string>
+    <string name="bothsides_equals_power">Angkat Kedua Sisi untuk Power</string>
+    <string name="bothsides_add">Tambahkan</string>
+    <string name="bothsides_sub">Mengurangi from</string>
     <string name="bothsides_multi">Multiply</string>
-    <string name="bothsides_div">Divide</string>
-    <string name="bothsides_power">Raise to a Power</string>
-    <string name="quadratic_for"> for </string>
-    <string name="quadratic">Use quadratic formula</string>
+    <string name="bothsides_div">Membagi</string>
+    <string name="bothsides_power">Memangkatkan</string>
+    <string name="quadratic_for"> - </string>
+    <string name="quadratic">Gunakan rumus kuadrat</string>
     <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_body" >Terima kasih untuk menginstal Mathilda</string>
+    <string name="tut_1_at" >1 dari 5 , geser kanan</string>
+    <string name="tut_2_title" >Selamat Datang</string>
+    <string name="tut_2_body" >Selamat Datang aljabar tanpa kesalahan , sibuk dengan pekerjaan atau frustrasi .</string>
+    <string name="tut_2_at" >2 dari 5</string>
+    <string name="tut_3_title" >Tap ganda</string>
+    <string name="tut_3_body" >Ketuk dua kali untuk menambah, mengurangi , mengalikan, membagi , dan banyak lagi .</string>
+    <string name="tut_3_at" >3 dari 5</string>
+    <string name="tut_4_title" >Drag dan Drop</string>
+    <string name="tut_4_body" >Drag dan Drop untuk memindahkan hal mana saja mereka bisa secara legal .</string>
+    <string name="tut_4_at" >4 dari 5</string>
+    <string name="tut_5_title" >Ini yang Mudah</string>
+    <string name="tut_5_body" >Gesek ke kanan untuk memulai</string>
+    <string name="tut_5_at" >5 dari 5</string>
 
 
     <string-array name="tut_both_2">
-        <item>Then, tap Ok to accept your changes</item>
-        <item>and bring them back to the Solve Screen.</item>
+        <item>Kemudian , tekan Ok untuk menerima perubahan dan </item>
+        <item>membawa mereka kembali ke Memecahkan Layar .</item>
     </string-array>
 
     <string-array name="tut_both_3">
-        <item>Or, tap Cancel or the back button to reject your changes</item>
-        <item>and go back to the Solve Screen.</item>
+        <item>Atau , tekan Batal atau tombol kembali untuk menolak </item>
+        <item>perubahan dan kembali ke Memecahkan Layar .</item>
     </string-array>
 
 </resources>

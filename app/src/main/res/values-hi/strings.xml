@@ -56,10 +56,10 @@
         <item>नल + विभाजित - उन्हें अलग करने , × या ÷ प्रतीक ।</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">यह लिख स्क्रीन है </string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>एक समीकरण में प्रवेश करने के लिए</item>
+        <item>स्क्रीन के तल पर बटन का प्रयोग करें।</item>
     </string-array>
 
     <string name="clear">साफ?</string>
@@ -94,21 +94,21 @@
     <string name="bothsides_power">एक पावर तक बढ़ाएं</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">द्विघात फार्मूला का प्रयोग करें</string>
-    <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_title" >हाय !</string>
+    <string name="tut_1_body" >Mathilda स्थापित करने के लिए धन्यवाद</string>
+    <string name="tut_1_at" >5 में से 1, ज़ोर से मारना सही</string>
+    <string name="tut_2_title" >स्वागत</string>
+    <string name="tut_2_body" >गलतियों के बिना बीजगणित , व्यस्त काम या हताशा में आपका स्वागत है ।</string>
+    <string name="tut_2_at" >2 से 5</string>
+    <string name="tut_3_title" >दो बार टैप</string>
+    <string name="tut_3_body" >डबल नल , विभाजन और भी बहुत कुछ , घटाना , गुणा जोड़ने के लिए।</string>
+    <string name="tut_3_at" >3 से 5</string>
+    <string name="tut_4_title" >खींचें और छोड़ें</string>
+    <string name="tut_4_body" >खींचें और ड्रॉप कहीं भी वे कानूनी तौर पर किया जा सकता है शर्तों को स्थानांतरित करने के लिए।</string>
+    <string name="tut_4_at" >4 से 5</string>
+    <string name="tut_5_title" >ऐसा लगता है कि आसान है</string>
+    <string name="tut_5_body" >कड़ी चोट सही शुरू करने के लिए</string>
+    <string name="tut_5_at" >5 में से 5</string>
 
     <string-array name="tut_both_2">
         <item>फिर, अपने परिवर्तनों को स्वीकार करते हैं और वापस समाधान</item>

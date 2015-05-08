@@ -1,5 +1,7 @@
 package colin.example.algebrator.Actions;
 
+import android.app.Activity;
+
 import cube.d.n.commoncore.eq.BinaryEquation;
 import cube.d.n.commoncore.eq.Equation;
 import cube.d.n.commoncore.eq.MonaryEquation;
@@ -13,24 +15,14 @@ import colin.example.algebrator.SuperView;
  * Created by Colin_000 on 3/25/2015.
  */
 
-public abstract class Action<myView extends SuperView> {
-    public myView myView;
+
+
+public abstract class Action<myView extends SuperView> extends BaseAction<myView> {
+
 
     public Action(myView myView) {
-        this.myView = myView;
+        super(myView);
     }
-
-    public boolean canAct(){
-        return true;
-    }
-
-    public void act(){
-        if (canAct()){
-            privateAct();
-        }
-    }
-
-    protected abstract void privateAct();
 
     protected boolean hasMatch() {
         int depth = 1;

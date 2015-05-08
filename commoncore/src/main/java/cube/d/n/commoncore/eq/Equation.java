@@ -244,7 +244,6 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         privateDraw(canvas, x, y);
 
         //drawLastPoints(canvas);
-
     }
 
     private void drawLastPoints(Canvas canvas) {

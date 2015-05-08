@@ -7,7 +7,7 @@ import colin.example.algebrator.EmilyView;
 /**
  * Created by Colin on 2/2/2015.
  */
-public class RightAction extends Action {
+public class RightAction extends Action<EmilyView> {
     public RightAction(EmilyView emilyView) {
         super(emilyView);
     }

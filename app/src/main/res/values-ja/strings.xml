@@ -56,10 +56,10 @@
         <item>分割 - それらを分離する、 ×または÷記号を。</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">これは、書き込み画面です </string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>式を入力するには、画面の下部に</item>
+        <item>あるボタンを使用してください。</item>
     </string-array>
 
     <string name="clear">クリア？</string>
@@ -94,21 +94,21 @@
     <string name="bothsides_power">電源へのレイズ</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">次の式を使用します</string>
-    <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_title" >こんにちは！</string>
+    <string name="tut_1_body" >マチルダをインストールしてくれてありがとう</string>
+    <string name="tut_1_at" >5の1 、右にスワイプ</string>
+    <string name="tut_2_title" >ようこそ</string>
+    <string name="tut_2_body" >間違いのない代数、忙しい仕事や欲求不満へようこそ。</string>
+    <string name="tut_2_at" >2の5</string>
+    <string name="tut_3_title" >ダブルタップ</string>
+    <string name="tut_3_body" >ダブルタップは、除算および大いに多くを、減算乗算、追加します。</string>
+    <string name="tut_3_at" >3の5</string>
+    <string name="tut_4_title" >ドラッグ·アンド·ドロップ</string>
+    <string name="tut_4_body" >ドラッグ＆ドロップは、どこでも、彼らが合法的にすることができる条件を移動します。</string>
+    <string name="tut_4_at" >4の5</string>
+    <string name="tut_5_title" >これは、ということです簡単</string>
+    <string name="tut_5_body" >右にスワイプして開始してください</string>
+    <string name="tut_5_at" >5の5</string>
 
 
     <string-array name="tut_both_2">

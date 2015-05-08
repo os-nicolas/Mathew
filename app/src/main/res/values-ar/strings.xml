@@ -56,10 +56,10 @@
         <item>الصنبور ضعف + ، - رمز ، × ÷ أو تفصل بينها.</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">هذه هي الشاشة الكتابة</string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>استخدام الأزرار في أسفل الشاشة</item>
+        <item>ل دخول المعادلة .</item>
     </string-array>
 
     <string name="clear">واضح؟</string>
@@ -94,21 +94,21 @@
     <string name="bothsides_power">رفع إلى السلطة</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">استخدام الصيغة التربيعية</string>
-    <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_title" >مرحبا !</string>
+    <string name="tut_1_body" >شكرا ل تثبيت ماتيلدا</string>
+    <string name="tut_1_at" >1 من 5، حق انتقاد</string>
+    <string name="tut_2_title" >ترحيب</string>
+    <string name="tut_2_body" >مرحبا بكم في الجبر دون اخطاء ، مشغول العمل أو الإحباط</string>
+    <string name="tut_2_at" >2 من 5</string>
+    <string name="tut_3_title" >الحنفية مزدوج</string>
+    <string name="tut_3_body" >الاستفادة من ضعف لإضافة أو طرح أو ضرب أو قسمة والكثير الكثير</string>
+    <string name="tut_3_at" >3 من 5</string>
+    <string name="tut_4_title" >السحب والإسقاط</string>
+    <string name="tut_4_body" >السحب و الإفلات لنقل أي مكان حيث أنها يمكن أن تكون قانونا</string>
+    <string name="tut_4_at" >4 من 5</string>
+    <string name="tut_5_title" >انه من السهل</string>
+    <string name="tut_5_body" >حق انتقاد للبدء</string>
+    <string name="tut_5_at" >5 من 5</string>
 
 
     <string-array name="tut_both_2">

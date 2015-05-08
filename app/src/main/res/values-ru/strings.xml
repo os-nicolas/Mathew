@@ -56,10 +56,10 @@
         <item>дважды нажмите+, -, × или ÷ символов , разделяя их .</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">Этоэкран Написать</string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>Используйте кнопки в нижней части экрана,</item>
+        <item> чтобы ввести уравнение .</item>
     </string-array>
 
     <string name="clear">Ясно ?</string>
@@ -94,21 +94,21 @@
     <string name="bothsides_power">Поднять в степень</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">Используйте квадратичной формулой</string>
-    <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_title" >Привет !</string>
+    <string name="tut_1_body" >Благодарим за установку Матильда</string>
+    <string name="tut_1_at" >1 из 5 , салфетки право</string>
+    <string name="tut_2_title" >добро пожаловать</string>
+    <string name="tut_2_body" >Добро пожаловать в алгебре без ошибок , занятой - работы или разочарования.</string>
+    <string name="tut_2_at" >2 из 5</string>
+    <string name="tut_3_title" >Двойное Нажатие</string>
+    <string name="tut_3_body" >Дважды нажмите, чтобы складывать, вычитать, умножать, делить и многое другое.</string>
+    <string name="tut_3_at" >3 из 5</string>
+    <string name="tut_4_title" >Перетаскивание</string>
+    <string name="tut_4_body" >Перетащите двигаться в любом месте условия они могут на законных основаниях быть.</string>
+    <string name="tut_4_at" >4 из 5</string>
+    <string name="tut_5_title" >Это так просто</string>
+    <string name="tut_5_body" >Размах право начать</string>
+    <string name="tut_5_at" >5 из 5</string>
 
 
     <string-array name="tut_both_2">

@@ -17,7 +17,7 @@ import colin.example.algebrator.tuts.HitSolveMessage;
 import colin.example.algebrator.tuts.TutMessage;
 
 
-public class Solve extends Action {
+public class Solve extends Action<EmilyView> {
 
     public Solve(EmilyView emilyView) {
         super(emilyView);

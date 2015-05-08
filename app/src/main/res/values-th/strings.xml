@@ -56,10 +56,10 @@
         <item>แตะ คู่+, -, × หรือ สัญลักษณ์ ÷ แยกพวกเขา.</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">นี่คือ หน้าจอ เขียน</string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>ใช้ปุ่ม ที่ด้านล่าง ของหน้าจอ </item>
+        <item> เพื่อเข้าสู่ สม</item>
     </string-array>
 
     <string name="clear">ที่ชัดเจน ?</string>
@@ -95,20 +95,20 @@
     <string name="quadratic_for"> - </string>
     <string name="quadratic">ใช้ สูตร สมการกำลังสอง</string>
     <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
+    <string name="tut_1_body" >ขอขอบคุณ สำหรับการติดตั้ง เฉียบคม</string>
+    <string name="tut_1_at" >1 ใน 5 ขวา รูด</string>
+    <string name="tut_2_title" >ยินดีต้อนรับ</string>
+    <string name="tut_2_body" >ยินดีต้อนรับสู่ พีชคณิต ไม่มีข้อผิดพลาด , การทำงาน ไม่ว่างหรือ ความยุ่งยาก</string>
     <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_3_title" >แตะ สองครั้ง</string>
+    <string name="tut_3_body" >แตะสองครั้ง จะบวกลบ คูณหาร และ อื่น ๆ อีกมากมาย</string>
+    <string name="tut_3_at" >3 จาก 5</string>
+    <string name="tut_4_title" >ลากและวาง</string>
+    <string name="tut_4_body" >ลากและวาง ที่จะย้าย แง่ ทุกที่ที่ ถูกต้องตามกฎหมาย สามารถ</string>
+    <string name="tut_4_at" >4 จาก 5</string>
+    <string name="tut_5_title" >มันเป็นเรื่องที่ ง่าย</string>
+    <string name="tut_5_body" >ปัดไปทางขวา เพื่อเริ่มต้น</string>
+    <string name="tut_5_at" >5 จาก 5</string>
 
 
     <string-array name="tut_both_2">

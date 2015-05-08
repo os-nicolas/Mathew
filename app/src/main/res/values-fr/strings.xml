@@ -56,10 +56,10 @@
         <item>le double tap + , - symbole , × ou ÷ les séparant .</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">Ceci est l\'écran d\'écriture</string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>Utilisez les boutons au bas de </item>
+        <item> l\'écran pour entrer une équation .</item>
     </string-array>
 
     <string name="clear">Effacer ?</string>
@@ -94,21 +94,21 @@
     <string name="bothsides_power">Élever à une puissance</string>
     <string name="quadratic_for"> - </string>
     <string name="quadratic">Utilisez formule quadratique</string>
-    <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
+    <string name="tut_1_title" >Salut!</string>
+    <string name="tut_1_body" >Merci pour l\'installation de Mathilda</string>
+    <string name="tut_1_at" >1/5 , à droite coup</string>
+    <string name="tut_2_title" >Bienvenue</string>
+    <string name="tut_2_body" >Bienvenue à l\'algèbre , sans erreurs , occupé travail ou de frustration .</string>
+    <string name="tut_2_at" >2/5</string>
     <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
+    <string name="tut_3_body" >Double Tap pour additionner, soustraire , multiplier et diviser et bien plus encore .</string>
+    <string name="tut_3_at" >3/5</string>
     <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_4_body" >Drag and Drop pour déplacer termes partout où ils peuvent être légalement .</string>
+    <string name="tut_4_at" >4/5</string>
+    <string name="tut_5_title" >Il est si facile</string>
+    <string name="tut_5_body" >Swipe droit pour commencer</string>
+    <string name="tut_5_at" >5/5</string>
 
 
     <string-array name="tut_both_2">

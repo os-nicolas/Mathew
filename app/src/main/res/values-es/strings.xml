@@ -56,10 +56,10 @@
         <item>doble toque en el signo + , - símbolo , × o ÷ separa.</item>
     </string-array>
 
-    <string name="tut_writemessage_1">This is the Write screen </string>
+    <string name="tut_writemessage_1">Esta es la pantalla de escritura </string>
     <string-array name="tut_writemessage_2">
-        <item>Use the buttons at the bottom of the screen</item>
-        <item> to enter an equation.</item>
+        <item>Utilice los botones en la parte inferior de la pantalla para </item>
+        <item> introducir una ecuación.</item>
     </string-array>
 
     <string name="clear">Claro?</string>
@@ -95,20 +95,20 @@
     <string name="quadratic_for"> por un </string>
     <string name="quadratic">Utilice la fórmula cuadrática</string>
     <string name="tut_1_title" >Hi!</string>
-    <string name="tut_1_body" >Thanks for installing Mathilda</string>
-    <string name="tut_1_at" >1 of 5, swipe right</string>
-    <string name="tut_2_title" >Welcome</string>
-    <string name="tut_2_body" >To algebra without mistakes, busy-work or frustration</string>
-    <string name="tut_2_at" >2 of 5</string>
-    <string name="tut_3_title" >Double Tap</string>
-    <string name="tut_3_body" >To add, subtract, multiply, divide and much much more</string>
-    <string name="tut_3_at" >3 of 5</string>
-    <string name="tut_4_title" >Drag and Drop</string>
-    <string name="tut_4_body" >To move terms anywhere they can legally be</string>
-    <string name="tut_4_at" >4 of 5</string>
-    <string name="tut_5_title" >It\'s that Easy</string>
-    <string name="tut_5_body" >Swipe right to get started</string>
-    <string name="tut_5_at" >5 of 5</string>
+    <string name="tut_1_body" >Gracias por la instalación de Mathilda</string>
+    <string name="tut_1_at" >1 de 5 , haga deslizar</string>
+    <string name="tut_2_title" >Bienvenida</string>
+    <string name="tut_2_body" >Bienvenido al álgebra y sin errores , ocupado en el trabajo o la frustración .</string>
+    <string name="tut_2_at" >2 de 5</string>
+    <string name="tut_3_title" >Doble Toque</string>
+    <string name="tut_3_body" >Doble toque para sumar, restar, multiplicar, dividir y mucho más .</string>
+    <string name="tut_3_at" >3 de 5</string>
+    <string name="tut_4_title" >Arrastrar y Soltar</string>
+    <string name="tut_4_body" >Arrastrar y soltar para mover términos en cualquier lugar que puede ser legalmente.</string>
+    <string name="tut_4_at" >4 de 5</string>
+    <string name="tut_5_title" >Es así de fácil</string>
+    <string name="tut_5_body" >Derecho Swipe para empezar</string>
+    <string name="tut_5_at" >5 de 5</string>
 
 
     <string-array name="tut_both_2">

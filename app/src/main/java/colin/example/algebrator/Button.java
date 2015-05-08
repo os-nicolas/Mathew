@@ -26,7 +26,7 @@ public class Button implements Physical {
 
     float bottom;
     Paint bkgPaint;
-    Paint textPaint;
+    public Paint textPaint;
     int highlightColor;
     int targetBkgColor;
     String text;
@@ -65,7 +65,7 @@ public class Button implements Physical {
         setLocation(left, right, top, bottom);
     }
 
-    public void draw(Canvas canvas) {
+    public void draw(Canvas canvas, Paint p){
 
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
@@ -77,15 +77,14 @@ public class Button implements Physical {
         }
         Paint bkgbkgPaint = new Paint();
         bkgbkgPaint.setColor(targetBkgColor);
+        bkgbkgPaint.setAlpha(p.getAlpha());
         RectF r = new RectF(left(), top(), right(), bottom());
         canvas.drawRect(r, bkgbkgPaint);
 
 
-        //Paint white = new Paint();
-        //white.setColor(Color.WHITE);
-        //canvas.drawRoundRect(r,10,10, white);
         float smaller = 3 * Algebrator.getAlgebrator().getDpi();
         RectF r2 = new RectF(left() + smaller, top() + smaller, right() - smaller, bottom() - smaller);
+        bkgPaint.setAlpha(p.getAlpha());
         canvas.drawRoundRect(r2, Algebrator.getAlgebrator().getCornor(), Algebrator.getAlgebrator().getCornor(), bkgPaint);
 
         Rect out = new Rect();
@@ -105,21 +104,6 @@ public class Button implements Physical {
         }
         float h = out.height();
 
-/*
-        Paint textHighlight = new Paint();
-        textHighlight.setTextSize(textPaint.getTextSize());
-        textHighlight.setTypeface(textPaint.getTypeface());
-        textHighlight.setTextAlign(Paint.Align.CENTER);
-        //textHighlight.setAntiAlias(true);
-        //TODO scale by dpi
-        textHighlight.setMaskFilter(new BlurMaskFilter(8, BlurMaskFilter.Blur.NORMAL));
-        textHighlight.setARGB(0xff,
-                (android.graphics.Color.red(bkgPaint.getColor())*2+0xff)/3,
-                (android.graphics.Color.green(bkgPaint.getColor())*2+0xff)/3,
-                (android.graphics.Color.blue(bkgPaint.getColor())*2+0xff)/3);
-
-        canvas.drawText(text, (right() + left()) / 2, (bottom() + top()) / 2 + h / 2 , textHighlight);
-        //textHighlight.setMaskFilter(null);*/
 
         //TODO this seems ugly
         if (!(this instanceof PopUpButton ) ){
@@ -134,8 +118,12 @@ public class Button implements Physical {
                 this.textPaint.setAlpha((int) currentAlpha);
             }
         }
-
+        textPaint.setAlpha(textPaint.getAlpha() * p.getAlpha() / (0xff));
         canvas.drawText(text, getX(), getY() + h / 2, textPaint);
+    }
+
+    public void draw(Canvas canvas) {
+        draw(canvas,new Paint());
     }
 
     protected float targetHeight() {
