@@ -52,49 +52,46 @@ public class TutActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         SharedPreferences settings = Algebrator.getAlgebrator().getSharedPreferences(PREFS_NAME, 0);
-        boolean alreadyShown = settings.getBoolean("startup_tut", false);
-        if (!alreadyShown) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("startup_tut", true);
+
+        editor.commit();
 
 
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("startup_tut", true);
-
-            editor.commit();
+        setContentView(R.layout.tut);
 
 
-            setContentView(R.layout.tut);
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+        // Remember that you should never show the action bar if the
+        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
 
+        // ViewPager and its adapters use support library
+        // fragments, so use getSupportFragmentManager.
 
-            View decorView = getWindow().getDecorView();
-            // Hide the status bar.
-            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-            decorView.setSystemUiVisibility(uiOptions);
-            // Remember that you should never show the action bar if the
-            // status bar is hidden, so hide that too if necessary.
-            ActionBar actionBar = getActionBar();
-            actionBar.hide();
+        mViewPager = (ViewPager) findViewById(R.id.pager);
 
-            // ViewPager and its adapters use support library
-            // fragments, so use getSupportFragmentManager.
+        if (mViewPager.getAdapter() == null) {
+            TutSetAdapter adapter =
+                    new TutSetAdapter(
+                            getSupportFragmentManager());
+            mViewPager.setAdapter(adapter);
 
-            mViewPager = (ViewPager) findViewById(R.id.pager);
+            final Context that = this;
 
-            if (mViewPager.getAdapter() == null) {
-                TutSetAdapter adapter =
-                        new TutSetAdapter(
-                                getSupportFragmentManager());
-                mViewPager.setAdapter(adapter);
-
-                final Context that = this;
-
-                mViewPager.setOnPageChangeListener(
-                        new ViewPager.SimpleOnPageChangeListener() {
-                            @Override
-                            public void onPageSelected(int position) {
-                                // When swiping between pages, select the
-                                // corresponding tab.
-                                TutSetAdapter adptr = (TutSetAdapter) mViewPager.getAdapter();
+            mViewPager.setOnPageChangeListener(
+                    new ViewPager.SimpleOnPageChangeListener() {
+                        @Override
+                        public void onPageSelected(int position) {
+                            // When swiping between pages, select the
+                            // corresponding tab.
+                            TutSetAdapter adptr = (TutSetAdapter) mViewPager.getAdapter();
 
 //                                Log.i("OnPageChangeListener", adptr+"");
 //
@@ -102,22 +99,17 @@ public class TutActivity extends FragmentActivity {
 //                                    ((TutFrag)adptr.getFragment(position)).start(adptr.getFragment(position).getView());
 //                                }
 
-                                if (position == adptr.getCount() - 1) {
-                                    //if we have reach the last tap
-                                    Intent myIntent = new Intent(that, WriteScreen.class);
-                                    that.startActivity(myIntent);
-                                }
-
-                                Log.i("tab selected", position + "");
+                            if (position == adptr.getCount() - 1) {
+                                //if we have reach the last tap
+                                Intent myIntent = new Intent(that, WriteScreen.class);
+                                that.startActivity(myIntent);
                             }
-                        });
-            }
-        } else {
-            Intent myIntent = new Intent(this, WriteScreen.class);
-            this.finish();
-            this.startActivity(myIntent);
 
+                            Log.i("tab selected", position + "");
+                        }
+                    });
         }
+
     }
 }
 
