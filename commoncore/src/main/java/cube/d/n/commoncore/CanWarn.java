@@ -1,6 +1,6 @@
 package cube.d.n.commoncore;
 
-import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.any.Equation;
 
 /**
  * Created by Colin on 4/24/2015.

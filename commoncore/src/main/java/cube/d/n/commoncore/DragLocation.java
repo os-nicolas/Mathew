@@ -3,15 +3,16 @@ package cube.d.n.commoncore;
 
 import android.util.Log;
 
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.v2.AlgebraLine;
 
 
 public class DragLocation implements Comparable<DragLocation> {
     public float x;
     public float y;
     public Equation myStupid;
-    public BaseView owner;
+    public AlgebraLine owner;
     public Equation myDemo;
     public boolean og = false;
 
@@ -21,10 +22,10 @@ public class DragLocation implements Comparable<DragLocation> {
         if (dragging.equals(equation)) {
             oGinit(equation);
         } else {
-            this.owner = equation.owner;
-            myStupid = equation.owner.stupid.copy();
+            this.owner = (AlgebraLine)equation.owner;
+            myStupid = equation.owner.stupid.get().copy();
             //let's follow the path down
-            Equation at = owner.stupid;
+            Equation at = owner.stupid.get();
             Equation myAt = myStupid;
             while (!at.equals(equation)) {
                 int index = at.deepIndexOf(equation);
@@ -33,7 +34,7 @@ public class DragLocation implements Comparable<DragLocation> {
             }
             Equation ourEquation = myAt;
 
-            at = equation.owner.stupid;
+            at = equation.owner.stupid.get();
             myAt = myStupid;
             while (!at.equals(dragging)) {
                 int index = at.deepIndexOf(dragging);
@@ -68,9 +69,9 @@ public class DragLocation implements Comparable<DragLocation> {
     }
 
     private void oGinit(Equation equation) {
-        this.owner = equation.owner;
+        this.owner = (AlgebraLine)equation.owner;
         og = true;
-        myStupid = equation.owner.stupid;
+        myStupid = equation.owner.stupid.get();
         myDemo = equation;
 
         //myStupid.updateLocation();
@@ -93,15 +94,15 @@ public class DragLocation implements Comparable<DragLocation> {
 
     public void updateDis(float eventX, float eventY) {
         if (myStupid instanceof EqualsEquation) {
-            this.dis = (float) Math.sqrt((x + owner.stupid.lastPoint.get(0).x - eventX) *
-                    (x + owner.stupid.lastPoint.get(0).x - eventX) +
-                    (y + owner.stupid.lastPoint.get(0).y - eventY) *
-                            (y + owner.stupid.lastPoint.get(0).y - eventY));
+            this.dis = (float) Math.sqrt((x + owner.stupid.get().lastPoint.get(0).x - eventX) *
+                    (x + owner.stupid.get().lastPoint.get(0).x - eventX) +
+                    (y + owner.stupid.get().lastPoint.get(0).y - eventY) *
+                            (y + owner.stupid.get().lastPoint.get(0).y - eventY));
         } else {
-            this.dis = (float) Math.sqrt((x + owner.stupid.getX() - eventX) *
-                    (x + owner.stupid.getX() - eventX) +
-                    (y + owner.stupid.getY() - eventY) *
-                            (y + owner.stupid.getY() - eventY));
+            this.dis = (float) Math.sqrt((x + owner.stupid.get().getX() - eventX) *
+                    (x + owner.stupid.get().getX() - eventX) +
+                    (y + owner.stupid.get().getY() - eventY) *
+                            (y + owner.stupid.get().getY() - eventY));
         }
 
     }
@@ -122,7 +123,7 @@ public class DragLocation implements Comparable<DragLocation> {
     }
 
     public void select() {
-        owner.stupid = myStupid;
+        owner.stupid.set(myStupid);
         if (!isOG()) {
             if (owner instanceof CanTrackChanges) {
                 ((CanTrackChanges) owner).changed();

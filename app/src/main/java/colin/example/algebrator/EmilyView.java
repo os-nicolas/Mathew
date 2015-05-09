@@ -9,11 +9,11 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.BaseView;
-import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.Button;
+import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
 import colin.example.algebrator.Actions.WriteScreen.ClearAction;
 import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
 import colin.example.algebrator.Actions.WriteScreen.DeleteAction;

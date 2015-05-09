@@ -1,7 +1,5 @@
 package colin.example.algebrator.tuts;
 
-import cube.d.n.commoncore.eq.AddEquation;
-import cube.d.n.commoncore.eq.EqualsEquation;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.BothSidesView;
 import colin.example.algebrator.R;

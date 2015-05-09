@@ -1,7 +1,7 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import colin.example.algebrator.EmilyView;
 
 public class TimesAction extends InlineOpAction {

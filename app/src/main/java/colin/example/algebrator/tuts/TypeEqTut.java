@@ -1,12 +1,6 @@
 package colin.example.algebrator.tuts;
 
-import colin.example.algebrator.Algebrator;
-import colin.example.algebrator.ColinView;
-import colin.example.algebrator.R;
 import colin.example.algebrator.SuperView;
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.PowerEquation;
 
 /**
  * Created by Colin on 3/19/2015.

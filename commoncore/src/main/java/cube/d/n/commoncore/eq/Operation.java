@@ -1,15 +1,16 @@
 package cube.d.n.commoncore.eq;
 
 
-import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.v2.Line;
 
 public abstract class Operation extends Equation {
 
-	public Operation(BaseView owner2) {
+	public Operation(Line owner2) {
 		super(owner2);
 	}
 
-    public Operation(BaseView owner2, Operation op) {
+    public Operation(Line owner2, Operation op) {
         super(owner2, op);
     }
 }

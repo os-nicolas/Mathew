@@ -10,11 +10,12 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.NumConstEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
-import cube.d.n.commoncore.eq.WritingLeafEquation;
+import cube.d.n.commoncore.Button;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 
 /**
  * Created by Colin on 1/3/2015.

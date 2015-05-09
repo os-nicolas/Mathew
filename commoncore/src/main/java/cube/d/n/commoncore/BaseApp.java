@@ -16,14 +16,12 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.Random;
 
 
-import cube.d.n.commoncore.eq.DivEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.PowerEquation;
+import cube.d.n.commoncore.eq.any.Equation;
 
 /**
  * Created by Colin_000 on 4/20/2015.
  */
-public abstract class  BaseApp extends Application{
+public abstract class BaseApp extends Application{
     private static BaseApp instance;
     private float dpi;
     private int DEFAULT_SIZE =40;
@@ -43,11 +41,14 @@ public abstract class  BaseApp extends Application{
 
     public int lightColor;
     public TextPaint textPaint = new TextPaint();
+    public long acceptedTime = 1000l;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+
+        Log.i("BaseApp", "created");
 
         initColors();
 
@@ -285,13 +286,5 @@ public abstract class  BaseApp extends Application{
         textPaint.setTextSize(TEXT_SIZE);
     }
 
-    BaseView active= null;
-    public BaseView getActive() {
-        //TODO
-        return active;
-    }
 
-    public void setActive(BaseView baseView) {
-        active = baseView;
-    }
 }

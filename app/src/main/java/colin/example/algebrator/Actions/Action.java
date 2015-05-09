@@ -1,14 +1,12 @@
 package colin.example.algebrator.Actions;
 
-import android.app.Activity;
-
-import cube.d.n.commoncore.eq.BinaryEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.MonaryEquation;
+import cube.d.n.commoncore.eq.any.BinaryEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
-import cube.d.n.commoncore.eq.WritingLeafEquation;
-import cube.d.n.commoncore.eq.WritingPraEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
+import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import colin.example.algebrator.SuperView;
 
 /**
@@ -163,14 +161,6 @@ public abstract class Action<myView extends SuperView> extends BaseAction<myView
         return getMoveCurrent(left) instanceof BinaryEquation;
     }
 
-    public static int countEquals(Equation stupid) {
-        int count = 0;
-        for (Equation e : stupid) {
-            if (e instanceof WritingLeafEquation && e.getDisplay(-1).equals("=")) {
-                count++;
-            }
-        }
-        return count;
-    }
+
 
 }

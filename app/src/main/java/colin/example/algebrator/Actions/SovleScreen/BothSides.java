@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
-import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.any.Equation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.BothSidesScreen;

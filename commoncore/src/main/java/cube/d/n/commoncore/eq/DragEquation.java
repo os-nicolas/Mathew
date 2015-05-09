@@ -5,6 +5,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MinusEquation;
+import cube.d.n.commoncore.eq.any.MultiDivSuperEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+
 public class DragEquation {
     // this is the on we draw
     public Equation eq;

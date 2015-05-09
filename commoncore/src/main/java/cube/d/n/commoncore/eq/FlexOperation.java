@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.eq;
 
-import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -8,9 +9,9 @@ import cube.d.n.commoncore.BaseView;
 public abstract class FlexOperation extends  Operation{
 
 
-    public FlexOperation(BaseView owner){super(owner);}
+    public FlexOperation(Line owner){super(owner);}
 
-    public FlexOperation(BaseView owner, FlexOperation flexOp) {
+    public FlexOperation(Line owner, FlexOperation flexOp) {
         super(owner,flexOp);
     }
 

@@ -1,20 +1,20 @@
 package cube.d.n.commoncore.eq.Pro;
 
-import cube.d.n.commoncore.BaseView;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
 public class CosEquation extends TrigEquation<ACosEquation> {
 
-    public CosEquation(BaseView owner) {
+    public CosEquation(Line owner) {
         super(owner);
     }
 
-    protected CosEquation(BaseView owner, TrigEquation toCopy) {
+    protected CosEquation(Line owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }
 

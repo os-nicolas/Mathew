@@ -3,7 +3,15 @@ package cube.d.n.commoncore.eq;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.BaseView;
+
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MinusEquation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.any.PlusMinusEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin_000 on 3/25/2015.
@@ -162,7 +170,7 @@ public class MultiCountData {
         return nums + " " + ks;
     }
 
-    public Equation getEquation(BaseView owner) {
+    public Equation getEquation(Line owner) {
         Equation top = null;
         Equation bot = null;
         Equation result = null;

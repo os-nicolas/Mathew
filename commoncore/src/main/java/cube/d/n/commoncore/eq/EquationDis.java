@@ -1,5 +1,7 @@
 package cube.d.n.commoncore.eq;
 
+import cube.d.n.commoncore.eq.any.Equation;
+
 public class EquationDis implements Comparable<EquationDis> {
 	public float dis;
 	public Equation equation;

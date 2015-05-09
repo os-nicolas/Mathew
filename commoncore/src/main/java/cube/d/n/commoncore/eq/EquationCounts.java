@@ -6,7 +6,13 @@ import android.util.Log;
 import java.math.BigDecimal;
 import java.util.HashMap;
 
-import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MinusEquation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin_000 on 1/18/2015.
@@ -22,7 +28,7 @@ public class EquationCounts {
             neg = !neg;
             e = e.get(0);
         }
-        if (e instanceof  PowerEquation){
+        if (e instanceof PowerEquation){
             root = e.get(0);
             // add all the top stuff
             Equation power = e.get(1);
@@ -106,7 +112,7 @@ public class EquationCounts {
     }
 
     public Equation getEquation() {
-        BaseView owner = root.owner;
+        Line owner = root.owner;
         if (equations.size()==0){
             if ( v.doubleValue()  == 1) {
                 return root;

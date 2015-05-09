@@ -21,19 +21,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import colin.example.algebrator.tuts.TutMessage;
-import cube.d.n.commoncore.Animation;
-import cube.d.n.commoncore.BaseApp;
-import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
-import cube.d.n.commoncore.eq.AddEquation;
-import cube.d.n.commoncore.eq.DragEquation;
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.MultiEquation;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
-import cube.d.n.commoncore.eq.WritingLeafEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 
 public abstract class SuperView extends BaseView implements
         OnTouchListener {

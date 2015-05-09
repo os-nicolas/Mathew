@@ -7,9 +7,17 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 
 
-import cube.d.n.commoncore.BaseApp;
-import cube.d.n.commoncore.BaseView;
+
 import cube.d.n.commoncore.CanWarn;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MinusEquation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.any.PlusMinusEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.v2.Line;
 
 
 /**
@@ -19,13 +27,13 @@ public class Operations {
 
     // **************************** MULTIPLY *****************************************
 
-    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify) {
-        BaseView owner = BaseApp.getApp().getActive();
+    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify,Line owner) {
+
 
         MultiCountDatas result = new MultiCountDatas();
         for (MultiCountData a : right) {
             for (MultiCountData b : left) {
-                MultiCountData toAdd = Multiply(a, b);
+                MultiCountData toAdd = Multiply(a, b, owner);
                 boolean found = false;
                 if (simplify) {
                     for (MultiCountData mcd : result) {
@@ -50,17 +58,16 @@ public class Operations {
         return result;
     }
 
-    private static MultiCountData Multiply(MultiCountData a, MultiCountData b) {
+    private static MultiCountData Multiply(MultiCountData a, MultiCountData b,Line owner) {
         MultiCountData result = new MultiCountData();
 
         for (MultiCountData e : new MultiCountData[]{a, b}) {
-            multiplyHelper(e, result);
+            multiplyHelper(e, result,owner);
         }
         return result;
     }
 
-    private static void multiplyHelper(MultiCountData newMcd, MultiCountData result) {
-        BaseView owner = BaseApp.getApp().getActive();
+    private static void multiplyHelper(MultiCountData newMcd, MultiCountData result,Line owner) {
 
         MultiCountData at = newMcd;
         MultiCountData target = result;
@@ -113,34 +120,31 @@ public class Operations {
 
     // **************************** ADD *****************************************
 
-    public static Equation Add(MultiCountData left, MultiCountData right) {
+    public static Equation Add(MultiCountData left, MultiCountData right,Line owner) {
         //
         MultiCountData under = null;
         if (left.under != null && right.under == null) {
             under = left.under;
-            right = Multiply(right, under);
+            right = Multiply(right, under,owner);
             left.under = null;
         } else if (left.under == null && right.under != null) {
             under = right.under;
-            left = Multiply(left, under);
+            left = Multiply(left, under,owner);
             right.under = null;
         } else if (left.under != null && right.under != null) {
             MultiCountData common = deepFindCommon(left.under, right.under);
-            MultiCountData leftRem = remainder(left.under, common);
-            MultiCountData rightRem = remainder(right.under, common);
+            MultiCountData leftRem = remainder(left.under, common,owner);
+            MultiCountData rightRem = remainder(right.under, common,owner);
 
-            under = Multiply(right.under, leftRem);
+            under = Multiply(right.under, leftRem,owner);
             left.under = null;
             right.under = null;
 
-            right = Multiply(right, leftRem);
+            right = Multiply(right, leftRem,owner);
 
-            left = Multiply(left, rightRem);
+            left = Multiply(left, rightRem,owner);
 
         }
-
-        //TODO get owner a different way?
-        BaseView owner = BaseApp.getApp().getActive();
 
         //if under == null we actully add
         if (under == null && !(left.key.isEmpty() &&
@@ -150,10 +154,10 @@ public class Operations {
 
             MultiCountData common = findCommon(left, right);
             if (!common.key.isEmpty() || !common.numbers.isEmpty()) {
-                left = remainder(left, common);
-                right = remainder(right, common);
+                left = remainder(left, common,owner);
+                right = remainder(right, common,owner);
             }
-            Equation result = addHelper(left, right);
+            Equation result = addHelper(left, right,owner);
             // and multiply the result time common if there is any common
             if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 0) {
                 return result;
@@ -214,8 +218,7 @@ public class Operations {
         }
     }
 
-    private static Equation addHelper(MultiCountData left, MultiCountData right) {
-        BaseView owner = BaseApp.getApp().getActive();
+    private static Equation addHelper(MultiCountData left, MultiCountData right,Line owner) {
         // if they are both just numbers make a NumConst
         if (left.key.size() == 0 && right.key.size() == 0 && right.numbers.size() <= 1 && left.numbers.size() <= 1 && !left.plusMinus && !right.plusMinus) {
             BigDecimal sum = right.getValue().add(left.getValue());
@@ -238,7 +241,7 @@ public class Operations {
     }
 
 
-    public static MultiCountData remainder(MultiCountData left, MultiCountData common) {
+    public static MultiCountData remainder(MultiCountData left, MultiCountData common,Line owner) {
         MultiCountData result = new MultiCountData();
 
         ArrayList<EquationCounts> leftCopy = new ArrayList<EquationCounts>();
@@ -294,7 +297,7 @@ public class Operations {
             }
         }
 
-        Equation oneEq = NumConstEquation.create(1,BaseApp.getApp().getActive());
+        Equation oneEq = NumConstEquation.create(1,owner);
         for (EquationCounts ec:leftCopy){
             if (!ec.isEmpty()) {
                 if (!ec.getEquation().same(oneEq)) {
@@ -370,7 +373,7 @@ public class Operations {
         if (common.under == null && left.under != null) {
             result.under = new MultiCountData(left.under);
         } else if (left.under != null) {
-            result.under = remainder(left.under, common.under);
+            result.under = remainder(left.under, common.under,owner);
         }
         // what do we do with unders?
         // nothing for now
@@ -574,8 +577,7 @@ public class Operations {
 
     // **************************** DIVIDE ****************************
 
-    public static Equation divide(Equation a, Equation b) {
-        BaseView owner = BaseApp.getApp().getActive();
+    public static Equation divide(Equation a, Equation b,Line owner) {
         Equation result = null;
 
         // we check to see if they are both power equations of the same power
@@ -633,11 +635,11 @@ public class Operations {
 
                     ((CanWarn) owner).tryWarn(common.getEquation(owner));
 
-                    MultiCountData topData = remainder(top, common);
-                    MultiCountData botData = remainder(bot, common);
+                    MultiCountData topData = remainder(top, common,owner);
+                    MultiCountData botData = remainder(bot, common,owner);
                     Equation topEq = topData.getEquation(owner);
                     Equation botEq = botData.getEquation(owner);
-                    result = getResult(topEq, botEq);
+                    result = getResult(topEq, botEq,owner);
 
                 }
                 // if we have sqrt(5)/23
@@ -685,18 +687,17 @@ public class Operations {
 
                 Equation topEq = top.getEquation(owner);
                 Equation botEq = bot.getEquation(owner);
-                result = getResult(topEq, botEq);
+                result = getResult(topEq, botEq,owner);
             } else {
                 Equation topEq = a;
                 Equation botEq = b;
-                result = getResult(topEq, botEq);
+                result = getResult(topEq, botEq,owner);
             }
         }
         return result;
     }
 
-    private static Equation getResult(Equation topEq, Equation botEq) {
-        BaseView owner = BaseApp.getApp().getActive();
+    private static Equation getResult(Equation topEq, Equation botEq,Line owner) {
         // if the top is 0 and the bottom is not
         if ((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0))) {
             if (owner instanceof CanWarn) {
@@ -739,7 +740,7 @@ public class Operations {
 
     public static Equation flip(Equation demo) {
 
-        BaseView owner = BaseApp.getApp().getActive();
+        Line owner = demo.owner;
         // if it's a div equation flip it over
         if (demo instanceof DivEquation) {
             if (demo.get(0) instanceof NumConstEquation && ((NumConstEquation) demo.get(0)).getValue().doubleValue() == 1) {

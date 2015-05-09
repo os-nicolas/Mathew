@@ -2,9 +2,9 @@ package colin.example.algebrator.Actions.BothSides;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.eq.Equation;
+import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.BothSidesView;

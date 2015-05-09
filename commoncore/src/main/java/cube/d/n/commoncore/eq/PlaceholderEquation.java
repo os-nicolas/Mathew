@@ -3,14 +3,16 @@ package cube.d.n.commoncore.eq;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-import cube.d.n.commoncore.BaseView;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.LeafEquation;
+import cube.d.n.commoncore.v2.Line;
 
 
 public class PlaceholderEquation extends LeafEquation {
 	private long lastUpdate;
     public boolean drawBkg=false;
 
-    public PlaceholderEquation(BaseView owner) {
+    public PlaceholderEquation(Line owner) {
 		super(owner);
         init();
 	}
@@ -25,7 +27,7 @@ public class PlaceholderEquation extends LeafEquation {
         lastUpdate = System.currentTimeMillis();
     }
 
-    public PlaceholderEquation(BaseView owner, PlaceholderEquation equations) {
+    public PlaceholderEquation(Line owner, PlaceholderEquation equations) {
         super(owner, equations);
         init();
     }

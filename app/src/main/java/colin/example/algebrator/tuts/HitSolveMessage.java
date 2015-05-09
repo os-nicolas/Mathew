@@ -1,11 +1,8 @@
 package colin.example.algebrator.tuts;
 
-import android.util.Log;
-
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
-import cube.d.n.commoncore.eq.WritingLeafEquation;
-import colin.example.algebrator.Actions.Action;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import colin.example.algebrator.Algebrator;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.R;

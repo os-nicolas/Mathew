@@ -1,18 +1,16 @@
 package colin.example.algebrator.Actions.SovleScreen;
 
-import cube.d.n.commoncore.eq.AddEquation;
-import cube.d.n.commoncore.eq.DivEquation;
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.MinusEquation;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.MultiCountData;
-import cube.d.n.commoncore.eq.MultiCountDatas;
-import cube.d.n.commoncore.eq.MultiEquation;
-import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.eq.PlusMinusEquation;
-import cube.d.n.commoncore.eq.PowerEquation;
-import cube.d.n.commoncore.eq.VarEquation;
+import cube.d.n.commoncore.eq.any.PlusMinusEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.eq.any.VarEquation;
 import colin.example.algebrator.Actions.Action;
 import colin.example.algebrator.ColinView;
 

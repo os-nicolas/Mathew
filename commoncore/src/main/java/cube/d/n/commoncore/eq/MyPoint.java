@@ -7,6 +7,7 @@ import android.graphics.RectF;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Physical;
+import cube.d.n.commoncore.eq.any.Equation;
 
 /**
  * Created by Colin on 2/11/2015.

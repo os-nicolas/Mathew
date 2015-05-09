@@ -1,20 +1,20 @@
 package cube.d.n.commoncore.eq.Pro;
 
-import cube.d.n.commoncore.BaseView;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.NumConstEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
 public class SineEquation extends TrigEquation<ASineEquation> {
 
-    public  SineEquation(BaseView owner) {
+    public  SineEquation(Line owner) {
         super(owner);
     }
 
-    protected   SineEquation(BaseView owner, TrigEquation toCopy) {
+    protected   SineEquation(Line owner, TrigEquation toCopy) {
         super(owner,toCopy);
     }
 

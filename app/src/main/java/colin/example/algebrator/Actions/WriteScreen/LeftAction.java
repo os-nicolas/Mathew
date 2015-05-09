@@ -1,6 +1,5 @@
 package colin.example.algebrator.Actions.WriteScreen;
 
-import cube.d.n.commoncore.eq.BinaryEquation;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import colin.example.algebrator.EmilyView;
 import colin.example.algebrator.Actions.Action;

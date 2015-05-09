@@ -10,17 +10,18 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.eq.AddEquation;
-import cube.d.n.commoncore.eq.BinaryEquation;
-import cube.d.n.commoncore.eq.DivEquation;
-import cube.d.n.commoncore.eq.EqualsEquation;
-import cube.d.n.commoncore.eq.Equation;
-import cube.d.n.commoncore.eq.MultiEquation;
+import cube.d.n.commoncore.Button;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.BinaryEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.PowerEquation;
-import cube.d.n.commoncore.eq.VarEquation;
-import cube.d.n.commoncore.eq.WritingEquation;
-import cube.d.n.commoncore.eq.WritingPraEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.eq.any.VarEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import colin.example.algebrator.Actions.BothSides.CancelAction;
 import colin.example.algebrator.Actions.BothSides.CheckAction;
 import colin.example.algebrator.Actions.WriteScreen.DecimalAction;
