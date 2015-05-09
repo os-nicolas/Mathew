@@ -30,11 +30,12 @@ import cube.d.n.commoncore.PopUpButton;
  */
 public class InputKeyboard extends KeyBoard {
 
-    private final InputLine line;
+
 
     public InputKeyboard(Main owner,InputLine line){
-        super(owner);
-        this.line = line;
+
+        super(owner,line);
+
     }
 
     @Override
@@ -42,53 +43,53 @@ public class InputKeyboard extends KeyBoard {
 
 
 
-        popUpButtons.add(new PopUpButton("clear" ,new ClearAction(line)));
+        popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
-        firstRow.add(new Button("7", new NumberAction(line, "7")));
-        firstRow.add(new Button("8", new NumberAction(line, "8")));
-        firstRow.add(new Button("9", new NumberAction(line, "9")));
-        firstRow.add(new Button("a", new VarAction(line, "a")));
-        firstRow.add(new Button("b", new VarAction(line, "b")));
-        firstRow.add(new Button("+", new PlusAction(line)));
-        firstRow.add(new Button("-", new MinusAction(line)));
-        firstRow.add(new Button("=", new EqualsAction(line)));
+        firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
+        firstRow.add(new Button("8", new NumberAction((InputLine)line, "8")));
+        firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
+        firstRow.add(new Button("a", new VarAction((InputLine)line, "a")));
+        firstRow.add(new Button("b", new VarAction((InputLine)line, "b")));
+        firstRow.add(new Button("+", new PlusAction((InputLine)line)));
+        firstRow.add(new Button("-", new MinusAction((InputLine)line)));
+        firstRow.add(new Button("=", new EqualsAction((InputLine)line)));
         //TODO this does not work since my font does not support this
         char[] backSpaceUnicode = { '\u232B'};
-        Button del = new Button(new String(backSpaceUnicode), new DeleteAction(line));
+        Button del = new Button(new String(backSpaceUnicode), new DeleteAction((InputLine)line));
         Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
         del.textPaint.setTypeface(myTypeface);
         firstRow.add(del);//
 
         ArrayList<Button> secondRow = new ArrayList<Button>();
-        secondRow.add(new Button("4", new NumberAction(line, "4")));
-        secondRow.add(new Button("5", new NumberAction(line, "5")));
-        secondRow.add(new Button("6", new NumberAction(line, "6")));
-        secondRow.add(new Button("(", new ParenthesesAction(line, true)));
-        secondRow.add(new Button(")", new ParenthesesAction(line, false)));
+        secondRow.add(new Button("4", new NumberAction((InputLine)line, "4")));
+        secondRow.add(new Button("5", new NumberAction((InputLine)line, "5")));
+        secondRow.add(new Button("6", new NumberAction((InputLine)line, "6")));
+        secondRow.add(new Button("(", new ParenthesesAction((InputLine)line, true)));
+        secondRow.add(new Button(")", new ParenthesesAction((InputLine)line, false)));
         char[] timesUnicode = {'\u00D7'};
-        secondRow.add(new Button(new String(timesUnicode), new TimesAction(line)));
+        secondRow.add(new Button(new String(timesUnicode), new TimesAction((InputLine)line)));
         char[] divisionUnicode = {'\u00F7'};
-        secondRow.add(new Button(new String(divisionUnicode), new DivAction(line)));
+        secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)));
 
 
         ArrayList<Button> thridRow = new ArrayList<Button>();
-        thridRow.add(new Button("1", new NumberAction(line, "1")));
-        thridRow.add(new Button("2", new NumberAction(line, "2")));
-        thridRow.add(new Button("3", new NumberAction(line, "3")));
-        thridRow.add(new Button("0", new NumberAction(line, "0")));
-        thridRow.add(new Button(".", new DecimalAction(line, ".")));
-        thridRow.add(new Button("cⁿ", new PowerAction(line)));
+        thridRow.add(new Button("1", new NumberAction((InputLine)line, "1")));
+        thridRow.add(new Button("2", new NumberAction((InputLine)line, "2")));
+        thridRow.add(new Button("3", new NumberAction((InputLine)line, "3")));
+        thridRow.add(new Button("0", new NumberAction((InputLine)line, "0")));
+        thridRow.add(new Button(".", new DecimalAction((InputLine)line, ".")));
+        thridRow.add(new Button("cⁿ", new PowerAction((InputLine)line)));
         char[] sqrtUnicode = {'\u221A'};
-        thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction(line)));
+        thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)));
         char[] leftUnicode = {'\u2190'};
-        thridRow.add(new Button(new String(leftUnicode), new LeftAction(line)));
+        thridRow.add(new Button(new String(leftUnicode), new LeftAction((InputLine)line)));
         char[] rightUnicode = {'\u2192'};
-        thridRow.add(new Button(new String(rightUnicode), new RightAction(line)));
+        thridRow.add(new Button(new String(rightUnicode), new RightAction((InputLine)line)));
 
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button solve = new Button("Solve", new Solve(line));
+        Button solve = new Button("Solve", new Solve((InputLine)line));
         solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(solve);
         addButtonsRow(thridRow, 8f / 9f, 9f / 9f);

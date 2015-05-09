@@ -5,6 +5,7 @@ import android.graphics.Paint;
 
 
 import cube.d.n.commoncore.eq.MyPoint;
+import cube.d.n.commoncore.v2.Line;
 
 /**
  * Created by Colin on 2/19/2015.
@@ -16,7 +17,7 @@ public class Pop extends Animation {
     int startAlpha = 0x90;
     public MyPoint myPoint;
 
-    public Pop(MyPoint myPoint,BaseView owner) {
+    public Pop(MyPoint myPoint,Line owner) {
         super(owner);
         this.startedAt = System.currentTimeMillis();
         this.myPoint = myPoint;

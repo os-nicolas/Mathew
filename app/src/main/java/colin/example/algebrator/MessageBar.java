@@ -1,15 +1,17 @@
-package cube.d.n.commoncore;
+package colin.example.algebrator;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
+
+import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.Message;
 
 
 /**
@@ -17,7 +19,7 @@ import java.util.concurrent.Callable;
  */
 public class MessageBar {
     float targetHeight = 0;
-    float shadowHeight = 20*BaseApp.getApp().getDpi();
+    float shadowHeight = 20* BaseApp.getApp().getDpi();
     float bodyHeight = 55*BaseApp.getApp().getDpi();
     float currentHeight = 0;
     final BaseView owner;

@@ -2,6 +2,7 @@ package cube.d.n.commoncore.v2;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -9,7 +10,7 @@ import android.graphics.Paint;
 public class KeyBoardManager extends GS<KeyBoard> {
 
    private long nextKeyboadAddAt =-1l;
-   private long switchTime = 500;
+   private long switchTime = 4000;
    private GS<KeyBoard> nextKeyboard = new GS<KeyBoard>();
 
     @Override
@@ -24,10 +25,12 @@ public class KeyBoardManager extends GS<KeyBoard> {
     public void swtich(){
         value = nextKeyboard.get();
         nextKeyboard.set(null);
+        Log.i("switch","to: "+ get());
     }
 
     public void hardSet(KeyBoard k){
         super.set(k);
+        Log.i("hardSet","to: "+ get());
     }
 
     public void draw(Canvas canvas, float top, float left, Paint paint) {

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -62,6 +63,9 @@ public class Main extends View implements View.OnTouchListener {
         return false;
     }
 
+    long startTime = System.currentTimeMillis();
+    int frames = 1;
+
     @Override
     protected void onDraw(Canvas canvas) {
 
@@ -78,11 +82,20 @@ public class Main extends View implements View.OnTouchListener {
         }
 
         keyBoardManager.draw(canvas, top, left, new Paint());
+        // TODO this is probably really bad for CPU and GPU use
+        invalidate();
+
+        long now = System.currentTimeMillis();
+        float elapsedTime = (now - startTime) / 1000f;
+        frames++;
+        if (frames % 100 == 0) {
+            Log.i("fps", "" + frames / elapsedTime);
+        }
     }
 
     private boolean inScreen(Line l, float top) {
         if (top > height- keyBoardManager.get().measureHeight() &&
-                keyBoardManager.getNextKeyboard()== null || top > height- keyBoardManager.getNextKeyboard().measureHeight()){
+                (keyBoardManager.getNextKeyboard()== null || top > height- keyBoardManager.getNextKeyboard().measureHeight())){
             return false;
         }
         if (top + l.measureHeight() < 0){

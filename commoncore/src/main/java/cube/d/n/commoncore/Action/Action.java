@@ -13,7 +13,7 @@ import cube.d.n.commoncore.v2.Line;
  */
 public abstract class Action {
 
-    public Line owner;
+    public final Line owner;
 
     public Action(Line owner){
         this.owner =owner;

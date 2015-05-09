@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import java.util.ArrayList;
 
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Measureable;
 import cube.d.n.commoncore.PopUpButton;
@@ -20,9 +21,12 @@ public abstract class KeyBoard implements Measureable {
     ArrayList<Button> buttons = new ArrayList<Button>();
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<>();
     public float buttonsPercent;
+    protected final Line line;
 
-    public KeyBoard(Main owner){
+
+    public KeyBoard(Main owner,Line line){
         this.owner = owner;
+        this.line = line;
         addButtons();
     }
 
@@ -93,6 +97,26 @@ public abstract class KeyBoard implements Measureable {
         for (PopUpButton myPUB: popUpButtons) {
             myPUB.updateLocation(this);
             myPUB.draw(canvas,paint);
+        }
+
+        drawShadow(canvas,paint.getAlpha());
+    }
+
+    protected void drawShadow(Canvas canvas,int alpha) {
+        Paint p = new Paint();
+        int color = BaseApp.getApp().darkDarkColor;
+        p.setColor(color);
+        p.setAlpha(alpha);
+        int at = ((int) (owner.height - measureHeight()));
+//        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
+//            canvas.drawLine(0,at,width,at,p);
+//            at--;
+//        }
+        p.setAlpha((int)(0x8f*(alpha/((float)0xff))));
+        while (p.getAlpha() > 1) {
+            canvas.drawLine(0, at, measureWidth(), at, p);
+            p.setAlpha((int) (p.getAlpha() / BaseApp.getApp().getShadowFade()));
+            at--;
         }
     }
 
