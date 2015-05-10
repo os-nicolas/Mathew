@@ -12,7 +12,7 @@ import cube.d.n.commoncore.v2.GS;
 public class KeyBoardManager extends GS<KeyBoard> {
 
    private long nextKeyboadAddAt =-1l;
-   private long switchTime = 4000;
+   private long switchTime = 500;
    private GS<KeyBoard> nextKeyboard = new GS<KeyBoard>();
 
     @Override

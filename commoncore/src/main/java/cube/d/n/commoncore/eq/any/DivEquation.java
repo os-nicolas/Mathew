@@ -211,6 +211,17 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 //        return result;
 //    }
 
+    @Override
+    public void tryOperator(int i) {
+
+        if (i!= size()-1) {
+            ArrayList<Equation> toOp = new ArrayList<Equation>();
+            toOp.add(get(i));
+            toOp.add(get(i + 1));
+            tryOperator(toOp);
+        }
+    }
+
     private double gcd(double a, double b){
         while (b > 0)
         {

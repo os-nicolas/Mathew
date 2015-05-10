@@ -1486,6 +1486,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return true;
     }
 
+    public abstract void tryOperator(int i);
+
 
     private class Clostest {
         public float dis;

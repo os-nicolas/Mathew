@@ -16,6 +16,8 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
         init();
     }
 
+
+
     @Override
     public Equation negate() {
         return this.get(0).copy();

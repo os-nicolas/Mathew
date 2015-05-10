@@ -2,6 +2,7 @@ package cube.d.n.commoncore.v2.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -218,6 +219,13 @@ public class InputLine extends Line implements Selects {
 
     @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
+
+        Rect r = new Rect((int)left,(int)top,(int)(left+ measureWidth()),(int)(top+measureHeight()));
+        Paint p = new Paint();
+        p.setAlpha(paint.getAlpha());
+        p.setColor(BaseApp.getApp().darkColor);
+        canvas.drawRect(r,p);
+
         stupid.get().draw(canvas,  left +( measureWidth() / 2f),top + buffer + stupid.get().measureHeightUpper());
     }
 

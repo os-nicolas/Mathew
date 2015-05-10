@@ -73,7 +73,7 @@ public class EquationButton extends Button {
         // if there is a warning show that too
         if (warn && canvas != null) {
             // we need to find the right end
-            float at =(float)( myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE * BaseApp.getApp().getDpi() *BaseApp.getApp().zoom);
+            float at = (float) (myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + WARN_SPACE * BaseApp.getApp().getDpi() * BaseApp.getApp().zoom);
             Paint p = new Paint(BaseApp.getApp().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);
@@ -103,21 +103,21 @@ public class EquationButton extends Button {
 
         float leftEnd;
         float rightEnd;
-        float topEnd = (y ) - myEq.measureHeightUpper()- buffer;
-        float bottomEnd = (y) + myEq.measureHeightLower()+ buffer;
+        float topEnd = (y) - myEq.measureHeightUpper() - buffer;
+        float bottomEnd = (y) + myEq.measureHeightLower() + buffer;
 
         if (myEq instanceof EqualsEquation) {
             float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-            leftEnd = (x ) - (middle / 2) - myEq.get(0).measureWidth()- buffer;
+            leftEnd = (x) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
             rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
         } else {
-            leftEnd = (x ) - myEq.measureWidth() / 2;
-            rightEnd = (x ) + myEq.measureWidth() / 2;
+            leftEnd = (x) - myEq.measureWidth() / 2;
+            rightEnd = (x) + myEq.measureWidth() / 2;
         }
 
         Paint temp = new Paint();
         //TODO scale by dpi - also do i really want to blurr this?
-        temp.setMaskFilter(new BlurMaskFilter(32 *BaseApp.getApp().getDpi(), BlurMaskFilter.Blur.NORMAL));
+        temp.setMaskFilter(new BlurMaskFilter(32 * BaseApp.getApp().getDpi(), BlurMaskFilter.Blur.NORMAL));
 
         temp.setColor(BaseApp.getApp().lightColor);
         temp.setAlpha(bkgCurrentAlpha);
@@ -134,11 +134,11 @@ public class EquationButton extends Button {
             if (lastLongTouch != null && lastLongTouch.started()) {
                 if (lastLongTouch.done()) {
                     Log.i("lastLongTouch", "done");
-                    ((CanTrackChanges)owner).getAfterAnimations().add(new DragStarted(owner, 0x7f));
+                    ((CanTrackChanges) owner).getAfterAnimations().add(new DragStarted(owner, 0x7f));
                     revert();
                     lastLongTouch = null;
                 } else {
-                    ((AlgebraLine)owner).drawProgress(canvas, lastLongTouch.percent(), 0xff);
+                    ((AlgebraLine) owner).drawProgress(canvas, lastLongTouch.percent(), 0xff);
                     Log.i("lastLongTouch", lastLongTouch.percent() + "");
                 }
             }
@@ -149,7 +149,7 @@ public class EquationButton extends Button {
 
     //long lastTap = 0;
     public void click(MotionEvent event) {
-        if (inBox(event) && !((AlgebraLine)owner).history.get(0).equals(this)) {
+        if (inBox(event) && !((AlgebraLine) owner).history.get(0).equals(this)) {
             Log.d("highlighting ", myEq.toString());
 
             if (lastLongTouch == null && event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -175,14 +175,14 @@ public class EquationButton extends Button {
 
         if (myEq instanceof EqualsEquation) {
 
-            stupidX = ((AlgebraLine)owner).stupid.get().lastPoint.get(0).x;
-            stupidY = ((AlgebraLine)owner).stupid.get().lastPoint.get(0).y;
+            stupidX = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).x;
+            stupidY = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).y;
             float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
             leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth();
             rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth();
         } else {
-            stupidX = ((AlgebraLine)owner).stupid.get().getX();
-            stupidY = ((AlgebraLine)owner).stupid.get().getY();
+            stupidX = ((AlgebraLine) owner).stupid.get().getX();
+            stupidY = ((AlgebraLine) owner).stupid.get().getY();
             leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f);
             rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f);
         }
@@ -199,24 +199,23 @@ public class EquationButton extends Button {
     private void revert() {
         // update the offset
 
-        if (((Selects)owner).getSelected() != null) {
-            ((Selects)owner).setSelected(null);
+        if (((Selects) owner).getSelected() != null) {
+            ((Selects) owner).setSelected(null);
         }
 
         // and set this back to be the boss
-        ((AlgebraLine)owner).stupid.set(myEq.copy());
+        ((AlgebraLine) owner).stupid.set(myEq.copy());
         // we don't have to do this but
-        ((AlgebraLine)owner).stupidAlpha = 0xff;
+        ((AlgebraLine) owner).stupidAlpha = 0xff;
         current = null;
         // at time of writing copy does not change active but it might someday so let's be safe
 
 
-
         // we need to remove all history and including this
-        ((AlgebraLine)owner).history = new ArrayList<EquationButton>(((AlgebraLine)owner).history.subList(((AlgebraLine)owner).history.indexOf(this), ((AlgebraLine)owner).history.size()));
+        ((AlgebraLine) owner).history = new ArrayList<EquationButton>(((AlgebraLine) owner).history.subList(((AlgebraLine) owner).history.indexOf(this), ((AlgebraLine) owner).history.size()));
 
         // update the offsets of the remaining histories
-        for (EquationButton eb : ((AlgebraLine)owner).history) {
+        for (EquationButton eb : ((AlgebraLine) owner).history) {
             if (eb != this) {
                 eb.x -= x;
                 eb.y -= y;
@@ -235,7 +234,7 @@ public class EquationButton extends Button {
             }
             bkgTargetAlpha = 0x00;
             // current copy
-            if (current != null && current.lastLongTouch != null && ((AlgebraLine)owner).history.indexOf(this) < ((AlgebraLine)owner).history.indexOf(current)) {
+            if (current != null && current.lastLongTouch != null && ((AlgebraLine) owner).history.indexOf(this) < ((AlgebraLine) owner).history.indexOf(current)) {
                 currentAlpha = (int) (Math.max(((.7f - current.lastLongTouch.percent())), 0) * 0xff);
                 targetAlpha = currentAlpha;
             } else {
@@ -272,22 +271,49 @@ public class EquationButton extends Button {
 
     @Override
     protected float top() {
-        return y + ((AlgebraLine)owner).stupid.get().lastPoint.get(0).getY() - myEq.measureHeightUpper();
+        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+            ((AlgebraLine) owner).stupid.get().updateLocation();
+        }
+        return y + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getY() - myEq.measureHeightUpper();
     }
 
     @Override
     protected float left() {
-        return x + ((AlgebraLine)owner).stupid.get().lastPoint.get(0).getX() - (myEq.measureWidth() / 2);
+        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+            ((AlgebraLine) owner).stupid.get().updateLocation();
+        }
+        return x + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getX() - (myEq.measureWidth() / 2);
     }
 
     @Override
     protected float bottom() {
-        return y + ((AlgebraLine)owner).stupid.get().lastPoint.get(0).getY() + myEq.measureHeightLower();
+        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+            ((AlgebraLine) owner).stupid.get().updateLocation();
+        }
+        return y + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getY() + myEq.measureHeightLower();
+    }
+
+    private void updateLocations() {
+
+        int stupidX;
+        int stupidY;
+        if (((AlgebraLine) owner).stupid.get() instanceof EqualsEquation) {
+            stupidX = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).x;
+            stupidY = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).y;
+        } else {
+            stupidX = (int) ((AlgebraLine) owner).stupid.get().getX();
+            stupidY = (int) ((AlgebraLine) owner).stupid.get().getY();
+        }
+        updateLocations(stupidX, stupidY);
+
     }
 
     @Override
     protected float right() {
-        float base = x + ((AlgebraLine)owner).stupid.get().lastPoint.get(0).getX() + (myEq.measureWidth() / 2);
+        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+            ((AlgebraLine) owner).stupid.get().updateLocation();
+        }
+        float base = x + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getX() + (myEq.measureWidth() / 2);
         if (warn) {
             return base + warnEq.measureWidth() + WARN_SPACE * BaseApp.getApp().getDpi();
         }
@@ -295,7 +321,7 @@ public class EquationButton extends Button {
     }
 
     public void updateZoom(double lastZoom, double zoom) {
-        y= (float)(y*zoom/lastZoom);
+        y = (float) (y * zoom / lastZoom);
 
     }
 }

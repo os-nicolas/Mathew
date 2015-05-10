@@ -33,6 +33,8 @@ public class WritingEquation extends Equation {
         init();
     }
 
+
+
     private void init() {
         display = "\"";
     }
@@ -91,6 +93,11 @@ public class WritingEquation extends Equation {
                     x - (totalWidth / 2) + currentX + (currentWidth / 2), y);
             currentX += currentWidth;
         }
+    }
+
+    @Override
+    public void tryOperator(int i) {
+        // do nothing!
     }
 
     @Override

@@ -34,7 +34,7 @@ class FadeInTextView extends TextView {
         //ColorDrawable cd = (ColorDrawable) getBackground();
         currentColor = 0xffffff;//cd.getColor();
         setTextColor(currentColor);
-        setTextSize(getTextSize()*BaseApp.getApp().getScale());
+        //setTextSize(getTextSize()*BaseApp.getApp().getScale());
         Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans-ExtraLight.ttf");
         setTypeface(myTypeface);
         realPaddingB = getPaddingBottom();

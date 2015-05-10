@@ -28,6 +28,10 @@ public abstract class LeafEquation extends Equation {
         }
     }
 
+    @Override
+    public void tryOperator(int i) {
+    }
+
 	public LeafEquation(Line owner) {
 		super(owner);
         init();

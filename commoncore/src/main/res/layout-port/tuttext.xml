@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Large Text"
-                        android:textSize="25sp"
+                        android:textSize="40sp"
                         android:layout_gravity="center|bottom"
                         android:gravity="center|bottom"
                         android:background="#ff0000"
@@ -62,7 +62,7 @@
                             android:background="#ff0000"
                             android:textColor="#ffffff"
                             android:text="yo yo yo yo yo yo yo"
-                            android:textSize="18sp"
+                            android:textSize="25sp"
                             android:gravity="center|top"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content" />

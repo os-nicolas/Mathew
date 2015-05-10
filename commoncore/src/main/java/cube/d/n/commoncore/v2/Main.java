@@ -59,7 +59,7 @@ public class Main extends View implements View.OnTouchListener {
         if (event.getPointerCount() == 1) {
             // pass it on to my bros
             boolean keepGoing = true;
-            if (keepGoing) {
+            if (keepGoing && keyBoardManager.getNextKeyboard() == null) {
                 keepGoing = !keyBoardManager.get().onTouch(event);
             }
             if (keepGoing) {

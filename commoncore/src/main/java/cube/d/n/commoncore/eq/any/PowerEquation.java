@@ -29,6 +29,16 @@ public class PowerEquation extends Operation implements BinaryEquation {
         init();
     }
 
+    @Override
+    public void tryOperator(int i) {
+        if (i!= size()-1) {
+            ArrayList<Equation> toOp = new ArrayList<Equation>();
+            toOp.add(get(i));
+            toOp.add(get(i + 1));
+            tryOperator(toOp);
+        }
+    }
+
     private void init() {
         display = "^";
     }

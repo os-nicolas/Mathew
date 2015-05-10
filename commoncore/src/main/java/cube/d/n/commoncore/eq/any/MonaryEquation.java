@@ -28,6 +28,13 @@ public abstract class MonaryEquation extends Equation {
 
     }
 
+    @Override
+    public void tryOperator(int i) {
+        ArrayList<Equation> toOp = new ArrayList<Equation>();
+        toOp.add(get(i));
+        tryOperator(toOp);
+    }
+
 
     public MonaryEquation(Line owner, MonaryEquation monEq) {
         super(owner,monEq);

@@ -24,6 +24,10 @@ public class EqualsEquation extends Equation {
         init();
 	}
 
+    @Override
+    public void tryOperator(int i) {
+    }
+
     private void init() {
         display = "=";
     }

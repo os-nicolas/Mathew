@@ -84,6 +84,17 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         display = new String(timesUnicode);
     }
 
+    @Override
+    public void tryOperator(int i) {
+
+        if (i!= size()-1) {
+            ArrayList<Equation> toOp = new ArrayList<Equation>();
+            toOp.add(get(i));
+            toOp.add(get(i + 1));
+            tryOperator(toOp);
+        }
+    }
+
     public void tryOperator(ArrayList<Equation> eqs) {
         //TODO handle inbeddedness
         String db ="";

@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import cube.d.n.commoncore.Animation;
+
 /**
  * Created by Colin on 4/24/2015.
  */

@@ -3,6 +3,7 @@ package cube.d.n.commoncore.v2.lines;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -13,6 +14,7 @@ import java.util.HashSet;
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CanTrackChanges;
+import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.EquationButton;
 import cube.d.n.commoncore.LongTouch;
@@ -36,7 +38,7 @@ import cube.d.n.commoncore.v2.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/7/2015.
  */
-public class AlgebraLine extends Line implements CanTrackChanges,Selects {
+public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn {
 
     private Equation selected;
     public int stupidAlpha=0xff;
@@ -45,6 +47,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
     protected DragLocations dragLocations = new DragLocations();
     public LongTouch lastLongTouch = null;
     private ArrayList<Animation> animation = new ArrayList<>();
+    private Equation changedEq;
 
 
     public AlgebraLine(Main owner) {
@@ -56,6 +59,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
     public AlgebraLine(Main owner, Equation newEq) {
         super(owner);
         stupid.set(newEq);
+        history.add(new EquationButton(stupid.get().copy(),this));
     }
 
     @Override
@@ -66,18 +70,20 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
         return myKeyBoard;
     }
 
+
+    private float height = -1;
     @Override
     public float measureHeight() {
-        float sum = 0 ;
-        sum = equationHeight(stupid.get());
-
-        for (EquationButton e: history){
-            if ((!e.equals(history.get(0)))) {
-                sum += e.measureHeight() + getHistoryBuffer();
+        if (height ==-1) {
+            if (history.size() != 1) {
+                float bot = stupid.get().getY() + stupid.get().measureHeightLower() + buffer;
+                float top = history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - buffer;
+                height = bot - top;
+            } else {
+                height = equationHeight(stupid.get());
             }
         }
-
-        return sum;
+        return height;
     }
 
     private float equationHeight(Equation equation) {
@@ -86,6 +92,12 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
 
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
+
+        Rect r = new Rect((int)left,(int)top,(int)(left+ measureWidth()),(int)(top+measureHeight()));
+        Paint p = new Paint();
+        p.setAlpha(paint.getAlpha());
+        p.setColor(0x20ff71ff);
+        canvas.drawRect(r,p);
 
         int targetAlpha;
         if (EquationButton.current != null && EquationButton.current.lastLongTouch != null){
@@ -123,19 +135,51 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
     private void drawHistory(Canvas canvas, float top, float left, Paint paint) {
         float historyBuffer = getHistoryBuffer();
 
-        float atHeight = top + measureHeight() - buffer - stupid.get().measureHeight() - historyBuffer;
+
+        float atHeight = -stupid.get().measureHeightUpper() - historyBuffer ;
+
+        for (EquationButton eb : history) {
+            if ((!eb.equals(history.get(0)))) {
+
+                atHeight -= eb.myEq.measureHeightLower();
+
+                int centerX;
+                int centerY;
+                if (stupid.get() instanceof EqualsEquation){
+                    centerX= stupid.get().lastPoint.get(0).x;
+                    centerY= stupid.get().lastPoint.get(0).y;
+                }else{
+                    centerX= (int) stupid.get().getX();
+                    centerY= (int) stupid.get().getY();
+                }
+
+                if ((centerY + atHeight + eb.myEq.measureHeightLower()) > 0 &&
+                        (centerY + atHeight - eb.myEq.measureHeightUpper()) < owner.height ) {
+                    eb.draw(canvas, centerX, centerY);
+                } else  {
+                    // update the locations
+                    eb.updateLocations(centerX, centerY);
+                }
+                atHeight -= (eb.myEq.measureHeightUpper() + historyBuffer);
+
+            }
+        }
+
         float currentPercent = fade;
+        atHeight = -stupid.get().measureHeightUpper() - historyBuffer ;
         for (EquationButton eb : history) {
             if (lastZoom != BaseApp.getApp().zoom){
                 eb.myEq.deepNeedsUpdate();
                 eb.updateZoom(lastZoom,BaseApp.getApp().zoom);
             }
             if ((!eb.equals(history.get(0)))) {
-
-                atHeight -= eb.myEq.measureHeightLower();
                 eb.targetColor = getHistoryColor(0xff000000, BaseApp.getApp().darkColor, currentPercent);
+                currentPercent *= fade;
                 eb.x = 0;
                 eb.targetY = atHeight;
+
+                atHeight -= eb.myEq.measureHeightLower();
+
                 int centerX;
                 int centerY;
                 if (stupid.get() instanceof EqualsEquation){
@@ -147,18 +191,18 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
                 }
 
                 eb.update(centerX,centerY);
-                if ((centerY + atHeight + eb.myEq.measureHeightLower()) > 0 &&
-                        (centerY + atHeight - eb.myEq.measureHeightUpper()) < measureHeight()) {
-                    eb.draw(canvas, centerX, centerY);
-                } else  if (  centerY > -(measureHeight()/4)*BaseApp.getApp().getDpi()
-                        || centerY < (measureHeight()*5/4)*BaseApp.getApp().getDpi()){
-                    // update the locations
-                    eb.updateLocations(centerX, centerY);
-                }
-                atHeight -= eb.myEq.measureHeightUpper() + historyBuffer;
+
+                atHeight -= (eb.myEq.measureHeightUpper() + historyBuffer);
                 currentPercent *= fade;
             }
         }
+
+
+
+        float bot2 = stupid.get().getY() + stupid.get().measureHeightLower() + buffer;
+        float top2 = history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - buffer;
+        height = (float)Math.floor(bot2 - top2);
+
         lastZoom = BaseApp.getApp().zoom;
     }
 
@@ -260,6 +304,8 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
                                 if (selected != null) {
                                     selected.setSelected(false);
                                 }
+
+                                updateHistory();
                             } else {
                                 if (selected != null) {
                                     selected.setSelected(false);
@@ -291,6 +337,19 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
         return false;
     }
 
+    public void updateHistory() {
+        // if they could have divided by 0 we need to warn them
+        // we don't have to worry warn checks for null
+        history.get(0).warn(changedEq);
+        changedEq = null;
+
+        // add a new Equation to history
+        history.add(0, new EquationButton(stupid.get().copy(), this));
+        Log.i("add to History", stupid.toString());
+        changed = false;
+
+    }
+
     private void endOnePointer(MotionEvent event) {
         if (myMode == TouchMode.SELECT) {
             resolveSelected(event);
@@ -298,7 +357,14 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
             DragLocation closest = dragLocations.closest(event);
 
             if (closest != null) {
-                closest.select();
+
+                if (closest.myStupid.same(stupid.get())){
+                    closest.select();
+                }else{
+                    closest.select();
+                    updateHistory();
+                }
+
             }
 
 
@@ -663,11 +729,14 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
         return pm.SOLVE;
     }
 
-    public void changed() {    }
+    private boolean changed = false;
+    public void changed() {
+        changed =true;
+    }
 
     @Override
     public boolean hasChanged() {
-        return false;
+        return changed;
     }
 
     @Override
@@ -690,6 +759,26 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects {
     }
 
     public void tryWarn(Equation equation) {
+        if (changedEq == null) {
+            Equation warnEq = equation.CouldBeZero();
+            if (warnEq != null) {
+                changedEq = warnEq;
+            }
+        } else {
+            Equation warnEq = equation.CouldBeZero();
+            if (warnEq != null) {
+                if (!(changedEq instanceof MultiEquation)) {
+                    Equation old = changedEq;
+                    changedEq = new MultiEquation(this);
+                    changedEq.add(old);
 
+                }
+                if (warnEq instanceof MultiEquation) {
+                    changedEq.addAll(warnEq);
+                } else {
+                    changedEq.add(warnEq);
+                }
+            }
+        }
     }
 }

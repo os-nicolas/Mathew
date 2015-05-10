@@ -6,5 +6,5 @@ import cube.d.n.commoncore.eq.any.Equation;
  * Created by Colin on 4/24/2015.
  */
 public interface CanWarn {
-    boolean tryWarn(Equation equation);
+    void tryWarn(Equation equation);
 }

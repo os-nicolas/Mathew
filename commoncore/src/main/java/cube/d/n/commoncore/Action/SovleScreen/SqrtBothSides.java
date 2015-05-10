@@ -35,5 +35,6 @@ public class SqrtBothSides extends Action {
             owner.stupid.set(newEq);
         }
         ((AlgebraLine)owner).changed();
+        ((AlgebraLine)owner).updateHistory();
     }
 }
