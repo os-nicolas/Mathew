@@ -14,7 +14,8 @@ import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
-import cube.d.n.commoncore.v2.InputLine;
+import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.v2.lines.Line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class WritingEquation extends Equation {
     char[] timesUnicode = { '\u00D7'};
     String times = new String(timesUnicode);
 
-    public WritingEquation(InputLine o) {
+    public WritingEquation(Line o) {
         super(o);
         init();
     }

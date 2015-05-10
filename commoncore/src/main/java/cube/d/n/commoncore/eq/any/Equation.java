@@ -28,7 +28,8 @@ import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.v2.CanDrag;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.v2.lines.Line;
 import cube.d.n.commoncore.v2.Selects;
 
 abstract public class Equation extends ArrayList<Equation> implements Physical {
@@ -137,7 +138,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     public boolean isSelected() {
         if (owner instanceof Selects){
-            this.equals(((Selects)owner).getSelected());
+            return this.equals(((Selects)owner).getSelected());
         }
         return false;
     }
@@ -251,7 +252,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         this.x = x;
         this.y = y;
 
-//        owner.hasUpdated= true;
+        if (owner instanceof AlgebraLine) {
+            ((AlgebraLine)owner).hasUpdated = true;
+        }
 
 
         drawBkgBox(canvas, x, y);

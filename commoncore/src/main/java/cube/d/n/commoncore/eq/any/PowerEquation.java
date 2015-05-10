@@ -16,7 +16,7 @@ import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin on 1/10/2015.

@@ -11,7 +11,7 @@ import android.util.Log;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 public abstract class LeafEquation extends Equation {
 

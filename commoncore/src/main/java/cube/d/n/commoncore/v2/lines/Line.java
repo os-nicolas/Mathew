@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore.v2.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,15 +8,31 @@ import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.v2.BitmapBacked;
+import cube.d.n.commoncore.v2.GS;
+import cube.d.n.commoncore.v2.Main;
+import cube.d.n.commoncore.v2.keyboards.KeyBoard;
 
 /**
 * Created by Colin_000 on 5/7/2015.
 */
 public abstract class Line extends BitmapBacked implements Physical {
 
+    protected Line getThis(){return this;}
+    public final GS<Equation> stupid  = new GS<Equation>(){
 
-    public final GS<Equation> stupid  = new GS<Equation>();
-    public final  Main owner;
+
+    @Override
+    public void set(Equation newStupid){
+            super.set(newStupid);
+            get().parent = null;
+            if (!get().owner.equals(getThis())){
+                get().updateOwner(getThis());
+                get().deepNeedsUpdate();
+            }
+        }
+    };
+    public final Main owner;
     public float buffer =20* BaseApp.getApp().getDpi();
 
     private float x;
@@ -25,6 +41,9 @@ public abstract class Line extends BitmapBacked implements Physical {
     public Line(Main owner){
         this.owner=owner;
     }
+
+
+    public abstract KeyBoard getKeyboad();
 
     @Override
     public float measureWidth() {
@@ -74,6 +93,11 @@ public abstract class Line extends BitmapBacked implements Physical {
     public void removeAnimation(Animation animation) {
 
     }
+
+    protected boolean in(MotionEvent event) {
+        return event.getY() < getY() + measureHeight()/2f && event.getY() > getY() - measureHeight()/2f;
+    }
+
 
     public enum pm  {WRITE,BOTH,SOLVE}
 }

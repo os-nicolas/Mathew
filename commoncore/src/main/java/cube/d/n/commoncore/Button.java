@@ -9,8 +9,6 @@ import android.view.MotionEvent;
 
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Physical;
-import cube.d.n.commoncore.v2.KeyBoard;
 
 public class Button implements Physical {
     // in percent of width (1 = full width)

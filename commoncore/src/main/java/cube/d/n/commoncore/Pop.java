@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin on 2/19/2015.

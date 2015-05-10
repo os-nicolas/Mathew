@@ -2,9 +2,8 @@ package cube.d.n.commoncore.Action.WriteScreen;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
-import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.InputLine;
+import cube.d.n.commoncore.v2.lines.InputLine;
 
 /**
  * Created by Colin_000 on 3/27/2015.

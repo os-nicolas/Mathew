@@ -5,8 +5,8 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
-import cube.d.n.commoncore.v2.InputLine;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin_000 on 5/8/2015.

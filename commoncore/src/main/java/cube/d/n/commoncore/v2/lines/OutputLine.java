@@ -1,8 +1,11 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore.v2.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
+import cube.d.n.commoncore.v2.Main;
+import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.v2.lines.Line;
 
 
 /**
@@ -12,6 +15,11 @@ public class OutputLine extends Line {
 
     public OutputLine(Main owner){
         super(owner);
+    }
+
+    @Override
+    public KeyBoard getKeyboad() {
+        return null;
     }
 
     @Override

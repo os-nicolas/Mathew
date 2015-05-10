@@ -2,7 +2,7 @@ package cube.d.n.commoncore;
 
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.v2.KeyBoard;
+import cube.d.n.commoncore.v2.keyboards.KeyBoard;
 
 /**
  * Created by Colin_000 on 3/26/2015.

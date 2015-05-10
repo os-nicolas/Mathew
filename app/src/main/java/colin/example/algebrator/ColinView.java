@@ -15,6 +15,7 @@ import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
+import cube.d.n.commoncore.EquationButton;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.DragEquation;

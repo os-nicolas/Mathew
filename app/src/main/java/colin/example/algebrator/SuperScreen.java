@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.view.WindowManager;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+
+import cube.d.n.commoncore.EquationButton;
 
 /**
  * Created by Colin on 2/6/2015.

@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore.v2.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -13,6 +13,12 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.v2.Main;
+import cube.d.n.commoncore.v2.Selects;
+import cube.d.n.commoncore.v2.TouchMode;
+import cube.d.n.commoncore.v2.keyboards.InputKeyboard;
+import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -27,6 +33,15 @@ public class InputLine extends Line implements Selects {
         initEq();
     }
 
+    private KeyBoard myKeyBoard = null;
+    @Override
+    public KeyBoard getKeyboad() {
+        if (myKeyBoard == null){
+            myKeyBoard = new InputKeyboard(owner,this);
+        }
+        return myKeyBoard;
+    }
+
     public void initEq() {
         stupid.set(new WritingEquation(this));
         stupid.get().add(selected);
@@ -36,7 +51,6 @@ public class InputLine extends Line implements Selects {
 
     @Override
     public boolean onTouch(MotionEvent event) {
-
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (in(event)) {
                 if (stupid.get().nearAny(event.getX(), event.getY())) {
@@ -53,26 +67,28 @@ public class InputLine extends Line implements Selects {
             if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
                 selected.goDark();
+                return true;
             }
             if (myMode == TouchMode.MOVE) {
                 //TODO scrolling
+                return true;
             }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
+                return true;
             }
             // if we were dragging everything around
             if (myMode == TouchMode.MOVE) {
                 //TODO scrolling
+                return true;
             }
 
         }
         return false;
     }
 
-    private boolean in(MotionEvent event) {
-        return event.getY() < getY() + measureHeight()/2f && event.getY() > getY() - measureHeight()/2f;
-    }
+
 
 
     private void updateVelocity(MotionEvent event) {
@@ -202,7 +218,7 @@ public class InputLine extends Line implements Selects {
 
     @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
-        stupid.get().draw(canvas, top + buffer + stupid.get().measureHeightUpper(), left + measureWidth() / 2f);
+        stupid.get().draw(canvas,  left +( measureWidth() / 2f),top + buffer + stupid.get().measureHeightUpper());
     }
 
     @Override
@@ -222,5 +238,9 @@ public class InputLine extends Line implements Selects {
     @Override
     public void setSelected(Equation equation) {
         Log.e("Input.setSelected","InputView can not be set");
+    }
+
+    public void deActivate() {
+        getSelected().deActivate();
     }
 }

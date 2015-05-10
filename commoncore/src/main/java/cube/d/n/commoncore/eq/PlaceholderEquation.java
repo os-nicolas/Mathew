@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 
 public class PlaceholderEquation extends LeafEquation {
@@ -51,6 +51,9 @@ public class PlaceholderEquation extends LeafEquation {
         now = now % 360;
         int alpha =(int)((1+Math.cos(Math.toRadians(now)))*127.5);
         p.setAlpha(alpha);
+        if (! active){
+            p.setAlpha(0x00);
+        }
         return p;
     }
 
@@ -58,5 +61,10 @@ public class PlaceholderEquation extends LeafEquation {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp) {
         temp.setAlpha(0xff);
         super.drawParentheses(canvas,x,y,temp);
+    }
+
+    boolean active = true;
+    public void deActivate() {
+        active = false;
     }
 }

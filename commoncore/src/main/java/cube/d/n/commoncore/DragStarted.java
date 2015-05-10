@@ -1,8 +1,10 @@
-package colin.example.algebrator;
+package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 
 import cube.d.n.commoncore.Animation;
+import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin on 1/21/2015.
@@ -12,11 +14,11 @@ public class DragStarted extends Animation {
     long time;
     double startedAt;
 
-    public DragStarted(SuperView owner, float startAlpha){
+    public DragStarted(Line owner, float startAlpha){
         super(owner);
         this.startAlpha = startAlpha;
         this.startedAt = System.currentTimeMillis();
-        this.time = Algebrator.getAlgebrator().doubleTapSpacing;
+        this.time = BaseApp.getApp().doubleTapSpacing;
     }
 
     @Override
@@ -24,7 +26,7 @@ public class DragStarted extends Animation {
         long now = System.currentTimeMillis();
         if ((now - startedAt) < time) {
             float currentAlpha = (float)(((double)startAlpha)*((time -(now - startedAt))/time));
-            owner.drawProgress(canvas, 1f, currentAlpha);
+            ((AlgebraLine)owner).drawProgress(canvas, 1f, (int)currentAlpha);
         }else{
             remove();
         }

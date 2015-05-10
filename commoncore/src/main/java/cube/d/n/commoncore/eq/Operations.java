@@ -17,7 +17,8 @@ import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.v2.lines.Line;
 
 
 /**
@@ -631,17 +632,16 @@ public class Operations {
             }
 
             if (anyCommon) { // they have anything in common
-                if (owner instanceof CanWarn) {
+                if (owner instanceof AlgebraLine) {
 
-                    ((CanWarn) owner).tryWarn(common.getEquation(owner));
-
-                    MultiCountData topData = remainder(top, common,owner);
-                    MultiCountData botData = remainder(bot, common,owner);
-                    Equation topEq = topData.getEquation(owner);
-                    Equation botEq = botData.getEquation(owner);
-                    result = getResult(topEq, botEq,owner);
+                    ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
 
                 }
+                MultiCountData topData = remainder(top, common,owner);
+                MultiCountData botData = remainder(bot, common,owner);
+                Equation topEq = topData.getEquation(owner);
+                Equation botEq = botData.getEquation(owner);
+                result = getResult(topEq, botEq,owner);
                 // if we have sqrt(5)/23
             }else if (a.removeNeg() instanceof PowerEquation){
                 result = new PowerEquation(owner);

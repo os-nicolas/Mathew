@@ -8,7 +8,7 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
-import cube.d.n.commoncore.v2.InputLine;
+import cube.d.n.commoncore.v2.lines.InputLine;
 
 public class ParenthesesAction extends Action {
 

@@ -2,7 +2,7 @@ package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 
 /**

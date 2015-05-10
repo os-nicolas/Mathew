@@ -7,7 +7,7 @@ import android.util.Log;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 public class EqualsEquation extends Equation {
 

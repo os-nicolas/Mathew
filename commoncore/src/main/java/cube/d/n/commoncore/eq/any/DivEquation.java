@@ -11,7 +11,7 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation {
 

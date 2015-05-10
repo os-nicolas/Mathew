@@ -11,6 +11,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Button;
+import cube.d.n.commoncore.EquationButton;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;

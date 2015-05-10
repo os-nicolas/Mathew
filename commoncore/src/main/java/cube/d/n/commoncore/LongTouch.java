@@ -1,4 +1,4 @@
-package colin.example.algebrator;
+package cube.d.n.commoncore;
 
 import android.view.MotionEvent;
 
@@ -7,7 +7,7 @@ import android.view.MotionEvent;
  */
 public class LongTouch {
     // TODO scale by dpi
-    private float distance=20*Algebrator.getAlgebrator().getDpi();
+    private float distance=20*BaseApp.getApp().getDpi();
 
     private float STARTED=50;
     private float DONE=1000;

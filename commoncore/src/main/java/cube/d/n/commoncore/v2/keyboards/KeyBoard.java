@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore.v2.keyboards;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,6 +11,9 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Measureable;
 import cube.d.n.commoncore.PopUpButton;
+import cube.d.n.commoncore.v2.Main;
+import cube.d.n.commoncore.v2.TouchMode;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -70,7 +73,18 @@ public abstract class KeyBoard implements Measureable {
 
     }
 
-    public void onTouch(MotionEvent event){
+    TouchMode myMode;
+
+    public boolean onTouch(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (in(event)) {
+                myMode = TouchMode.KEYBOARD;
+
+            } else {
+                myMode = TouchMode.NOPE;
+            }
+        }
+        if (myMode == TouchMode.KEYBOARD){
             if (event.getAction() == MotionEvent.ACTION_UP) {
                 for (Button myBut : buttons) {
                     myBut.click(event);
@@ -78,7 +92,7 @@ public abstract class KeyBoard implements Measureable {
                 for (PopUpButton pub : popUpButtons) {
                     pub.click(event);
                 }
-            }else{
+            } else {
                 for (Button myBut : buttons) {
                     myBut.hover(event);
                 }
@@ -86,7 +100,26 @@ public abstract class KeyBoard implements Measureable {
                     pub.hover(event);
                 }
             }
+            return true;
+        }
+        return false;
     }
+
+
+    protected boolean in(MotionEvent event) {
+        for (Button b : buttons) {
+            if (b.couldClick(event)) {
+                return true;
+            }
+        }
+        for (Button b : popUpButtons) {
+            if (b.couldClick(event)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public void draw(Canvas canvas, float top, float left, Paint paint){
         for (Button myBut: buttons) {

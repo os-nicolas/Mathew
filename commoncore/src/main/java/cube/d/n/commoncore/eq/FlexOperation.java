@@ -1,7 +1,7 @@
 package cube.d.n.commoncore.eq;
 
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.v2.Line;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin on 1/3/2015.

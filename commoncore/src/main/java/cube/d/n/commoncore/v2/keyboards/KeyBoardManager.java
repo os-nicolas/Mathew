@@ -1,8 +1,10 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore.v2.keyboards;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
+
+import cube.d.n.commoncore.v2.GS;
 
 /**
 * Created by Colin_000 on 5/7/2015.

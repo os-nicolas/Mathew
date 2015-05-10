@@ -24,6 +24,8 @@ import colin.example.algebrator.tuts.TutMessage;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
+import cube.d.n.commoncore.EquationButton;
+import cube.d.n.commoncore.LongTouch;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;

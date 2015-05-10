@@ -7,7 +7,7 @@ import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
-import cube.d.n.commoncore.v2.InputLine;
+import cube.d.n.commoncore.v2.lines.InputLine;
 
 /**
  * Created by Colin on 1/13/2015.

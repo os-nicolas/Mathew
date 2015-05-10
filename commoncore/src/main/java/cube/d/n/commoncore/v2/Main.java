@@ -10,6 +10,13 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.v2.keyboards.EnptyKeyboard;
+import cube.d.n.commoncore.v2.keyboards.InputKeyboard;
+import cube.d.n.commoncore.v2.keyboards.KeyBoardManager;
+import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.v2.lines.Line;
+
 /**
 * Created by Colin_000 on 5/7/2015.
 */
@@ -39,9 +46,9 @@ public class Main extends View implements View.OnTouchListener {
     }
 
     private void init(Context context) {
-        keyBoardManager.hardSet(new EnptyKeyboard(this));
-        lines.add(new InputLine(this));
-        keyBoardManager.set(new InputKeyboard(this, (InputLine) lines.get(0)));
+        Line myLine = new InputLine(this);
+        keyBoardManager.hardSet(myLine.getKeyboad());
+        lines.add(myLine);
         setOnTouchListener(this);
     }
 
@@ -51,7 +58,13 @@ public class Main extends View implements View.OnTouchListener {
 
         if (event.getPointerCount() == 1) {
             // pass it on to my bros
-
+            boolean keepGoing = true;
+            if (keepGoing) {
+                keepGoing = !keyBoardManager.get().onTouch(event);
+            }
+            if (keepGoing) {
+                keepGoing = !lines.get(lines.size()-1).onTouch(event);
+            }
 
         }else{
             // handle zoom or whatever
@@ -60,7 +73,7 @@ public class Main extends View implements View.OnTouchListener {
 
 
 
-        return false;
+        return true;
     }
 
     long startTime = System.currentTimeMillis();
@@ -104,4 +117,8 @@ public class Main extends View implements View.OnTouchListener {
         return true;
     }
 
+    public void addLine(Line line) {
+        lines.add(line);
+        keyBoardManager.set(line.getKeyboad());
+    }
 }
