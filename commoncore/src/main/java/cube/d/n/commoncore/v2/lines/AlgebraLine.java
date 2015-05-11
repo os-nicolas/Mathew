@@ -130,28 +130,22 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
 
     double lastZoom = BaseApp.getApp().zoom;
-    float baseBuffer = 75 * BaseApp.getApp().getDpi();
+    //float baseBuffer = 75 * BaseApp.getApp().getDpi();
     float fade = 0.4f;
     private void drawHistory(Canvas canvas, float top, float left, Paint paint) {
         float historyBuffer = getHistoryBuffer();
 
 
-        float atHeight = -stupid.get().measureHeightUpper() - historyBuffer ;
+        float atHeight = -((stupid.get().measureHeight()/2f)+ historyBuffer) ;
+
+
+        int  centerX= (int) stupid.get().x;
+        int centerY= (int) stupid.get().y;
 
         for (EquationButton eb : history) {
             if ((!eb.equals(history.get(0)))) {
 
-                atHeight -= eb.myEq.measureHeightLower();
-
-                int centerX;
-                int centerY;
-                if (stupid.get() instanceof EqualsEquation){
-                    centerX= stupid.get().lastPoint.get(0).x;
-                    centerY= stupid.get().lastPoint.get(0).y;
-                }else{
-                    centerX= (int) stupid.get().getX();
-                    centerY= (int) stupid.get().getY();
-                }
+                atHeight -= eb.myEq.measureHeight()/2f;
 
                 if ((centerY + atHeight + eb.myEq.measureHeightLower()) > 0 &&
                         (centerY + atHeight - eb.myEq.measureHeightUpper()) < owner.height ) {
@@ -160,13 +154,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                     // update the locations
                     eb.updateLocations(centerX, centerY);
                 }
-                atHeight -= (eb.myEq.measureHeightUpper() + historyBuffer);
+                atHeight -= ((eb.myEq.measureHeight()/2f) + historyBuffer);
 
             }
         }
 
         float currentPercent = fade;
-        atHeight = -stupid.get().measureHeightUpper() - historyBuffer ;
+        atHeight = -((stupid.get().measureHeight()/2f)+ historyBuffer) ;
         for (EquationButton eb : history) {
             if (lastZoom != BaseApp.getApp().zoom){
                 eb.myEq.deepNeedsUpdate();
@@ -176,23 +170,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 eb.targetColor = getHistoryColor(0xff000000, BaseApp.getApp().darkColor, currentPercent);
                 currentPercent *= fade;
                 eb.x = 0;
+
+                atHeight -= eb.myEq.measureHeight()/2f;
                 eb.targetY = atHeight;
-
-                atHeight -= eb.myEq.measureHeightLower();
-
-                int centerX;
-                int centerY;
-                if (stupid.get() instanceof EqualsEquation){
-                    centerX= stupid.get().lastPoint.get(0).x;
-                    centerY= stupid.get().lastPoint.get(0).y;
-                }else{
-                    centerX= (int) stupid.get().getX();
-                    centerY= (int) stupid.get().getY();
-                }
 
                 eb.update(centerX,centerY);
 
-                atHeight -= (eb.myEq.measureHeightUpper() + historyBuffer);
+                atHeight -= ((eb.myEq.measureHeight()/2f) + historyBuffer);
                 currentPercent *= fade;
             }
         }
@@ -358,12 +342,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
             if (closest != null) {
 
-                if (closest.myStupid.same(stupid.get())){
                     closest.select();
-                }else{
-                    closest.select();
-                    updateHistory();
-                }
 
             }
 
@@ -703,7 +682,8 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     private float getHistoryBuffer() {
-        return (float)(baseBuffer* BaseApp.getApp().zoom);
+        return buffer*2;
+        //return (float)(baseBuffer* BaseApp.getApp().zoom);
     }
 
     private int getHistoryColor(int currentColor, int targetColor, float percent) {

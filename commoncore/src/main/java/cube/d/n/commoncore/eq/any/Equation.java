@@ -259,6 +259,16 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
         drawBkgBox(canvas, x, y);
 
+
+        if (canvas != null) {
+            Paint p = new Paint();
+            p.setColor(0x33369745);
+            RectF r = new RectF((int) (x - measureWidth() / 2),
+                    (int) (y - measureHeightUpper()),
+                    (int) (x + measureWidth() / 2), (int) (y + measureHeightLower()));
+            canvas.drawRoundRect(r, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), p);
+
+        }
         privateDraw(canvas, x, y);
 
         //drawLastPoints(canvas);

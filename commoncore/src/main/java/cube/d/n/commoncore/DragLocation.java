@@ -127,6 +127,7 @@ public class DragLocation implements Comparable<DragLocation> {
         if (!isOG()) {
             if (owner instanceof AlgebraLine) {
                 ((AlgebraLine) owner).changed();
+                ((AlgebraLine) owner).updateHistory();
             }
         } else {
             myDemo.setSelected(true);

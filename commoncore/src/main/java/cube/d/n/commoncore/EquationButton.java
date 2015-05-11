@@ -64,11 +64,8 @@ public class EquationButton extends Button {
         drawBkg(canvas, x + stupidX, y + stupidY);
         myEq.setColor(currentColor);
         myEq.setAlpha(currentAlpha);
-        if (myEq instanceof EqualsEquation) {
-            ((EqualsEquation) myEq).drawCentered(canvas, x + stupidX, y + stupidY);
-        } else {
+
             myEq.draw(canvas, x + stupidX, y + stupidY);
-        }
 
         // if there is a warning show that too
         if (warn && canvas != null) {
