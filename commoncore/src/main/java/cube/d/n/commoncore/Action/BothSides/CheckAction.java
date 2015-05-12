@@ -3,11 +3,13 @@ package cube.d.n.commoncore.Action.BothSides;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.SovleScreen.BothSides;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.v2.Selects;
+import cube.d.n.commoncore.v2.lines.AlgebraLine;
 import cube.d.n.commoncore.v2.lines.BothSidesLine;
 import cube.d.n.commoncore.v2.lines.InputLine;
 
@@ -53,17 +55,20 @@ public class CheckAction extends Action {
 
     @Override
     protected void privateAct() {
-//        BaseApp.getApp().solveView.changed();
-//
-//        ArrayList<Equation> converted = new ArrayList<>();
-//        converted.add(((WritingEquation)mine.copy()).convert());
-//        converted.add(((WritingEquation)mine.copy()).convert());
-//
-//        Equation newStupid =  myView.makeModie(converted);
-//
-//        Algebrator.getAlgebrator().solveView.setStupid(newStupid);
-//
-//        myView.myActivity.finish();
+
+
+
+        ArrayList<Equation> converted = new ArrayList<>();
+        converted.add(((WritingEquation)mine.copy()).convert());
+        converted.add(((WritingEquation)mine.copy()).convert());
+
+        Equation newStupid =  ((BothSidesLine)owner).makeModie(converted);
+
+        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).changed();
+        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).stupid.set(newStupid);
+        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).updateHistory();
+
+        owner.owner.revert();
     }
 
     public CheckAction(BothSidesLine myView) {

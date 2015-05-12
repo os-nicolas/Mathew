@@ -121,4 +121,10 @@ public class Main extends View implements View.OnTouchListener {
         lines.add(line);
         keyBoardManager.set(line.getKeyboad());
     }
+
+    public void revert() {
+        lines.remove(lines.size()-1);
+        keyBoardManager.set(lines.get(lines.size()-1).getKeyboad());
+
+    }
 }

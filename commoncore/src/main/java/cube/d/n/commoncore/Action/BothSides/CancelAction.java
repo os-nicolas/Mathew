@@ -16,7 +16,7 @@ public class CancelAction extends Action {
 
     @Override
     protected void privateAct() {
-
+        owner.owner.revert();
     }
 
     public CancelAction(BothSidesLine myView) {
