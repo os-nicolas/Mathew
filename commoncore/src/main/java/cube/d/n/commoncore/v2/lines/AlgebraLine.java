@@ -120,6 +120,10 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
             dragging.eq.draw(canvas, dragging.eq.x, dragging.eq.y);
         }
 
+        for (EquationButton eb : history) {
+            eb.tryRevert(canvas,top,left);
+        }
+
         for (int i = 0; i < animation.size(); i++) {
             animation.get(i).draw(canvas);
         }
@@ -202,6 +206,12 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public boolean onTouch(MotionEvent event) {
 
+        for (int i = 0; i < history.size(); i++) {
+            if (history.get(i).in(event)) {
+                myMode = TouchMode.HIS;
+            }
+            history.get(i).click(event);
+        }
 
         if (!hasUpdated){
             stupid.get().updateLocation();
@@ -215,9 +225,11 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                     myMode = TouchMode.SELECT;
                 } else {
                     myMode = TouchMode.MOVE;
+
                     if (selected != null) {
                         removeSelected();
                     }
+
                 }
                 lastX = event.getX();
                 lastY = event.getY();
@@ -724,8 +736,37 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         return animation;
     }
 
-    public void drawProgress(Canvas canvas, float percent, int i) {
-
+    public void drawProgress(Canvas canvas, float top, float left, float percent, int startAt) {
+        Paint p = new Paint();
+        p.setColor(BaseApp.getApp().darkColor - 0xff000000);
+        float targetAlpha = startAt;
+        p.setAlpha((int) targetAlpha);
+        float scaleBy = BaseApp.getApp().getShadowFade();
+        int at = (int)top;
+        for (int i = 0; i < BaseApp.getApp().getTopLineWidth(); i++) {
+            p.setAlpha((int) targetAlpha);
+            canvas.drawLine(left, at, measureWidth() * percent, at, p);
+            float atX = ((int) (left+ measureWidth() * percent));
+            while (p.getAlpha() > 1) {
+                canvas.drawLine(atX, at, atX + 1, at, p);
+                p.setAlpha((int) (p.getAlpha() / scaleBy));
+                atX++;
+            }
+            at++;
+        }
+        p.setAlpha(0x7f);
+        while (targetAlpha > 1) {
+            p.setAlpha((int) targetAlpha);
+            canvas.drawLine(0, at, left+ measureWidth() * percent, at, p);
+            float atX = ((int) (left+ measureWidth() * percent));
+            while (p.getAlpha() > 1) {
+                canvas.drawLine(atX, at, atX + 1, at, p);
+                p.setAlpha((int) (p.getAlpha() / scaleBy));
+                atX++;
+            }
+            targetAlpha = targetAlpha / scaleBy;
+            at++;
+        }
     }
 
     @Override

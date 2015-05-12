@@ -16,7 +16,9 @@ import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.v2.Selects;
+import cube.d.n.commoncore.v2.TouchMode;
 import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.v2.lines.Line;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -34,14 +36,14 @@ public class EquationButton extends Button {
     private int targetAlpha = 0xff;
     int bkgCurrentAlpha = 0x0;
     int bkgTargetAlpha = 0x0;
-    AlgebraLine owner;
+    Line owner;
     public int targetColor;
     public int currentColor = Color.BLACK;
     private boolean warn = false;
     private Equation warnEq = null;
 
 
-    public EquationButton(Equation e, AlgebraLine owner) {
+    public EquationButton(Equation e, Line owner) {
         myEq = e;
         e.active = false;
         this.owner = owner;
@@ -103,14 +105,14 @@ public class EquationButton extends Button {
         float topEnd = (y) - myEq.measureHeightUpper() - buffer;
         float bottomEnd = (y) + myEq.measureHeightLower() + buffer;
 
-        if (myEq instanceof EqualsEquation) {
-            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-            leftEnd = (x) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
-            rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
-        } else {
+//        if (myEq instanceof EqualsEquation) {
+//            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
+//            leftEnd = (x) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
+//            rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
+//        } else {
             leftEnd = (x) - myEq.measureWidth() / 2;
             rightEnd = (x) + myEq.measureWidth() / 2;
-        }
+//        }
 
         Paint temp = new Paint();
         //TODO scale by dpi - also do i really want to blurr this?
@@ -126,16 +128,16 @@ public class EquationButton extends Button {
 
     }
 
-    public void tryRevert(Canvas canvas) {
+    public void tryRevert(Canvas canvas,float top,float left) {
         if (!this.equals(((AlgebraLine) owner).history.get(0))) {
             if (lastLongTouch != null && lastLongTouch.started()) {
                 if (lastLongTouch.done()) {
                     Log.i("lastLongTouch", "done");
-                    ((CanTrackChanges) owner).getAfterAnimations().add(new DragStarted(owner, 0x7f));
+                    ((CanTrackChanges) owner).getAfterAnimations().add(new DragStarted(owner, 0x7f,0,left));
                     revert();
                     lastLongTouch = null;
                 } else {
-                    ((AlgebraLine) owner).drawProgress(canvas, lastLongTouch.percent(), 0xff);
+                    ((AlgebraLine) owner).drawProgress(canvas,0,left, lastLongTouch.percent(), 0xff);
                     Log.i("lastLongTouch", lastLongTouch.percent() + "");
                 }
             }
@@ -144,20 +146,36 @@ public class EquationButton extends Button {
 
     public LongTouch lastLongTouch = null;
 
+
+    public boolean in(MotionEvent event){
+        return inBox(event) && !((AlgebraLine) owner).history.get(0).equals(this);
+    }
+
+
+    TouchMode myMode;
     //long lastTap = 0;
     public void click(MotionEvent event) {
-        if (inBox(event) && !((AlgebraLine) owner).history.get(0).equals(this)) {
-            Log.d("highlighting ", myEq.toString());
 
-            if (lastLongTouch == null && event.getAction() == MotionEvent.ACTION_DOWN) {
-                lastLongTouch = new LongTouch(event);
-            } else if (lastLongTouch != null && lastLongTouch.outside(event)) {
-                lastLongTouch = null;
+        if (in(event)) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN){
+                myMode = TouchMode.HIS;
             }
+
+            if (myMode == TouchMode.HIS) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    lastLongTouch = new LongTouch(event);
+                } else if (lastLongTouch != null && lastLongTouch.outside(event)) {
+                    lastLongTouch = null;
+                    myMode = TouchMode.NOPE;
+                }
+            }
+        }else if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            myMode = TouchMode.NOPE;
         }
 
         if (event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() == 2) {
             lastLongTouch = null;
+            myMode = TouchMode.NOPE;
         }
 
     }

@@ -13,12 +13,16 @@ public class DragStarted extends Animation {
     float startAlpha=0xff;
     long time;
     double startedAt;
+    float top;
+    float left;
 
-    public DragStarted(Line owner, float startAlpha){
+    public DragStarted(Line owner, float startAlpha,float top,float left){
         super(owner);
         this.startAlpha = startAlpha;
         this.startedAt = System.currentTimeMillis();
         this.time = BaseApp.getApp().doubleTapSpacing;
+        this.left = left;
+        this.top = top;
     }
 
     @Override
@@ -26,7 +30,7 @@ public class DragStarted extends Animation {
         long now = System.currentTimeMillis();
         if ((now - startedAt) < time) {
             float currentAlpha = (float)(((double)startAlpha)*((time -(now - startedAt))/time));
-            ((AlgebraLine)owner).drawProgress(canvas, 1f, (int)currentAlpha);
+            ((AlgebraLine)owner).drawProgress(canvas,top,left, 1f, (int)currentAlpha);
         }else{
             remove();
         }
