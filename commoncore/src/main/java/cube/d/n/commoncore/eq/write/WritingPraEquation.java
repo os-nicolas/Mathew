@@ -196,6 +196,9 @@ public class WritingPraEquation extends WritingLeafEquation {
                         }
                     }
                 }
+                if (current instanceof  WritingLeafEquation && current.getDisplay().equals("=")){
+                    return null;
+                }
                 if (current != null && !keepGoing(current)) {
                     return null;
                 }
@@ -213,6 +216,9 @@ public class WritingPraEquation extends WritingLeafEquation {
                             return current;
                         }
                     }
+                }
+                if (current instanceof  WritingLeafEquation && current.getDisplay().equals("=")){
+                    return null;
                 }
                 if (current != null && !keepGoing(current)) {
                     return null;

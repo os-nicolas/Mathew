@@ -36,7 +36,7 @@ public abstract class Line extends BitmapBacked implements Physical {
         }
     };
     public final Main owner;
-    public float buffer =20* BaseApp.getApp().getDpi();
+    public  static float buffer =20* BaseApp.getApp().getDpi();
 
     private float x;
     private float y;
@@ -100,6 +100,8 @@ public abstract class Line extends BitmapBacked implements Physical {
     protected boolean in(MotionEvent event) {
         return event.getY() < getY() + measureHeight()/2f && event.getY() > getY() - measureHeight()/2f;
     }
+
+    public abstract float requestedWidth();
 
 
     public enum pm  {WRITE,BOTH,SOLVE}

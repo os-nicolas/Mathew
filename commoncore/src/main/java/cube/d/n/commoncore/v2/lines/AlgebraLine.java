@@ -93,11 +93,11 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
 
-        Rect r = new Rect((int)left,(int)top,(int)(left+ measureWidth()),(int)(top+measureHeight()));
-        Paint p = new Paint();
-        p.setAlpha(paint.getAlpha());
-        p.setColor(0x20ff71ff);
-        canvas.drawRect(r,p);
+//        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
+//        Paint p = new Paint();
+//        p.setAlpha(paint.getAlpha());
+//        p.setColor(0x20ff71ff);
+//        canvas.drawRect(r,p);
 
         int targetAlpha;
         if (EquationButton.current != null && EquationButton.current.lastLongTouch != null){
@@ -206,11 +206,15 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public boolean onTouch(MotionEvent event) {
 
+        boolean nope = true;
         for (int i = 0; i < history.size(); i++) {
-            if (history.get(i).in(event)) {
+            if (history.get(i).click(event)) {
                 myMode = TouchMode.HIS;
+                nope =false;
             }
-            history.get(i).click(event);
+        }
+        if (nope && myMode == TouchMode.HIS){
+            myMode = TouchMode.NOPE;
         }
 
         if (!hasUpdated){
@@ -220,11 +224,12 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if (in(event)) {
-                if (stupid.get().nearAny(event.getX(), event.getY())) {
+                if (!stupid.get().closetOn(event.getX(),
+                        event.getY()).isEmpty()) {
                     resolveSelected(event);
                     myMode = TouchMode.SELECT;
                 } else {
-                    myMode = TouchMode.MOVE;
+                    myMode = TouchMode.NOPE;
 
                     if (selected != null) {
                         removeSelected();
@@ -233,7 +238,6 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 }
                 lastX = event.getX();
                 lastY = event.getY();
-                return true;
             } else {
                 myMode = TouchMode.NOPE;
             }
@@ -254,19 +258,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 if (closest != null) {
                     stupid.set(closest.myStupid);
                 }
-                return true;
             }
-
-            if (myMode == TouchMode.MOVE) {
-                //TODO scrolling
-                return true;
-            }
-
-            if (myMode == TouchMode.NOPE) {
-                //TODO scrolling
-                return false;
-            }
-
 
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             if (myMode != TouchMode.NOPE){
@@ -317,20 +309,15 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 if (!clicked) {
                     endOnePointer(event);
                 }
-
-                // if we were dragging everything around
-                if (myMode == TouchMode.MOVE) {
-                //TODO scrolling
-                    return true;
-                }
-
                 lastLongTouch = null;
-
-            }else{
-                return false;
             }
         }
-        return false;
+
+        if (myMode == TouchMode.NOPE) {
+            return false;
+        }else{
+            return  true;
+        }
     }
 
     public void updateHistory() {
@@ -405,8 +392,6 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
             boolean pass = true;
             if (selected != null) {
                 startDragging();
-            } else {
-                myMode = TouchMode.MOVE;
             }
         }
     }
@@ -437,7 +422,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
             //}
 
         } else {
-            myMode = TouchMode.MOVE;
+            myMode = TouchMode.NOPE;
         }
     }
 
@@ -772,6 +757,17 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public Equation getSelected() {
         return selected;
+    }
+
+
+    @Override
+    public float requestedWidth() {
+        float best = stupid.get().measureWidth() + buffer*2;
+        for (EquationButton eb: history){
+            best = Math.max(best,eb.myEq.measureWidth()+ buffer*2);
+        }
+
+        return best;
     }
 
     @Override

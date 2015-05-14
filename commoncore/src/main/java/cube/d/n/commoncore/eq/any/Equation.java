@@ -124,6 +124,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         needsUpdate();
     }
 
+    public String getDisplay() {
+        return display;
+    }
+
     public String getDisplay(int pos) {
         return display;
     }

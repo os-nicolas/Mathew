@@ -244,11 +244,11 @@ public class BothSidesLine extends InputLine {
     @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
 
-        Rect r = new Rect((int)left,(int)top,(int)(left+ measureWidth()),(int)(top+measureHeight()));
-        Paint p = new Paint();
-        p.setAlpha(paint.getAlpha());
-        p.setColor(BaseApp.getApp().lightColor);
-        canvas.drawRect(r,p);
+//        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
+//        Paint p = new Paint();
+//        p.setAlpha(paint.getAlpha());
+//        p.setColor(BaseApp.getApp().lightColor);
+//        canvas.drawRect(r,p);
 
         // i should probably shade it the input color
 
@@ -263,6 +263,11 @@ public class BothSidesLine extends InputLine {
     @Override
     public float measureHeight() {
         return stupid.get().measureHeight() + 2 * buffer + demo.measureHeight()+ 2*buffer;
+    }
+
+    @Override
+    public float requestedWidth() {
+        return Math.max(stupid.get().measureWidth() + buffer*2,demo.measureWidth()+ 2*buffer);
     }
 
 

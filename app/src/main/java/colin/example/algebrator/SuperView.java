@@ -249,14 +249,14 @@ public abstract class SuperView extends BaseView implements
 
         // keep selected on the screen
         long now = System.currentTimeMillis();
-        long diff = now - lastVelocityUpdate;
+
 
         //TODO scale by dpi
         float pushV = 1f * Algebrator.getAlgebrator().getDpi();
         float maxV = 4f * Algebrator.getAlgebrator().getDpi();
         float chunk = 20f * Algebrator.getAlgebrator().getDpi();
 
-        float steps = diff / step;
+
 
         float or = outRight();
         if (or != 0) {
@@ -290,6 +290,9 @@ public abstract class SuperView extends BaseView implements
             }
             slidding = true;
         }
+
+        long diff = now - lastVelocityUpdate;
+        float steps = diff / step;
 
         if (slidding) {
             //if (steps == 0){

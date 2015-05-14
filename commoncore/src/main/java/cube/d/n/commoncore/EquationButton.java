@@ -154,7 +154,7 @@ public class EquationButton extends Button {
 
     TouchMode myMode;
     //long lastTap = 0;
-    public void click(MotionEvent event) {
+    public boolean click(MotionEvent event) {
 
         if (in(event)) {
             if (event.getAction() == MotionEvent.ACTION_DOWN){
@@ -176,6 +176,12 @@ public class EquationButton extends Button {
         if (event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() == 2) {
             lastLongTouch = null;
             myMode = TouchMode.NOPE;
+        }
+
+        if (myMode ==  TouchMode.NOPE){
+            return false;
+        }else{
+            return true;
         }
 
     }
@@ -225,6 +231,8 @@ public class EquationButton extends Button {
         current = null;
         // at time of writing copy does not change active but it might someday so let's be safe
 
+
+        owner.owner.addToOffsetY(y);
 
         // we need to remove all history and including this
         ((AlgebraLine) owner).history = new ArrayList<EquationButton>(((AlgebraLine) owner).history.subList(((AlgebraLine) owner).history.indexOf(this), ((AlgebraLine) owner).history.size()));

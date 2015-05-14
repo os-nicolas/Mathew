@@ -57,10 +57,7 @@ public class InputLine extends Line implements Selects {
                 if (stupid.get().nearAny(event.getX(), event.getY())) {
                     resolveSelected(event);
                     myMode = TouchMode.SELECT;
-                } else {
-                    myMode = TouchMode.MOVE;
                 }
-                return true;
             } else {
                 myMode = TouchMode.NOPE;
             }
@@ -70,23 +67,16 @@ public class InputLine extends Line implements Selects {
                 selected.goDark();
                 return true;
             }
-            if (myMode == TouchMode.MOVE) {
-                //TODO scrolling
-                return true;
-            }
         } else if (event.getAction() == MotionEvent.ACTION_UP) {
             if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
-                return true;
             }
-            // if we were dragging everything around
-            if (myMode == TouchMode.MOVE) {
-                //TODO scrolling
-                return true;
-            }
-
         }
-        return false;
+        if (myMode == TouchMode.NOPE) {
+            return false;
+        }else{
+            return  true;
+        }
     }
 
 
@@ -96,7 +86,7 @@ public class InputLine extends Line implements Selects {
         //TODO
     }
 
-    private void removeSelected() {
+    public void removeSelected() {
         if (selected instanceof PlaceholderEquation) {
             if (!(selected.parent.size() == 1 && selected.parent != null)) {
                 Equation oldEq = selected;
@@ -220,11 +210,11 @@ public class InputLine extends Line implements Selects {
     @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
 
-        Rect r = new Rect((int)left,(int)top,(int)(left+ measureWidth()),(int)(top+measureHeight()));
-        Paint p = new Paint();
-        p.setAlpha(paint.getAlpha());
-        p.setColor(BaseApp.getApp().darkColor);
-        canvas.drawRect(r,p);
+//        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
+//        Paint p = new Paint();
+//        p.setAlpha(paint.getAlpha());
+//        p.setColor(BaseApp.getApp().darkColor);
+//        canvas.drawRect(r,p);
 
         stupid.get().draw(canvas,  left +( measureWidth() / 2f),top + buffer + stupid.get().measureHeightUpper());
     }
@@ -232,6 +222,11 @@ public class InputLine extends Line implements Selects {
     @Override
     public pm parentThesisMode() {
         return pm.WRITE;
+    }
+
+    @Override
+    public float requestedWidth() {
+        return stupid.get().measureWidth() + buffer*2;
     }
 
     public void insert(Equation newEq) {

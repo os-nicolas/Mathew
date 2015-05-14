@@ -145,7 +145,7 @@ public class Button implements Physical {
     }
 
 
-    public void click(MotionEvent event) {
+    public boolean click(MotionEvent event) {
         if (couldClick(event)) {
             hover = false;
             if (myAction.canAct()) {
@@ -158,6 +158,7 @@ public class Button implements Physical {
                 bkgPaint.setColor(toGreyScale(highlightColor));
             }
         }
+        return true;
     }
 
     private int toGreyScale(int input) {

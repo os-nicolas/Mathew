@@ -56,17 +56,15 @@ public class CheckAction extends Action {
     @Override
     protected void privateAct() {
 
-
-
         ArrayList<Equation> converted = new ArrayList<>();
         converted.add(((WritingEquation)mine.copy()).convert());
         converted.add(((WritingEquation)mine.copy()).convert());
 
         Equation newStupid =  ((BothSidesLine)owner).makeModie(converted);
 
-        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).changed();
-        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).stupid.set(newStupid);
-        ((AlgebraLine)owner.owner.lines.get(owner.owner.lines.size()-2)).updateHistory();
+        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).changed();
+        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).stupid.set(newStupid);
+        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).updateHistory();
 
         owner.owner.revert();
     }
