@@ -235,15 +235,15 @@ public abstract class BaseApp extends Application{
         return (float)(10*BaseApp.getApp().getDpi());
     }
 
-    public float getPranIn(Equation eq) {
+    public float getPranIn() {
         return (float)(9*getDpi()*zoom);
     }
 
-    public float getStrokeWidth(Equation eq) {
+    public float getStrokeWidth() {
         return (float)(1.5f*getDpi()*zoom);
     }
 
-    public float getDivWidthAdd(Equation eq) {
+    public float getDivWidthAdd() {
         return (float)(20*getDpi()*zoom);
     }
 

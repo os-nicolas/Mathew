@@ -2,7 +2,6 @@ package cube.d.n.commoncore.Action.WriteScreen;
 
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
@@ -11,7 +10,7 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin on 1/13/2015.

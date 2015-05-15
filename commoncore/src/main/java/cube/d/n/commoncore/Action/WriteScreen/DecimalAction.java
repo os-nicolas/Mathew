@@ -7,7 +7,7 @@ import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 public class DecimalAction extends Action {
 

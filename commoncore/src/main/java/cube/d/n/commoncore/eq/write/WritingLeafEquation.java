@@ -10,8 +10,8 @@ import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
 import cube.d.n.commoncore.eq.LegallityCheck;
-import cube.d.n.commoncore.v2.lines.InputLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/6/2015.

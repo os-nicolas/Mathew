@@ -4,7 +4,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin on 2/22/2015.
@@ -25,7 +25,7 @@ public abstract class InlineOpAction extends Action {
             can = false;
         }
 
-        if (l == null) {
+        if (l == null && owner.owner.getLast() == null) {
             can = false;
         }
 
@@ -34,6 +34,12 @@ public abstract class InlineOpAction extends Action {
 
     protected void inlineInsert(Equation newEq) {
         ((InputLine) owner).getSelected().goDark();
-        ((InputLine) owner).insert(newEq);
+        Equation l = ((InputLine) owner).left();
+        if (l!=null) {
+            ((InputLine) owner).insert(newEq);
+        }else{
+            ((InputLine) owner).insert(owner.owner.getLast());
+            ((InputLine) owner).insert(newEq);
+        }
     }
 }

@@ -7,7 +7,7 @@ import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

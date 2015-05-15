@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 
 /**

@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2.lines;
+package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,10 +8,10 @@ import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.v2.BitmapBacked;
-import cube.d.n.commoncore.v2.GS;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.BitmapBacked;
+import cube.d.n.commoncore.GS;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -33,10 +33,16 @@ public abstract class Line extends BitmapBacked implements Physical {
                 get().updateOwner(getThis());
                 get().deepNeedsUpdate();
             }
+            if ( getThis() instanceof InputLine){
+                get().setMyTextScale(1.2f);
+            }
         }
     };
     public final Main owner;
-    public  static float buffer =20* BaseApp.getApp().getDpi();
+
+    public  static float getBuffer(){
+        return (float) (20* BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
+    }
 
     private float x;
     private float y;
@@ -55,7 +61,7 @@ public abstract class Line extends BitmapBacked implements Physical {
 
     @Override
     public float measureHeight() {
-        return stupid.get().measureHeight() + 2 * buffer;
+        return stupid.get().measureHeight() + 2 *  getBuffer();
     }
 
 
@@ -101,7 +107,9 @@ public abstract class Line extends BitmapBacked implements Physical {
         return event.getY() < getY() + measureHeight()/2f && event.getY() > getY() - measureHeight()/2f;
     }
 
-    public abstract float requestedWidth();
+    public abstract float requestedMaxX();
+
+    public abstract float requestedMinX();
 
 
     public enum pm  {WRITE,BOTH,SOLVE}

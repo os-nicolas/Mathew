@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2.keyboards;
+package cube.d.n.commoncore.keyboards;
 
 import java.util.ArrayList;
 
@@ -7,9 +7,8 @@ import cube.d.n.commoncore.Action.SovleScreen.BothSides;
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
 import cube.d.n.commoncore.Button;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.lines.AlgebraLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.

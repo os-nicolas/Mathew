@@ -1,17 +1,14 @@
-package cube.d.n.commoncore.v2.lines;
+package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
-import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.EquationButton;
-import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
@@ -23,10 +20,9 @@ import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.AlgebraKeyboard;
-import cube.d.n.commoncore.v2.keyboards.BothSidesKeyBoard;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.keyboards.BothSidesKeyBoard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
  * Created by Colin_000 on 5/11/2015.
@@ -55,13 +51,16 @@ public class BothSidesLine extends InputLine {
         return null;
     }
 
-    public boolean onTouch(MotionEvent event){
-        boolean toReturn = super.onTouch(event);
-        // this is called a lot
-        // maybe we can limit our updates of modie
-
-        return toReturn;
+    @Override
+    public float requestedMaxX() {
+        return Math.max(0,(demo.measureWidth()+  getBuffer()*2-owner.width)/2f);
     }
+
+    @Override
+    public float requestedMinX() {
+        return -Math.max(0,(demo.measureWidth()+  getBuffer()*2-owner.width)/2f);
+    }
+
 
     private ArrayList<Equation> getAddToBothSides() {
         ArrayList<Equation> toBothSides = new ArrayList<>();
@@ -252,22 +251,17 @@ public class BothSidesLine extends InputLine {
 
         // i should probably shade it the input color
 
-        demo.draw(canvas, left + (measureWidth() / 2f), top +buffer+ demo.measureHeightUpper());
+        demo.draw(canvas, left + (measureWidth() / 2f), top + getBuffer()+ demo.measureHeightUpper());
 
 
-        stupid.get().draw(canvas, left + (measureWidth() / 2f), top +buffer*3+ demo.measureHeight() + stupid.get().measureHeightUpper() );
+        stupid.get().draw(canvas, left + (measureWidth() / 2f), top + getBuffer()*3+ demo.measureHeight() + stupid.get().measureHeightUpper() );
 
 
     }
 
     @Override
     public float measureHeight() {
-        return stupid.get().measureHeight() + 2 * buffer + demo.measureHeight()+ 2*buffer;
-    }
-
-    @Override
-    public float requestedWidth() {
-        return Math.max(stupid.get().measureWidth() + buffer*2,demo.measureWidth()+ 2*buffer);
+        return stupid.get().measureHeight() + 2 *  getBuffer() + demo.measureHeight()+ 2* getBuffer();
     }
 
 

@@ -16,7 +16,7 @@ import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/10/2015.
@@ -444,7 +444,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
             // TODO scale by dpi
             float width_addition = BaseApp.getApp().getSqrtWidthAdd(equation);
             float height_addition = BaseApp.getApp().getSqrtHeightAdd(equation);
-            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth(equation));
+            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
             atX += width_addition / 5f;
             canvas.drawLine(atX, y, atX + width_addition / 5f, y, p);
             atX += width_addition / 5f;
@@ -496,7 +496,7 @@ public class PowerEquation extends Operation implements BinaryEquation {
             Paint p = new Paint();
             p.setColor(BaseApp.getApp().lightColor);
             p.setAlpha(mybkgAlpha);
-            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
+            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
 
             float bkgBuffer = BaseApp.getApp().getbkgBuffer(this);
 

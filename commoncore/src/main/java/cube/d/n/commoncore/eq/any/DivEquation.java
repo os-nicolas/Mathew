@@ -11,7 +11,7 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation {
 
@@ -88,7 +88,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			maxWidth += getParnWidthAddition();
 		}
 
-		return maxWidth + BaseApp.getApp().getDivWidthAdd(this);
+		return maxWidth + BaseApp.getApp().getDivWidthAdd();
 	}
 
 	@Override
@@ -107,12 +107,12 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			get(i).draw(canvas, x, currentY + get(i).measureHeightUpper() );
 			currentY += get(i).measureHeight();
 			if (i != size() - 1) {
-				MyPoint point = new MyPoint(measureWidth() - BaseApp.getApp().getDivWidthAdd(this),getMyHeight());
+				MyPoint point = new MyPoint(measureWidth() - BaseApp.getApp().getDivWidthAdd(),getMyHeight());
 				point.x = (int) x;
 				point.y = (int) (currentY + (getMyHeight()) / 2);
                 // TODO scale by dpi
-				temp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
-				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd(this))) / 2);
+				temp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
+				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd())) / 2);
                 if (canvas !=null ) {
                     canvas.drawLine(point.x - halfwidth, point.y, point.x
                             + halfwidth, point.y, temp);

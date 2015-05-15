@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2.keyboards;
+package cube.d.n.commoncore.keyboards;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,9 +11,9 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Measureable;
 import cube.d.n.commoncore.PopUpButton;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.TouchMode;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.lines.Line;
 
 /**
 * Created by Colin_000 on 5/7/2015.

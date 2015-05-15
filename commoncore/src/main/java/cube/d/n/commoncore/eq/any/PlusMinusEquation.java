@@ -1,6 +1,6 @@
 package cube.d.n.commoncore.eq.any;
 
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/28/2015.

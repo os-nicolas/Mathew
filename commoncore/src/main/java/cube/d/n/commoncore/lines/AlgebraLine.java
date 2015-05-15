@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2.lines;
+package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -29,11 +29,11 @@ import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.Selects;
-import cube.d.n.commoncore.v2.TouchMode;
-import cube.d.n.commoncore.v2.keyboards.AlgebraKeyboard;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.Selects;
+import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
  * Created by Colin_000 on 5/7/2015.
@@ -76,8 +76,8 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     public float measureHeight() {
         if (height ==-1) {
             if (history.size() != 1) {
-                float bot = stupid.get().getY() + stupid.get().measureHeightLower() + buffer;
-                float top = history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - buffer;
+                float bot = stupid.get().getY() + stupid.get().measureHeightLower() +  getBuffer();
+                float top = history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() -  getBuffer();
                 height = bot - top;
             } else {
                 height = equationHeight(stupid.get());
@@ -87,7 +87,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     private float equationHeight(Equation equation) {
-        return stupid.get().measureHeight() + 2 * buffer;
+        return stupid.get().measureHeight() + 2 *  getBuffer();
     }
 
     @Override
@@ -110,11 +110,9 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
         stupid.get().setAlpha(stupidAlpha);
 
-        if (stupid.get() instanceof EqualsEquation){
-            stupid.get().draw(canvas, left + measureWidth()/2f, top + measureHeight() - buffer - stupid.get().measureHeightLower());
-        }else{
-            stupid.get().draw(canvas, left + measureWidth()/2f, top + measureHeight() - buffer - stupid.get().measureHeightLower());
-        }
+
+        stupid.get().draw(canvas, left + measureWidth()/2f, top + measureHeight() -  getBuffer() - stupid.get().measureHeightLower());
+
 
         if (dragging != null) {
             dragging.eq.draw(canvas, dragging.eq.x, dragging.eq.y);
@@ -187,8 +185,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
 
 
-        float bot2 = stupid.get().getY() + stupid.get().measureHeightLower() + buffer;
-        float top2 = history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - buffer;
+        float bot2 = stupid.get().getY() + stupid.get().measureHeightLower() +  getBuffer();
+        float top2;
+        if (history.size()!=1) {
+            top2=history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - getBuffer();
+        }else {
+            top2 = stupid.get().getY() - stupid.get().measureHeightLower() -  getBuffer();
+        }
         height = (float)Math.floor(bot2 - top2);
 
         lastZoom = BaseApp.getApp().zoom;
@@ -221,96 +224,104 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
             stupid.get().updateLocation();
         }
         hasUpdated = false;
+        if (event.getPointerCount() ==1) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (in(event)) {
+                    if (!stupid.get().closetOn(event.getX(),
+                            event.getY()).isEmpty()) {
+                        resolveSelected(event);
+                        myMode = TouchMode.SELECT;
+                    } else {
+                        myMode = TouchMode.NOPE;
 
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (in(event)) {
-                if (!stupid.get().closetOn(event.getX(),
-                        event.getY()).isEmpty()) {
-                    resolveSelected(event);
-                    myMode = TouchMode.SELECT;
+                        if (selected != null) {
+                            removeSelected();
+                        }
+
+                    }
+                    lastX = event.getX();
+                    lastY = event.getY();
                 } else {
                     myMode = TouchMode.NOPE;
+                }
+            }
+            if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (myMode == TouchMode.SELECT) {
+                    selectMoved(event);
+                    return true;
+                }
 
-                    if (selected != null) {
-                        removeSelected();
+                // if we are dragging something move it
+                // drag is only a mode in the solve screen
+                if (myMode == TouchMode.DRAG) {
+                    dragging.eq.x = event.getX();
+                    dragging.eq.y = event.getY();
+
+                    DragLocation closest = dragLocations.closest(event);
+
+                    if (closest != null) {
+                        stupid.set(closest.myStupid);
                     }
-
                 }
-                lastX = event.getX();
-                lastY = event.getY();
-            } else {
-                myMode = TouchMode.NOPE;
-            }
-        }  if (event.getAction() == MotionEvent.ACTION_MOVE) {
-            if (myMode == TouchMode.SELECT) {
-                selectMoved(event);
-                return true;
-            }
 
-            // if we are dragging something move it
-            // drag is only a mode in the solve screen
-            if (myMode == TouchMode.DRAG) {
-                dragging.eq.x = event.getX();
-                dragging.eq.y = event.getY();
-
-                DragLocation closest = dragLocations.closest(event);
-
-                if (closest != null) {
-                    stupid.set(closest.myStupid);
-                }
-            }
-
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (myMode != TouchMode.NOPE){
-                // did we click anything?
-                boolean clicked = false;
-                long now = System.currentTimeMillis();
-                Point tapPoint = new Point();
-                tapPoint.x = (int) event.getX();
-                tapPoint.y = (int) event.getY();
-                long tapSpacing = now - lastTapTime;
-                if (tapSpacing < BaseApp.getApp().doubleTapSpacing && dis(tapPoint, lastTapPoint) < BaseApp.getApp().getDoubleTapDistance() && myMode == TouchMode.SELECT) {
-                    Log.i("", "doubleTap! dis: " + dis(tapPoint, lastTapPoint) + " time: " + tapSpacing);
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (myMode != TouchMode.NOPE) {
+                    // did we click anything?
+                    boolean clicked = false;
+                    long now = System.currentTimeMillis();
+                    Point tapPoint = new Point();
+                    tapPoint.x = (int) event.getX();
+                    tapPoint.y = (int) event.getY();
+                    long tapSpacing = now - lastTapTime;
+                    if (tapSpacing < BaseApp.getApp().doubleTapSpacing && dis(tapPoint, lastTapPoint) < BaseApp.getApp().getDoubleTapDistance() && myMode == TouchMode.SELECT) {
+                        Log.i("", "doubleTap! dis: " + dis(tapPoint, lastTapPoint) + " time: " + tapSpacing);
 
                         stupid.get().tryOperator(event.getX(),
                                 event.getY());
                         clicked = true;
-                            if (hasChanged()) {
-                                clicked = false;
-                                // TODO
-                                // TODO
-                                // this is def a band-aid
-                                // the problem is that some operation don't change the eq
-                                // while making a new copy of it
-                                // in these case we still select - altho maybe we don't need to
-                                // however sometimes selected is in the old version of stupid
-                                // this casues problem when we try to select it
-                                // the real solution is to pass selected on in a good way
-                                // this probably mean editing copy and rewriting it like constructors
-                                // TODO
-                                // TODO
-                                if (selected != null) {
-                                    selected.setSelected(false);
-                                }
-
-                                updateHistory();
-                            } else {
-                                if (selected != null) {
-                                    selected.setSelected(false);
-                                }
+                        if (hasChanged()) {
+                            clicked = false;
+                            // TODO
+                            // TODO
+                            // this is def a band-aid
+                            // the problem is that some operation don't change the eq
+                            // while making a new copy of it
+                            // in these case we still select - altho maybe we don't need to
+                            // however sometimes selected is in the old version of stupid
+                            // this casues problem when we try to select it
+                            // the real solution is to pass selected on in a good way
+                            // this probably mean editing copy and rewriting it like constructors
+                            // TODO
+                            // TODO
+                            if (selected != null) {
+                                selected.setSelected(false);
                             }
 
-                    // set the lastTapTime to zero so they can not triple tap and get two double taps
-                    lastTapTime = 0;
-                } else {
-                    lastTapTime = now;
+                            updateHistory();
+                        } else {
+                            if (selected != null) {
+                                selected.setSelected(false);
+                            }
+                        }
+
+                        // set the lastTapTime to zero so they can not triple tap and get two double taps
+                        lastTapTime = 0;
+                    } else {
+                        lastTapTime = now;
+                    }
+                    lastTapPoint = tapPoint;
+                    if (!clicked) {
+                        endOnePointer(event);
+                    }
+                    lastLongTouch = null;
                 }
-                lastTapPoint = tapPoint;
-                if (!clicked) {
-                    endOnePointer(event);
-                }
-                lastLongTouch = null;
             }
+        }else {
+            if ( myMode != TouchMode.NOPE) {
+                endOnePointer(event);
+            }
+            myMode = TouchMode.NOPE;
+
         }
 
         if (myMode == TouchMode.NOPE) {
@@ -344,7 +355,6 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                     closest.select();
 
             }
-
 
             stupid.get().fixIntegrety();
 
@@ -679,7 +689,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     private float getHistoryBuffer() {
-        return buffer*2;
+        return  getBuffer()*2;
         //return (float)(baseBuffer* BaseApp.getApp().zoom);
     }
 
@@ -704,6 +714,24 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public pm parentThesisMode() {
         return pm.SOLVE;
+    }
+
+    @Override
+    public float requestedMaxX() {
+        float widest = stupid.get().measureWidth()+  getBuffer()*2;
+        for (EquationButton eb : history){
+            widest = Math.max(widest,eb.myEq.measureWidth())+  getBuffer()*2;
+        }
+        return Math.max(0,(widest-owner.width)/2f);
+    }
+
+    @Override
+    public float requestedMinX() {
+        float widest = stupid.get().measureWidth()+  getBuffer()*2;
+        for (EquationButton eb : history){
+            widest = Math.max(widest,eb.myEq.measureWidth())+  getBuffer()*2;
+        }
+        return -Math.max(0,(widest-owner.width)/2f);
     }
 
     private boolean changed = false;
@@ -759,16 +787,6 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         return selected;
     }
 
-
-    @Override
-    public float requestedWidth() {
-        float best = stupid.get().measureWidth() + buffer*2;
-        for (EquationButton eb: history){
-            best = Math.max(best,eb.myEq.measureWidth()+ buffer*2);
-        }
-
-        return best;
-    }
 
     @Override
     public void setSelected(Equation equation) {

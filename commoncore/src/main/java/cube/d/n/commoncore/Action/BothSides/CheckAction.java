@@ -3,15 +3,12 @@ package cube.d.n.commoncore.Action.BothSides;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Action.SovleScreen.BothSides;
-import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.Selects;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.BothSidesLine;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.Selects;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.BothSidesLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.
@@ -45,7 +42,6 @@ public class CheckAction extends Action {
         // we need to follow the path to selected
         // and remove it from mine
         if (mine instanceof WritingEquation) {
-
             if (((WritingEquation) mine).deepLegal()) {
                 return true;
             }
@@ -62,9 +58,12 @@ public class CheckAction extends Action {
 
         Equation newStupid =  ((BothSidesLine)owner).makeModie(converted);
 
-        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).changed();
-        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).stupid.set(newStupid);
-        ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2)).updateHistory();
+        AlgebraLine daLine = ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2));
+        daLine.changed();
+        newStupid.updateOwner(daLine);
+        daLine.stupid.set(newStupid);
+
+        daLine.updateHistory();
 
         owner.owner.revert();
     }

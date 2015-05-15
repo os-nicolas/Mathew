@@ -2,7 +2,7 @@ package cube.d.n.commoncore.Action.BothSides;
 
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.v2.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.BothSidesLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.

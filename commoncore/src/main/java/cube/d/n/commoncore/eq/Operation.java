@@ -2,7 +2,7 @@ package cube.d.n.commoncore.eq;
 
 
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 public abstract class Operation extends Equation {
 

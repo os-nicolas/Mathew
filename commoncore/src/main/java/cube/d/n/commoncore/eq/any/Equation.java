@@ -27,10 +27,10 @@ import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
-import cube.d.n.commoncore.v2.CanDrag;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.Line;
-import cube.d.n.commoncore.v2.Selects;
+import cube.d.n.commoncore.CanDrag;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.Selects;
 
 abstract public class Equation extends ArrayList<Equation> implements Physical {
 
@@ -548,6 +548,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
 
     private Paint mPaint = null;
+    private float myTextScale = 1f;
+
+    public void setMyTextScale(float newTextScale){
+        myTextScale=newTextScale;
+    }
 
     public Paint getPaint() {
         if (mPaint == null) {
@@ -560,7 +565,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 targetTextSize = MIN_TEXT_SIZE;
             }
         }
-        mPaint.setTextSize((float) (targetTextSize*BaseApp.getApp().zoom));
+        mPaint.setTextSize((float) (targetTextSize*BaseApp.getApp().zoom*this.root().myTextScale));
         return mPaint;
     }
 
@@ -651,7 +656,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected static void drawParentheses(boolean left, Canvas canvas, float x, float y, Paint ptemp, float uh, float lh, Equation myEq) {
         float edgeX = BaseApp.getApp().getPranEdgeX(myEq);
         float edgeY = BaseApp.getApp().getPranEdgeY(myEq);
-        float in = BaseApp.getApp().getPranIn(myEq);
+        float in = BaseApp.getApp().getPranIn();
 
         if (left) {
             //left side
@@ -670,7 +675,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
+            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
             float w = measureWidth();
             float hu = measureHeightUpper();
             float hl = measureHeightLower();

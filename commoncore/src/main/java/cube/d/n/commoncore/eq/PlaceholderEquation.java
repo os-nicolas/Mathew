@@ -5,7 +5,7 @@ import android.graphics.Paint;
 
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 
 public class PlaceholderEquation extends LeafEquation {
@@ -50,7 +50,9 @@ public class PlaceholderEquation extends LeafEquation {
         long now = (System.currentTimeMillis()-lastUpdate)/4;
         now = now % 360;
         int alpha =(int)((1+Math.cos(Math.toRadians(now)))*127.5);
-        p.setAlpha(alpha);
+
+       // float scaleBy =  super.getPaint().getAlpha()/((float)0xff);
+        p.setAlpha((int)(alpha ));
         if (! active){
             p.setAlpha(0x00);
         }

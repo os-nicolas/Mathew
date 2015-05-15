@@ -1,7 +1,7 @@
 package cube.d.n.commoncore.eq.any;
 
 import cube.d.n.commoncore.eq.LegallityCheck;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 public class VarEquation extends LeafEquation implements LegallityCheck {
 		

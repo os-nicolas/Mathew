@@ -1,17 +1,15 @@
-package cube.d.n.commoncore.v2.lines;
+package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.EnptyKeyboard;
-import cube.d.n.commoncore.v2.keyboards.InputKeyboard;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.keyboards.EnptyKeyboard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 
 /**
@@ -22,20 +20,39 @@ public class OutputLine extends Line {
     float eqY;
     float currentAlpha;
 
-    public OutputLine(Main owner, Equation newEq){
+
+    public OutputLine(final Main owner, Equation newEq){
         super(owner);
+
+        //Equation oldEq = newEq.copy();
         stupid.set(newEq);
         reduce();
-        float targetY = + buffer + stupid.get().measureHeightUpper();
+        //EqualsEquation ee = new EqualsEquation(this);
+        //ee.add(oldEq);
+        //ee.add(stupid.get());
+        //stupid.set(ee);
+
+        float targetY = +  getBuffer() + stupid.get().measureHeightUpper();
         currentAlpha = 0x00;
         eqY = targetY - measureHeight();
+        Thread th = new Thread(){
+            @Override
+            public void run(){
+                try {
+                    sleep(500l);
+                    owner.addLine(new InputLine(owner));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+
+        };
+        th.start();
+
+
 
     }
 
-    @Override
-    public float requestedWidth() {
-        return stupid.get().measureWidth() + buffer*2;
-    }
 
     private void reduce() {
         int at =0;
@@ -86,14 +103,17 @@ public class OutputLine extends Line {
     private KeyBoard myKeyBoard = null;
     @Override
     public KeyBoard getKeyboad() {
-        if (myKeyBoard == null){
-            myKeyBoard = new EnptyKeyboard(owner);
-        }
-        return myKeyBoard;
+//        if (myKeyBoard == null){
+//            myKeyBoard = new EnptyKeyboard(owner);
+//        }
+//        return myKeyBoard;
+        return null;
     }
 
+    double lastZoom = BaseApp.getApp().zoom;
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
+
 
 //        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
 //        Paint p = new Paint();
@@ -103,12 +123,30 @@ public class OutputLine extends Line {
 
         int rate = BaseApp.getApp().getRate();
         currentAlpha = (currentAlpha * rate + 0xff) / (rate + 1);
+        stupid.get().getPaint().setColor(BaseApp.getApp().darkDarkColor);
         stupid.get().setAlpha((int)currentAlpha);
-        float targetY = + buffer + stupid.get().measureHeightUpper();
+        float targetY = +  getBuffer() + stupid.get().measureHeightUpper();
+        if (lastZoom != BaseApp.getApp().zoom){
+            eqY *= BaseApp.getApp().zoom/lastZoom;
+            lastZoom= BaseApp.getApp().zoom;
+        }
         eqY = (eqY * rate + targetY) / (rate + 1);
 
 
         stupid.get().draw(canvas,  left +( measureWidth() / 2f),top + eqY);
+
+
+    }
+
+
+    @Override
+    public float requestedMaxX() {
+        return Math.max(0,(stupid.get().measureWidth()+  getBuffer()*2-owner.width)/2f);
+    }
+
+    @Override
+    public float requestedMinX() {
+        return -Math.max(0,(stupid.get().measureWidth()+  getBuffer()*2-owner.width)/2f);
     }
 
     @Override

@@ -1,7 +1,6 @@
-package cube.d.n.commoncore.v2.keyboards;
+package cube.d.n.commoncore.keyboards;
 
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
+import cube.d.n.commoncore.Main;
 
 /**
  * Created by Colin_000 on 5/9/2015.

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 3/30/2015.

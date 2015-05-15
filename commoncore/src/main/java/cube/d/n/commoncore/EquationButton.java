@@ -15,10 +15,8 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
-import cube.d.n.commoncore.v2.Selects;
-import cube.d.n.commoncore.v2.TouchMode;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -155,25 +153,16 @@ public class EquationButton extends Button {
     TouchMode myMode;
     //long lastTap = 0;
     public boolean click(MotionEvent event) {
-
-        if (in(event)) {
-            if (event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN){
+            if (in(event)) {
                 myMode = TouchMode.HIS;
+                lastLongTouch = new LongTouch(event);
+            }else {
+                myMode = TouchMode.NOPE;
             }
-
-            if (myMode == TouchMode.HIS) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    lastLongTouch = new LongTouch(event);
-                } else if (lastLongTouch != null && lastLongTouch.outside(event)) {
-                    lastLongTouch = null;
-                    myMode = TouchMode.NOPE;
-                }
-            }
-        }else if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            myMode = TouchMode.NOPE;
         }
 
-        if (event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() == 2) {
+         if (( lastLongTouch != null && lastLongTouch.outside(event)) || event.getAction() == MotionEvent.ACTION_UP || event.getPointerCount() >1) {
             lastLongTouch = null;
             myMode = TouchMode.NOPE;
         }
@@ -187,26 +176,11 @@ public class EquationButton extends Button {
     }
 
     private boolean inBox(MotionEvent event) {
-        float stupidX;
-        float stupidY;
 
-        float leftEnd;
-        float rightEnd;
-
-
-        if (myEq instanceof EqualsEquation) {
-
-            stupidX = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).x;
-            stupidY = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).y;
-            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-            leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth();
-            rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth();
-        } else {
-            stupidX = ((AlgebraLine) owner).stupid.get().getX();
-            stupidY = ((AlgebraLine) owner).stupid.get().getY();
-            leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f);
-            rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f);
-        }
+        float stupidX = ((AlgebraLine) owner).stupid.get().getX();
+        float  stupidY = ((AlgebraLine) owner).stupid.get().getY();
+        float  leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f);
+        float  rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f);
 
         float topEnd = (y + stupidY) - myEq.measureHeightUpper();
         float bottomEnd = (y + stupidY) + myEq.measureHeightLower();

@@ -17,8 +17,8 @@ import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.Line;
 
 
 /**

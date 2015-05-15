@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2.keyboards;
+package cube.d.n.commoncore.keyboards;
 
 import android.graphics.Typeface;
 
@@ -23,9 +23,8 @@ import cube.d.n.commoncore.Action.WriteScreen.VarAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.PopUpButton;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.lines.InputLine;
 
 
 /**

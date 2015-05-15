@@ -12,7 +12,7 @@ import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin on 1/7/2015.
@@ -71,7 +71,7 @@ public class WritingPraEquation extends WritingLeafEquation {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp, boolean left) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
+            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
             float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -BaseApp.getApp().getSqrtHeightAdd(this) : 0) + (getMatch() instanceof WritingSqrtEquation ? -BaseApp.getApp().getSqrtHeightAdd(this) : 0);
             float lh = measureHeightLower();
 

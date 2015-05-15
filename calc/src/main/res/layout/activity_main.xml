@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-<cube.d.n.commoncore.v2.Main
+<cube.d.n.commoncore.Main
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"/>
 </RelativeLayout>

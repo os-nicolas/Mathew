@@ -5,7 +5,7 @@ import android.util.Log;
 
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.AlgebraLine;
 
 
 public class DragLocation implements Comparable<DragLocation> {

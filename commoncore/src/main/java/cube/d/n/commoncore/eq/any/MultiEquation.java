@@ -8,7 +8,7 @@ import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.Line;
 
 import java.util.ArrayList;
 

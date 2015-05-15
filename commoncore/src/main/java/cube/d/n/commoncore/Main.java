@@ -1,8 +1,10 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,10 +12,11 @@ import android.view.View;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.BaseApp;
-import cube.d.n.commoncore.v2.keyboards.KeyBoardManager;
-import cube.d.n.commoncore.v2.lines.InputLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.keyboards.KeyBoardManager;
+import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.OutputLine;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -58,16 +61,23 @@ public class Main extends View implements View.OnTouchListener {
     float vx;
     long lastVelocityUpdate;
     public boolean fingerDown= false;
+
+    private TouchMode myMode;
+    private double lastZoomDis = -1;
+    private Point lastCenter;
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         if (event.getAction()== MotionEvent.ACTION_DOWN){
             lastDragY = -1;
             lastDragX=-1;
+            moveX =false;
+            moveY = false;
+            myMode = TouchMode.SOMEONEELSE;
             vy = 0;
             fingerDown= true;
         }
 
-        if (event.getPointerCount() == 1) {
+
             // pass it on to my bros
             boolean keepGoing = true;
             if (keepGoing && keyBoardManager.getNextKeyboard() == null) {
@@ -76,20 +86,50 @@ public class Main extends View implements View.OnTouchListener {
             if (keepGoing) {
                 keepGoing = !lines.get(lines.size()-1).onTouch(event);
             }
-            if (keepGoing == true){
+        if (keepGoing == true) {
+            if (event.getPointerCount() == 1) {
+
                 // we are dragging!
-                if (lastDragY==-1){
+                if ( myMode != TouchMode.SLIDE) {
+                    myMode = TouchMode.SLIDE;
                     lastDragY = event.getY();
                     lastDragX = event.getX();
                     lastVelocityUpdate = System.currentTimeMillis();
-                }else{
+                } else {
                     updateVelocity(event);
                 }
+            } else if (event.getPointerCount() == 2) {
+                if (myMode != TouchMode.ZOOM) {
+                    myMode=TouchMode.ZOOM;
+                    lastZoomDis = getPointerDistance(event);
+                    lastCenter = getCenter(event);
+                } else {
+                    double currentZoomDis = getPointerDistance(event);
+                    Point touchCenter = getCenter(event);
+                    Point screenCenter = getCenter();
+                    double oldZoom = BaseApp.getApp().zoom;
+                    BaseApp.getApp().zoom = BaseApp.getApp().zoom * (currentZoomDis / lastZoomDis);
+                    //maybe this should be in snap back, would make sense;
+                    if (BaseApp.getApp().zoom < .7) {
+                        BaseApp.getApp().zoom = .7;
+                    }
+                    if (BaseApp.getApp().zoom > 1.5) {
+                        BaseApp.getApp().zoom = 1.5;
+                    }
+                    lastZoomDis = currentZoomDis;
+                    //float oldDisx =lastCenter.x - (screenCenter.x +offsetX);
+                    float oldDisy = lastCenter.y - (screenCenter.y + offsetY);
+                    //offsetX =(float) -((Algebrator.getAlgebrator().zoom/oldZoom)*(oldDisx) -touchCenter.x + screenCenter.x);
+                    offsetY = (float) -((BaseApp.getApp().zoom / oldZoom) * (oldDisy) - touchCenter.y + screenCenter.y);
+                    lastCenter = touchCenter;
+
+                    for (Line l:lines) {
+                        l.stupid.get().deepNeedsUpdate();
+                    }
+                }
+            } else {
+                myMode = TouchMode.NOPE;
             }
-
-        }else{
-            // handle zoom or whatever
-
         }
 
         if (event.getAction()== MotionEvent.ACTION_UP){
@@ -101,30 +141,84 @@ public class Main extends View implements View.OnTouchListener {
         return true;
     }
 
+    private double getPointerDistance(MotionEvent event) {
+        if (event.getPointerCount() != 2){
+            Log.e("SuperView.getPointerDistance","pointer count should be 2");
+            return -1;
+        }else {
+            float dx = event.getX(0) - event.getX(1);
+            float dy = event.getY(0) - event.getY(1);
+            return Math.sqrt(dx*dx + dy*dy);
+        }
+
+    }
+
+    private Point getCenter() {
+        Point result = new Point();
+        result.x = (int) (width / 2 );
+        result.y = (int) (height / 3 );
+        return result;
+    }
+
+    private Point getCenter(MotionEvent event) {
+        Point result = new Point();
+        if (event.getPointerCount() != 2){
+            Log.e("SuperView.getPointerDistance","pointer count should be 2");
+        }else {
+            result.x = (int)(event.getX(0) + event.getX(1))/2;
+            result.y = (int)(event.getY(0) + event.getY(1))/2;
+        }
+        return result;
+    }
+
     private float step = 1000f / 60f;
+    private boolean moveX =false;
+    private boolean moveY = false;
+    private float minMove = 15*BaseApp.getApp().getDpi();
     private void updateVelocity(MotionEvent event) {
+
+        if (!moveX && !moveY){
+            float dy = (event.getY() - lastDragY);
+            float dx = (event.getX() - lastDragX);
+            if (Math.abs(dx)> Math.abs(dy) &&Math.abs(dx) > minMove ){
+                moveX=true;
+            }else if ( Math.abs(dy)>minMove){
+                moveY=true;
+            }
+        }
+
+        final float maxSteps = 5f;
         long now = System.currentTimeMillis();
         long timePass = now - lastVelocityUpdate;
         if (timePass != 0) {
             float stepsPass = timePass / step;
-            float dy = (event.getY() - lastDragY);
-            float dx = (event.getX() - lastDragX);
-            offsetY += dy;
-            offsetX += dx;
-            float currentVy = (dy) / stepsPass;
-            float currentVx = (dx) / stepsPass;
+            if (moveX){
 
-            lastDragY = event.getY();
-            lastDragX = event.getX();
-            lastVelocityUpdate = now;
-            final float maxSteps = 5f;
-            if (stepsPass < maxSteps) {
-                vy = ((maxSteps - stepsPass) * vy + (stepsPass) * currentVy) / maxSteps;
-                vx = ((maxSteps - stepsPass) * vx + (stepsPass) * currentVx) / maxSteps;
-            } else {
-                vy = currentVy;
-                vx = currentVx;
+                float dx = (event.getX() - lastDragX);
+                offsetX += dx;
+                float currentVx = (dx) / stepsPass;
+                lastDragX = event.getX();
+
+                if (stepsPass < maxSteps) {
+                    vx = ((maxSteps - stepsPass) * vx + (stepsPass) * currentVx) / maxSteps;
+                } else {
+                    vx = currentVx;
+                }
             }
+            if (moveY) {
+                float dy = (event.getY() - lastDragY);
+                offsetY += dy;
+                float currentVy = (dy) / stepsPass;
+
+                lastDragY = event.getY();
+                lastVelocityUpdate = now;
+                if (stepsPass < maxSteps) {
+                    vy = ((maxSteps - stepsPass) * vy + (stepsPass) * currentVy) / maxSteps;
+                } else {
+                    vy = currentVy;
+                }
+            }
+
         }
     }
 
@@ -142,6 +236,11 @@ public class Main extends View implements View.OnTouchListener {
         }
         height = canvas.getHeight();
         width = canvas.getWidth();
+
+        Rect r = new Rect(0,0,(int)width,(int)height);
+        Paint p = new Paint();
+        p.setColor(0xffffffff);
+        canvas.drawRect(r,p);
 
         if (!fingerDown) {
             slide();
@@ -196,7 +295,8 @@ public class Main extends View implements View.OnTouchListener {
         if (lines.size()==1) {
             maxOffsetY= height - keyBoardManager.get().measureHeight();
         }else{
-            maxOffsetY = height - keyBoardManager.get().measureHeight()- 4*Line.buffer;
+            // we know the first line is input
+            maxOffsetY = height - keyBoardManager.get().measureHeight()- lines.get(0).measureHeight();
             for (Line l:lines){
                 maxOffsetY+= l.measureHeight();
             }
@@ -206,7 +306,9 @@ public class Main extends View implements View.OnTouchListener {
             offsetY = (offsetY*BaseApp.getApp().getRate() +maxOffsetY)/(BaseApp.getApp().getRate()+1);
         }
 
-        float minOffsetY=Math.min(height - keyBoardManager.get().measureHeight(),lines.get(lines.size()-1).stupid.get().measureHeight()+ 2*Line.buffer);
+        float minOffsetY=Math.min(height - keyBoardManager.get().measureHeight(),lines.get(lines.size()-1).stupid.get().measureHeight()+ 2*Line. getBuffer()
+        + (lines.get(lines.size()-1) instanceof InputLine?2*Line. getBuffer():0)
+        );
 
         if (offsetY < minOffsetY){
             offsetY = (offsetY*BaseApp.getApp().getRate() +minOffsetY)/(BaseApp.getApp().getRate()+1);
@@ -214,13 +316,15 @@ public class Main extends View implements View.OnTouchListener {
 
 
         float maxOffsetX = 0;
+        float minOffsetX = 0;
 
         float bot = offsetY;
         for (int i= lines.size()-1;i>=0;i--){
             Line l = lines.get(i);
             float top = bot - l.measureHeight();
             if (inScreen(l,top)){
-                maxOffsetX = Math.max(maxOffsetX,Math.max(0,(l.requestedWidth()-width)/2));
+                maxOffsetX = Math.max(maxOffsetX,l.requestedMaxX());
+                minOffsetX = Math.min(minOffsetX,l.requestedMinX());
             }
             bot-= l.measureHeight();
         }
@@ -229,7 +333,6 @@ public class Main extends View implements View.OnTouchListener {
             offsetX = (offsetX*BaseApp.getApp().getRate() +maxOffsetX)/(BaseApp.getApp().getRate()+1);
         }
 
-        float minOffsetX=-maxOffsetX;
 
         if (offsetX < minOffsetX){
             offsetX = (offsetX*BaseApp.getApp().getRate() +minOffsetX)/(BaseApp.getApp().getRate()+1);
@@ -242,7 +345,7 @@ public class Main extends View implements View.OnTouchListener {
         long diff = now - lastVelocityUpdate;
         float steps = diff / step;
 
-        double friction = .85;
+        double friction = .95;
         float dx = (float) (vx * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
         float dy = (float) (vy * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
 
@@ -284,4 +387,23 @@ public class Main extends View implements View.OnTouchListener {
 
     public Line getLine(int at){return lines.get(at);}
     public int getLinesSize(){return lines.size();}
+
+    public Line lastLine() {
+        return getLine(getLinesSize()-1);
+    }
+
+    public Equation getLast(){
+        if (getLinesSize()!=1){
+            Line targetLine = getLine(getLinesSize()-2);
+            if (targetLine instanceof OutputLine){
+                Equation result =targetLine.stupid.get().copy();
+                result.updateOwner(lastLine());
+                return result;
+            }
+        }
+        return null;
+
+
+
+    }
 }

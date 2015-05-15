@@ -1,8 +1,9 @@
-package cube.d.n.commoncore.v2.lines;
+package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -14,12 +15,11 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.Main;
-import cube.d.n.commoncore.v2.Selects;
-import cube.d.n.commoncore.v2.TouchMode;
-import cube.d.n.commoncore.v2.keyboards.InputKeyboard;
-import cube.d.n.commoncore.v2.keyboards.KeyBoard;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.Selects;
+import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.keyboards.InputKeyboard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -52,25 +52,34 @@ public class InputLine extends Line implements Selects {
 
     @Override
     public boolean onTouch(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (in(event)) {
-                if (stupid.get().nearAny(event.getX(), event.getY())) {
-                    resolveSelected(event);
-                    myMode = TouchMode.SELECT;
+        if (event.getPointerCount() ==1) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (in(event)) {
+                    if (getSelected().nearAny(event.getX(), event.getY())) {
+                        resolveSelected(event);
+                        myMode = TouchMode.SELECT;
+                    } else {
+                        myMode = TouchMode.NOPE;
+                    }
+                } else {
+                    myMode = TouchMode.NOPE;
                 }
-            } else {
-                myMode = TouchMode.NOPE;
+            } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                if (myMode == TouchMode.SELECT) {
+                    resolveSelected(event);
+                    selected.goDark();
+                }
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                if (myMode == TouchMode.SELECT) {
+                    resolveSelected(event);
+                }
             }
-        } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+        }else{
             if (myMode == TouchMode.SELECT) {
                 resolveSelected(event);
-                selected.goDark();
-                return true;
             }
-        } else if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (myMode == TouchMode.SELECT) {
-                resolveSelected(event);
-            }
+            myMode = TouchMode.NOPE;
+
         }
         if (myMode == TouchMode.NOPE) {
             return false;
@@ -78,9 +87,6 @@ public class InputLine extends Line implements Selects {
             return  true;
         }
     }
-
-
-
 
     private void updateVelocity(MotionEvent event) {
         //TODO
@@ -94,7 +100,6 @@ public class InputLine extends Line implements Selects {
             }
         }
     }
-
 
     private void resolveSelected(MotionEvent event) {
 // now we need to figure out what we are selecting
@@ -207,8 +212,14 @@ public class InputLine extends Line implements Selects {
         return selected.left();
     }
 
+    private int currentAlpha= 0x00;
+    private float lastLeft = -1;// measureWidth() / 2f;
+    private float lastRight =-1;// measureWidth() / 2f;
+    double lastZoom = BaseApp.getApp().zoom;
     @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
+
+
 
 //        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
 //        Paint p = new Paint();
@@ -216,7 +227,65 @@ public class InputLine extends Line implements Selects {
 //        p.setColor(BaseApp.getApp().darkColor);
 //        canvas.drawRect(r,p);
 
-        stupid.get().draw(canvas,  left +( measureWidth() / 2f),top + buffer + stupid.get().measureHeightUpper());
+        int rate = BaseApp.getApp().getRate();
+
+        stupid.get().setAlpha(paint.getAlpha());
+
+        float eqCenterX=left +(  stupid.get().measureWidth() / 2f) + getBuffer();
+
+
+
+        if (!owner.lastLine().equals(this)) {
+
+            float liney = top +  getBuffer()*3 + stupid.get().measureHeight() +  getBuffer()/2f;
+
+
+            Paint p = new Paint();
+            //p.setColor(BaseApp.getApp().darkColor);
+            currentAlpha = (currentAlpha * rate + 0xff) / (rate + 1);
+            p.setAlpha((int) (currentAlpha * (paint.getAlpha() / (float) 0xff)));
+
+            float targetLeft = getBuffer();//(measureWidth() / 2f) - (stupid.get().measureWidth() / 2f) - (getBuffer()/2f);
+            float targetRight = Math.max(measureWidth()-getBuffer(),stupid.get().measureWidth()+2*getBuffer());//(measureWidth() / 2f) + (stupid.get().measureWidth() / 2f) + (getBuffer()/2f);
+            if (lastZoom != BaseApp.getApp().zoom) {
+                // umm we should be able to do something with this
+                //lastLeft= lastLeft;
+                lastZoom = BaseApp.getApp().zoom;
+            }
+            lastLeft = (lastLeft * rate + targetLeft) / (rate + 1);
+            lastRight = (lastRight * rate + targetRight) / (rate + 1);
+
+            //RectF r = new RectF((int)lastLeft,
+            //        (int)(top+getBuffer()*3 - (getBuffer()/2f)),
+            //        (int)(lastRight),
+            //        (int)(top+getBuffer()*3+stupid.get().measureHeight()) + (getBuffer()/2f));
+
+            //canvas.drawRect(r,p);
+            //BaseApp.getApp().getCornor(),BaseApp.getApp().getCornor();
+            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
+            canvas.drawLine(
+                    left + lastLeft,
+                    liney,
+                    left + lastRight,
+                    liney,
+                    p);
+
+//            float lineybot = top +  getBuffer()*2.5f;
+//
+//            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
+//            canvas.drawLine(
+//                    left + lastLeft,
+//                    lineybot,
+//                    left + lastRight,
+//                    lineybot,
+//                    p);
+        }else{
+             lastLeft =  eqCenterX;
+             lastRight = eqCenterX;
+        }
+
+        stupid.get().draw(canvas,  eqCenterX ,top +  getBuffer()*3 + stupid.get().measureHeightUpper());
+
     }
 
     @Override
@@ -225,8 +294,18 @@ public class InputLine extends Line implements Selects {
     }
 
     @Override
-    public float requestedWidth() {
-        return stupid.get().measureWidth() + buffer*2;
+    public float requestedMaxX() {
+        return 0;
+    }
+
+    @Override
+    public float requestedMinX() {
+        return -Math.max(0,(stupid.get().measureWidth()+  getBuffer()*3-owner.width));
+    }
+
+    @Override
+    public float measureHeight() {
+        return stupid.get().measureHeight() +4 *  getBuffer();
     }
 
     public void insert(Equation newEq) {
@@ -246,4 +325,5 @@ public class InputLine extends Line implements Selects {
     public void deActivate() {
         getSelected().deActivate();
     }
+
 }

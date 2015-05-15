@@ -14,8 +14,8 @@ import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

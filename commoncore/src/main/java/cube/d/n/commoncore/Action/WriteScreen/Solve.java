@@ -1,23 +1,16 @@
 package cube.d.n.commoncore.Action.WriteScreen;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.util.Log;
-
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.eq.PlaceholderEquation;
-import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.v2.Selects;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.InputLine;
-import cube.d.n.commoncore.v2.lines.Line;
-import cube.d.n.commoncore.v2.lines.OutputLine;
+import cube.d.n.commoncore.Selects;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.OutputLine;
 
 
 public class Solve extends Action {
@@ -74,10 +67,6 @@ public class Solve extends Action {
         }
         newEq.updateOwner(line);
         owner.owner.addLine(line);
-        if (vars.size() ==0 && countEquals(((WritingEquation) Solve.mine))!=1){
-            owner.owner.addLine(new InputLine(owner.owner));
-        }
-
     }
 
     private ArrayList<String> getVars(Equation stupid) {

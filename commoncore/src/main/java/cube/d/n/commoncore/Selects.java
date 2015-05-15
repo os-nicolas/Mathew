@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.v2;
+package cube.d.n.commoncore;
 
 import cube.d.n.commoncore.eq.any.Equation;
 

@@ -4,7 +4,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
-import cube.d.n.commoncore.v2.lines.InputLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin on 1/7/2015.

@@ -2,9 +2,8 @@ package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 
-import cube.d.n.commoncore.Animation;
-import cube.d.n.commoncore.v2.lines.AlgebraLine;
-import cube.d.n.commoncore.v2.lines.Line;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/21/2015.
