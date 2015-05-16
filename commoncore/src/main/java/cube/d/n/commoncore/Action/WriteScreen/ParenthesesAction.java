@@ -61,6 +61,7 @@ public class ParenthesesAction extends Action {
             holder.add(oldEq);
             oldEq.setSelected(true);
         }
+        updateOffsetX();
     }
 
 

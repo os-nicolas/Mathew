@@ -7,6 +7,7 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 
@@ -27,6 +28,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 public class InputLine extends Line implements Selects {
 
     private final PlaceholderEquation selected;
+
 
     public InputLine(Main owner) {
         super(owner);
@@ -67,6 +69,24 @@ public class InputLine extends Line implements Selects {
             } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (myMode == TouchMode.SELECT) {
                     resolveSelected(event);
+
+                    float slideBuffer = getBuffer();
+
+                    if ( event.getX() - (selected.measureWidth()/2f) <slideBuffer ){
+                        owner.toAddToOffsetX(this,(slideBuffer-(event.getX() - (selected.measureWidth()/2f)))/10f);
+                    }
+
+                    if ( event.getX() + (selected.measureWidth()/2f) > owner.width -slideBuffer ){
+                        owner.toAddToOffsetX(this,((owner.width -slideBuffer)-(event.getX() + (selected.measureWidth()/2f) ))/10f);
+                    }
+
+                    if ( event.getY() - selected.measureHeightUpper() <slideBuffer ){
+                        owner.toAddToOffsetY((slideBuffer-( event.getY() - selected.measureHeightUpper()))/10f);
+                    }
+
+                    if (event.getY() +selected.measureHeightLower() > owner.height -owner.keyBoardManager.get().measureHeight() -slideBuffer){
+                        owner.toAddToOffsetY(((owner.height -owner.keyBoardManager.get().measureHeight() -slideBuffer)-(event.getY() + selected.measureHeightLower() ))/10f);
+                    }
                     selected.goDark();
                 }
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -86,10 +106,6 @@ public class InputLine extends Line implements Selects {
         }else{
             return  true;
         }
-    }
-
-    private void updateVelocity(MotionEvent event) {
-        //TODO
     }
 
     public void removeSelected() {
@@ -231,7 +247,9 @@ public class InputLine extends Line implements Selects {
 
         stupid.get().setAlpha(paint.getAlpha());
 
-        float eqCenterX=left +(  stupid.get().measureWidth() / 2f) + getBuffer();
+        float realLeft = Math.min(0,Math.max(left,owner.width - stupid.get().measureWidth() - 2* getBuffer()));
+
+        float eqCenterX=realLeft +(  stupid.get().measureWidth() / 2f) + getBuffer();
 
 
 
@@ -246,7 +264,7 @@ public class InputLine extends Line implements Selects {
             p.setAlpha((int) (currentAlpha * (paint.getAlpha() / (float) 0xff)));
 
             float targetLeft = getBuffer();//(measureWidth() / 2f) - (stupid.get().measureWidth() / 2f) - (getBuffer()/2f);
-            float targetRight = Math.max(measureWidth()-getBuffer(),stupid.get().measureWidth()+2*getBuffer());//(measureWidth() / 2f) + (stupid.get().measureWidth() / 2f) + (getBuffer()/2f);
+            float targetRight = Math.max(measureWidth()-getBuffer(),stupid.get().measureWidth()+getBuffer());//(measureWidth() / 2f) + (stupid.get().measureWidth() / 2f) + (getBuffer()/2f);
             if (lastZoom != BaseApp.getApp().zoom) {
                 // umm we should be able to do something with this
                 //lastLeft= lastLeft;
@@ -264,9 +282,9 @@ public class InputLine extends Line implements Selects {
             //BaseApp.getApp().getCornor(),BaseApp.getApp().getCornor();
             p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
             canvas.drawLine(
-                    left + lastLeft,
+                    realLeft + lastLeft,
                     liney,
-                    left + lastRight,
+                    realLeft + lastRight,
                     liney,
                     p);
 
@@ -326,4 +344,74 @@ public class InputLine extends Line implements Selects {
         getSelected().deActivate();
     }
 
+    private float offsetX=0;
+    private float vx=0;
+    private float toAddToOffsetX=0;
+    public float getOffsetX() {
+        return offsetX;
+    }
+
+    public void updateVeloctiyX(float stepsPass, float maxSteps, float dx) {
+        offsetX += dx;
+        float currentVx = (dx) / stepsPass;
+
+        boolean print = false;
+        if ( Math.abs(vx) > .1) {
+            Log.i("vX-in",vx+"");
+            print= true;
+        }
+
+        if (stepsPass < maxSteps) {
+            vx = (((maxSteps - stepsPass) * vx) + ((stepsPass) * currentVx)) / maxSteps;
+        } else {
+            vx = currentVx;
+        }
+
+        if (print) {
+            Log.i("vX-out",vx+",stepsPass "+ stepsPass+",maxSteps "+ maxSteps+",dx "+ dx);
+        }
+    }
+
+    public void toAddToOffsetX(float toAdd) {
+        toAddToOffsetX+=toAdd;
+    }
+
+    public void addToOffsetX() {
+        float toAdd =toAddToOffsetX/BaseApp.getApp().getRate();
+        offsetX+= toAdd;
+        toAddToOffsetX-= toAdd;
+    }
+
+    public void snapBack() {
+        float maxOffsetX = requestedMaxX();
+        float minOffsetX = requestedMinX();
+        for (int i =0;i< owner.getLinesSize();i++){
+            if ( owner.nextInputLine(i).equals(this)){
+                maxOffsetX = Math.max(owner.getLine(i).requestedMaxX(),maxOffsetX);
+                minOffsetX = Math.min(owner.getLine(i).requestedMinX(), minOffsetX);
+            }
+
+        }
+
+
+        if (offsetX > maxOffsetX){
+            offsetX = (offsetX*BaseApp.getApp().getRate() +maxOffsetX)/(BaseApp.getApp().getRate()+1);
+        }
+
+        if (offsetX < minOffsetX){
+            offsetX = (offsetX*BaseApp.getApp().getRate() +minOffsetX)/(BaseApp.getApp().getRate()+1);
+        }
+    }
+
+    public void slide(double friction, float steps) {
+        if ( Math.abs(vx) > .1) {
+            Log.i("vX-slide",vx+"");
+        }else{
+            //Log.i("vx-slide-called","true dat");
+        }
+
+        float dx = (float) (vx * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
+        vx = (float) (vx * Math.pow(friction, steps));
+        offsetX+=dx;
+    }
 }

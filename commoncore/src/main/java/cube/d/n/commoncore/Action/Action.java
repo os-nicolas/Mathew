@@ -1,5 +1,6 @@
 package cube.d.n.commoncore.Action;
 
+import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
@@ -127,5 +128,18 @@ public abstract class Action {
             }
         }
     }
+
+    public void updateOffsetX(){
+        if (owner instanceof  InputLine){
+                InputLine il = (InputLine)owner;
+                PlaceholderEquation phe = il.getSelected();
+                if (phe.getX() +(phe.measureWidth()/2f) > owner.owner.width- 4*Line.getBuffer()){
+                    il.toAddToOffsetX((owner.owner.width- 4*Line.getBuffer())- (phe.getX() +(phe.measureWidth()/2f)));
+                }
+                if (phe.getX() < 4*Line.getBuffer()){
+                    il.toAddToOffsetX((4*Line.getBuffer())- phe.getX());
+                }
+        }
+        }
 
 }

@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -90,8 +91,16 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         return stupid.get().measureHeight() + 2 *  getBuffer();
     }
 
+    private float internalOffset= Float.MAX_VALUE;
+
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
+
+        if (internalOffset==Float.MAX_VALUE){
+            if (stupid.get() instanceof EqualsEquation){
+                internalOffset = -(stupid.get().measureWidth()/2f)+((EqualsEquation) stupid.get()).measureLeft();
+            }
+        }
 
 //        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
 //        Paint p = new Paint();
@@ -110,12 +119,34 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
         stupid.get().setAlpha(stupidAlpha);
 
-
-        stupid.get().draw(canvas, left + measureWidth()/2f, top + measureHeight() -  getBuffer() - stupid.get().measureHeightLower());
+        if (stupid.get() instanceof EqualsEquation){
+            ((EqualsEquation) stupid.get()).drawCentered(canvas, left +internalOffset + (measureWidth() / 2f), top + measureHeight() - getBuffer() - stupid.get().measureHeightLower());
+        }else {
+            stupid.get().draw(canvas, left + measureWidth() / 2f, top + measureHeight() - getBuffer() - stupid.get().measureHeightLower());
+        }
 
 
         if (dragging != null) {
+
             dragging.eq.draw(canvas, dragging.eq.x, dragging.eq.y);
+
+            float slideBuffer = getBuffer();
+
+            if ( dragging.eq.getX() - (dragging.eq.measureWidth()/2f) <slideBuffer ){
+                owner.toAddToOffsetX(this,(slideBuffer-(dragging.eq.getX() - (dragging.eq.measureWidth()/2f)))/10f);
+            }
+
+            if ( dragging.eq.getX() + (dragging.eq.measureWidth()/2f) > owner.width -slideBuffer ){
+                owner.toAddToOffsetX(this,((owner.width -slideBuffer)-(dragging.eq.getX() + (dragging.eq.measureWidth()/2f) ))/10f);
+            }
+
+            if ( dragging.eq.getY() - dragging.eq.measureHeightUpper() <slideBuffer ){
+                owner.toAddToOffsetY((slideBuffer-( dragging.eq.getY() - dragging.eq.measureHeightUpper()))/10f);
+            }
+
+            if ( dragging.eq.getY() + dragging.eq.measureHeightLower() > owner.height -owner.keyBoardManager.get().measureHeight() -slideBuffer){
+                owner.toAddToOffsetY(((owner.height -owner.keyBoardManager.get().measureHeight() -slideBuffer)-(dragging.eq.getY() + dragging.eq.measureHeightLower() ))/10f);
+            }
         }
 
         for (EquationButton eb : history) {
@@ -124,6 +155,14 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
         for (int i = 0; i < animation.size(); i++) {
             animation.get(i).draw(canvas);
+        }
+
+     for (DragLocation dl:dragLocations){
+            float dlx = dl.x + stupid.get().lastPoint.get(0).x;
+            float dly = dl.y + stupid.get().lastPoint.get(0).y;
+            Paint temp =new Paint();
+            temp.setColor(Color.GREEN);
+            canvas.drawCircle(dlx,dly,15,temp);
         }
 
 
@@ -141,7 +180,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         float atHeight = -((stupid.get().measureHeight()/2f)+ historyBuffer) ;
 
 
-        int  centerX= (int) stupid.get().x;
+        int  centerX;
+        if (stupid.get() instanceof  EqualsEquation){
+            centerX=(int)(left +internalOffset + (measureWidth() / 2f));
+        }else{
+            centerX= (int) stupid.get().x;
+        }
+
         int centerY= (int) stupid.get().y;
 
         for (EquationButton eb : history) {
@@ -151,10 +196,10 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
                 if ((centerY + atHeight + eb.myEq.measureHeightLower()) > 0 &&
                         (centerY + atHeight - eb.myEq.measureHeightUpper()) < owner.height ) {
-                    eb.draw(canvas, centerX, centerY);
+                    eb.draw(canvas, (int)(centerX), centerY);
                 } else  {
                     // update the locations
-                    eb.updateLocations(centerX, centerY);
+                    eb.updateLocations((int)(centerX), centerY);
                 }
                 atHeight -= ((eb.myEq.measureHeight()/2f) + historyBuffer);
 
@@ -718,20 +763,36 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
     @Override
     public float requestedMaxX() {
-        float widest = stupid.get().measureWidth()+  getBuffer()*2;
-        for (EquationButton eb : history){
-            widest = Math.max(widest,eb.myEq.measureWidth())+  getBuffer()*2;
+        if (stupid.get() instanceof EqualsEquation){
+            float leftest = ((EqualsEquation) stupid.get()).measureLeft() + getBuffer() -internalOffset;
+            for (EquationButton eb : history) {
+                leftest = Math.max(leftest, ((EqualsEquation) eb.myEq).measureLeft() + getBuffer() - internalOffset);
+            }
+            return Math.max(0,leftest-(owner.width/2f));
+        }else {
+            float widest = stupid.get().measureWidth() + getBuffer() * 2;
+            for (EquationButton eb : history) {
+                widest = Math.max(widest, eb.myEq.measureWidth()+ getBuffer() * 2) ;
+            }
+            return Math.max(0,(widest-owner.width)/2f);
         }
-        return Math.max(0,(widest-owner.width)/2f);
     }
 
     @Override
     public float requestedMinX() {
-        float widest = stupid.get().measureWidth()+  getBuffer()*2;
-        for (EquationButton eb : history){
-            widest = Math.max(widest,eb.myEq.measureWidth())+  getBuffer()*2;
+        if (stupid.get() instanceof EqualsEquation){
+            float rightest = ((EqualsEquation) stupid.get()).measureRight() + getBuffer() +internalOffset;
+            for (EquationButton eb : history) {
+                rightest = Math.max(rightest, ((EqualsEquation) eb.myEq).measureRight() + getBuffer() +internalOffset);
+            }
+            return -Math.max(0,rightest-(owner.width/2f));
+        }else {
+            float widest = stupid.get().measureWidth() + getBuffer() * 2;
+            for (EquationButton eb : history) {
+                widest = Math.max(widest, eb.myEq.measureWidth() + getBuffer() * 2);
+            }
+            return -Math.max(0, (widest - owner.width) / 2f);
         }
-        return -Math.max(0,(widest-owner.width)/2f);
     }
 
     private boolean changed = false;

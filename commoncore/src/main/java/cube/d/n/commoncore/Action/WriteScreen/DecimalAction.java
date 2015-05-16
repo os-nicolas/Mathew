@@ -54,6 +54,7 @@ public class DecimalAction extends Action {
                 oldEq.setSelected(true);
             }
         }
+        updateOffsetX();
     }
 
     private Equation getEq() {

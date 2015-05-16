@@ -53,6 +53,7 @@ public class EqualsAction extends Action {
 
         Equation newEq = new WritingLeafEquation("=",(InputLine)owner);
         ((InputLine)owner).insert(newEq);
+        updateOffsetX();
     }
 }
 

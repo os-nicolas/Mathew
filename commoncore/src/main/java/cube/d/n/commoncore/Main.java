@@ -12,8 +12,22 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.WriteScreen.PowerAction;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.BinaryEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.MinusEquation;
+import cube.d.n.commoncore.eq.any.MonaryEquation;
+import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.PlusMinusEquation;
+import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.eq.any.SignEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
+import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
@@ -23,9 +37,10 @@ import cube.d.n.commoncore.lines.OutputLine;
 */
 public class Main extends View implements View.OnTouchListener {
 
-    final private KeyBoardManager keyBoardManager = new KeyBoardManager();
 
-    private ArrayList<Line> lines = new ArrayList<>();
+    final public KeyBoardManager keyBoardManager = new KeyBoardManager();
+
+    final ArrayList<Line> lines = new ArrayList<>();
 
     public float height;
     public float width;
@@ -56,9 +71,7 @@ public class Main extends View implements View.OnTouchListener {
     float lastDragY;
     float lastDragX;
     float offsetY;
-    float offsetX;
     float vy;
-    float vx;
     long lastVelocityUpdate;
     public boolean fingerDown= false;
 
@@ -193,17 +206,17 @@ public class Main extends View implements View.OnTouchListener {
         if (timePass != 0) {
             float stepsPass = timePass / step;
             if (moveX){
-
                 float dx = (event.getX() - lastDragX);
-                offsetX += dx;
-                float currentVx = (dx) / stepsPass;
-                lastDragX = event.getX();
-
-                if (stepsPass < maxSteps) {
-                    vx = ((maxSteps - stepsPass) * vx + (stepsPass) * currentVx) / maxSteps;
-                } else {
-                    vx = currentVx;
+                for (int i =0;i<lines.size();i++){
+                    Line l = lines.get(i);
+                    if( (l.getY()+ (l.measureHeight()/2f) > event.getY() || i == lines.size()-1) &&
+                            l.getY() - (l.measureHeight()/2f) < event.getY()){//|| i == 0
+                        nextInputLine(i).updateVeloctiyX(stepsPass,maxSteps,dx);
+                        break;
+                    }
                 }
+                lastDragX = event.getX();
+                lastVelocityUpdate = now;
             }
             if (moveY) {
                 float dy = (event.getY() - lastDragY);
@@ -232,7 +245,6 @@ public class Main extends View implements View.OnTouchListener {
         if (height == 0) {
             height = canvas.getHeight();
             offsetY = ((height - keyBoardManager.get().measureHeight())/2f)+ lines.get(lines.size()-1).measureHeight()/2f;
-            offsetX = 0;
         }
         height = canvas.getHeight();
         width = canvas.getWidth();
@@ -248,12 +260,18 @@ public class Main extends View implements View.OnTouchListener {
         }
 
         addToOffestY();
+        addToOffestX();
 
         float bot = offsetY;
-        float left = offsetX;
+        float left;
         for (int i= lines.size()-1;i>=0;i--){
+
+            left = nextInputLine(i).getOffsetX();
             Line l = lines.get(i);
             float top = bot - l.measureHeight();
+            if (i==lines.size()-1){
+                top+=l.stupid.get().measureHeightLower();
+            }
             if (inScreen(l,top)){
                 l.draw(canvas,top,left,new Paint());
 
@@ -274,8 +292,13 @@ public class Main extends View implements View.OnTouchListener {
 
     }
 
-    public void toAddToOffsetY(float toAdd){
-        toAddToOffsetY+=toAdd;
+    public InputLine nextInputLine(int at) {
+        for (int i= at;i>=0;i--){
+            if (lines.get(i) instanceof InputLine && !(lines.get(i) instanceof BothSidesLine)){
+                return (InputLine) lines.get(i);
+            }
+        }
+        return null;
     }
 
 
@@ -283,11 +306,30 @@ public class Main extends View implements View.OnTouchListener {
         offsetY += toAdd;
     }
 
+    public void toAddToOffsetY(float toAdd){
+        toAddToOffsetY+=toAdd;
+    }
+
     float toAddToOffsetY=0;
     private void addToOffestY() {
         float toAdd =toAddToOffsetY/BaseApp.getApp().getRate();
         offsetY+= toAdd;
         toAddToOffsetY-= toAdd;
+    }
+
+    public void toAddToOffsetX(Line l,float toAdd){
+        int at = lines.indexOf(l);
+        InputLine inputLine =  nextInputLine(at);
+        inputLine.toAddToOffsetX(toAdd);
+    }
+
+    private void addToOffestX() {
+        for (Line l:lines){
+            if ( l instanceof  InputLine  && !(l instanceof BothSidesLine)){
+                ((InputLine) l).addToOffsetX();
+            }
+        }
+
     }
 
     private void snapeBack() {
@@ -314,29 +356,13 @@ public class Main extends View implements View.OnTouchListener {
             offsetY = (offsetY*BaseApp.getApp().getRate() +minOffsetY)/(BaseApp.getApp().getRate()+1);
         }
 
-
-        float maxOffsetX = 0;
-        float minOffsetX = 0;
-
-        float bot = offsetY;
         for (int i= lines.size()-1;i>=0;i--){
             Line l = lines.get(i);
-            float top = bot - l.measureHeight();
-            if (inScreen(l,top)){
-                maxOffsetX = Math.max(maxOffsetX,l.requestedMaxX());
-                minOffsetX = Math.min(minOffsetX,l.requestedMinX());
+            if ( l instanceof InputLine && !(l instanceof BothSidesLine)){
+                ((InputLine)l).snapBack();
             }
-            bot-= l.measureHeight();
         }
 
-        if (offsetX > maxOffsetX){
-            offsetX = (offsetX*BaseApp.getApp().getRate() +maxOffsetX)/(BaseApp.getApp().getRate()+1);
-        }
-
-
-        if (offsetX < minOffsetX){
-            offsetX = (offsetX*BaseApp.getApp().getRate() +minOffsetX)/(BaseApp.getApp().getRate()+1);
-        }
 
     }
 
@@ -346,14 +372,20 @@ public class Main extends View implements View.OnTouchListener {
         float steps = diff / step;
 
         double friction = .95;
-        float dx = (float) (vx * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
+
         float dy = (float) (vy * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
 
-        vx = (float) (vx * Math.pow(friction, steps));
+        for (int i= lines.size()-1;i>=0;i--){
+            Line l = lines.get(i);
+            if ( l instanceof InputLine  && !(l instanceof BothSidesLine)){
+                ((InputLine)l).slide(friction,steps);
+            }
+        }
+
         vy = (float) (vy * Math.pow(friction, steps));
 
         lastVelocityUpdate = now;
-        offsetX+=dx;
+
         offsetY+=dy;
     }
 
@@ -397,13 +429,74 @@ public class Main extends View implements View.OnTouchListener {
             Line targetLine = getLine(getLinesSize()-2);
             if (targetLine instanceof OutputLine){
                 Equation result =targetLine.stupid.get().copy();
+                result = convert(result);
                 result.updateOwner(lastLine());
                 return result;
             }
         }
         return null;
 
-
-
     }
+
+
+    //TODO this needs to hanlde ()
+    private Equation convert(Equation eq) {
+        Equation toAdd;
+        Equation write = null;
+        if (eq instanceof EqualsEquation || eq instanceof AddEquation || eq instanceof MultiEquation){
+
+            String s ="";
+            if (eq instanceof EqualsEquation){
+                s ="=";
+            }
+            if (eq instanceof AddEquation){
+                s ="+";
+            }
+            if (eq instanceof MultiEquation){
+                s ="*";
+            }
+
+
+            write = new WritingEquation(eq.owner);
+            for (Equation e: eq){
+                toAdd = convert(e);
+                if (toAdd instanceof WritingEquation){
+                    write.addAll(toAdd);
+                }else{
+                    write.add(toAdd);
+                }
+                if (eq.indexOf(e) != eq.size()-1){
+                    toAdd = new WritingLeafEquation(s,eq.owner);
+                    write.add(toAdd);
+                }
+            }
+
+        }else if (eq instanceof SignEquation){
+            write = new WritingEquation(eq.owner);
+            String s ="";
+            if (eq instanceof MinusEquation){
+                s ="-";
+            }
+            if (eq instanceof PlusMinusEquation){
+                s ="\u00B1";
+            }
+            toAdd = new WritingLeafEquation(s,eq.owner);
+            write.add(toAdd);
+
+        }else if (eq instanceof BinaryEquation){
+            if (eq instanceof DivEquation){
+                write = new DivEquation(eq.owner);
+            }
+            if (eq instanceof PowerEquation){
+                write = new PowerEquation(eq.owner);
+            }
+            for (Equation e: eq){
+                toAdd = convert(e);
+                write.add(toAdd);
+            }
+        }
+
+        return write;
+    }
+
 }

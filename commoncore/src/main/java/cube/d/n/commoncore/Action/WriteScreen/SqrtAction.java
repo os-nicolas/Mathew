@@ -16,6 +16,7 @@ public class SqrtAction extends MonaryAction {
     protected void privateAct() {
         Equation newEq = new WritingSqrtEquation(((InputLine)owner));
         monaryInsert(newEq);
+
     }
 
 

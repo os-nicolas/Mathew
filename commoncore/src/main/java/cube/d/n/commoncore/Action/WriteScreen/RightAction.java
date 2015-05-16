@@ -23,5 +23,6 @@ public class RightAction extends Action {
     protected void privateAct() {
         ((PlaceholderEquation) ((InputLine)owner).getSelected()).goDark();
         tryMoveRight(((InputLine)owner).getSelected());
+        updateOffsetX();
     }
 }

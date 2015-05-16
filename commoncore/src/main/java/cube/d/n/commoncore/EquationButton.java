@@ -65,7 +65,11 @@ public class EquationButton extends Button {
         myEq.setColor(currentColor);
         myEq.setAlpha(currentAlpha);
 
+        if (myEq instanceof EqualsEquation){
+            ((EqualsEquation) myEq).drawCentered(canvas, x + stupidX, y + stupidY);
+        }else {
             myEq.draw(canvas, x + stupidX, y + stupidY);
+        }
 
         // if there is a warning show that too
         if (warn && canvas != null) {
@@ -103,14 +107,14 @@ public class EquationButton extends Button {
         float topEnd = (y) - myEq.measureHeightUpper() - buffer;
         float bottomEnd = (y) + myEq.measureHeightLower() + buffer;
 
-//        if (myEq instanceof EqualsEquation) {
-//            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
-//            leftEnd = (x) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
-//            rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
-//        } else {
-            leftEnd = (x) - myEq.measureWidth() / 2;
-            rightEnd = (x) + myEq.measureWidth() / 2;
-//        }
+       if (myEq instanceof EqualsEquation) {
+            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
+            leftEnd = (x) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
+            rightEnd = (x) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
+        } else {
+            leftEnd = (x) - (myEq.measureWidth() / 2f)- buffer;
+            rightEnd = (x) + (myEq.measureWidth() / 2f)+ buffer;
+        }
 
         Paint temp = new Paint();
         //TODO scale by dpi - also do i really want to blurr this?
@@ -177,10 +181,22 @@ public class EquationButton extends Button {
 
     private boolean inBox(MotionEvent event) {
 
+        float buffer = (float) (10 * BaseApp.getApp().getDpi() * BaseApp.getApp().zoom);
+
         float stupidX = ((AlgebraLine) owner).stupid.get().getX();
         float  stupidY = ((AlgebraLine) owner).stupid.get().getY();
-        float  leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f);
-        float  rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f);
+        float  leftEnd;
+        float  rightEnd;
+
+        if (myEq instanceof EqualsEquation) {
+            float middle = myEq.measureWidth() - (myEq.get(0).measureWidth() + myEq.get(1).measureWidth());
+            leftEnd = (x + stupidX) - (middle / 2) - myEq.get(0).measureWidth() - buffer;
+            rightEnd = (x + stupidX) + (middle / 2) + myEq.get(1).measureWidth() + buffer;
+        } else {
+            leftEnd = (x + stupidX) - (myEq.measureWidth() / 2f) - buffer;
+            rightEnd = (x + stupidX) + (myEq.measureWidth() / 2f) + buffer;
+        }
+
 
         float topEnd = (y + stupidY) - myEq.measureHeightUpper();
         float bottomEnd = (y + stupidY) + myEq.measureHeightLower();

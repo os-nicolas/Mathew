@@ -87,6 +87,7 @@ public class NumberAction extends Action {
                     ((InputLine)owner).insert(newEq);
                 }
             }
+        updateOffsetX();
     }
 
 }

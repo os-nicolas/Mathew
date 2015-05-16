@@ -33,5 +33,6 @@ public abstract class MonaryAction extends Action {
             holder.add(oldEq);
             oldEq.setSelected(true);
         }
+        updateOffsetX();
     }
 }

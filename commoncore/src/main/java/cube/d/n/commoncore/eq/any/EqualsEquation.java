@@ -61,7 +61,7 @@ public class EqualsEquation extends Equation {
     // this is badly named this is draw centered on the equals
     public void drawCentered(Canvas canvas, float x, float y) {
         // we need to figure out where the equals is
-        float diffX = (float) (+this.measureWidth()/2 - get(0).measureWidth() - (getMyWidth() + myWidthAdd())/2);
+        float diffX = (float) (+this.measureWidth()/2 - get(0).measureWidth() - (getMyWidth() + myWidthAdd())/2f);
         super.draw(canvas, x+diffX, y);
     }
 
@@ -82,4 +82,12 @@ public class EqualsEquation extends Equation {
 		NumConstEquation num = new NumConstEquation(BigDecimal.ZERO, owner);
 		add(pos,num);
 	}
+
+    public float measureLeft() {
+        return (float) ( get(0).measureWidth() + (getMyWidth() + myWidthAdd())/2f);
+    }
+
+    public float measureRight() {
+        return (float) ( get(1).measureWidth() + (getMyWidth() + myWidthAdd())/2f);
+    }
 }

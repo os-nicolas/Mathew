@@ -41,5 +41,6 @@ public abstract class InlineOpAction extends Action {
             ((InputLine) owner).insert(owner.owner.getLast());
             ((InputLine) owner).insert(newEq);
         }
+        updateOffsetX();
     }
 }

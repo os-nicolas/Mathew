@@ -77,6 +77,7 @@ public abstract class BinaryAction extends Action {
             ((InputLine) owner).getSelected().justRemove();
             newEq.add(placeHolder);
         }
+        updateOffsetX();
     }
 
     private boolean canBlock() {
