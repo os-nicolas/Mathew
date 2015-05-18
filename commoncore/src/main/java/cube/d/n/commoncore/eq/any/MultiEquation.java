@@ -3,6 +3,7 @@ package cube.d.n.commoncore.eq.any;
 
 import android.util.Log;
 
+import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
@@ -12,7 +13,7 @@ import cube.d.n.commoncore.lines.Line;
 
 import java.util.ArrayList;
 
-public class MultiEquation extends FlexOperation implements MultiDivSuperEquation {
+public class MultiEquation extends FlexOperation implements MultiDivSuperEquation, BinaryOperator {
 
     public MultiEquation(Line owner, MultiEquation equations) {
         super(owner, equations);
@@ -101,7 +102,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         for (Equation e:eqs){
             db +=e.toString();
         }
-        Log.i("",db);
+        Log.i("try Op",db);
 
 
         int at = Math.min(indexOf(eqs.get(0)), indexOf(eqs.get(1)));
@@ -118,7 +119,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
         MultiCountDatas right= new MultiCountDatas(eqs.get(1));
 
-        boolean simplify = eqs.get(0).removeNeg() instanceof AddEquation && eqs.get(1).removeNeg() instanceof AddEquation;
+        boolean simplify = eqs.get(0).removeSign() instanceof AddEquation && eqs.get(1).removeSign() instanceof AddEquation;
             // multiply && combine like terms
         MultiCountDatas fullSet = Operations.Multiply(left, right, simplify,owner);
 

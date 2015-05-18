@@ -26,8 +26,6 @@ public class PopUpButton extends Button {
     }
 
     public void updateLocation(KeyBoard owner){
-
-        float ybot = owner.buttonsPercent;
         float rate = BaseApp.getApp().getRate();
             if (myAction.canAct()){
                 if (currentHeight < targetHeight) {
@@ -58,9 +56,10 @@ public class PopUpButton extends Button {
                     }
                 }
             }
+            float ybot = 1-owner.buttonsPercent;
             float ytop = ybot-currentHeight;
 
-            owner.buttonsPercent = ytop;
+            owner.buttonsPercent = (1-ytop);
 
             setLocation(startAtX,endAtX,ytop,ybot);
 

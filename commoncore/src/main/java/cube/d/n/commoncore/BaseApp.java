@@ -78,12 +78,6 @@ public abstract class BaseApp extends Application{
 
         setDpiAndScale(metrics.densityDpi / 160f, (float) inches);
 
-
-        // Get tracker.
-        Tracker t = getTracker();
-
-        // Enable Advertising Features.
-        t.enableAdvertisingIdCollection(true);
     }
 
     public abstract String getPropertyId();
@@ -94,6 +88,7 @@ public abstract class BaseApp extends Application{
         }else{
             GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
             myTracker =  analytics.newTracker(getPropertyId());
+            myTracker.enableAdvertisingIdCollection(true);
             return  myTracker;
         }
     }

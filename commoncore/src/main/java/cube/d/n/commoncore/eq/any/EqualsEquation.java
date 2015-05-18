@@ -11,6 +11,7 @@ import cube.d.n.commoncore.lines.Line;
 
 public class EqualsEquation extends Equation {
 
+
     @Override
     public void integrityCheck() {
         super.integrityCheck();
@@ -89,5 +90,10 @@ public class EqualsEquation extends Equation {
 
     public float measureRight() {
         return (float) ( get(1).measureWidth() + (getMyWidth() + myWidthAdd())/2f);
+    }
+
+    public float getCenter() {
+        return getX() - measureWidth()/2f + measureLeft();
+
     }
 }

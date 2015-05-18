@@ -39,7 +39,7 @@ public class VarAction extends Action {
             holder.add(oldEq);
             oldEq.setSelected(true);
         }
-        updateOffsetX();
+        updateOffset();
     }
 
 

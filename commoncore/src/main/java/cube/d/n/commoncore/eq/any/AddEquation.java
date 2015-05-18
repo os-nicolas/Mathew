@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.Line;
 
-public class AddEquation extends FlexOperation {
+public class AddEquation extends FlexOperation implements BinaryOperator {
 
     @Override
     public void integrityCheck(){

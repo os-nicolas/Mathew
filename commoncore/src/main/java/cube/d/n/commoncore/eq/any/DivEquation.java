@@ -8,12 +8,13 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.Line;
 
-public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation {
+public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation , BinaryOperator {
 
     @Override
     public void integrityCheck(){

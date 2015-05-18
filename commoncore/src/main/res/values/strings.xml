@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">CommonCore</string>
     <string name="assume">Assuming</string>
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
+    <string name="quadratic">Solve Quadratic</string>
+    <string name="quadratic_for">-</string>
 </resources>

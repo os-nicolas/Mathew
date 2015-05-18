@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import cube.d.n.commoncore.Action.SovleScreen.SolveQuadratic;
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CanTrackChanges;
@@ -19,6 +20,8 @@ import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.EquationButton;
 import cube.d.n.commoncore.LongTouch;
+import cube.d.n.commoncore.PopUpButton;
+import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.DragLocations;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
@@ -28,6 +31,7 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.Main;
@@ -60,6 +64,9 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     public AlgebraLine(Main owner, Equation newEq) {
         super(owner);
         stupid.set(newEq);
+        if (!hasInitedVars){
+            initVars();
+        }
         history.add(new EquationButton(stupid.get().copy(),this));
     }
 
@@ -70,6 +77,9 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         }
         return myKeyBoard;
     }
+
+
+
 
 
     private float height = -1;
@@ -109,7 +119,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 //        canvas.drawRect(r,p);
 
         int targetAlpha;
-        if (EquationButton.current != null && EquationButton.current.lastLongTouch != null){
+        if (EquationButton.current != null && EquationButton.current.owner.equals(this) && EquationButton.current.lastLongTouch != null){
             stupidAlpha = (int)(Math.max(.7f-EquationButton.current.lastLongTouch.percent(),0)*0xff);
             targetAlpha = stupidAlpha;
         }else{
@@ -157,13 +167,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
             animation.get(i).draw(canvas);
         }
 
-     for (DragLocation dl:dragLocations){
-            float dlx = dl.x + stupid.get().lastPoint.get(0).x;
-            float dly = dl.y + stupid.get().lastPoint.get(0).y;
-            Paint temp =new Paint();
-            temp.setColor(Color.GREEN);
-            canvas.drawCircle(dlx,dly,15,temp);
-        }
+//     for (DragLocation dl:dragLocations){
+//            float dlx = dl.x + stupid.get().lastPoint.get(0).x;
+//            float dly = dl.y + stupid.get().lastPoint.get(0).y;
+//            Paint temp =new Paint();
+//            temp.setColor(Color.GREEN);
+//            canvas.drawCircle(dlx,dly,15,temp);
+//        }
 
 
         drawHistory(canvas,top,left,paint);
@@ -211,6 +221,9 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         for (EquationButton eb : history) {
             if (lastZoom != BaseApp.getApp().zoom){
                 eb.myEq.deepNeedsUpdate();
+                if (eb.warnEq != null){
+                    eb.warnEq.deepNeedsUpdate();
+                }
                 eb.updateZoom(lastZoom,BaseApp.getApp().zoom);
             }
             if ((!eb.equals(history.get(0)))) {
@@ -386,6 +399,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         history.add(0, new EquationButton(stupid.get().copy(), this));
         Log.i("add to History", stupid.toString());
         changed = false;
+        center();
 
     }
 
@@ -763,36 +777,72 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
     @Override
     public float requestedMaxX() {
+        float leftest;
         if (stupid.get() instanceof EqualsEquation){
-            float leftest = ((EqualsEquation) stupid.get()).measureLeft() + getBuffer() -internalOffset;
-            for (EquationButton eb : history) {
-                leftest = Math.max(leftest, ((EqualsEquation) eb.myEq).measureLeft() + getBuffer() - internalOffset);
-            }
-            return Math.max(0,leftest-(owner.width/2f));
+            leftest = ((EqualsEquation) stupid.get()).measureLeft() + getBuffer() -internalOffset;
         }else {
-            float widest = stupid.get().measureWidth() + getBuffer() * 2;
-            for (EquationButton eb : history) {
-                widest = Math.max(widest, eb.myEq.measureWidth()+ getBuffer() * 2) ;
-            }
-            return Math.max(0,(widest-owner.width)/2f);
+            leftest = (stupid.get().measureWidth()/2f) + getBuffer();
         }
+        for (EquationButton eb : history) {
+            if (stupid.get() instanceof EqualsEquation){
+                leftest = Math.max(leftest,eb.measureLeft()+ getBuffer() -internalOffset );
+            }else {
+                leftest = Math.max(leftest,eb.measureLeft()+ getBuffer() );
+            }
+        }
+        return Math.max(0,leftest-(owner.width/2f));
     }
 
     @Override
     public float requestedMinX() {
+        float rightest;
         if (stupid.get() instanceof EqualsEquation){
-            float rightest = ((EqualsEquation) stupid.get()).measureRight() + getBuffer() +internalOffset;
-            for (EquationButton eb : history) {
-                rightest = Math.max(rightest, ((EqualsEquation) eb.myEq).measureRight() + getBuffer() +internalOffset);
-            }
-            return -Math.max(0,rightest-(owner.width/2f));
+            rightest = ((EqualsEquation) stupid.get()).measureRight() + getBuffer() +internalOffset;
         }else {
-            float widest = stupid.get().measureWidth() + getBuffer() * 2;
-            for (EquationButton eb : history) {
-                widest = Math.max(widest, eb.myEq.measureWidth() + getBuffer() * 2);
-            }
-            return -Math.max(0, (widest - owner.width) / 2f);
+            rightest = (stupid.get().measureWidth()/2f) + getBuffer();
         }
+        for (EquationButton eb : history) {
+            if (stupid.get() instanceof EqualsEquation){
+                rightest = Math.max(rightest,eb.measureRight()+ getBuffer() +internalOffset    );
+            }else {
+                rightest = Math.max(rightest,eb.measureRight()+ getBuffer() );
+            }
+        }
+        return -Math.max(0,rightest-(owner.width/2f));
+
+    }
+
+    private boolean hasInitedVars = false;
+    private void initVars() {
+        ArrayList<String> myVars = getMyVars(stupid.get());
+//        for (int i =popUpButtons.size()-1;i>-1;i--){
+//            if (popUpButtons.get(i).myAction instanceof SolveQuadratic){
+//                popUpButtons.remove(i);
+//            }
+//        }
+        for (String myVar:myVars) {
+            //TODO strings are bad
+            PopUpButton quadratic = new PopUpButton( owner.getContext().getString(R.string.quadratic) + (myVars.size()==1?"":" "+owner.getContext().getString(R.string.quadratic_for)+" "+myVar), new SolveQuadratic(myVar,this));
+            quadratic.setTargets(1f / 9f, 0f, 1f);
+            getKeyboad().popUpButtons.add(quadratic);
+        }
+        hasInitedVars = true;
+    }
+
+    private ArrayList<String> getMyVars(Equation stupid) {
+        ArrayList<String> result = new ArrayList<>();
+        if (stupid instanceof VarEquation){
+            result.add(stupid.getDisplay(-1));
+        }
+        for (Equation e: stupid){
+            ArrayList<String> innerResult = getMyVars(e);
+            for (String s: innerResult){
+                if (!result.contains(s)){
+                    result.add(s);
+                }
+            }
+        }
+        return result;
     }
 
     private boolean changed = false;

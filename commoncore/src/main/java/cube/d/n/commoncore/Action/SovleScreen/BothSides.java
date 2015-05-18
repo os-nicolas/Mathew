@@ -26,6 +26,7 @@ public class BothSides extends Action {
         line.setUp(myBothSidesMode,owner.stupid.get().copy());
         owner.owner.addLine(line);
 
+
     }
 
     @Override

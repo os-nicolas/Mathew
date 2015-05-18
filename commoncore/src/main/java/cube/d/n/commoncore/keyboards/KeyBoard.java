@@ -25,6 +25,7 @@ public abstract class KeyBoard implements Measureable {
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<>();
     public float buttonsPercent;
     protected final Line line;
+    private boolean active= true;
 
 
     public KeyBoard(Main owner,Line line){
@@ -76,31 +77,33 @@ public abstract class KeyBoard implements Measureable {
     TouchMode myMode;
 
     public boolean onTouch(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (in(event)) {
-                myMode = TouchMode.KEYBOARD;
+        if (active) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (in(event)) {
+                    myMode = TouchMode.KEYBOARD;
 
-            } else {
-                myMode = TouchMode.NOPE;
-            }
-        }
-        if (myMode == TouchMode.KEYBOARD){
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                for (Button myBut : buttons) {
-                    myBut.click(event);
-                }
-                for (PopUpButton pub : popUpButtons) {
-                    pub.click(event);
-                }
-            } else {
-                for (Button myBut : buttons) {
-                    myBut.hover(event);
-                }
-                for (PopUpButton pub : popUpButtons) {
-                    pub.hover(event);
+                } else {
+                    myMode = TouchMode.NOPE;
                 }
             }
-            return true;
+            if (myMode == TouchMode.KEYBOARD) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    for (Button myBut : buttons) {
+                        myBut.click(event);
+                    }
+                    for (PopUpButton pub : popUpButtons) {
+                        pub.click(event);
+                    }
+                } else {
+                    for (Button myBut : buttons) {
+                        myBut.hover(event);
+                    }
+                    for (PopUpButton pub : popUpButtons) {
+                        pub.hover(event);
+                    }
+                }
+                return true;
+            }
         }
         return false;
     }
@@ -129,7 +132,7 @@ public abstract class KeyBoard implements Measureable {
         buttonsPercent = getBaseButtonsPercent();
         for (PopUpButton myPUB: popUpButtons) {
             myPUB.updateLocation(this);
-            myPUB.draw(canvas,paint);
+            myPUB.draw(canvas, paint);
         }
 
         drawShadow(canvas,paint.getAlpha());
@@ -157,4 +160,11 @@ public abstract class KeyBoard implements Measureable {
 
     public abstract float getBaseButtonsPercent();
 
+    public void deactivate() {
+        active = false;
+    }
+
+    public void reactivate() {
+        active = true;
+    }
 }

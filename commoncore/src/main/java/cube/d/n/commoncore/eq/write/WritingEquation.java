@@ -127,6 +127,7 @@ public class WritingEquation extends Equation {
         //boolean openParen = false;
         boolean wasParen = false;
         int minus = 0;
+        boolean plusMinus = false;
 
         for (int i = 0; i < size(); i++) {
             Equation at = get(i);
@@ -145,6 +146,9 @@ public class WritingEquation extends Equation {
                 } else if (at.getDisplay(-1).equals("-")) {
                     currentToAdd = new AddEquation(owner);
                     minus++;
+                }  else if (at.getDisplay(-1).equals("\u00B1")) {
+                    currentToAdd = new AddEquation(owner);
+                    plusMinus=true;
                 } else {
                     if (at instanceof WritingPraEquation && ((WritingPraEquation) at).left) {
                         boolean wasSqrt =at instanceof WritingSqrtEquation;
@@ -166,10 +170,16 @@ public class WritingEquation extends Equation {
                         left = convert(at);
                     }
 
-                    //TODO this minus could go inside but we are not going to worry about that now
-                    while (minus > 0) {
-                        left = left.negate();
-                        minus--;
+                    if (plusMinus){
+                        left = left.plusMinus();
+                        plusMinus = false;
+                        minus=0;
+                    }else {
+                        //TODO this minus could go inside but we are not going to worry about that now
+                        while (minus > 0) {
+                            left = left.negate();
+                            minus--;
+                        }
                     }
                     if (left instanceof AddEquation || left instanceof MultiEquation) {
                         currentToAdd = left;
@@ -206,6 +216,11 @@ public class WritingEquation extends Equation {
                             newEq = new AddEquation(owner);
                         }
                         minus++;
+                    } else if (at.getDisplay(-1).equals("\u00B1")) {
+                        if (!get(i - 1).getDisplay(-1).equals(times)) {
+                            newEq = new AddEquation(owner);
+                        }
+                        plusMinus = true;
                     }
                     if (newEq != null) {
                         if (newEq.getClass().equals(currentToAdd.getClass())) {
@@ -296,9 +311,16 @@ public class WritingEquation extends Equation {
                             }
                             wasParen = true;
 
-                            while (minus > 0) {
-                                at = at.negate();
-                                minus--;
+                            if (plusMinus){
+                                at = at.plusMinus();
+                                plusMinus = false;
+                                minus=0;
+                            }else {
+                                //TODO this minus could go inside but we are not going to worry about that now
+                                while (minus > 0) {
+                                    at = at.negate();
+                                    minus--;
+                                }
                             }
                             currentToAdd.add(at);
                         }
@@ -307,9 +329,16 @@ public class WritingEquation extends Equation {
 
                     at = convert(at);
 
-                    while (minus > 0) {
-                        at = at.negate();
-                        minus--;
+                    if (plusMinus){
+                        at = at.plusMinus();
+                        plusMinus = false;
+                        minus=0;
+                    }else {
+                        //TODO this minus could go inside but we are not going to worry about that now
+                        while (minus > 0) {
+                            at = at.negate();
+                            minus--;
+                        }
                     }
                     currentToAdd.add(at);
                 }

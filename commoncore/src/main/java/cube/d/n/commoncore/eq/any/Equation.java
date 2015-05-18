@@ -271,8 +271,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 //                    (int) (y - measureHeightUpper()),
 //                    (int) (x + measureWidth() / 2), (int) (y + measureHeightLower()));
 //            canvas.drawRoundRect(r, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), p);
-//
 //        }
+
         privateDraw(canvas, x, y);
 
         //drawLastPoints(canvas);
@@ -749,7 +749,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         Equation result = super.remove(pos);
         needsUpdate();
         if (result != null) {
-            if (this.size() == 1 && !(this instanceof WritingEquation && owner.stupid.get().equals(this) && this.get(0) instanceof PlaceholderEquation)) {
+            if (this.size() == 1 && !(this instanceof WritingEquation && owner.stupid.get().equals(this))) {
                 this.replace(get(0));
             } else if (size() == 0) {
                 remove();
@@ -836,7 +836,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public boolean reallyInstanceOf(Class t) {
-        Equation at = removeNeg();
+        Equation at = removeSign();
         return t.isInstance(at);
     }
 
@@ -845,13 +845,22 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
      * does not make a copy or change the actuall structure
      * @return
      */
-    public Equation removeNeg() {
+    public Equation removeSign() {
         Equation at = (Equation)this;
-        while (at instanceof MinusEquation || at instanceof PlusMinusEquation) {
+        while (at instanceof SignEquation ) {
             at = at.get(0);
         }
         return at;
     }
+
+    public Equation removeNeg() {
+        Equation at = (Equation)this;
+        while (at instanceof MinusEquation ) {
+            at = at.get(0);
+        }
+        return at;
+    }
+
 
     @Override
     public int hashCode() {
@@ -1523,12 +1532,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public boolean containsSame(Equation lookingFor) {
-        if (this.same(lookingFor) || this.removeNeg().same(lookingFor)){
+        if (this.same(lookingFor) || this.removeSign().same(lookingFor)){
             return true;
         }
         if (this instanceof  MultiEquation) {
             for (Equation e : this) {
-                if (e.same(lookingFor) || e.removeNeg().same(lookingFor)) {
+                if (e.same(lookingFor) || e.removeSign().same(lookingFor)) {
                     return true;
                 }
             }

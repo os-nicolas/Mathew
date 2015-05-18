@@ -2,6 +2,7 @@ package cube.d.n.commoncore.Action.WriteScreen;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.lines.InputLine;
@@ -38,9 +39,16 @@ public abstract class InlineOpAction extends Action {
         if (l!=null) {
             ((InputLine) owner).insert(newEq);
         }else{
-            ((InputLine) owner).insert(owner.owner.getLast());
+            Equation oldEq = owner.owner.getLast();
+            if (oldEq instanceof WritingEquation) {
+                for (Equation e:oldEq) {
+                    ((InputLine) owner).insert(e);
+                }
+            }else{
+                ((InputLine) owner).insert(oldEq);
+            }
             ((InputLine) owner).insert(newEq);
         }
-        updateOffsetX();
+        updateOffset();
     }
 }

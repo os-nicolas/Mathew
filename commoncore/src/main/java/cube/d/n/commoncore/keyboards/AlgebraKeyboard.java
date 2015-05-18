@@ -2,13 +2,17 @@ package cube.d.n.commoncore.keyboards;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.Action.Done;
+import cube.d.n.commoncore.Action.BothSides.CheckAction;
+import cube.d.n.commoncore.Action.SovleScreen.Done;
 import cube.d.n.commoncore.Action.SovleScreen.BothSides;
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.BothSidesLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -31,8 +35,11 @@ public class AlgebraKeyboard extends KeyBoard {
         firstRow.add(new Button( "cⁿ", new BothSides((AlgebraLine)line,BothSidesMode.POWER)));
         char[] sqrtUnicode = {'\u221A'};
         firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
-        firstRow.add(new Button( "go", new Done(line)));
-        addButtonsRow(firstRow, 8f / 9f, 9f / 9f);
+
+        addButtonsRow(firstRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), new Done(line));
+        solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
+        buttons.add(solve);
 
     }
 

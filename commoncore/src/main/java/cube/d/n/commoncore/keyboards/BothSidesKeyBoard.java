@@ -89,14 +89,14 @@ public class BothSidesKeyBoard extends KeyBoard {
         buttons.add(del);
 
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button solve = new Button( BaseApp.getApp().getResources().getString(R.string.ok), new CheckAction((BothSidesLine)line));
-        solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
-        buttons.add(solve);
-        addButtonsRow(thridRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-
-        Button cancel =new Button( BaseApp.getApp().getResources().getString(R.string.cancel), new CancelAction((BothSidesLine)line));
-        cancel.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
+        Button cancel = new Button(BaseApp.getApp().getResources().getString(R.string.cancel), new CancelAction((BothSidesLine)line));
+        cancel.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(cancel);
+
+        addButtonsRow(thridRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), new CheckAction((BothSidesLine)line));
+        solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
+        buttons.add(solve);
     }
 
     @Override

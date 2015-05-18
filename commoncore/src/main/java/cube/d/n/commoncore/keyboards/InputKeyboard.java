@@ -24,6 +24,7 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.InputLine;
 
 
@@ -45,7 +46,7 @@ public class InputKeyboard extends KeyBoard {
 
 
 
-        popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
+        //popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
@@ -73,6 +74,10 @@ public class InputKeyboard extends KeyBoard {
         secondRow.add(new Button(new String(timesUnicode), new TimesAction((InputLine)line)));
         char[] divisionUnicode = {'\u00F7'};
         secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)));
+        char[] leftUnicode = {'\u2190'};
+        secondRow.add(new Button(new String(leftUnicode), new LeftAction((InputLine)line)));
+        char[] rightUnicode = {'\u2192'};
+        secondRow.add(new Button(new String(rightUnicode), new RightAction((InputLine)line)));
 
 
         ArrayList<Button> thridRow = new ArrayList<Button>();
@@ -84,17 +89,14 @@ public class InputKeyboard extends KeyBoard {
         thridRow.add(new Button("cⁿ", new PowerAction((InputLine)line)));
         char[] sqrtUnicode = {'\u221A'};
         thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)));
-        char[] leftUnicode = {'\u2190'};
-        thridRow.add(new Button(new String(leftUnicode), new LeftAction((InputLine)line)));
-        char[] rightUnicode = {'\u2192'};
-        thridRow.add(new Button(new String(rightUnicode), new RightAction((InputLine)line)));
+
 
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
-        addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button solve = new Button("Solve", new Solve((InputLine)line));
-        solve.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
+        addButtonsRow(secondRow, 7f / 9f, 8f / 9f);
+        addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
+        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.ok), new Solve((InputLine)line));
+        solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
-        addButtonsRow(thridRow, 8f / 9f, 9f / 9f);
     }
 
     @Override

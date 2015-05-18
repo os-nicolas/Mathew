@@ -28,6 +28,12 @@ public abstract class LeafEquation extends Equation {
         }
     }
 
+
+    @Override
+    public boolean reallySame(Equation other){
+        return this.same(other);
+    }
+
     @Override
     public void tryOperator(int i) {
     }

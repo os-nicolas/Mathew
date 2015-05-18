@@ -218,7 +218,7 @@ public class SolveQuadratic extends Action<ColinView> {
         Equation result = null;
         if (stuffSide instanceof AddEquation) {
             for (Equation eq : stuffSide) {
-                if (eq.removeNeg() instanceof NumConstEquation){
+                if (eq.removeSign() instanceof NumConstEquation){
                     result = eq;
                 }
             }

@@ -20,6 +20,6 @@ public class LeftAction extends Action {
     protected void privateAct() {
         ((InputLine) owner).getSelected().goDark();
         tryMoveLeft(((InputLine) owner).getSelected());
-        updateOffsetX();
+        updateOffset();
     }
 }

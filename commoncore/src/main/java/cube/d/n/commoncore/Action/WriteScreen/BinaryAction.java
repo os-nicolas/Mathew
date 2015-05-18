@@ -24,7 +24,12 @@ public abstract class BinaryAction extends Action {
     @Override
     public boolean canAct() {
         Equation l = ((InputLine) owner).left();
-        boolean can = l != null;
+        boolean can = true;
+        if (l== null){
+        if ( owner.owner.getLast() == null) {
+            can = false;
+        }
+        }
         if (can && (l instanceof WritingLeafEquation || l instanceof VarEquation || l instanceof NumConstEquation)) {
             can = !l.isOpLeft();
         }
@@ -36,6 +41,7 @@ public abstract class BinaryAction extends Action {
                 can = canBlock();
             }
         }
+
         return can;
     }
 
@@ -44,6 +50,18 @@ public abstract class BinaryAction extends Action {
         boolean can = canAct();
         boolean block = can && canBlock();
 
+        if (l== null && can) {
+            Equation oldEq =owner.owner.getLast();
+
+            ((InputLine) owner).getSelected().replace(newEq);
+            if (oldEq instanceof WritingEquation && oldEq.size() ==1){
+                newEq.add(oldEq.get(0));
+            }else {
+                newEq.add(oldEq);
+            }
+            newEq.add(((InputLine) owner).getSelected());
+        }else
+
         if (can && !block) {
             ((InputLine) owner).getSelected().justRemove();
             Equation oldEq = l;
@@ -51,7 +69,7 @@ public abstract class BinaryAction extends Action {
             oldEq.replace(newEq);
             newEq.add(oldEq);
             newEq.add(((InputLine) owner).getSelected());
-        }
+        }else
 
         if (can && block) {
             Equation oldEq = ((WritingPraEquation) l).popBlock();
@@ -77,7 +95,7 @@ public abstract class BinaryAction extends Action {
             ((InputLine) owner).getSelected().justRemove();
             newEq.add(placeHolder);
         }
-        updateOffsetX();
+        updateOffset();
     }
 
     private boolean canBlock() {

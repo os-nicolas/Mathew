@@ -1,9 +1,12 @@
 package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -109,12 +112,10 @@ public class InputLine extends Line implements Selects {
     }
 
     public void removeSelected() {
-        if (selected instanceof PlaceholderEquation) {
-            if (!(selected.parent.size() == 1 && selected.parent != null)) {
+            if (selected.parent.size() != 1) {
                 Equation oldEq = selected;
                 oldEq.remove();
             }
-        }
     }
 
     private void resolveSelected(MotionEvent event) {
@@ -128,13 +129,13 @@ public class InputLine extends Line implements Selects {
 
         removeSelected();
 
-        Equation lcp = null;
+
         // if it's an action up
         // and it was near the left of stupid
         ArrayList<EquationDis> closest = stupid.get().closest(
                 event.getX(), event.getY());
 
-        lcp = closest.get(0).equation;
+        Equation lcp = closest.get(0).equation;
 
         // TODO 100 to var scale by dpi
         //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
@@ -259,12 +260,12 @@ public class InputLine extends Line implements Selects {
 
 
             Paint p = new Paint();
-            //p.setColor(BaseApp.getApp().darkColor);
+            p.setColor(BaseApp.getApp().lightColor);
             currentAlpha = (currentAlpha * rate + 0xff) / (rate + 1);
             p.setAlpha((int) (currentAlpha * (paint.getAlpha() / (float) 0xff)));
 
             float targetLeft = getBuffer();//(measureWidth() / 2f) - (stupid.get().measureWidth() / 2f) - (getBuffer()/2f);
-            float targetRight = Math.max(measureWidth()-getBuffer(),stupid.get().measureWidth()+getBuffer());//(measureWidth() / 2f) + (stupid.get().measureWidth() / 2f) + (getBuffer()/2f);
+            float targetRight =measureWidth()/2;//measureWidth()-getBuffer();// Math.max(measureWidth()-getBuffer(),stupid.get().measureWidth()+getBuffer());//(measureWidth() / 2f) + (stupid.get().measureWidth() / 2f) + (getBuffer()/2f);
             if (lastZoom != BaseApp.getApp().zoom) {
                 // umm we should be able to do something with this
                 //lastLeft= lastLeft;
@@ -280,13 +281,28 @@ public class InputLine extends Line implements Selects {
 
             //canvas.drawRect(r,p);
             //BaseApp.getApp().getCornor(),BaseApp.getApp().getCornor();
-            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
-            canvas.drawLine(
-                    realLeft + lastLeft,
-                    liney,
-                    realLeft + lastRight,
-                    liney,
-                    p);
+//            p.setStrokeWidth(BaseApp.getApp().getStrokeWidth()*10);
+//            canvas.drawLine(
+//                    realLeft + lastLeft,
+//                    liney,
+//                    realLeft + lastRight,
+//                    liney,
+//                    p);
+
+            int x1 = (int)(lastRight-targetRight); //(int) (realLeft + lastLeft);
+            int y1 = (int)(top +  getBuffer()*2.5);//(int) (liney -2*getBuffer());
+            int x2 = (int)lastRight;//(int)(owner.width/2f); //(int) (realLeft + lastRight);
+            int y2 = (int)(top +  getBuffer()*3.5 + stupid.get().measureHeight()) ;//(int) (liney+2*getBuffer());
+            Shader shader = new LinearGradient(x1, y1, x2, y1, BaseApp.getApp().lightColor, 0x00000000, Shader.TileMode.CLAMP);
+            Paint p2 = new Paint();
+            p2.setShader(shader);
+            canvas.drawRect(new RectF(x1, y1, x2*2, y2), p2);
+
+//            int x1 = 0, y1 = 0, x2 = 300,  y2 = 600;
+//            Shader shader = new LinearGradient(0, 0, y2, y2, Color.BLUE, Color.GREEN, Shader.TileMode.CLAMP);
+//            Paint paint2 = new Paint();
+//            paint2.setShader(shader);
+//            canvas.drawRect(new RectF(x1, y1, x2, y2), paint2);
 
 //            float lineybot = top +  getBuffer()*2.5f;
 //
@@ -297,10 +313,12 @@ public class InputLine extends Line implements Selects {
 //                    left + lastRight,
 //                    lineybot,
 //                    p);
-        }else{
-             lastLeft =  eqCenterX;
-             lastRight = eqCenterX;
         }
+        //
+        // else{
+        //     lastLeft =  eqCenterX;
+        //     lastRight = eqCenterX;
+        //}
 
         stupid.get().draw(canvas,  eqCenterX ,top +  getBuffer()*3 + stupid.get().measureHeightUpper());
 
@@ -396,10 +414,12 @@ public class InputLine extends Line implements Selects {
 
         if (offsetX > maxOffsetX){
             offsetX = (offsetX*BaseApp.getApp().getRate() +maxOffsetX)/(BaseApp.getApp().getRate()+1);
+            vx=0;
         }
 
         if (offsetX < minOffsetX){
             offsetX = (offsetX*BaseApp.getApp().getRate() +minOffsetX)/(BaseApp.getApp().getRate()+1);
+            vx=0;
         }
     }
 
@@ -413,5 +433,9 @@ public class InputLine extends Line implements Selects {
         float dx = (float) (vx * ((Math.pow(friction, steps) - 1) / Math.log(friction)));
         vx = (float) (vx * Math.pow(friction, steps));
         offsetX+=dx;
+    }
+
+    public void stopSliding() {
+        vx = 0;
     }
 }

@@ -124,7 +124,10 @@ public class Operations {
     public static Equation Add(MultiCountData left, MultiCountData right,Line owner) {
         //
         MultiCountData under = null;
-        if (left.under != null && right.under == null) {
+        boolean dontDoIt = false;
+        if (overZero(left,owner) || overZero(right,owner)){
+            dontDoIt =true;
+        }else if (left.under != null && right.under == null) {
             under = left.under;
             right = Multiply(right, under,owner);
             left.under = null;
@@ -147,8 +150,10 @@ public class Operations {
 
         }
 
+
+
         //if under == null we actully add
-        if (under == null && !(left.key.isEmpty() &&
+        if (!dontDoIt && under == null && !(left.key.isEmpty() &&
                 right.key.isEmpty() &&
                 (right.numbers.size() > 1 || left.numbers.size() > 1))) {
 
@@ -217,6 +222,10 @@ public class Operations {
                 return top;
             }
         }
+    }
+
+    private static boolean overZero(MultiCountData left,Line owner) {
+        return left.under != null && sortaNumber(left.under.getEquation(owner)) && getValue(left.under.getEquation(owner)).doubleValue()==0;
     }
 
     private static Equation addHelper(MultiCountData left, MultiCountData right,Line owner) {
@@ -319,7 +328,7 @@ public class Operations {
             boolean match = false;
             for (int ii = 0; ii < commonCopyNum.size(); ii++) {
                 Equation ee = commonCopyNum.get(ii);
-                if (e.removeNeg().same(ee.removeNeg())) {
+                if (e.removeSign().same(ee.removeSign())) {
                     if (e.isNeg() != ee.isNeg()){
                         toFlip = ! toFlip;
                     }
@@ -448,46 +457,51 @@ public class Operations {
         ArrayList<Equation> leftNumCopy = left.copyNumbers();
         ArrayList<Equation> rightNumCopy = right.copyNumbers();
 
-
-        for (int i = 0; i < leftNumCopy.size(); i++) {
-            Equation e = leftNumCopy.get(i);
-            for (int ii = 0; ii < rightNumCopy.size(); ii++) {
-                Equation ee = rightNumCopy.get(ii);
-                // TODO i am checking for zero and one here but really i think we should just not be able to add them to numbers in the first place
-                if (e.removeNeg().same(ee.removeNeg()) &&
-                        getValue(e).doubleValue() != 0 &&
-                        getValue(e).doubleValue() != 1
-                        ) {
-                    boolean neg = e.isNeg() && ee.isNeg();
-                    result.numbers.add((!neg?e.removeNeg():e));
-                    leftNumCopy.remove(i);
-                    rightNumCopy.remove(ii);
-                    i--;
-                    break;
-                } else {
-                    int eInt = (int) Math.floor(getValue(e).doubleValue());
-                    int eeInt = (int) Math.floor(getValue(ee).doubleValue());
-                    int myGcd = gcd(eInt, eeInt);
-                    if (getValue(e).doubleValue() == eInt
-                            && 0 != eInt
-                            && 0 != eeInt
-                            && 1 != eInt
-                            && 1 != eeInt
-                            && getValue(ee).doubleValue() == eeInt
-                            && Math.abs(myGcd) != 1 && myGcd!=0 ) {
-                        result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));
-                        if (eInt == myGcd) {
-                            leftNumCopy.remove(i);
-                            i--;
-                        } else {
-                            leftNumCopy.set(i, NumConstEquation.create(new BigDecimal(eInt / myGcd), e.owner));
-                        }
-                        if (eeInt == myGcd) {
-                            rightNumCopy.remove(ii);
-                        } else {
-                            rightNumCopy.set(ii, NumConstEquation.create(new BigDecimal(eeInt / myGcd), ee.owner));
-                        }
+        // we don't factory anything out of +-
+        // this is not really ever useful
+        // and it breaks OutputLine.reduce()
+        // because it flip between 3+-3 and (1+-1)3 forever
+        if (!left.plusMinus && !right.plusMinus) {
+            for (int i = 0; i < leftNumCopy.size(); i++) {
+                Equation e = leftNumCopy.get(i);
+                for (int ii = 0; ii < rightNumCopy.size(); ii++) {
+                    Equation ee = rightNumCopy.get(ii);
+                    // TODO i am checking for zero and one here but really i think we should just not be able to add them to numbers in the first place
+                    if (e.removeSign().same(ee.removeSign()) &&
+                            getValue(e).doubleValue() != 0 &&
+                            getValue(e).doubleValue() != 1
+                            ) {
+                        boolean neg = e.isNeg() && ee.isNeg();
+                        result.numbers.add((!neg ? e.removeSign() : e));
+                        leftNumCopy.remove(i);
+                        rightNumCopy.remove(ii);
+                        i--;
                         break;
+                    } else {
+                        int eInt = (int) Math.floor(getValue(e).doubleValue());
+                        int eeInt = (int) Math.floor(getValue(ee).doubleValue());
+                        int myGcd = gcd(eInt, eeInt);
+                        if (getValue(e).doubleValue() == eInt
+                                && 0 != eInt
+                                && 0 != eeInt
+                                && 1 != eInt
+                                && 1 != eeInt
+                                && getValue(ee).doubleValue() == eeInt
+                                && Math.abs(myGcd) != 1 && myGcd != 0) {
+                            result.numbers.add(NumConstEquation.create(new BigDecimal(myGcd), e.owner));
+                            if (eInt == myGcd) {
+                                leftNumCopy.remove(i);
+                                i--;
+                            } else {
+                                leftNumCopy.set(i, NumConstEquation.create(new BigDecimal(eInt / myGcd), e.owner));
+                            }
+                            if (eeInt == myGcd) {
+                                rightNumCopy.remove(ii);
+                            } else {
+                                rightNumCopy.set(ii, NumConstEquation.create(new BigDecimal(eeInt / myGcd), ee.owner));
+                            }
+                            break;
+                        }
                     }
                 }
             }
@@ -583,19 +597,19 @@ public class Operations {
 
         // we check to see if they are both power equations of the same power
         // or close to that (just a negetive sign away
-        boolean samePower = (a.removeNeg() instanceof PowerEquation &&
-                b.removeNeg() instanceof PowerEquation &&
-                a.removeNeg().get(1).same(b.removeNeg().get(1)));
+        boolean samePower = (a.removeSign() instanceof PowerEquation &&
+                b.removeSign() instanceof PowerEquation &&
+                a.removeSign().get(1).same(b.removeSign().get(1)));
 
         if (samePower) {
             boolean neg = a.isNeg() != b.isNeg();
             boolean plusMinus = a.isPlusMinus() != b.isPlusMinus();
             Equation div = new DivEquation(owner);
-            div.add(a.removeNeg().get(0).copy());
-            div.add(b.removeNeg().get(0).copy());
+            div.add(a.removeSign().get(0).copy());
+            div.add(b.removeSign().get(0).copy());
             Equation power = new PowerEquation(owner);
             power.add(div);
-            power.add(a.removeNeg().get(1).copy());
+            power.add(a.removeSign().get(1).copy());
 
             if (plusMinus) {
                 result = result.plusMinus();
@@ -605,9 +619,9 @@ public class Operations {
                 result = power;
             }
         //TODO this need to be able to handle negs on the addEquation
-        } else if (a.removeNeg() instanceof AddEquation) {
+        } else if (a.removeSign() instanceof AddEquation) {
             result = new AddEquation(owner);
-            for (Equation e : a.removeNeg()) {
+            for (Equation e : a.removeSign()) {
                 Equation newEq = new DivEquation(owner);
                 newEq.add(e);
                 newEq.add(b.copy());
@@ -643,18 +657,18 @@ public class Operations {
                 Equation botEq = botData.getEquation(owner);
                 result = getResult(topEq, botEq,owner);
                 // if we have sqrt(5)/23
-            }else if (a.removeNeg() instanceof PowerEquation){
+            }else if (a.removeSign() instanceof PowerEquation){
                 result = new PowerEquation(owner);
                 // we raise b to the the same power as a and bring it inside
                 Equation newBot = new PowerEquation(owner);
                 newBot.add(b.copy());
-                newBot.add(Operations.flip(a.removeNeg().get(1).copy()));
-                Equation newTop = a.removeNeg().get(0).copy();
+                newBot.add(Operations.flip(a.removeSign().get(1).copy()));
+                Equation newTop = a.removeSign().get(0).copy();
                 Equation inside = new DivEquation(owner);
                 inside.add(newTop);
                 inside.add(newBot);
                 result.add(inside);
-                result.add(a.removeNeg().get(1).copy());
+                result.add(a.removeSign().get(1).copy());
                 result = a.passNegs(result);
                 // if we have a/b where a and b are sortaNumbers
             } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
@@ -735,7 +749,7 @@ public class Operations {
     }
 
     public static boolean sortaNumber(Equation e) {
-        return e.removeNeg() instanceof NumConstEquation;
+        return e.removeSign() instanceof NumConstEquation;
     }
 
     public static Equation flip(Equation demo) {

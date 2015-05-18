@@ -56,7 +56,7 @@ public class DeleteAction extends Action {
         } else {
             l.remove();
         }
-        updateOffsetX();
+        updateOffset();
     }
 
 }

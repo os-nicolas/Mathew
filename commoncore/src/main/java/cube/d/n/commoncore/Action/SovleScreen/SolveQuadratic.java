@@ -100,6 +100,7 @@ public class SolveQuadratic extends Action {
                     bot.add(a2);
         stuffSide.owner.stupid.set(newStupid);
         ((AlgebraLine)newStupid.owner).changed();
+        ((AlgebraLine)newStupid.owner).updateHistory();
 
     }
 
@@ -218,7 +219,7 @@ public class SolveQuadratic extends Action {
         Equation result = null;
         if (stuffSide instanceof AddEquation) {
             for (Equation eq : stuffSide) {
-                if (eq.removeNeg() instanceof NumConstEquation){
+                if (eq.removeSign() instanceof NumConstEquation){
                     result = eq;
                 }
             }

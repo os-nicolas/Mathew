@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
@@ -21,7 +22,8 @@ import cube.d.n.commoncore.lines.Line;
 /**
  * Created by Colin on 1/10/2015.
  */
-public class PowerEquation extends Operation implements BinaryEquation {
+public class PowerEquation extends Operation implements BinaryEquation, BinaryOperator
+{
 
     public PowerEquation(Line owner) {
         super(owner);

@@ -129,16 +129,26 @@ public abstract class Action {
         }
     }
 
-    public void updateOffsetX(){
+    public void updateOffset(){
         if (owner instanceof  InputLine){
                 InputLine il = (InputLine)owner;
                 PlaceholderEquation phe = il.getSelected();
                 if (phe.getX() +(phe.measureWidth()/2f) > owner.owner.width- 4*Line.getBuffer()){
                     il.toAddToOffsetX((owner.owner.width- 4*Line.getBuffer())- (phe.getX() +(phe.measureWidth()/2f)));
                 }
-                if (phe.getX() < 4*Line.getBuffer()){
-                    il.toAddToOffsetX((4*Line.getBuffer())- phe.getX());
+                if (phe.getX() -(phe.measureWidth()/2f) < 4*Line.getBuffer()){
+                    il.toAddToOffsetX((4*Line.getBuffer())- (phe.getX() - (phe.measureWidth()/2f)));
                 }
+                if ((owner.owner.getOffsetY() + 2*Line.getBuffer())> owner.owner.height - owner.owner.keyBoardManager.get().measureHeight()){
+                    owner.owner.toAddToOffsetY((owner.owner.height - owner.owner.keyBoardManager.get().measureHeight())
+                            - (owner.owner.getOffsetY())+ 2*Line.getBuffer());
+                }
+                // this probably does not really work since getY stopping being update off screen
+                // it also probably is not need and will never happen because we already scroll if get the last line offscreen
+                if (phe.getY() -phe.measureHeightUpper() < 2*Line.getBuffer()){
+                    owner.owner.toAddToOffsetY((2*Line.getBuffer())- (phe.getY() - phe.measureHeightUpper()));
+                }
+
         }
         }
 
