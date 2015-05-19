@@ -25,7 +25,7 @@ public class TutSetAdapter extends FragmentPagerAdapter {
 
     public TutSetAdapter(FragmentManager fm) {
         super(fm);
-        frags.add(new TutStart());
+        //frags.add(new TutStart());
         frags.add(TutTextFrag.make(
                 "Hi",
                 "Thanks for installing Mathilda",
@@ -33,22 +33,22 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         frags.add(TutVideoFrag.make(
                 "Welcome",
                 "To algebra without mistakes, busy-work or frustration",
-                "android.resource://colin.example.algebrator/raw/" + R.raw.test,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.overview,
                 "2 of 5"));
         frags.add(TutVideoFrag.make(
                 "Double Tap",
                 "To add, subtract, multiply, divide, and much, much more",
-                "android.resource://colin.example.algebrator/raw/" + R.raw.test,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.doubletap,
                 "3 of 5"));
         frags.add(TutVideoFrag.make(
                 "Drag and Drop",
-                "To move rems anywhere they can legally be",
-                "android.resource://colin.example.algebrator/raw/" + R.raw.test,
-                "3 of 5"));
+                "To move terms anywhere they can legally be",
+                "android.resource://cube.d.n.calc/raw/" + R.raw.draganddrop,
+                "4 of 5"));
         frags.add(TutTextFrag.make(
                 "It's that easy",
                 "Swipe right to get started",
-                "3 of 5"));
+                "5 of 5"));
         frags.add(new TutEnd());
     }
 

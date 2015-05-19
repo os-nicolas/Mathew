@@ -77,6 +77,9 @@ public class Main extends View implements View.OnTouchListener {
     float vy;
     long lastVelocityUpdate;
     public boolean fingerDown= false;
+    public boolean trackFinger = false;
+    public float trackFingerX = -1;
+    public float trackFingerY = -1;
 
     private TouchMode myMode;
     private double lastZoomDis = -1;
@@ -93,6 +96,10 @@ public class Main extends View implements View.OnTouchListener {
             fingerDown= true;
         }
 
+        if (event.getPointerCount() == 1) {
+            trackFingerX = event.getX();
+            trackFingerY = event.getY();
+        }
 
             // pass it on to my bros
             boolean keepGoing = true;
@@ -316,6 +323,12 @@ public class Main extends View implements View.OnTouchListener {
         if (lastEq == null || !lastLine().stupid.get().reallySame(lastEq) ){
             lastEq = lastLine().stupid.get().copy();
             Log.i("current", lastEq.toString()+"");
+        }
+
+        if (trackFinger && fingerDown){
+            Paint fingerPaint = new Paint();
+            fingerPaint.setARGB(0xff/2,(0xd5-(0xff/2))*2,0x04,0x06);
+            canvas.drawCircle(trackFingerX,trackFingerY,20*BaseApp.getApp().getDpi(),fingerPaint);
         }
 
     }

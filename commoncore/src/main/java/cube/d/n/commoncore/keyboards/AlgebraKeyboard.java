@@ -37,7 +37,7 @@ public class AlgebraKeyboard extends KeyBoard {
         firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
 
         addButtonsRow(firstRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), new Done(line));
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), new Done(line));
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
 

@@ -1,7 +1,9 @@
 <resources>
     <string name="assume">Assuming</string>
-    <string name="ok">ok</string>
-    <string name="cancel">cancel</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
     <string name="quadratic">Solve Quadratic</string>
     <string name="quadratic_for">-</string>
+    <string name="retrn">Return</string>
+    <string name="enter">Enter</string>
 </resources>

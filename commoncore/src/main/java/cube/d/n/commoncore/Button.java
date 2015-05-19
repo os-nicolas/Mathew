@@ -76,10 +76,14 @@ public class Button implements Physical {
         canvas.drawRect(r, bkgbkgPaint);
 
 
-        float smaller = 3 * BaseApp.getApp().getDpi();
-        RectF r2 = new RectF(left() + smaller, top() + smaller, right() - smaller, bottom() - smaller);
-        bkgPaint.setAlpha(p.getAlpha());
-        canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), bkgPaint);
+        // if they are the same color, but both are somewhat transparent it looks weird
+        // this happen on fade ins
+        if (p.getAlpha() == 0xff) {
+            float smaller = 3 * BaseApp.getApp().getDpi();
+            RectF r2 = new RectF(left() + smaller, top() + smaller, right() - smaller, bottom() - smaller);
+            bkgPaint.setAlpha(p.getAlpha());
+            canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), bkgPaint);
+        }
 
         Rect out = new Rect();
         //TODO scale by dpi

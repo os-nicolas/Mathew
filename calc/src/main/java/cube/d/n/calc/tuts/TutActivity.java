@@ -49,49 +49,41 @@ public class TutActivity extends FragmentActivity {
             };
             th.start();
         }
-        if (mViewPager.getCurrentItem() == 0) {
-            Thread th = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                        that.runOnUiThread(new Runnable() {
-                            public void run() {
-                                mViewPager.setCurrentItem(1, true);
-                            }
-                        });
-
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            th.start();
-        }
+//        if (mViewPager.getCurrentItem() == 0) {
+//            Thread th = new Thread() {
+//                @Override
+//                public void run() {
+//                    try {
+//                        Thread.sleep(1000);
+//                        that.runOnUiThread(new Runnable() {
+//                            public void run() {
+//                                mViewPager.setCurrentItem(1, true);
+//                            }
+//                        });
+//
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//            th.start();
+//        }
     }
+
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
 
-//        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
-//        SharedPreferences.Editor editor = settings.edit();
-//        editor.putBoolean("startup_tut", true);
-//
-//        editor.commit();
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("startup_tut", true);
+
+        editor.commit();
 
 
         setContentView(R.layout.tut);
-
-
-//        View decorView = getWindow().getDecorView();
-//        // Hide the status bar.
-//        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-//        decorView.setSystemUiVisibility(uiOptions);
-//        // Remember that you should never show the action bar if the
-//        // status bar is hidden, so hide that too if necessary.
-//        ActionBar actionBar = getActionBar();
-//        actionBar.hide();
 
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
@@ -113,12 +105,6 @@ public class TutActivity extends FragmentActivity {
                             // When swiping between pages, select the
                             // corresponding tab.
                             TutSetAdapter adptr = (TutSetAdapter) mViewPager.getAdapter();
-
-//                                Log.i("OnPageChangeListener", adptr+"");
-//
-//                                if ( adptr.getFragment(position) instanceof TutFrag){
-//                                    ((TutFrag)adptr.getFragment(position)).start(adptr.getFragment(position).getView());
-//                                }
 
                             if (position == adptr.getCount() - 1) {
                                 //if we have reach the last tap

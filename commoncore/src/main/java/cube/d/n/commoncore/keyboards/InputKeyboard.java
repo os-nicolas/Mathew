@@ -94,7 +94,7 @@ public class InputKeyboard extends KeyBoard {
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
         addButtonsRow(secondRow, 7f / 9f, 8f / 9f);
         addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
-        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.ok), new Solve((InputLine)line));
+        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), new Solve((InputLine)line));
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
     }

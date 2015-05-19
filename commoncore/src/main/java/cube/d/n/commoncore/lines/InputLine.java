@@ -295,6 +295,8 @@ public class InputLine extends Line implements Selects {
             int y2 = (int)(top +  getBuffer()*3.5 + stupid.get().measureHeight()) ;//(int) (liney+2*getBuffer());
             Shader shader = new LinearGradient(x1, y1, x2, y1, BaseApp.getApp().lightColor, 0x00000000, Shader.TileMode.CLAMP);
             Paint p2 = new Paint();
+            p2.setDither(true);
+            p2.setAntiAlias(true);
             p2.setShader(shader);
             canvas.drawRect(new RectF(x1, y1, x2*2, y2), p2);
 
