@@ -381,7 +381,7 @@ public class Main extends View implements View.OnTouchListener {
             maxOffsetY= height - keyBoardManager.get().measureHeight();
         }else{
             // we know the first line is input
-            maxOffsetY = height - keyBoardManager.get().measureHeight()- lines.get(0).measureHeight() - 2*Line.getBuffer();
+            maxOffsetY = Math.max(0,height - keyBoardManager.get().measureHeight()- lines.get(0).measureHeight() - 2*Line.getBuffer());
             for (Line l:lines){
                 maxOffsetY+= l.measureHeight();
             }
@@ -392,7 +392,7 @@ public class Main extends View implements View.OnTouchListener {
             vy =0;
         }
 
-        float minOffsetY=Math.min(height - keyBoardManager.get().measureHeight(),lines.get(lines.size()-1).stupid.get().measureHeight()
+        float minOffsetY=Math.min(height - keyBoardManager.get().measureHeight() - (lines.get(lines.size()-1).stupid.get().measureHeight()/2f),(lines.get(lines.size()-1).stupid.get().measureHeight()/2f)
         + (lines.get(lines.size()-1) instanceof InputLine?Line. getBuffer():0)
         );
 

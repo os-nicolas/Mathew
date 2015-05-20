@@ -139,9 +139,9 @@ public abstract class Action {
                 if (phe.getX() -(phe.measureWidth()/2f) < 4*Line.getBuffer()){
                     il.toAddToOffsetX((4*Line.getBuffer())- (phe.getX() - (phe.measureWidth()/2f)));
                 }
-                if ((owner.owner.getOffsetY() + 2*Line.getBuffer())> owner.owner.height - owner.owner.keyBoardManager.get().measureHeight()){
+                if (owner.owner.getOffsetY() + (il.stupid.get().measureHeight()/2f)> owner.owner.height - owner.owner.keyBoardManager.get().measureHeight()){
                     owner.owner.toAddToOffsetY((owner.owner.height - owner.owner.keyBoardManager.get().measureHeight())
-                            - (owner.owner.getOffsetY()+ 2*Line.getBuffer()));
+                            - (owner.owner.getOffsetY() + (il.stupid.get().measureHeight()/2f)));
                 }
                 // this probably does not really work since getY stopping being update off screen
                 // it also probably is not need and will never happen because we already scroll if get the last line offscreen

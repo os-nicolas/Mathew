@@ -25,30 +25,35 @@ public class TutSetAdapter extends FragmentPagerAdapter {
 
     public TutSetAdapter(FragmentManager fm) {
         super(fm);
-        //frags.add(new TutStart());
+//        frags.add(new TutStart());
         frags.add(TutTextFrag.make(
                 "Hi",
                 "Thanks for installing Mathilda",
-                "1 of 5").withExtaTimeOut(750));
+                "1 of 6").withExtaTimeOut(750));
         frags.add(TutVideoFrag.make(
                 "Welcome",
-                "To algebra without mistakes, busy-work or frustration",
+                "Welcome, To algebra without mistakes, busy-work or frustration",
                 "android.resource://cube.d.n.calc/raw/" + R.raw.overview,
-                "2 of 5"));
+                "2 of 6"));
         frags.add(TutVideoFrag.make(
                 "Double Tap",
-                "To add, subtract, multiply, divide, and much, much more",
+                "Double Tap to add, subtract, multiply, divide, and much, much more",
                 "android.resource://cube.d.n.calc/raw/" + R.raw.doubletap,
-                "3 of 5"));
+                "3 of 6"));
         frags.add(TutVideoFrag.make(
                 "Drag and Drop",
-                "To move terms anywhere they can legally be",
+                "Drag and Drop to move terms anywhere they can legally be",
                 "android.resource://cube.d.n.calc/raw/" + R.raw.draganddrop,
-                "4 of 5"));
+                "4 of 6"));
+        frags.add(TutVideoFrag.make(
+                "Calculator",
+                "And, it's an excellent calculator",
+                "android.resource://cube.d.n.calc/raw/" + R.raw.calc,
+                "5 of 6"));
         frags.add(TutTextFrag.make(
                 "It's that easy",
                 "Swipe right to get started",
-                "5 of 5"));
+                "6 of 6"));
         frags.add(new TutEnd());
     }
 

@@ -54,7 +54,7 @@ public class TutActivity extends FragmentActivity {
 //                @Override
 //                public void run() {
 //                    try {
-//                        Thread.sleep(1000);
+//                        Thread.sleep(3000);
 //                        that.runOnUiThread(new Runnable() {
 //                            public void run() {
 //                                mViewPager.setCurrentItem(1, true);
