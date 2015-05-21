@@ -60,6 +60,14 @@ public abstract class KeyBoard implements Measureable {
         addButtonsRow(row, 0, 1, top, bottum);
     }
 
+    /**
+     * null in row indicate a skip
+     * @param row
+     * @param left
+     * @param right
+     * @param top
+     * @param bottum
+     */
     protected void addButtonsRow(ArrayList<Button> row, float left, float right, float top, float bottum) {
         float count = row.size();
         float at = left;
@@ -67,8 +75,10 @@ public abstract class KeyBoard implements Measureable {
 
         for (float i = 0; i < count; i++) {
             Button b = row.get((int) i);
-            b.setLocation(at, at + step, top, bottum);
-            buttons.add(b);
+            if (b!=null){
+                b.setLocation(at, at + step, top, bottum);
+                buttons.add(b);
+            }
             at += step;
         }
 

@@ -22,44 +22,32 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
+import cube.d.n.commoncore.keyboards.KeyBoard;
+import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.InputLine;
 
-
 /**
- * Created by Colin_000 on 5/7/2015.
+ * Created by Colin_000 on 5/21/2015.
  */
-public class InputKeyboard extends KeyBoard {
-
-
-
-    public InputKeyboard(Main owner,InputLine line){
-
-        super(owner,line);
-
+public class SimpleCalcKeyboard extends KeyBoard {
+    public SimpleCalcKeyboard(Main owner, CalcLine calcLine) {
+        super(owner,calcLine);
     }
 
     @Override
     protected void addButtons() {
-
-
-
-        //popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
+//popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
         firstRow.add(new Button("8", new NumberAction((InputLine)line, "8")));
         firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
-        firstRow.add(new Button("a", new VarAction((InputLine)line, "a")));
-        firstRow.add(new Button("b", new VarAction((InputLine)line, "b")));
+        firstRow.add(null);
+        firstRow.add(null);
         firstRow.add(new Button("+", new PlusAction((InputLine)line)));
         firstRow.add(new Button("-", new MinusAction((InputLine)line)));
         firstRow.add(new Button("=", new EqualsAction((InputLine)line)));
-        //TODO this does not work since my font does not support this
-        char[] backSpaceUnicode = { '\u232B'};
-        Button del = new Button(new String(backSpaceUnicode), new DeleteAction((InputLine)line));
-        Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
-        del.textPaint.setTypeface(myTypeface);
-        firstRow.add(del);//
+
 
         ArrayList<Button> secondRow = new ArrayList<Button>();
         secondRow.add(new Button("4", new NumberAction((InputLine)line, "4")));
@@ -88,7 +76,13 @@ public class InputKeyboard extends KeyBoard {
         thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)));
 
 
-        addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
+        addButtonsRow(firstRow, 0f, 7f / 9f,6f / 9f, 7f / 9f);
+        char[] backSpaceUnicode = { '\u232B'};
+        Button del = new Button(new String(backSpaceUnicode), new DeleteAction((InputLine)line));
+        Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
+        del.textPaint.setTypeface(myTypeface);
+        del.setLocation(6f / 9f, 7f / 9f, 8f / 9f, 9f / 9f);
+        buttons.add(del);
         addButtonsRow(secondRow, 7f / 9f, 8f / 9f);
         addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
         Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), BaseApp.getApp().getEnter((InputLine) line)  );

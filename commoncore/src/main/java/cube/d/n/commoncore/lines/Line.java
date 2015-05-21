@@ -83,6 +83,9 @@ public abstract class Line extends BitmapBacked implements Physical {
     public void draw(Canvas canvas, float top, float left, Paint paint){
         updateLocation(top,left);
         innerDraw(canvas,top,left,paint);
+        if (ntc){
+            center();
+        }
     }
 
     protected abstract void innerDraw(Canvas canvas, float top, float left, Paint paint);
@@ -125,7 +128,13 @@ public abstract class Line extends BitmapBacked implements Physical {
         return null;
     }
 
+    private boolean ntc =false;
+    public void needsToCenter(){
+        ntc = true;
+    }
+
     public void center(){
+        ntc = false;
         if (stupid.get() instanceof EqualsEquation){
             if  (((EqualsEquation) stupid.get()).measureLeft() + ((EqualsEquation) stupid.get()).measureRight() < owner.width){
                 if (((EqualsEquation) stupid.get()).getCenter()  -((EqualsEquation) stupid.get()).measureLeft() <getBuffer() ){

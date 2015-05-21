@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/calc" />
             <option value="$PROJECT_DIR$/commoncore" />
+            <option value="$PROJECT_DIR$/helper" />
             <option value="$PROJECT_DIR$/practice" />
           </set>
         </option>

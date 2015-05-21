@@ -2,8 +2,7 @@ package cube.d.n.commoncore.keyboards;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.Action.BothSides.CheckAction;
-import cube.d.n.commoncore.Action.SovleScreen.Done;
+
 import cube.d.n.commoncore.Action.SovleScreen.BothSides;
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
@@ -12,7 +11,6 @@ import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.BothSidesLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -37,7 +35,7 @@ public class AlgebraKeyboard extends KeyBoard {
         firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
 
         addButtonsRow(firstRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), new Done(line));
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), BaseApp.getApp().getDone(line));
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
 

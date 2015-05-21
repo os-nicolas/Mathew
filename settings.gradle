@@ -1,1 +1,1 @@
-include ':app', ':practice', ':commoncore', ':calc'
+include ':app', ':practice', ':commoncore', ':calc', ':helper'

@@ -5,8 +5,7 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.Action.BothSides.CancelAction;
-import cube.d.n.commoncore.Action.BothSides.CheckAction;
+
 import cube.d.n.commoncore.Action.WriteScreen.DecimalAction;
 import cube.d.n.commoncore.Action.WriteScreen.DeleteAction;
 import cube.d.n.commoncore.Action.WriteScreen.DivAction;
@@ -89,12 +88,12 @@ public class BothSidesKeyBoard extends KeyBoard {
         buttons.add(del);
 
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button cancel = new Button(BaseApp.getApp().getResources().getString(R.string.cancel), new CancelAction((BothSidesLine)line));
+        Button cancel = new Button(BaseApp.getApp().getResources().getString(R.string.cancel),  BaseApp.getApp().getCancel((BothSidesLine) line));
         cancel.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(cancel);
 
         addButtonsRow(thridRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), new CheckAction((BothSidesLine)line));
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), BaseApp.getApp().getOk((BothSidesLine) line));
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
     }

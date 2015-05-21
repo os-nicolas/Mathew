@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Helper</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_colin">ColinAct</string>
+    <string name="tut_1_title">Hi</string>
+    <string name="tut_1_body">Thanks for installing Mathilda</string>
+    <string name="tut_1_at">1 of 5, swipe right</string>
+    <string name="tut_2_title">Welcome</string>
+    <string name="tut_2_body">To algebra without mistakes, busy-work or frustration</string>
+    <string name="tut_2_at">2 of 5</string>
+    <string name="tut_3_title">Double Tap</string>
+    <string name="tut_3_body">To add, subtract, multiply, divide, and much much more</string>
+    <string name="tut_3_at">3 of 5</string>
+    <string name="tut_4_title">Drag and Drop</string>
+    <string name="tut_4_body">To move terms anywhere they can legally be</string>
+    <string name="tut_4_at">4 of 5</string>
+    <string name="tut_5_title">It\'s that Easy</string>
+    <string name="tut_5_body">Swipe right to get started</string>
+    <string name="tut_5_at">5 of 5</string>
+
+</resources>

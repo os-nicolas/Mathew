@@ -31,6 +31,7 @@ import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
@@ -50,21 +51,34 @@ public class Main extends View implements View.OnTouchListener {
 
     public Main(Context context) {
         super(context);
-        init(context);
+        init(context,InputLineEnum.INPUT);
+    }
+
+    public Main(Context context,InputLineEnum startLine) {
+        super(context);
+        init(context,startLine);
     }
 
     public  Main(Context context, AttributeSet attrs){
         super(context,attrs);
-        init(context);
+        init(context,InputLineEnum.INPUT);
     }
 
     public  Main(Context context, AttributeSet attrs, int defStyleAttr){
         super(context,attrs,defStyleAttr);
-        init(context);
+        init(context,InputLineEnum.INPUT);
     }
 
-    private void init(Context context) {
-        Line myLine = new InputLine(this);
+    private void init(Context context, InputLineEnum startLine) {
+        Line myLine;
+        if ( startLine == InputLineEnum.INPUT) {
+            myLine = new InputLine(this);
+        }else if (startLine == InputLineEnum.CALC){
+            myLine = new CalcLine(this);
+        }else{
+            Log.e("main.init","InputLineEnum not recognized");
+            myLine = new InputLine(this);
+        }
         keyBoardManager.hardSet(myLine.getKeyboad());
         lines.add(myLine);
         setOnTouchListener(this);

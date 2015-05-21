@@ -9,6 +9,7 @@ import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
+import android.widget.*;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -16,7 +17,11 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.Random;
 
 
+import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 4/20/2015.
@@ -92,6 +97,14 @@ public abstract class BaseApp extends Application{
             return  myTracker;
         }
     }
+
+    public abstract Action getEnter(InputLine line);
+
+    public abstract Action getDone(Line line);
+
+    public abstract Action getOk(BothSidesLine line);
+
+    public abstract Action getCancel(BothSidesLine line);
 
     public int getRate() {
         return 5;

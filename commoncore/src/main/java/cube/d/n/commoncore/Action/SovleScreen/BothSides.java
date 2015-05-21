@@ -21,6 +21,7 @@ public class BothSides extends Action {
     @Override
     protected void privateAct() {
 
+        ((AlgebraLine)owner).setSelected(null);
 
         BothSidesLine line = new BothSidesLine(owner.owner);
         line.setUp(myBothSidesMode,owner.stupid.get().copy());

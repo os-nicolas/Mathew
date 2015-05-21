@@ -399,7 +399,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         history.add(0, new EquationButton(stupid.get().copy(), this));
         Log.i("add to History", stupid.toString());
         changed = false;
-        center();
+        needsToCenter();
 
     }
 
