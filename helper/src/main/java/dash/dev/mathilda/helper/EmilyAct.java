@@ -19,7 +19,7 @@ public class EmilyAct extends Activity {
     private static final String PREFS_NAME = "tuts";
     public static final String screenName = "EmilyAct";
 
-    public static boolean hasShown = false;
+    //public static boolean hasShown = false;
 
     private static WeakReference<EmilyAct> instance=new WeakReference<EmilyAct>(null);
 
@@ -33,16 +33,15 @@ public class EmilyAct extends Activity {
 
         instance =new WeakReference<EmilyAct>(this);
 
-//        SharedPreferences settings = Mathilda.getApp().getSharedPreferences(PREFS_NAME, 0);
-        //boolean alreadyShown = settings.getBoolean("startup_tut", false) || hasShown;
-//        boolean alreadyShown = hasShown;
-//        final Activity that = this;
-//        if (!alreadyShown) {
-//            Intent myIntent = new Intent(that, TutActivity.class);
-//            hasShown = true;
-//            that.finish();
-//            that.startActivity(myIntent);
-//        }
+        SharedPreferences settings = Mathilda.getApp().getSharedPreferences(PREFS_NAME, 0);
+        boolean alreadyShown = settings.getBoolean("write", false) ;
+        final Activity that = this;
+        if (!alreadyShown) {
+            Intent myIntent = new Intent(that, TutActivity.class);
+            //hasShown = true;
+            that.finish();
+            that.startActivity(myIntent);
+        }
 
         setContentView(Mathilda.getView(screenName,this));
     }

@@ -27,7 +27,7 @@ public abstract class Line extends BitmapBacked implements Physical {
     @Override
     public void set(Equation newStupid){
             super.set(newStupid);
-            if (get().lastPoint.size() == 0) {
+            if (get().getDrawnAtY() == -1) {
                 get().updateLocation();
             }
             get().parent = null;

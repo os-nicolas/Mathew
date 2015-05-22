@@ -57,8 +57,7 @@ public class TutActivity extends FragmentActivity {
 
         SharedPreferences settings =  Mathilda.getApp().getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean("startup_tut", true);
-
+        editor.putBoolean("write", true);
         editor.commit();
 
 

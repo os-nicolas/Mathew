@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assume">ทะลึ่ง</string>
+    <string name="ok">ตกลง</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="quadratic">แก้สมการกำลังสอง</string>
+    <string name="quadratic_for"> </string>
+    <string name="retrn">กลับ</string>
+    <string name="enter">เข้า</string>
+
+    <string name="tut_1_title" >Hi!</string>
+    <string name="tut_1_body" >ขอขอบคุณ สำหรับการติดตั้ง เฉียบคม</string>
+    <string name="tut_1_at" >1 ใน 5 ขวา รูด</string>
+    <string name="tut_2_title" >ยินดีต้อนรับ</string>
+    <string name="tut_2_body" >ยินดีต้อนรับสู่ พีชคณิต ไม่มีข้อผิดพลาด , การทำงาน ไม่ว่างหรือ ความยุ่งยาก</string>
+    <string name="tut_2_at" >2 of 5</string>
+    <string name="tut_3_title" >แตะ สองครั้ง</string>
+    <string name="tut_3_body" >แตะสองครั้ง จะบวกลบ คูณหาร และ อื่น ๆ อีกมากมาย</string>
+    <string name="tut_3_at" >3 จาก 5</string>
+    <string name="tut_4_title" >ลากและวาง</string>
+    <string name="tut_4_body" >ลากและวาง ที่จะย้าย แง่ ทุกที่ที่ ถูกต้องตามกฎหมาย สามารถ</string>
+    <string name="tut_4_at" >4 จาก 5</string>
+    <string name="tut_5_title" >มันเป็นเรื่องที่ ง่าย</string>
+    <string name="tut_5_body" >ปัดไปทางขวา เพื่อเริ่มต้น</string>
+    <string name="tut_5_at" >5 จาก 5</string>
+
+</resources>

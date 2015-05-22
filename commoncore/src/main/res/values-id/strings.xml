@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">Dengan asumsi</string>
+    <string name="ok">Oke</string>
+    <string name="cancel">membatalkan</string>
+    <string name="quadratic">memecahkan kuadrat</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">kembali</string>
+    <string name="enter">masuk</string>
+
+    <string name="tut_1_title" >Hi!</string>
+    <string name="tut_1_body" >Terima kasih untuk menginstal Mathilda</string>
+    <string name="tut_1_at" >1 dari 5 , geser kanan</string>
+    <string name="tut_2_title" >Selamat Datang</string>
+    <string name="tut_2_body" >Selamat Datang aljabar tanpa kesalahan , sibuk dengan pekerjaan atau frustrasi .</string>
+    <string name="tut_2_at" >2 dari 5</string>
+    <string name="tut_3_title" >Tap ganda</string>
+    <string name="tut_3_body" >Ketuk dua kali untuk menambah, mengurangi , mengalikan, membagi , dan banyak lagi .</string>
+    <string name="tut_3_at" >3 dari 5</string>
+    <string name="tut_4_title" >Drag dan Drop</string>
+    <string name="tut_4_body" >Drag dan Drop untuk memindahkan hal mana saja mereka bisa secara legal .</string>
+    <string name="tut_4_at" >4 dari 5</string>
+    <string name="tut_5_title" >Ini yang Mudah</string>
+    <string name="tut_5_body" >Gesek ke kanan untuk memulai</string>
+    <string name="tut_5_at" >5 dari 5</string>
+
+
+
+</resources>

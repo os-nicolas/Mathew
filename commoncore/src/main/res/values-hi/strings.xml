@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">कब</string>
+    <string name="ok">ठीक</string>
+    <string name="cancel">रद्द</string>
+    <string name="quadratic">द्विघात का समाधान</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">वापसी</string>
+    <string name="enter">दर्ज</string>
+
+    <string name="tut_1_title" >हाय !</string>
+    <string name="tut_1_body" >Mathilda स्थापित करने के लिए धन्यवाद</string>
+    <string name="tut_1_at" >5 में से 1, ज़ोर से मारना सही</string>
+    <string name="tut_2_title" >स्वागत</string>
+    <string name="tut_2_body" >गलतियों के बिना बीजगणित , व्यस्त काम या हताशा में आपका स्वागत है ।</string>
+    <string name="tut_2_at" >2 से 5</string>
+    <string name="tut_3_title" >दो बार टैप</string>
+    <string name="tut_3_body" >डबल नल , विभाजन और भी बहुत कुछ , घटाना , गुणा जोड़ने के लिए।</string>
+    <string name="tut_3_at" >3 से 5</string>
+    <string name="tut_4_title" >खींचें और छोड़ें</string>
+    <string name="tut_4_body" >खींचें और ड्रॉप कहीं भी वे कानूनी तौर पर किया जा सकता है शर्तों को स्थानांतरित करने के लिए।</string>
+    <string name="tut_4_at" >4 से 5</string>
+    <string name="tut_5_title" >ऐसा लगता है कि आसान है</string>
+    <string name="tut_5_body" >कड़ी चोट सही शुरू करने के लिए</string>
+    <string name="tut_5_at" >5 में से 5</string>
+
+
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">Supondo</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">cancelar</string>
+    <string name="quadratic">resolver quadrática</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">retorno</string>
+    <string name="enter">entrar</string>
+
+    <string name="tut_1_title" >Oi !</string>
+    <string name="tut_1_body" >Obrigado por instalar Mathilda</string>
+    <string name="tut_1_at" >1 de 5, direito furto</string>
+    <string name="tut_2_title" >Bem-vindo</string>
+    <string name="tut_2_body" >Bem-vindo a álgebra sem erros, - obra ocupada ou frustração.</string>
+    <string name="tut_2_at" >2 de 5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >Toque duas vezes para adicionar, subtrair , multiplicar, dividir e muito mais.</string>
+    <string name="tut_3_at" >3 de 5</string>
+    <string name="tut_4_title" >Arrastar e soltar</string>
+    <string name="tut_4_body" >Arrastar e soltar para mover termos em qualquer lugar que pode ser legalmente.</string>
+    <string name="tut_4_at" >4 de 5</string>
+    <string name="tut_5_title" >É muito fácil</string>
+    <string name="tut_5_body" >Direito Swipe para começar</string>
+    <string name="tut_5_at" >5 de 5</string>
+
+</resources>

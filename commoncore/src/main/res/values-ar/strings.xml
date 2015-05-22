@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assume">على افتراض</string>
+    <string name="ok">حسنا</string>
+    <string name="cancel">إلغاء</string>
+    <string name="quadratic">حل الدرجة الثانية</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">القيام به</string>
+    <string name="enter">ل, سجل</string>
+
+    <string name="tut_1_title" >مرحبا !</string>
+    <string name="tut_1_body" >شكرا ل تثبيت ماتيلدا</string>
+    <string name="tut_1_at" >1 من 5، حق انتقاد</string>
+    <string name="tut_2_title" >ترحيب</string>
+    <string name="tut_2_body" >مرحبا بكم في الجبر دون اخطاء ، مشغول العمل أو الإحباط</string>
+    <string name="tut_2_at" >2 من 5</string>
+    <string name="tut_3_title" >الحنفية مزدوج</string>
+    <string name="tut_3_body" >الاستفادة من ضعف لإضافة أو طرح أو ضرب أو قسمة والكثير الكثير</string>
+    <string name="tut_3_at" >3 من 5</string>
+    <string name="tut_4_title" >السحب والإسقاط</string>
+    <string name="tut_4_body" >السحب و الإفلات لنقل أي مكان حيث أنها يمكن أن تكون قانونا</string>
+    <string name="tut_4_at" >4 من 5</string>
+    <string name="tut_5_title" >انه من السهل</string>
+    <string name="tut_5_body" >حق انتقاد للبدء</string>
+    <string name="tut_5_at" >5 من 5</string>
+
+
+</resources>

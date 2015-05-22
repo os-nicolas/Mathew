@@ -25,8 +25,7 @@
         <activity
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
             android:name=".ColinAct"
-            android:launchMode="singleTask"
-            android:label="@string/title_activity_colin" >
+            android:launchMode="singleTask">
         </activity>
         <activity
             android:name="dash.dev.mathilda.helper.tuts.TutActivity"

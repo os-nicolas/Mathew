@@ -44,6 +44,9 @@ public class InputLine extends Line implements Selects {
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
             myKeyBoard = new InputKeyboard(owner,this);
+            if (BaseApp.getApp().includeClear()){
+                ((InputKeyboard)myKeyBoard).withClear();
+            }
         }
         return myKeyBoard;
     }
@@ -60,7 +63,7 @@ public class InputLine extends Line implements Selects {
         if (event.getPointerCount() ==1) {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 if (in(event)) {
-                    if (getSelected().nearAny(event.getX(), event.getY())) {
+                    if (stupid.get().nearAny(event.getX(), event.getY())) {
                         resolveSelected(event);
                         myMode = TouchMode.SELECT;
                     } else {

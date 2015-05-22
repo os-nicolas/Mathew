@@ -1,22 +1,24 @@
-package cube.d.n.commoncore.Action.WriteScreen;
+package dash.dev.mathilda.simple;
 
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
 
+/**
+ * Created by Colin_000 on 5/22/2015.
+ */
+public class EnterAction extends Action {
 
-public class Solve extends Action {
-
-    public Solve(InputLine emilyView) {
-        super(emilyView);
+    public EnterAction(InputLine line) {
+        super(line);
     }
 
     public static Equation mine;
@@ -27,18 +29,18 @@ public class Solve extends Action {
         mine = owner.stupid.get().copy();
 
         // we want to remove the place holder
-            Equation at = owner.stupid.get();
-            Equation myAt = mine;
-            while (!at.equals(((Selects)owner).getSelected())) {
-                int index = at.deepIndexOf(((Selects)owner).getSelected());
-                at = at.get(index);
-                myAt = myAt.get(index);
-            }
-            if (myAt.parent != null && myAt.parent.size() != 1) {
-                myAt.remove();
-            } else {
-                return false;
-            }
+        Equation at = owner.stupid.get();
+        Equation myAt = mine;
+        while (!at.equals(((Selects)owner).getSelected())) {
+            int index = at.deepIndexOf(((Selects)owner).getSelected());
+            at = at.get(index);
+            myAt = myAt.get(index);
+        }
+        if (myAt.parent != null && myAt.parent.size() != 1) {
+            myAt.remove();
+        } else {
+            return false;
+        }
 
         // we need to follow the path to selected
         // and remove it from mine
@@ -55,11 +57,11 @@ public class Solve extends Action {
     protected void privateAct() {
 
 
-        Equation newEq = ((WritingEquation) Solve.mine).convert();
+        Equation newEq = ((WritingEquation) EnterAction.mine).convert();
         ArrayList<String> vars = getVars(newEq);
         ((InputLine)owner).deActivate();
         Line line;
-        if (vars.size() != 0 ||  countEquals(((WritingEquation) Solve.mine))==1){
+        if (vars.size() != 0 ||  countEquals(((WritingEquation) EnterAction.mine))==1){
             line = new AlgebraLine(owner.owner,newEq);
 
         }else{

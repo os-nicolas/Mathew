@@ -41,9 +41,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private static int idBacker = 0;
     public Equation parent;
     public boolean demo = false;
-    public float x = 0;
-    public float y = 0;
-    public ArrayList<MyPoint> lastPoint = new ArrayList<MyPoint>();
+    public float x = -1;
+    public float y = -1;
+    protected ArrayList<MyPoint> lastPoint = new ArrayList<MyPoint>();
     protected String display = "";
     private int myWidth;
     protected int getMyWidth(){
@@ -1516,6 +1516,13 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     public abstract void tryOperator(int i);
 
+    public float getDrawnAtY() {
+        return y;
+    }
+
+    public float getCenter() {
+        return x;
+    }
 
     private class Clostest {
         public float dis;

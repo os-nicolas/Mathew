@@ -28,6 +28,7 @@ import cube.d.n.commoncore.lines.Line;
  */
 public abstract class BaseApp extends Application{
     private static BaseApp instance;
+    public final static long aveTime=4000;
     private float dpi;
     private int DEFAULT_SIZE =40;
     public double zoom = 1;
@@ -295,4 +296,7 @@ public abstract class BaseApp extends Application{
     }
 
 
+    public boolean includeClear() {
+        return false;
+    }
 }

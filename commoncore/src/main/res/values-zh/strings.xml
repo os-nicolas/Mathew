@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">假设</string>
+    <string name="ok">良好</string>
+    <string name="cancel">取消</string>
+    <string name="quadratic">解决二次</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">回报</string>
+    <string name="enter">进入</string>
+
+    <string name="tut_1_title" >嗨！</string>
+    <string name="tut_1_body" >感谢您安装马蒂尔达</string>
+    <string name="tut_1_at" >1 5 ，右轻扫</string>
+    <string name="tut_2_title" >欢迎</string>
+    <string name="tut_2_body" >欢迎代数无误，忙工作或沮丧。</string>
+    <string name="tut_2_at" >2 5</string>
+    <string name="tut_3_title" >枪王</string>
+    <string name="tut_3_body" >双击进行加，减，乘，除等。</string>
+    <string name="tut_3_at" >3 5</string>
+    <string name="tut_4_title" >拖放</string>
+    <string name="tut_4_body" >Drag and Drop to move terms anywhere they can legally be.</string>
+    <string name="tut_4_at" >4 5</string>
+    <string name="tut_5_title" >就是这么简单</string>
+    <string name="tut_5_body" >向右滑动上手</string>
+    <string name="tut_5_at" >5 5</string>
+
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">と仮定すると、</string>
+    <string name="ok">はい</string>
+    <string name="cancel">キャンセル</string>
+    <string name="quadratic">二次を解決</string>
+    <string name="quadratic_for"> </string>
+    <string name="retrn">リターン</string>
+    <string name="enter">入力します</string>
+
+
+    <string name="tut_1_title" >こんにちは！</string>
+    <string name="tut_1_body" >マチルダをインストールしてくれてありがとう</string>
+    <string name="tut_1_at" >5の1 、右にスワイプ</string>
+    <string name="tut_2_title" >ようこそ</string>
+    <string name="tut_2_body" >間違いのない代数、忙しい仕事や欲求不満へようこそ。</string>
+    <string name="tut_2_at" >2の5</string>
+    <string name="tut_3_title" >ダブルタップ</string>
+    <string name="tut_3_body" >ダブルタップは、除算および大いに多くを、減算乗算、追加します。</string>
+    <string name="tut_3_at" >3の5</string>
+    <string name="tut_4_title" >ドラッグ·アンド·ドロップ</string>
+    <string name="tut_4_body" >ドラッグ＆ドロップは、どこでも、彼らが合法的にすることができる条件を移動します。</string>
+    <string name="tut_4_at" >4の5</string>
+    <string name="tut_5_title" >これは、ということです簡単</string>
+    <string name="tut_5_body" >右にスワイプして開始してください</string>
+    <string name="tut_5_at" >5の5</string>
+
+</resources>

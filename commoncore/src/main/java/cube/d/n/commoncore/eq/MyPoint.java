@@ -46,7 +46,7 @@ public class MyPoint extends Point implements Physical {
     }
 
     public boolean near(float x, float y) {
-        float near =(float)( 40* BaseApp.getApp().getDpi() * (BaseApp.getApp().zoom + 1)/2); // we only sort scale by zoom
+        float near =(float)( 30* BaseApp.getApp().getDpi() * (BaseApp.getApp().zoom + 1)/2); // we only sort scale by zoom
         return x < this.x + near + this.myWidth / 2
                 && x > this.x - near - this.myWidth / 2
                 && y < this.y + near + this.myHeight / 2

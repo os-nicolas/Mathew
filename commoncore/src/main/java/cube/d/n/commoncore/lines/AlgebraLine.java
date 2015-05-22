@@ -98,7 +98,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     private float equationHeight(Equation equation) {
-        return stupid.get().measureHeight() + 2 *  getBuffer();
+        return equation.measureHeight() + 2 *  getBuffer();
     }
 
     private float internalOffset= Float.MAX_VALUE;
@@ -168,8 +168,8 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         }
 
 //     for (DragLocation dl:dragLocations){
-//            float dlx = dl.x + stupid.get().lastPoint.get(0).x;
-//            float dly = dl.y + stupid.get().lastPoint.get(0).y;
+//            float dlx = dl.x + stupid.get().getCenter();
+//            float dly = dl.y + stupid.get().getDrawnAtY();
 //            Paint temp =new Paint();
 //            temp.setColor(Color.GREEN);
 //            canvas.drawCircle(dlx,dly,15,temp);
@@ -248,7 +248,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         if (history.size()!=1) {
             top2=history.get(history.size() - 1).getY() - history.get(history.size() - 1).myEq.measureHeightUpper() - getBuffer();
         }else {
-            top2 = stupid.get().getY() - stupid.get().measureHeightLower() -  getBuffer();
+            top2 = stupid.get().getY() - stupid.get().measureHeightUpper() -  getBuffer();
         }
         height = (float)Math.floor(bot2 - top2);
 

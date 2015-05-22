@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="assume">Unter der Annahme,</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">stornieren</string>
+    <string name="quadratic">lösen Sie Quadratic</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">zurückkehren</string>
+    <string name="enter">eingeben</string>
+
+    <string name="tut_1_title" >Hallo !</string>
+    <string name="tut_1_body" >Vielen Dank für die Installation von Mathilda</string>
+    <string name="tut_1_at" >1 von 5, Swipe rechts</string>
+    <string name="tut_2_title" >willkommen</string>
+    <string name="tut_2_body" >Willkommen in Algebra , ohne Fehler , busy - Arbeit oder Frustration.</string>
+    <string name="tut_2_at" >2 von 5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >Tippen Sie zweimal zu addieren, subtrahieren, multiplizieren, dividieren und vieles mehr.</string>
+    <string name="tut_3_at" >3 von 5</string>
+    <string name="tut_4_title" >Drag and Drop</string>
+    <string name="tut_4_body" >Drag &amp; Drop , um Begriffe zu bewegen überall können sie legal sein .</string>
+    <string name="tut_4_at" >4 von 5</string>
+    <string name="tut_5_title" >So geht einfachy</string>
+    <string name="tut_5_body" >Streichen Sie nach rechts , um zu beginnen</string>
+    <string name="tut_5_at" >5 von 5</string>
+</resources>

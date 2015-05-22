@@ -19,7 +19,7 @@ public class ClearAction extends Action {
     long lastCalled=0l;
     long lastShown=0l;
     long lastActed =0l;
-    long showFor = BaseApp.getApp().acceptedTime;
+    long showFor = BaseApp.getApp().acceptedTime*4;
     long timeOut = 1000;
 
     @Override

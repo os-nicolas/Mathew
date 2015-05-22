@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">Supposant</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Annuler</string>
+    <string name="quadratic">Résolvez quadratique</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">revenir</string>
+    <string name="enter">Entrer</string>
+
+    <string name="tut_1_title" >Salut!</string>
+    <string name="tut_1_body" >Merci pour l\'installation de Mathilda</string>
+    <string name="tut_1_at" >1/5 , à droite coup</string>
+    <string name="tut_2_title" >Bienvenue</string>
+    <string name="tut_2_body" >Bienvenue à l\'algèbre , sans erreurs , occupé travail ou de frustration .</string>
+    <string name="tut_2_at" >2/5</string>
+    <string name="tut_3_title" >Double Tap</string>
+    <string name="tut_3_body" >Double Tap pour additionner, soustraire , multiplier et diviser et bien plus encore .</string>
+    <string name="tut_3_at" >3/5</string>
+    <string name="tut_4_title" >Drag and Drop</string>
+    <string name="tut_4_body" >Drag and Drop pour déplacer termes partout où ils peuvent être légalement .</string>
+    <string name="tut_4_at" >4/5</string>
+    <string name="tut_5_title" >Il est si facile</string>
+    <string name="tut_5_body" >Swipe droit pour commencer</string>
+    <string name="tut_5_at" >5/5</string>
+
+</resources>

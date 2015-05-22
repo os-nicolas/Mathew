@@ -57,8 +57,13 @@ public class DragLocation implements Comparable<DragLocation> {
 
             myStupid.updateLocation();
 
-            this.x = myDemo.x - myStupid.lastPoint.get(0).x;
-            this.y = myDemo.y - myStupid.lastPoint.get(0).y;
+            if (myStupid instanceof EqualsEquation) {
+                this.x = myDemo.x - ((EqualsEquation)myStupid).getCenter();
+                this.y = myDemo.y - myStupid.getDrawnAtY();
+            } else {
+                this.x = myDemo.x - myStupid.getX();
+                this.y = myDemo.y - myStupid.getDrawnAtY();
+            }
 
             myDemo.demo = true;
 
@@ -76,11 +81,11 @@ public class DragLocation implements Comparable<DragLocation> {
 
         //myStupid.updateLocation();
         if (myStupid instanceof EqualsEquation) {
-            this.x = equation.x - myStupid.lastPoint.get(0).x;
-            this.y = equation.y - myStupid.lastPoint.get(0).y;
+            this.x = equation.x - ((EqualsEquation)myStupid).getCenter();
+            this.y = equation.y - myStupid.getDrawnAtY();
         } else {
             this.x = equation.x - myStupid.getX();
-            this.y = equation.y - myStupid.getY();
+            this.y = equation.y - myStupid.getDrawnAtY();
         }
 
         myDemo.demo = true;
@@ -94,15 +99,15 @@ public class DragLocation implements Comparable<DragLocation> {
 
     public void updateDis(float eventX, float eventY) {
         if (myStupid instanceof EqualsEquation) {
-            this.dis = (float) Math.sqrt((x + owner.stupid.get().lastPoint.get(0).x - eventX) *
-                    (x + owner.stupid.get().lastPoint.get(0).x - eventX) +
-                    (y + owner.stupid.get().lastPoint.get(0).y - eventY) *
-                            (y + owner.stupid.get().lastPoint.get(0).y - eventY));
+            this.dis = (float) Math.sqrt((x + ((EqualsEquation)owner.stupid.get()).getCenter() - eventX) *
+                    (x + ((EqualsEquation)owner.stupid.get()).getCenter() - eventX) +
+                    (y + owner.stupid.get().getDrawnAtY() - eventY) *
+                            (y + owner.stupid.get().getDrawnAtY() - eventY));
         } else {
             this.dis = (float) Math.sqrt((x + owner.stupid.get().getX() - eventX) *
                     (x + owner.stupid.get().getX() - eventX) +
-                    (y + owner.stupid.get().getY() - eventY) *
-                            (y + owner.stupid.get().getY() - eventY));
+                    (y + owner.stupid.get().getDrawnAtY() - eventY) *
+                            (y + owner.stupid.get().getDrawnAtY()- eventY));
         }
 
     }

@@ -173,8 +173,8 @@ public class ColinView extends SuperView implements CanTrackChanges, CanWarn {
             changedEq = null;
 
             // add a new Equation to history
-            history.add(0, new EquationButton(stupid.copy(), this));
-            Log.i("add to History", stupid.toString());
+            history.add(0, new EquationButton(stupid.get().copy(), this));
+            Log.i("add to History", stupid.get().toString());
             changed = false;
 
             if (!alreadySolved && isSolved()) {

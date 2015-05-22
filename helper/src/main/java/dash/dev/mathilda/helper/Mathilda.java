@@ -73,4 +73,8 @@ public class Mathilda extends BaseApp {
         }
         return result;
     }
+
+    public boolean includeClear() {
+        return true;
+    }
 }

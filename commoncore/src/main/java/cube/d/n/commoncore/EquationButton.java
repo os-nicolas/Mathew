@@ -74,7 +74,7 @@ public class EquationButton extends Button {
         // if there is a warning show that too
         if (warn && canvas != null) {
             // we need to find the right end
-            float at = (float) (myEq.lastPoint.get(0).x + myEq.get(1).measureWidth() + (WARN_SPACE * BaseApp.getApp().zoom));
+            float at = (float) (myEq.getX() + (myEq.measureWidth()/2f) + (WARN_SPACE * BaseApp.getApp().zoom));
             Paint p = new Paint(BaseApp.getApp().textPaint);
             p.setTextSize(myEq.getPaint().getTextSize());
             p.setAlpha(currentAlpha);
@@ -285,18 +285,18 @@ public class EquationButton extends Button {
 
     @Override
     protected float top() {
-        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+        if (((AlgebraLine) owner).stupid.get().getDrawnAtY() == -1) {
             ((AlgebraLine) owner).stupid.get().updateLocation();
         }
-        return y + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getY() - myEq.measureHeightUpper();
+        return y + ((AlgebraLine) owner).stupid.get().getDrawnAtY() - myEq.measureHeightUpper();
     }
 
     @Override
     protected float bottom() {
-        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+        if (((AlgebraLine) owner).stupid.get().getDrawnAtY() == -1) {
             ((AlgebraLine) owner).stupid.get().updateLocation();
         }
-        return y + ((AlgebraLine) owner).stupid.get().lastPoint.get(0).getY() + myEq.measureHeightLower();
+        return y + ((AlgebraLine) owner).stupid.get().getDrawnAtY() + myEq.measureHeightLower();
     }
 
     private void updateLocations() {
@@ -304,8 +304,8 @@ public class EquationButton extends Button {
         int stupidX;
         int stupidY;
         if (((AlgebraLine) owner).stupid.get() instanceof EqualsEquation) {
-            stupidX = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).x;
-            stupidY = ((AlgebraLine) owner).stupid.get().lastPoint.get(0).y;
+            stupidX = (int) ((EqualsEquation)((AlgebraLine) owner).stupid.get()).getCenter();
+            stupidY = (int) ((AlgebraLine) owner).stupid.get().getDrawnAtY();
         } else {
             stupidX = (int) ((AlgebraLine) owner).stupid.get().getX();
             stupidY = (int) ((AlgebraLine) owner).stupid.get().getY();
@@ -336,7 +336,7 @@ public class EquationButton extends Button {
 
     @Override
     public float right() {
-        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+        if (((AlgebraLine) owner).stupid.get().getDrawnAtY() == -1) {
             ((AlgebraLine) owner).stupid.get().updateLocation();
         }
 
@@ -361,7 +361,7 @@ public class EquationButton extends Button {
 
     @Override
     public float left() {
-        if (((AlgebraLine) owner).stupid.get().lastPoint.size() == 0) {
+        if (((AlgebraLine) owner).stupid.get().getDrawnAtY() == -1) {
             ((AlgebraLine) owner).stupid.get().updateLocation();
         }
 

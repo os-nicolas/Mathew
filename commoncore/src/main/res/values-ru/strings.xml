@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="assume">Если предположить,</string>
+    <string name="ok">Хорошо</string>
+    <string name="cancel">отменить</string>
+    <string name="quadratic">решать квадратные</string>
+    <string name="quadratic_for">-</string>
+    <string name="retrn">возвращаться</string>
+    <string name="enter">вводить</string>
+
+    <string name="tut_1_title" >Привет !</string>
+    <string name="tut_1_body" >Благодарим за установку Матильда</string>
+    <string name="tut_1_at" >1 из 5 , салфетки право</string>
+    <string name="tut_2_title" >добро пожаловать</string>
+    <string name="tut_2_body" >Добро пожаловать в алгебре без ошибок , занятой - работы или разочарования.</string>
+    <string name="tut_2_at" >2 из 5</string>
+    <string name="tut_3_title" >Двойное Нажатие</string>
+    <string name="tut_3_body" >Дважды нажмите, чтобы складывать, вычитать, умножать, делить и многое другое.</string>
+    <string name="tut_3_at" >3 из 5</string>
+    <string name="tut_4_title" >Перетаскивание</string>
+    <string name="tut_4_body" >Перетащите двигаться в любом месте условия они могут на законных основаниях быть.</string>
+    <string name="tut_4_at" >4 из 5</string>
+    <string name="tut_5_title" >Это так просто</string>
+    <string name="tut_5_body" >Размах право начать</string>
+    <string name="tut_5_at" >5 из 5</string>
+
+</resources>

@@ -4,6 +4,7 @@ import android.graphics.Typeface;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.WriteScreen.ClearAction;
 import cube.d.n.commoncore.Action.WriteScreen.DecimalAction;
 import cube.d.n.commoncore.Action.WriteScreen.DeleteAction;
 import cube.d.n.commoncore.Action.WriteScreen.DivAction;
@@ -21,6 +22,7 @@ import cube.d.n.commoncore.Action.WriteScreen.VarAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.InputLine;
 
@@ -38,12 +40,20 @@ public class InputKeyboard extends KeyBoard {
 
     }
 
+    boolean alreadyWithClear = false;
+    public void withClear(){
+        if (!alreadyWithClear) {
+            popUpButtons.add(new PopUpButton("clear", new ClearAction((InputLine) line)));
+            alreadyWithClear = true;
+        }
+    }
+
     @Override
     protected void addButtons() {
 
 
 
-        //popUpButtons.add(new PopUpButton("clear" ,new ClearAction((InputLine)line)));
+
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
