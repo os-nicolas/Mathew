@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Калькулятор</string>
+    <string name="action_settings">настройки</string>
+    <string name="tut_1_atl">1 из 6, проведите пальцем влево</string>
+    <string name="tut_2_atl">2 из 6</string>
+    <string name="tut_3_atl">3 из 6</string>
+    <string name="tut_4_atl">4 из 6</string>
+    <string name="tut_6_title">Калькулятор</string>
+    <string name="tut_6_body">Кроме того, это отличный калькулятор</string>
+    <string name="tut_6_atl">5 из 6</string>
+    <string name="tut_5_atl">6 из 6</string>
+
+</resources>

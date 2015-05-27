@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">เครื่องคิดเลข</string>
+    <string name="action_settings">การตั้งค่า</string>
+    <string name="tut_1_atl">1 จาก 6 รูดซ้าย</string>
+    <string name="tut_2_atl">2 จาก 6</string>
+    <string name="tut_3_atl">3 จาก 6</string>
+    <string name="tut_4_atl">4 จาก 6</string>
+    <string name="tut_6_title">เครื่องคิดเลข</string>
+    <string name="tut_6_body">พลัสก็คิดเลขที่ดีเยี่ยม</string>
+    <string name="tut_6_atl">5 จาก 6</string>
+    <string name="tut_5_atl">6 จาก 6</string>
+
+</resources>

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cube.d.n.calc.Mathilda;
 import cube.d.n.calc.R;
 import cube.d.n.commoncore.TutEnd;
 import cube.d.n.commoncore.TutFrag;
@@ -27,33 +28,33 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         super(fm);
 //        frags.add(new TutStart());
         frags.add(TutTextFrag.make(
-                "Hi",
-                "Thanks for installing Mathilda",
-                "1 of 6").withExtaTimeOut(750));
+                Mathilda.getApp().getResources().getString(R.string.tut_1_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_1_body),
+                Mathilda.getApp().getResources().getString(R.string.tut_1_atl)).withExtaTimeOut(650));
         frags.add(TutVideoFrag.make(
-                "Welcome",
-                "Welcome, To algebra without mistakes, busy-work or frustration",
-                "android.resource://cube.d.n.calc/raw/" + R.raw.overview,
-                "2 of 6"));
+                Mathilda.getApp().getResources().getString(R.string.tut_2_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_2_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.overview,
+                Mathilda.getApp().getResources().getString(R.string.tut_2_atl)));
         frags.add(TutVideoFrag.make(
-                "Double Tap",
-                "Double Tap to add, subtract, multiply, divide, and much, much more",
-                "android.resource://cube.d.n.calc/raw/" + R.raw.doubletap,
-                "3 of 6"));
+                Mathilda.getApp().getResources().getString(R.string.tut_3_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_3_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.doubletap,
+                Mathilda.getApp().getResources().getString(R.string.tut_3_atl)));
         frags.add(TutVideoFrag.make(
-                "Drag and Drop",
-                "Drag and Drop to move terms anywhere they can legally be",
-                "android.resource://cube.d.n.calc/raw/" + R.raw.draganddrop,
-                "4 of 6"));
-        frags.add(TutVideoFrag.make(
-                "Calculator",
-                "And, it's an excellent calculator",
-                "android.resource://cube.d.n.calc/raw/" + R.raw.calc,
-                "5 of 6"));
+                Mathilda.getApp().getResources().getString(R.string.tut_4_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_4_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.draganddrop,
+                Mathilda.getApp().getResources().getString(R.string.tut_4_atl)));
         frags.add(TutTextFrag.make(
-                "It's that easy",
-                "Swipe right to get started",
-                "6 of 6"));
+                Mathilda.getApp().getResources().getString(R.string.tut_6_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_6_body),
+                Mathilda.getApp().getResources().getString(R.string.tut_6_atl)));
+
+        frags.add(TutTextFrag.make(
+                Mathilda.getApp().getResources().getString(R.string.tut_5_title),
+                Mathilda.getApp().getResources().getString(R.string.tut_5_body),
+                Mathilda.getApp().getResources().getString(R.string.tut_5_atl)));
         frags.add(new TutEnd());
     }
 

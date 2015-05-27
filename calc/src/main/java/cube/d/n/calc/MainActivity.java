@@ -13,19 +13,15 @@ public class MainActivity extends Activity {
 
     private static final String PREFS_NAME = "tuts";
 
-    public static boolean hasShown = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
-        //boolean alreadyShown = settings.getBoolean("startup_tut", false) || hasShown;
-        boolean alreadyShown = hasShown;
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
+        boolean alreadyShown = settings.getBoolean("startup_tut", false);
         final Activity that = this;
         if (!alreadyShown) {
             Intent myIntent = new Intent(that, TutActivity.class);
-            hasShown = true;
             that.finish();
             that.startActivity(myIntent);
         }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Calculator</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="tut_1_atl">1 sur 6, balayez vers la gauche</string>
+    <string name="tut_2_atl">2 de 6</string>
+    <string name="tut_3_atl">3 of 6</string>
+    <string name="tut_4_atl">4 de 6</string>
+    <string name="tut_6_title">Calculator</string>
+    <string name="tut_6_body">De plus, il est un excellent calculateur</string>
+    <string name="tut_6_atl">5 de 6</string>
+    <string name="tut_5_atl">6 de 6</string>
+
+</resources>

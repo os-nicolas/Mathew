@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Calculadora</string>
+    <string name="action_settings">Definições</string>
+    <string name="tut_1_atl">1 de 6, deslize para a esquerda</string>
+    <string name="tut_2_atl">2 de 6</string>
+    <string name="tut_3_atl">3 de 6</string>
+    <string name="tut_4_atl">4 de 6</string>
+    <string name="tut_6_title">Calculadora</string>
+    <string name="tut_6_body">Além disso, é uma excelente calculadora</string>
+    <string name="tut_6_atl">5 de 6</string>
+    <string name="tut_5_atl">6 de 6</string>
+
+</resources>

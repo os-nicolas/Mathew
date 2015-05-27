@@ -2,7 +2,15 @@
 <resources>
 
     <string name="app_name">Calculator</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="tut_1_atl">1 of 6 ,swipe left</string>
+    <string name="tut_2_atl">2 of 6</string>
+    <string name="tut_3_atl">3 of 6</string>
+    <string name="tut_4_atl">4 of 6</string>
+    <string name="tut_6_title">Calculator</string>
+    <string name="tut_6_body">Plus, it\'s an excellent calculator</string>
+    <string name="tut_6_atl">5 of 6</string>
+    <string name="tut_5_atl">6 of 6</string>
+
 
 </resources>

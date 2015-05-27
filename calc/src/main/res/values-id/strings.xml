@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Kalkulator </string>
+    <string name="action_settings">Pengaturan</string>
+    <string name="tut_1_atl">1 dari 6, geser ke kiri</string>
+    <string name="tut_2_atl">2 dari 6</string>
+    <string name="tut_3_atl">3 dari 6</string>
+    <string name="tut_4_atl">4 dari 6</string>
+    <string name="tut_6_title">Kalkulator </string>
+    <string name="tut_6_body">Plus, itu adalah kalkulator yang sangat baik</string>
+    <string name="tut_6_atl">5 dari 6</string>
+    <string name="tut_5_atl">6 dari 6</string>
+</resources>

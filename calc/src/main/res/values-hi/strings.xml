@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">कैलक्यूलेटर</string>
+    <string name="action_settings">सेटिंग</string>
+    <string name="tut_1_atl">6 में से 1, बाएं स्वाइप</string>
+    <string name="tut_2_atl">2 से 6</string>
+    <string name="tut_3_atl">3 से 6</string>
+    <string name="tut_4_atl">4 से 6</string>
+    <string name="tut_6_title">कैलक्यूलेटर</string>
+    <string name="tut_6_body">इसके अलावा, यह एक उत्कृष्ट कैलकुलेटर है</string>
+    <string name="tut_6_atl">5 से 6</string>
+    <string name="tut_5_atl">6 का 6</string>
+
+
+</resources>

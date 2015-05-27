@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">電卓</string>
+    <string name="action_settings">[設定]</string>
+    <string name="tut_1_atl">6の1は、左スワイプ</string>
+    <string name="tut_2_atl">2の6</string>
+    <string name="tut_3_atl">3の6</string>
+    <string name="tut_4_atl">4の6</string>
+    <string name="tut_6_title">電卓</string>
+    <string name="tut_6_body">プラス、それは優れた電卓です</string>
+    <string name="tut_6_atl">5の6</string>
+    <string name="tut_5_atl">6の6</string>
+
+</resources>

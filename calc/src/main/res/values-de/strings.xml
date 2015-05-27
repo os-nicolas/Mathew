@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Rechner</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="tut_1_atl">1 von 6, streichen Sie nach links</string>
+    <string name="tut_2_atl">2 von 6</string>
+    <string name="tut_3_atl">3 von 6</string>
+    <string name="tut_4_atl">4 von 6</string>
+    <string name="tut_6_title">Rechner</string>
+    <string name="tut_6_body">Plus, es ist eine ausgezeichnete Rechner</string>
+    <string name="tut_6_atl">5 von 6</string>
+    <string name="tut_5_atl">6 von 6</string>
+</resources>

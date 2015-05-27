@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">계산기</string>
+    <string name="action_settings">설정</string>
+    <string name="tut_1_atl">6의 1, 왼쪽으로 스 와이프</string>
+    <string name="tut_2_atl">(2) (6)</string>
+    <string name="tut_3_atl">(3) (6)</string>
+    <string name="tut_4_atl">(4) (6)</string>
+    <string name="tut_6_title">계산기</string>
+    <string name="tut_6_body">게다가, 그것은 우수한 계산기의</string>
+    <string name="tut_6_atl">(5) (6)</string>
+    <string name="tut_5_atl">(6) (6)</string>
+
+
+</resources>

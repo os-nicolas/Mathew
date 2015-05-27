@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">计算器</string>
+    <string name="action_settings">设置</string>
+    <string name="tut_1_atl">1出6，刷卡左</string>
+    <string name="tut_2_atl">2出6</string>
+    <string name="tut_3_atl">3出6</string>
+    <string name="tut_4_atl">4出6</string>
+    <string name="tut_6_title">计算器</string>
+    <string name="tut_6_body">另外，它是一个很好的计算器</string>
+    <string name="tut_6_atl">5出6</string>
+    <string name="tut_5_atl">6出6</string>
+
+</resources>

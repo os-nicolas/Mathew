@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">آلة حاسبة</string>
+    <string name="action_settings">الإعدادات</string>
+    <string name="tut_1_atl">1 من 6، مرر اليسار</string>
+    <string name="tut_2_atl">2 من 6</string>
+    <string name="tut_3_atl">3 من 6</string>
+    <string name="tut_4_atl">4 من 6</string>
+    <string name="tut_6_title">آلة حاسبة</string>
+    <string name="tut_6_body">بالاضافة الى ذلك، انها آلة حاسبة ممتازة</string>
+    <string name="tut_6_atl">5 من 6</string>
+    <string name="tut_5_atl">6 من 6</string>
+
+
+</resources>
