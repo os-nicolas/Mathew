@@ -11,6 +11,7 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 
@@ -69,5 +70,9 @@ public class Mathilda extends BaseApp {
             views.put(mainActivity, result);
         }
         return result;
+    }
+
+    public Line getInputLine(Main owner) {
+        return new CalcLine(owner);
     }
 }

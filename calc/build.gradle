@@ -8,7 +8,7 @@ android {
         applicationId "cube.d.n.calc"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 2
+        versionCode 3
         versionName "0.2"
     }
     buildTypes {

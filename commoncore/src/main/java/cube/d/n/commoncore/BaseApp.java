@@ -299,4 +299,8 @@ public abstract class BaseApp extends Application{
     public boolean includeClear() {
         return false;
     }
+
+    public Line getInputLine(Main owner) {
+        return new InputLine(owner);
+    }
 }

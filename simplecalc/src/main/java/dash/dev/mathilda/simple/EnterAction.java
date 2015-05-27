@@ -56,34 +56,10 @@ public class EnterAction extends Action {
     @Override
     protected void privateAct() {
 
-
         Equation newEq = ((WritingEquation) EnterAction.mine).convert();
-        ArrayList<String> vars = getVars(newEq);
         ((InputLine)owner).deActivate();
-        Line line;
-        if (vars.size() != 0 ||  countEquals(((WritingEquation) EnterAction.mine))==1){
-            line = new AlgebraLine(owner.owner,newEq);
-
-        }else{
-            line = new OutputLine(owner.owner,newEq);
-        }
+        Line line = new OutputLine(owner.owner,newEq);
         newEq.updateOwner(line);
         owner.owner.addLine(line);
-    }
-
-    private ArrayList<String> getVars(Equation stupid) {
-        ArrayList<String> result = new ArrayList<>();
-        if (stupid instanceof VarEquation){
-            result.add(stupid.getDisplay(-1));
-        }
-        for (Equation e: stupid){
-            ArrayList<String> innerResult = getVars(e);
-            for (String s: innerResult){
-                if (!result.contains(s)){
-                    result.add(s);
-                }
-            }
-        }
-        return result;
     }
 }

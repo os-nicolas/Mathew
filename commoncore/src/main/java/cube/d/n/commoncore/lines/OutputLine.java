@@ -47,7 +47,7 @@ public class OutputLine extends Line {
             public void run() {
                 try {
                     sleep(500l);
-                    owner.addLine(new InputLine(owner));
+                    owner.addLine(BaseApp.getApp().getInputLine(owner));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

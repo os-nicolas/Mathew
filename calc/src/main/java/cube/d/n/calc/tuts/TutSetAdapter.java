@@ -46,11 +46,11 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                 Mathilda.getApp().getResources().getString(R.string.tut_4_body),
                 "android.resource://colin.example.algebrator/raw/" + R.raw.draganddrop,
                 Mathilda.getApp().getResources().getString(R.string.tut_4_atl)));
-        frags.add(TutTextFrag.make(
+        frags.add(TutVideoFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_6_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_6_body),
+                "android.resource://colin.example.algebrator/raw/" + R.raw.calc,
                 Mathilda.getApp().getResources().getString(R.string.tut_6_atl)));
-
         frags.add(TutTextFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_5_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_5_body),
