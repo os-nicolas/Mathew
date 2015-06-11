@@ -36,6 +36,9 @@ public abstract class BaseApp extends Application{
     private int TEXT_SIZE= DEFAULT_TEXT_SIZE;
     float scale =1f;
     public long doubleTapSpacing = 300;
+    public int darkLightColor;
+    public int lightLightColor;
+    public int darkdarkLightColor;
     private float doubleTapDistance = 50;
     public int darkColor;
     public Paint bkgPaint = new Paint();
@@ -137,6 +140,13 @@ public abstract class BaseApp extends Application{
             lightColor = 0xffddd7d7;
             darkColor =0xffd5080b;
         //}
+
+        darkLightColor = BaseApp.colorFade(lightColor, Color.BLACK);
+        lightLightColor =  BaseApp.colorFade(lightColor, Color.WHITE);
+        lightLightColor =  BaseApp.colorFade(lightLightColor, Color.WHITE);
+
+        darkdarkLightColor = BaseApp.colorFade(darkLightColor, darkColor);
+        darkdarkLightColor = BaseApp.colorFade(darkdarkLightColor, Color.BLACK);
 
         //darkColor =0xffd5080b;
         darkDarkColor = darkColor;

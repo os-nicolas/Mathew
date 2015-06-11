@@ -1,5 +1,6 @@
 package cube.d.n.commoncore.keyboards;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.MotionEvent;
 
@@ -48,8 +49,8 @@ public class BothSidesKeyBoard extends KeyBoard {
         firstRow.add(new Button( "9", new NumberAction((BothSidesLine)line, "9")));
         firstRow.add(new Button( "a", new VarAction((BothSidesLine)line, "a")));
         firstRow.add(new Button( "b", new VarAction((BothSidesLine)line, "b")));
-        firstRow.add(new Button( "+", new PlusAction((BothSidesLine)line)));
-        firstRow.add(new Button( "-", new MinusAction((BothSidesLine)line)));
+        firstRow.add(new Button( "+", new PlusAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        firstRow.add(new Button( "-", new MinusAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
 
         //TODO this does not work since my font does not support this
 
@@ -61,9 +62,9 @@ public class BothSidesKeyBoard extends KeyBoard {
         secondRow.add(new Button( "(", new ParenthesesAction((BothSidesLine)line, true)));
         secondRow.add(new Button( ")", new ParenthesesAction((BothSidesLine)line, false)));
         char[] timesUnicode = {'\u00D7'};
-        secondRow.add(new Button( new String(timesUnicode), new TimesAction((BothSidesLine)line)));
+        secondRow.add(new Button( new String(timesUnicode), new TimesAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] divisionUnicode = {'\u00F7'};
-        secondRow.add(new Button( new String(divisionUnicode), new DivAction((BothSidesLine)line)));
+        secondRow.add(new Button( new String(divisionUnicode), new DivAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
 
 
         ArrayList<Button> thridRow = new ArrayList<Button>();
@@ -72,28 +73,28 @@ public class BothSidesKeyBoard extends KeyBoard {
         thridRow.add(new Button( "3", new NumberAction((BothSidesLine)line, "3")));
         thridRow.add(new Button( "0", new NumberAction((BothSidesLine)line, "0")));
         thridRow.add(new Button( ".", new DecimalAction((BothSidesLine)line, ".")));
-        thridRow.add(new Button( "cⁿ", new PowerAction((BothSidesLine)line)));
+        thridRow.add(new Button( "^", new PowerAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] sqrtUnicode = {'\u221A'};
-        thridRow.add(new Button( new String(sqrtUnicode), new SqrtAction((BothSidesLine)line)));
+        thridRow.add(new Button( new String(sqrtUnicode), new SqrtAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
 
 
 
 
         addButtonsRow(firstRow, 0f, 7f / 9f,6f / 9f, 7f / 9f);
         char[] backSpaceUnicode = {'\u232B'};
-        Button del = new Button( new String(backSpaceUnicode), new DeleteAction((BothSidesLine)line));
+        Button del = new Button( new String(backSpaceUnicode), new DeleteAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
         del.textPaint.setTypeface(myTypeface);
         del.setLocation(7f / 9f, 1f, 6f / 9f, 7f / 9f);
         buttons.add(del);
 
         addButtonsRow(secondRow, 0f, 7f / 9f, 7f / 9f, 8f / 9f);
-        Button cancel = new Button(BaseApp.getApp().getResources().getString(R.string.cancel),  BaseApp.getApp().getCancel((BothSidesLine) line));
+        Button cancel = new Button(BaseApp.getApp().getResources().getString(R.string.cancel),  BaseApp.getApp().getCancel((BothSidesLine) line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         cancel.setLocation(7f / 9f, 1f, 7f / 9f, 8f / 9f);
         buttons.add(cancel);
 
         addButtonsRow(thridRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), BaseApp.getApp().getOk((BothSidesLine) line));
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.ok), BaseApp.getApp().getOk((BothSidesLine) line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
     }

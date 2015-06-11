@@ -47,6 +47,22 @@ public class Button implements Physical {
         //TODO does not work at all
     }
 
+    public Button withColor(int color){
+        this.bkgPaint.setColor(color);
+        targetBkgColor = color;
+        return this;
+    }
+
+    public Button withHighLightColor(int color){
+        this.highlightColor=color;
+        return this;
+    }
+
+    public Button withTextColor(int color){
+        this.textPaint.setColor(color);
+        return this;
+    }
+
     public void setLocation(float left, float right, float top, float bottom) {
         this.left = left;
         this.right = right;
@@ -66,7 +82,7 @@ public class Button implements Physical {
 
         if (!hover) {
             int currentColor = bkgPaint.getColor();
-            currentColor = BaseApp.colorFade(currentColor, BaseApp.getApp().lightColor);
+            currentColor = BaseApp.colorFade(currentColor, targetBkgColor);
             bkgPaint.setColor(currentColor);
         }
         Paint bkgbkgPaint = new Paint();
@@ -194,7 +210,7 @@ public class Button implements Physical {
             }
         }else{
             hover = false;
-            bkgPaint.setColor(BaseApp.getApp().lightColor);
+            bkgPaint.setColor(targetBkgColor);
         }
     }
 

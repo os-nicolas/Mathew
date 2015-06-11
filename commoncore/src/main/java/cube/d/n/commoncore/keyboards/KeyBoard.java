@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.keyboards;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
@@ -12,6 +13,8 @@ import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Measureable;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.TouchMode;
 import cube.d.n.commoncore.lines.Line;
 
@@ -23,9 +26,11 @@ public abstract class KeyBoard implements Measureable {
     public final Main owner;
     ArrayList<Button> buttons = new ArrayList<Button>();
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<>();
+    public ArrayList<SelectedRow> popUpLines = new ArrayList<>();
     public float buttonsPercent;
     protected final Line line;
     private boolean active= true;
+
 
 
     public KeyBoard(Main owner,Line line){
@@ -104,11 +109,17 @@ public abstract class KeyBoard implements Measureable {
                     for (PopUpButton pub : popUpButtons) {
                         pub.click(event);
                     }
+                    for (SelectedRow pub : popUpLines) {
+                        pub.click(event);
+                    }
                 } else {
                     for (Button myBut : buttons) {
                         myBut.hover(event);
                     }
                     for (PopUpButton pub : popUpButtons) {
+                        pub.hover(event);
+                    }
+                    for (SelectedRow pub : popUpLines) {
                         pub.hover(event);
                     }
                 }
@@ -130,6 +141,11 @@ public abstract class KeyBoard implements Measureable {
                 return true;
             }
         }
+        for (SelectedRow pub : popUpLines) {
+            if (pub.couldClick(event)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -140,7 +156,13 @@ public abstract class KeyBoard implements Measureable {
         }
 
         buttonsPercent = getBaseButtonsPercent();
+
         for (PopUpButton myPUB: popUpButtons) {
+            myPUB.updateLocation(this);
+            myPUB.draw(canvas, paint);
+        }
+
+        for (SelectedRow myPUB: popUpLines) {
             myPUB.updateLocation(this);
             myPUB.draw(canvas, paint);
         }
@@ -150,7 +172,7 @@ public abstract class KeyBoard implements Measureable {
 
     protected void drawShadow(Canvas canvas,int alpha) {
         Paint p = new Paint();
-        int color = BaseApp.getApp().darkDarkColor;
+        int color = Color.BLACK;//BaseApp.getApp().darkDarkColor;
         p.setColor(color);
         p.setAlpha(alpha);
         int at = ((int) (owner.height - measureHeight()));

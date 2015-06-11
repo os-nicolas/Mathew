@@ -27,6 +27,6 @@ public class ColinAct extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance= new WeakReference<ColinAct>(this);
-        setContentView(Mathilda.getView(screenName,this));
+        setContentView(Mathilda.getAndRemoveView(screenName,this));
     }
 }

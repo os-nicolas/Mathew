@@ -60,7 +60,7 @@ public class Mathilda extends BaseApp {
             views.put(mainActivity, main);
     }
 
-    public static View getView(String mainActivity,Activity activity) {
+    public static View getAndRemoveView(String mainActivity,Activity activity) {
         View result;
         if (views.containsKey(mainActivity)){
             result= views.get(mainActivity);
@@ -73,6 +73,18 @@ public class Mathilda extends BaseApp {
         }
         return result;
     }
+
+    public static View justGetView(String mainActivity,Activity activity) {
+        View result;
+        if (views.containsKey(mainActivity)){
+            result= views.get(mainActivity);
+        }else {
+            result = new Main(activity);
+            views.put(mainActivity, result);
+        }
+        return result;
+    }
+
 
     public boolean includeClear() {
         return true;

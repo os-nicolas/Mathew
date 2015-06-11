@@ -22,6 +22,7 @@ import cube.d.n.commoncore.EquationButton;
 import cube.d.n.commoncore.LongTouch;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.R;
+import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.DragLocations;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
@@ -822,7 +823,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 //        }
         for (String myVar:myVars) {
             //TODO strings are bad
-            PopUpButton quadratic = new PopUpButton( owner.getContext().getString(R.string.quadratic) + (myVars.size()==1?"":" "+owner.getContext().getString(R.string.quadratic_for)+" "+myVar), new SolveQuadratic(myVar,this));
+            PopUpButton quadratic = (PopUpButton)(new PopUpButton( owner.getContext().getString(R.string.quadratic) + (myVars.size()==1?"":" "+owner.getContext().getString(R.string.quadratic_for)+" "+myVar), new SolveQuadratic(myVar,this)).withColor(BaseApp.getApp().lightLightColor));
             quadratic.setTargets(1f / 9f, 0f, 1f);
             getKeyboad().popUpButtons.add(quadratic);
         }
@@ -902,6 +903,24 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public void setSelected(Equation equation) {
         selected=equation;
+
+        AlgebraKeyboard ak = (AlgebraKeyboard) getKeyboad();
+        for (int i= ak.popUpLines.size()-1;i >=0;i--){
+            SelectedRow sr =ak.popUpLines.get(i);
+            sr.kill();
+            if (sr.done()){
+                ak.popUpLines.remove(i);
+            }
+        }
+        //TODO remove old all popUpLines
+
+
+        if (equation != null){
+            SelectedRow toAdd = equation.getSelectedRow();
+            if (toAdd != null) {
+                ak.popUpLines.add(toAdd);
+            }
+        }
     }
 
     public void tryWarn(Equation equation) {

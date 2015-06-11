@@ -1,5 +1,6 @@
 package cube.d.n.commoncore.keyboards;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class InputKeyboard extends KeyBoard {
     boolean alreadyWithClear = false;
     public void withClear(){
         if (!alreadyWithClear) {
-            popUpButtons.add(new PopUpButton("clear", new ClearAction((InputLine) line)));
+            popUpButtons.add((PopUpButton)(new PopUpButton("clear", new ClearAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
             alreadyWithClear = true;
         }
     }
@@ -61,12 +62,12 @@ public class InputKeyboard extends KeyBoard {
         firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
         firstRow.add(new Button("a", new VarAction((InputLine)line, "a")));
         firstRow.add(new Button("b", new VarAction((InputLine)line, "b")));
-        firstRow.add(new Button("+", new PlusAction((InputLine)line)));
-        firstRow.add(new Button("-", new MinusAction((InputLine)line)));
-        firstRow.add(new Button("=", new EqualsAction((InputLine)line)));
+        firstRow.add(new Button("+", new PlusAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        firstRow.add(new Button("-", new MinusAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        firstRow.add(new Button("=", new EqualsAction((InputLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE));
         //TODO this does not work since my font does not support this
         char[] backSpaceUnicode = { '\u232B'};
-        Button del = new Button(new String(backSpaceUnicode), new DeleteAction((InputLine)line));
+        Button del = new Button(new String(backSpaceUnicode), new DeleteAction((InputLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
         del.textPaint.setTypeface(myTypeface);
         firstRow.add(del);//
@@ -78,13 +79,13 @@ public class InputKeyboard extends KeyBoard {
         secondRow.add(new Button("(", new ParenthesesAction((InputLine)line, true)));
         secondRow.add(new Button(")", new ParenthesesAction((InputLine)line, false)));
         char[] timesUnicode = {'\u00D7'};
-        secondRow.add(new Button(new String(timesUnicode), new TimesAction((InputLine)line)));
+        secondRow.add(new Button(new String(timesUnicode), new TimesAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] divisionUnicode = {'\u00F7'};
-        secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)));
+        secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] leftUnicode = {'\u2190'};
-        secondRow.add(new Button(new String(leftUnicode), new LeftAction((InputLine)line)));
+        secondRow.add(new Button(new String(leftUnicode), new LeftAction((InputLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE));
         char[] rightUnicode = {'\u2192'};
-        secondRow.add(new Button(new String(rightUnicode), new RightAction((InputLine)line)));
+        secondRow.add(new Button(new String(rightUnicode), new RightAction((InputLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE));
 
 
         ArrayList<Button> thridRow = new ArrayList<Button>();
@@ -93,15 +94,15 @@ public class InputKeyboard extends KeyBoard {
         thridRow.add(new Button("3", new NumberAction((InputLine)line, "3")));
         thridRow.add(new Button("0", new NumberAction((InputLine)line, "0")));
         thridRow.add(new Button(".", new DecimalAction((InputLine)line, ".")));
-        thridRow.add(new Button("cⁿ", new PowerAction((InputLine)line)));
+        thridRow.add(new Button("^", new PowerAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] sqrtUnicode = {'\u221A'};
-        thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)));
+        thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
 
 
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
         addButtonsRow(secondRow, 7f / 9f, 8f / 9f);
         addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
-        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), BaseApp.getApp().getEnter((InputLine) line)  );
+        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), BaseApp.getApp().getEnter((InputLine) line)  ).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
     }

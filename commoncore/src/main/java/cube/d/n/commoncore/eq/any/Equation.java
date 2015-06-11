@@ -19,6 +19,7 @@ import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.Pop;
+import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.DragLocations;
 import cube.d.n.commoncore.eq.EquationDis;
@@ -1522,6 +1523,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     public float getCenter() {
         return x;
+    }
+
+    public SelectedRow getSelectedRow() {
+        return null;
     }
 
     private class Clostest {
