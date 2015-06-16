@@ -478,17 +478,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 MyPoint myPoint = getLastPoint(x, y);
                 Log.i("did it change?",old.toString() + " " + owner.stupid.get().toString());
                 if (!(old.same(owner.stupid.get()))) {
-                    ((CanTrackChanges)owner).changed();
-
-                    // if we operated we should be the one to pop
-                    for (int i = 0; i < ((CanTrackChanges)owner).getAfterAnimations().size(); i++) {
-                        Animation a = ((CanTrackChanges)owner).getAfterAnimations().get(i);
-                        if (a instanceof Pop) {
-                            ((CanTrackChanges)owner).getAfterAnimations().remove(a);
-                            i--;
-                        }
-                    }
-                    ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint, owner));
+                    changed(myPoint);
                     return true;
                 }
 
@@ -523,6 +513,41 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         }
         return false;
+    }
+
+    public void changed(MyPoint myPoint) {
+        ((CanTrackChanges)owner).changed();
+
+        // if we operated we should be the one to pop
+        for (int i = 0; i < ((CanTrackChanges)owner).getAfterAnimations().size(); i++) {
+            Animation a = ((CanTrackChanges)owner).getAfterAnimations().get(i);
+            if (a instanceof Pop) {
+                ((CanTrackChanges)owner).getAfterAnimations().remove(a);
+                i--;
+            }
+        }
+        ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint, owner));
+
+        if (owner instanceof AlgebraLine) {
+            // TODO
+            // TODO
+            // this is def a band-aid
+            // the problem is that some operation don't change the eq
+            // while making a new copy of it
+            // in these case we still select - altho maybe we don't need to
+            // however sometimes selected is in the old version of stupid
+            // this casues problem when we try to select it
+            // the real solution is to pass selected on in a good way
+            // this probably mean editing copy and rewriting it like constructors
+            // TODO
+            // TODO
+            AlgebraLine al = (AlgebraLine)owner;
+            if (al.getSelected() != null) {
+                al.getSelected().setSelected(false);
+            }
+
+            al.updateHistory();
+        }
     }
 
     private MyPoint getLastPoint(float x, float y) {

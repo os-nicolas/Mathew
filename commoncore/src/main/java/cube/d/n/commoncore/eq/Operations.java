@@ -391,7 +391,7 @@ public class Operations {
         return result;
     }
 
-    private static MultiCountData deepFindCommon(MultiCountData left, MultiCountData right) {
+    public static MultiCountData deepFindCommon(MultiCountData left, MultiCountData right) {
         MultiCountData leftAt = left;
         MultiCountData rightAt = right;
         MultiCountData result = findCommon(leftAt, rightAt);
@@ -597,37 +597,13 @@ public class Operations {
 
         // we check to see if they are both power equations of the same power
         // or close to that (just a negetive sign away
-        boolean samePower = (a.removeSign() instanceof PowerEquation &&
-                b.removeSign() instanceof PowerEquation &&
-                a.removeSign().get(1).same(b.removeSign().get(1)));
 
-        if (samePower) {
-            boolean neg = a.isNeg() != b.isNeg();
-            boolean plusMinus = a.isPlusMinus() != b.isPlusMinus();
-            Equation div = new DivEquation(owner);
-            div.add(a.removeSign().get(0).copy());
-            div.add(b.removeSign().get(0).copy());
-            Equation power = new PowerEquation(owner);
-            power.add(div);
-            power.add(a.removeSign().get(1).copy());
+        if (divide_CanSamePower(a, b)) {
+            result = divide_samePower(a, b, owner);
 
-            if (plusMinus) {
-                result = result.plusMinus();
-            } else if (neg) {
-                result = power.negate();
-            } else {
-                result = power;
-            }
-        //TODO this need to be able to handle negs on the addEquation
-        } else if (a.removeSign() instanceof AddEquation) {
-            result = new AddEquation(owner);
-            for (Equation e : a.removeSign()) {
-                Equation newEq = new DivEquation(owner);
-                newEq.add(e);
-                newEq.add(b.copy());
-                result.add(newEq);
-            }
-            result = a.passNegs(result);
+         //TODO this need to be able to handle negs on the addEquation
+        } else if (divide_CanSplitUp(a)) {
+            result = divide_SplitUp(a, b, owner);
         } else {
             // figure out what is common
             MultiCountData top = new MultiCountData(a);
@@ -635,73 +611,25 @@ public class Operations {
 
             MultiCountData common = deepFindCommon(top, bot);
 
-            MultiCountData commonAt = common;
 
-            boolean anyCommon = false;
-            while (!anyCommon && commonAt != null) {
-                if (!commonAt.isEmpty()) {
-                    anyCommon = true;
-                }
-                commonAt = commonAt.under;
-            }
-
-            if (anyCommon) { // they have anything in common
-                if (owner instanceof AlgebraLine) {
-
-                    ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
-
-                }
-                MultiCountData topData = remainder(top, common,owner);
-                MultiCountData botData = remainder(bot, common,owner);
-                Equation topEq = topData.getEquation(owner);
-                Equation botEq = botData.getEquation(owner);
-                result = getResult(topEq, botEq,owner);
+            if (divide_CanCancel(common)) { // they have anything in common
+                result = divide_Cancel(owner, top, bot, common);
                 // if we have sqrt(5)/23
-            }else if (a.removeSign() instanceof PowerEquation){
-                result = new PowerEquation(owner);
-                // we raise b to the the same power as a and bring it inside
-                Equation newBot = new PowerEquation(owner);
-                newBot.add(b.copy());
-                newBot.add(Operations.flip(a.removeSign().get(1).copy()));
-                Equation newTop = a.removeSign().get(0).copy();
-                Equation inside = new DivEquation(owner);
-                inside.add(newTop);
-                inside.add(newBot);
-                result.add(inside);
-                result.add(a.removeSign().get(1).copy());
-                result = a.passNegs(result);
+            }else if (divide_CanBringIn(a)){
+                result = divide_BringIn(a, b, owner);
                 // if we have a/b where a and b are sortaNumbers
-            } else if (bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0)) {
-                int topInt = (int) Math.floor(top.getValue().doubleValue());
-                int botInt = (int) Math.floor(bot.getValue().doubleValue());
-                int myGcd = gcd(topInt, botInt);
+            } else if (divide_CanSortaNumbers(top, bot)) {
+
 
                 // if it can be reduced
-                if (bot.getValue().doubleValue() == botInt
-                        && top.getValue().doubleValue() == topInt
-                        && Math.abs(myGcd) != 1) {
+                if (divide_CanReduce(top, bot)) {
 
-                    bot.numbers = new ArrayList<Equation>();
-                    bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt / myGcd), owner));
-                    top.numbers = new ArrayList<Equation>();
-                    top.numbers.add(NumConstEquation.create(new BigDecimal(topInt / myGcd), owner));
-
+                    result =divide_Reduce(owner, top, bot);
 
                 } else {
-                    BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
-                    bot.numbers = new ArrayList<Equation>();
-                    top.numbers = new ArrayList<Equation>();
-                    top.numbers.add(NumConstEquation.create(value, owner));
+                    result = divide_Divide(owner, top, bot);
                 }
 
-                if (bot.plusMinus) {
-                    bot.plusMinus = false;
-                    top.plusMinus = true;
-                }
-
-                Equation topEq = top.getEquation(owner);
-                Equation botEq = bot.getEquation(owner);
-                result = getResult(topEq, botEq,owner);
             } else {
                 Equation topEq = a;
                 Equation botEq = b;
@@ -711,7 +639,153 @@ public class Operations {
         return result;
     }
 
-    private static Equation getResult(Equation topEq, Equation botEq,Line owner) {
+    public static boolean divide_CanCancel(MultiCountData common) {
+        MultiCountData commonAt = common;
+
+        boolean anyCommon = false;
+        while (!anyCommon && commonAt != null) {
+            if (!commonAt.isEmpty()) {
+                anyCommon = true;
+            }
+            commonAt = commonAt.under;
+        }
+        return anyCommon;
+    }
+
+    public static Equation divide_Divide(Line owner, MultiCountData top, MultiCountData bot) {
+        Equation result;BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
+        bot.numbers = new ArrayList<Equation>();
+        top.numbers = new ArrayList<Equation>();
+        top.numbers.add(NumConstEquation.create(value, owner));
+
+        if (bot.plusMinus) {
+            bot.plusMinus = false;
+            top.plusMinus = true;
+        }
+
+        Equation topEq = top.getEquation(owner);
+        Equation botEq = bot.getEquation(owner);
+        result = getResult(topEq, botEq,owner);
+        return result;
+    }
+
+    public static Equation divide_Reduce(Line owner, MultiCountData top, MultiCountData bot) {
+        Equation result;
+        int topInt = (int) Math.floor(top.getValue().doubleValue());
+        int botInt = (int) Math.floor(bot.getValue().doubleValue());
+        int myGcd = gcd(topInt, botInt);
+
+        bot.numbers = new ArrayList<Equation>();
+        bot.numbers.add(NumConstEquation.create(new BigDecimal(botInt / myGcd), owner));
+        top.numbers = new ArrayList<Equation>();
+        top.numbers.add(NumConstEquation.create(new BigDecimal(topInt / myGcd), owner));
+
+        if (bot.plusMinus) {
+            bot.plusMinus = false;
+            top.plusMinus = true;
+        }
+
+        Equation topEq = top.getEquation(owner);
+        Equation botEq = bot.getEquation(owner);
+        result = getResult(topEq, botEq,owner);
+        return result;
+    }
+
+    public static boolean divide_CanReduce(MultiCountData top, MultiCountData bot) {
+        int topInt = (int) Math.floor(top.getValue().doubleValue());
+        int botInt = (int) Math.floor(bot.getValue().doubleValue());
+        int myGcd = gcd(topInt, botInt);
+
+        return bot.getValue().doubleValue() == botInt
+                && top.getValue().doubleValue() == topInt
+                && Math.abs(myGcd) != 1;
+    }
+
+    public static boolean divide_CanSortaNumbers(MultiCountData top, MultiCountData bot) {
+        return bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);
+    }
+
+    public static Equation divide_BringIn(Equation a, Equation b, Line owner) {
+        Equation result;
+        result = new PowerEquation(owner);
+        // we raise b to the the same power as a and bring it inside
+        Equation newBot = new PowerEquation(owner);
+        newBot.add(b.copy());
+        newBot.add(Operations.flip(a.removeSign().get(1).copy()));
+        Equation newTop = a.removeSign().get(0).copy();
+        Equation inside = new DivEquation(owner);
+        inside.add(newTop);
+        inside.add(newBot);
+        result.add(inside);
+        result.add(a.removeSign().get(1).copy());
+        result = a.passNegs(result);
+        return result;
+    }
+
+    public static boolean divide_CanBringIn(Equation a) {
+        return a.removeSign() instanceof PowerEquation;
+    }
+
+    public static Equation divide_Cancel(Line owner, MultiCountData top, MultiCountData bot, MultiCountData common) {
+        Equation result;
+        if (owner instanceof AlgebraLine) {
+
+            ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
+
+        }
+        MultiCountData topData = remainder(top, common,owner);
+        MultiCountData botData = remainder(bot, common,owner);
+        Equation topEq = topData.getEquation(owner);
+        Equation botEq = botData.getEquation(owner);
+        result = getResult(topEq, botEq,owner);
+        return result;
+    }
+
+    public static Equation divide_SplitUp(Equation a, Equation b, Line owner) {
+        Equation result;
+        result = new AddEquation(owner);
+        for (Equation e : a.removeSign()) {
+            Equation newEq = new DivEquation(owner);
+            newEq.add(e);
+            newEq.add(b.copy());
+            result.add(newEq);
+        }
+        result = a.passNegs(result);
+        return result;
+    }
+
+    public static boolean divide_CanSplitUp(Equation a) {
+        return a.removeSign() instanceof AddEquation;
+    }
+
+    public static boolean divide_CanSamePower(Equation a, Equation b) {
+        return (a.removeSign() instanceof PowerEquation &&
+                b.removeSign() instanceof PowerEquation &&
+                a.removeSign().get(1).same(b.removeSign().get(1)));
+    }
+
+    public static Equation divide_samePower(Equation a, Equation b, Line owner) {
+        boolean neg = a.isNeg() != b.isNeg();
+        boolean plusMinus = a.isPlusMinus() != b.isPlusMinus();
+        Equation div = new DivEquation(owner);
+        div.add(a.removeSign().get(0).copy());
+        div.add(b.removeSign().get(0).copy());
+        Equation power = new PowerEquation(owner);
+        power.add(div);
+        power.add(a.removeSign().get(1).copy());
+
+        Equation result=null;
+        if (plusMinus) {
+            result = power.plusMinus();
+        } else if (neg) {
+            result = power.negate();
+        } else {
+            result = power;
+        }
+        return result;
+    }
+
+    public static Equation getResult(Equation topEq, Equation botEq,Line owner) {
         // if the top is 0 and the bottom is not
         if ((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0))) {
             if (owner instanceof CanWarn) {

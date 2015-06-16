@@ -7,8 +7,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
+import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.eq.BinaryOperator;
+import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
@@ -176,6 +180,84 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		DivEquation e = (DivEquation)eq;
 		return get(0).same(e.get(0)) && get(1).same(e.get(1));
 	}
+
+    public SelectedRow getSelectedRow() {
+        final Equation a = get(0);
+        final Equation b = get(1);
+
+
+        ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+
+        final Equation selected = this;
+        if (Operations.divide_CanSamePower(a, b)) {
+            buttons.add(new SelectedRowButtons("samePower",new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    selected.replace(Operations.divide_samePower(a, b, owner));
+                    MyPoint p = new MyPoint(getX(),getY());
+                    changed(p);
+                }
+            }));
+        }
+
+        if (Operations.divide_CanSplitUp(a)) {
+            buttons.add(new SelectedRowButtons("split",new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    selected.replace(Operations.divide_SplitUp(a, b, owner));
+                    MyPoint p = new MyPoint(getX(),getY());
+                    changed(p);
+                }
+            }));
+        }
+
+
+        final MultiCountData top = new MultiCountData(a);
+        final MultiCountData bot = new MultiCountData(b);
+
+        final MultiCountData common = Operations.deepFindCommon(top, bot);
+
+        if (Operations.divide_CanCancel(common) && !Operations.divide_CanSortaNumbers(top, bot)) {
+            buttons.add(new SelectedRowButtons("cancel",new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    selected.replace(Operations.divide_Cancel(owner, top, bot, common));
+                    MyPoint p = new MyPoint(getX(),getY());
+                    changed(p);
+                }
+            }));
+        }
+
+        if (Operations.divide_CanSortaNumbers(top, bot) && Operations.divide_CanReduce(top, bot)) {
+            buttons.add(new SelectedRowButtons("reduce",new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    selected.replace(Operations.divide_Reduce(owner, top, bot));
+                    MyPoint p = new MyPoint(getX(),getY());
+                    changed(p);
+                }
+            }));
+        }
+
+        if (Operations.divide_CanSortaNumbers(top, bot)) {
+            buttons.add(new SelectedRowButtons("divide",new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    selected.replace(Operations.divide_Divide(owner, top, bot));
+                    MyPoint p = new MyPoint(getX(),getY());
+                    changed(p);
+                }
+            }));
+        }
+
+        if (buttons.size() != 0){
+            SelectedRow sr = new SelectedRow(1f/9f);
+            sr.addButtonsRow(buttons,0,1);
+            return sr;
+        }else{
+            return null;
+        }
+    }
 	
 	public void tryOperator(ArrayList<Equation> eqs) {
 

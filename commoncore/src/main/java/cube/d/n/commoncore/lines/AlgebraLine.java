@@ -340,23 +340,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                         clicked = true;
                         if (hasChanged()) {
                             clicked = false;
-                            // TODO
-                            // TODO
-                            // this is def a band-aid
-                            // the problem is that some operation don't change the eq
-                            // while making a new copy of it
-                            // in these case we still select - altho maybe we don't need to
-                            // however sometimes selected is in the old version of stupid
-                            // this casues problem when we try to select it
-                            // the real solution is to pass selected on in a good way
-                            // this probably mean editing copy and rewriting it like constructors
-                            // TODO
-                            // TODO
-                            if (selected != null) {
-                                selected.setSelected(false);
-                            }
 
-                            updateHistory();
                         } else {
                             if (selected != null) {
                                 selected.setSelected(false);
