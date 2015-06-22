@@ -122,12 +122,131 @@ public class Operations {
     // **************************** ADD *****************************************
 
     public static Equation Add(MultiCountData left, MultiCountData right,Line owner) {
-        //
-        MultiCountData under = null;
-        boolean dontDoIt = false;
-        if (overZero(left,owner) || overZero(right,owner)){
-            dontDoIt =true;
-        }else if (left.under != null && right.under == null) {
+        if (add_canAddNumber(left,right,owner)){
+            return add_AddNumber(left,right,owner);
+        }else if (add_canCommon(left,right,owner)){
+            return add_Common(left,right,owner);
+        }else if (add_canCommonDenom(left,right,owner)){
+            return add_CommonDenom(left, right, owner);
+        }else{
+            return add_CombineLikeTerms(left, right, owner);
+
+//            Equation result = new AddEquation(owner);
+//            result.add(left.getEquation(owner));
+//            result.add(right.getEquation(owner));
+//            return result;
+        }
+
+//
+//        //
+//        MultiCountData under = null;
+//        boolean dontDoIt = false;
+//        if (overZero(left,owner) || overZero(right,owner)){
+//            dontDoIt =true;
+//        }else if (left.under != null && right.under == null) {
+//            under = left.under;
+//            right = Multiply(right, under,owner);
+//            left.under = null;
+//        } else if (left.under == null && right.under != null) {
+//            under = right.under;
+//            left = Multiply(left, under,owner);
+//            right.under = null;
+//        } else if (left.under != null && right.under != null) {
+//            MultiCountData common = deepFindCommon(left.under, right.under);
+//            MultiCountData leftRem = remainder(left.under, common,owner);
+//            MultiCountData rightRem = remainder(right.under, common,owner);
+//
+//            under = Multiply(right.under, leftRem,owner);
+//            left.under = null;
+//            right.under = null;
+//
+//            right = Multiply(right, leftRem,owner);
+//
+//            left = Multiply(left, rightRem,owner);
+//
+//        }
+//
+//
+//
+//        //if under == null we actully add
+//        if (!dontDoIt && under == null && !(left.key.isEmpty() &&
+//                right.key.isEmpty() &&
+//                (right.numbers.size() > 1 || left.numbers.size() > 1))) {
+//
+//
+//            MultiCountData common = findCommon(left, right);
+//            if (!common.key.isEmpty() || !common.numbers.isEmpty()) {
+//                left = remainder(left, common,owner);
+//                right = remainder(right, common,owner);
+//            }
+//            Equation result = addHelper(left, right,owner);
+//            // and multiply the result time common if there is any common
+//            if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 0) {
+//                return result;
+//            } else if (common.notOne()) {
+//                // handle 5A + 5A in this case we get
+//                // result = 2, commmon = 5,A
+//                // we want to clear out result and
+//                if (sortaNumber(result) && common.numbers.size() == 1) {
+//                    BigDecimal number = getValue(result).multiply(common.getValue());
+//                    number = (common.negative ? number.negate() : number);
+//                    common.numbers = new ArrayList<>();
+//                    common.numbers.add(NumConstEquation.create(number, owner));
+//                    return common.getEquation(owner);
+//                } else
+//                    // handle -A -A
+//                    if (common.numbers.size() == 1 && common.getValue().doubleValue() == -1) {
+//                        return result.negate();
+//                    } else
+//                        // handle 2A - A
+//                        if (sortaNumber(result) && getValue(result).doubleValue() == 1) {
+//                            return common.getEquation(owner);
+//                        } else {
+//                            // handle AB + AC
+//                            Equation holder = new MultiEquation(owner);
+//                            holder.add(result);
+//                            holder.add(common.getEquation(owner));
+//                            return holder;
+//                        }
+//            } else {
+//                return result;
+//            }
+//        }
+//        //otherwise we are done
+//        else {
+//            //return (left + right ) /under
+//            Equation lEq = left.getEquation(owner);
+//            Equation rEq = right.getEquation(owner);
+//            Equation top = new AddEquation(owner);
+//            for (Equation eq : new Equation[]{lEq, rEq}) {
+//                if (eq instanceof AddEquation) {
+//                    for (Equation e : eq) {
+//                        top.add(e);
+//                    }
+//                } else {
+//                    top.add(eq);
+//                }
+//            }
+//            if (under != null) {
+//                Log.d("bot", "combine:  " + under.combine + " numbers.size: " + under.numbers.size() + "under.getValue" + under.getValue().doubleValue() + " neg: " + under.negative);
+//                Equation bot = under.getEquation(owner);
+//                Equation result = new DivEquation(owner);
+//                result.add(top);
+//                result.add(bot);
+//                return result;
+//            }else{
+//                return top;
+//            }
+//        }
+    }
+
+    public static Equation add_CombineLikeTerms(MultiCountData left, MultiCountData right, Line owner) {
+        return addHelper(left, right,owner);
+    }
+
+    private static Equation add_CommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+        MultiCountData under=null;
+        if (left.under != null && right.under == null) {
             under = left.under;
             right = Multiply(right, under,owner);
             left.under = null;
@@ -147,81 +266,98 @@ public class Operations {
             right = Multiply(right, leftRem,owner);
 
             left = Multiply(left, rightRem,owner);
-
         }
 
-
-
-        //if under == null we actully add
-        if (!dontDoIt && under == null && !(left.key.isEmpty() &&
-                right.key.isEmpty() &&
-                (right.numbers.size() > 1 || left.numbers.size() > 1))) {
-
-
-            MultiCountData common = findCommon(left, right);
-            if (!common.key.isEmpty() || !common.numbers.isEmpty()) {
-                left = remainder(left, common,owner);
-                right = remainder(right, common,owner);
-            }
-            Equation result = addHelper(left, right,owner);
-            // and multiply the result time common if there is any common
-            if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 0) {
-                return result;
-            } else if (common.notOne()) {
-                // handle 5A + 5A in this case we get
-                // result = 2, commmon = 5,A
-                // we want to clear out result and
-                if (sortaNumber(result) && common.numbers.size() == 1) {
-                    BigDecimal number = getValue(result).multiply(common.getValue());
-                    number = (common.negative ? number.negate() : number);
-                    common.numbers = new ArrayList<>();
-                    common.numbers.add(NumConstEquation.create(number, owner));
-                    return common.getEquation(owner);
-                } else
-                    // handle -A -A
-                    if (common.numbers.size() == 1 && common.getValue().doubleValue() == -1) {
-                        return result.negate();
-                    } else
-                        // handle 2A - A
-                        if (sortaNumber(result) && getValue(result).doubleValue() == 1) {
-                            return common.getEquation(owner);
-                        } else {
-                            // handle AB + AC
-                            Equation holder = new MultiEquation(owner);
-                            holder.add(result);
-                            holder.add(common.getEquation(owner));
-                            return holder;
-                        }
-            } else {
-                return result;
-            }
-        }
-        //otherwise we are done
-        else {
-            //return (left + right ) /under
-            Equation lEq = left.getEquation(owner);
-            Equation rEq = right.getEquation(owner);
-            Equation top = new AddEquation(owner);
-            for (Equation eq : new Equation[]{lEq, rEq}) {
-                if (eq instanceof AddEquation) {
-                    for (Equation e : eq) {
-                        top.add(e);
-                    }
-                } else {
-                    top.add(eq);
+        Equation lEq = left.getEquation(owner);
+        Equation rEq = right.getEquation(owner);
+        Equation top = new AddEquation(owner);
+        for (Equation eq : new Equation[]{lEq, rEq}) {
+            if (eq instanceof AddEquation) {
+                for (Equation e : eq) {
+                    top.add(e);
                 }
-            }
-            if (under != null) {
-                Log.d("bot", "combine:  " + under.combine + " numbers.size: " + under.numbers.size() + "under.getValue" + under.getValue().doubleValue() + " neg: " + under.negative);
-                Equation bot = under.getEquation(owner);
-                Equation result = new DivEquation(owner);
-                result.add(top);
-                result.add(bot);
-                return result;
-            }else{
-                return top;
+            } else {
+                top.add(eq);
             }
         }
+
+        Log.d("bot", "combine:  " + under.combine + " numbers.size: " + under.numbers.size() + "under.getValue" + under.getValue().doubleValue() + " neg: " + under.negative);
+        Equation bot = under.getEquation(owner);
+        Equation result = new DivEquation(owner);
+        result.add(top);
+        result.add(bot);
+        return result;
+    }
+
+    private static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+        return left.under !=null || right.under!=null &&!(overZero(left,owner) || overZero(right,owner));
+    }
+
+    public static Equation add_AddNumber(MultiCountData left, MultiCountData right, Line owner) {
+        Equation lEq = left.getEquation(owner);
+        Equation rEq = right.getEquation(owner);
+        Equation top = new AddEquation(owner);
+        for (Equation eq : new Equation[]{lEq, rEq}) {
+            if (eq instanceof AddEquation) {
+                for (Equation e : eq) {
+                    top.add(e);
+                }
+            } else {
+                top.add(eq);
+            }
+        }
+        return top;
+    }
+
+    public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, Line owner) {
+        return divide_CanSortaNumbers(left,right);
+    }
+
+    private static Equation add_Common(MultiCountData left, MultiCountData right, Line owner) {
+        MultiCountData common = findCommon(left, right);
+
+        left = remainder(left, common,owner);
+        right = remainder(right, common,owner);
+
+        Equation result = addHelper(left, right,owner);
+
+        if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 0) {
+            // A-A
+            return result;
+        } else if (common.notOne()) {
+            // handle 5A + 5A in this case we get
+            // result = 2, commmon = 5,A
+            // we want to clear out result and
+            if (sortaNumber(result) && common.numbers.size() == 1) {
+                BigDecimal number = getValue(result).multiply(common.getValue());
+                number = (common.negative ? number.negate() : number);
+                common.numbers = new ArrayList<>();
+                common.numbers.add(NumConstEquation.create(number, owner));
+                return common.getEquation(owner);
+            } else
+                // handle -A -A
+                if (common.numbers.size() == 1 && common.getValue().doubleValue() == -1) {
+                    return result.negate();
+                } else
+                    // handle 2A - A
+                    if (sortaNumber(result) && getValue(result).doubleValue() == 1) {
+                        return common.getEquation(owner);
+                    } else {
+                        // handle AB + AC
+                        Equation holder = new MultiEquation(owner);
+                        holder.add(result);
+                        holder.add(common.getEquation(owner));
+                        return holder;
+                    }
+        } else {
+            return result;
+        }
+    }
+
+    public static boolean add_canCommon(MultiCountData left, MultiCountData right, Line owner) {
+        MultiCountData common = findCommon(left, right);
+
+        return (!common.key.isEmpty() || !common.numbers.isEmpty());
     }
 
     private static boolean overZero(MultiCountData left,Line owner) {
