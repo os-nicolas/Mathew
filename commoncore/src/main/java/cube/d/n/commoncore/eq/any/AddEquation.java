@@ -165,21 +165,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                     }
                 }));
             }
-
-            //TODO
-//            if (Operations.add_canCombineLikeTerms(left, right, owner)) {
-//                buttons.add(new SelectedRowButtons("cliketerms", new Action(owner) {
-//                    @Override
-//                    protected void privateAct() {
-//                        Equation result = Operations.add_CombineLikeTerms(left, right, owner);
-//                        handleResult(0, result);
-//                        MyPoint p = new MyPoint(getX(), getY());
-//                        changed(p);
-//                    }
-//                }));
-//            }
-
-        }
+       }
 
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);

@@ -129,6 +129,7 @@ public class Operations {
         }else if (add_canCommon(left, right, owner)){
             return add_Common(left, right, owner);
         }else{
+            // this is really not combine like terms, it's really do nothing
             return add_CombineLikeTerms(left, right, owner);
 
 //            Equation result = new AddEquation(owner);
