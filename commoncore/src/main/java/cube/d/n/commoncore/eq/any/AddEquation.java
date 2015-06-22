@@ -119,6 +119,9 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
         if (this.size() == 2) {
             final Equation a = get(0);
             final Equation b = get(1);
+            final ArrayList<Equation> eqs = new ArrayList<>();
+            eqs.add(a);
+            eqs.add(b);
 
             final MultiCountData left = new MultiCountData(a);
             final MultiCountData right = new MultiCountData(b);
@@ -127,6 +130,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SelectedRowButtons("addnums", new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        operateRemove(eqs);
                         Equation result = Operations.add_AddNumber(left, right, owner);
                         handleResult(0, result);
                         MyPoint p = new MyPoint(getX(), getY());
@@ -139,6 +143,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SelectedRowButtons("comdenom", new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        operateRemove(eqs);
                         Equation result = Operations.add_CommonDenom(left, right, owner);
                         handleResult(0, result);
                         MyPoint p = new MyPoint(getX(), getY());
@@ -152,6 +157,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SelectedRowButtons("common", new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        operateRemove(eqs);
                         Equation result = Operations.add_Common(left, right, owner);
                         handleResult(0, result);
                         MyPoint p = new MyPoint(getX(), getY());
@@ -160,6 +166,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 }));
             }
 
+            //TODO
 //            if (Operations.add_canCombineLikeTerms(left, right, owner)) {
 //                buttons.add(new SelectedRowButtons("cliketerms", new Action(owner) {
 //                    @Override

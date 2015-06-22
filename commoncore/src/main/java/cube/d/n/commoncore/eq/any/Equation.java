@@ -542,7 +542,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (al.getSelected() != null) {
                 al.getSelected().setSelected(false);
             }
-
+            al.updatePopUpButtons();
             al.updateHistory();
         }
     }

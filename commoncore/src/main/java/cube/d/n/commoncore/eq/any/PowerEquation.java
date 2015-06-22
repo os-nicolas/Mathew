@@ -106,6 +106,11 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         }
         Log.i("try op power", (eqs.size() == 0 ? "no eqs passed in" : db));
 
+
+
+
+
+
         Equation result = null;
 
         // this is really dangerous

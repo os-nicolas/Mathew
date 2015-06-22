@@ -842,7 +842,7 @@ public class Operations {
     }
 
     public static boolean divide_CanSortaNumbers(MultiCountData top, MultiCountData bot) {
-        return bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);
+        return  top.key.size() ==0 &&  bot.key.size() ==0 && bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);
     }
 
     public static Equation divide_BringIn(Equation a, Equation b, Line owner) {

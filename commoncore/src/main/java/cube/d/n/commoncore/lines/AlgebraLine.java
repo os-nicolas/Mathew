@@ -341,10 +341,10 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                         clicked = true;
                         if (hasChanged()) {
                             clicked = false;
-
                         } else {
                             if (selected != null) {
                                 selected.setSelected(false);
+                                updatePopUpButtons();
                             }
                         }
 
