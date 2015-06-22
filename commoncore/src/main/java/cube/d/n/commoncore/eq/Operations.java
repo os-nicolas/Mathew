@@ -124,10 +124,10 @@ public class Operations {
     public static Equation Add(MultiCountData left, MultiCountData right,Line owner) {
         if (add_canAddNumber(left,right,owner)){
             return add_AddNumber(left,right,owner);
-        }else if (add_canCommon(left,right,owner)){
-            return add_Common(left,right,owner);
-        }else if (add_canCommonDenom(left,right,owner)){
+        }else if (add_canCommonDenom(left, right, owner)){
             return add_CommonDenom(left, right, owner);
+        }else if (add_canCommon(left, right, owner)){
+            return add_Common(left, right, owner);
         }else{
             return add_CombineLikeTerms(left, right, owner);
 
@@ -244,7 +244,7 @@ public class Operations {
         return addHelper(left, right,owner);
     }
 
-    private static Equation add_CommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_CommonDenom(MultiCountData left, MultiCountData right, Line owner) {
         MultiCountData under=null;
         if (left.under != null && right.under == null) {
             under = left.under;
@@ -289,31 +289,19 @@ public class Operations {
         return result;
     }
 
-    private static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+    public static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, Line owner) {
         return left.under !=null || right.under!=null &&!(overZero(left,owner) || overZero(right,owner));
     }
 
     public static Equation add_AddNumber(MultiCountData left, MultiCountData right, Line owner) {
-        Equation lEq = left.getEquation(owner);
-        Equation rEq = right.getEquation(owner);
-        Equation top = new AddEquation(owner);
-        for (Equation eq : new Equation[]{lEq, rEq}) {
-            if (eq instanceof AddEquation) {
-                for (Equation e : eq) {
-                    top.add(e);
-                }
-            } else {
-                top.add(eq);
-            }
-        }
-        return top;
+        return addHelper(left, right, owner);
     }
 
     public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, Line owner) {
         return divide_CanSortaNumbers(left,right);
     }
 
-    private static Equation add_Common(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_Common(MultiCountData left, MultiCountData right, Line owner) {
         MultiCountData common = findCommon(left, right);
 
         left = remainder(left, common,owner);
@@ -354,7 +342,23 @@ public class Operations {
         }
     }
 
+    public static boolean add_canCombineLikeTerms(MultiCountData left, MultiCountData right, Line owner) {
+
+        Equation result = new AddEquation(owner);
+        result.add(left.getEquation(owner));
+        result.add(right.getEquation(owner));
+
+        return !result.same(addHelper(left, right, owner));
+    }
+
     public static boolean add_canCommon(MultiCountData left, MultiCountData right, Line owner) {
+        //TODO
+        // atm 3a/5 + 4a will return 7a
+        // to protect from that we
+        if (left.under != null || right.under != null){
+            return false;
+        }
+
         MultiCountData common = findCommon(left, right);
 
         return (!common.key.isEmpty() || !common.numbers.isEmpty());
@@ -981,4 +985,6 @@ public class Operations {
         result.add(demo);
         return result;
     }
+
+
 }

@@ -152,9 +152,6 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (owner instanceof Selects) {
             Log.i("selecting", this.toString());
             if (selected) {
-                if (((Selects)owner).getSelected() != null) {
-                    ((Selects)owner).getSelected().setSelected(false);
-                }
                 ((Selects)owner).setSelected(this);
             } else if (((Selects)owner).getSelected().equals(this)) {
                 ((Selects)owner).setSelected(null);
@@ -796,6 +793,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public boolean same(Equation eq) {
+        if (eq == null) {
+            return false;
+        }
+
         if (!this.getClass().equals(eq.getClass())) {
             return false;
         }

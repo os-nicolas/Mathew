@@ -4,10 +4,14 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
+import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.Line;
 
@@ -107,6 +111,76 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
 
         Equation result = Operations.Add(new MultiCountData(a), new MultiCountData(b), owner);
         handleResult(at, result);
+    }
+
+    @Override
+    public SelectedRow getSelectedRow() {
+        ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+        if (this.size() == 2) {
+            final Equation a = get(0);
+            final Equation b = get(1);
+
+            final MultiCountData left = new MultiCountData(a);
+            final MultiCountData right = new MultiCountData(b);
+
+            if (Operations.add_canAddNumber(left, right, owner)) {
+                buttons.add(new SelectedRowButtons("addnums", new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        Equation result = Operations.add_AddNumber(left, right, owner);
+                        handleResult(0, result);
+                        MyPoint p = new MyPoint(getX(), getY());
+                        changed(p);
+                    }
+                }));
+            }
+
+            if (Operations.add_canCommonDenom(left, right, owner)) {
+                buttons.add(new SelectedRowButtons("comdenom", new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        Equation result = Operations.add_CommonDenom(left, right, owner);
+                        handleResult(0, result);
+                        MyPoint p = new MyPoint(getX(), getY());
+                        changed(p);
+                    }
+                }));
+            }
+
+
+            if (Operations.add_canCommon(left, right, owner)) {
+                buttons.add(new SelectedRowButtons("common", new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        Equation result = Operations.add_Common(left, right, owner);
+                        handleResult(0, result);
+                        MyPoint p = new MyPoint(getX(), getY());
+                        changed(p);
+                    }
+                }));
+            }
+
+//            if (Operations.add_canCombineLikeTerms(left, right, owner)) {
+//                buttons.add(new SelectedRowButtons("cliketerms", new Action(owner) {
+//                    @Override
+//                    protected void privateAct() {
+//                        Equation result = Operations.add_CombineLikeTerms(left, right, owner);
+//                        handleResult(0, result);
+//                        MyPoint p = new MyPoint(getX(), getY());
+//                        changed(p);
+//                    }
+//                }));
+//            }
+
+        }
+
+        if (buttons.size() != 0) {
+            SelectedRow sr = new SelectedRow(1f / 9f);
+            sr.addButtonsRow(buttons, 0, 1);
+            return sr;
+        } else {
+            return null;
+        }
     }
 
     private void handleResult(int at, Equation result) {

@@ -295,6 +295,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
 
                         if (selected != null) {
                             removeSelected();
+                            updatePopUpButtons();
                         }
 
                     }
@@ -358,13 +359,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                     }
                     lastLongTouch = null;
                 }
+
             }
         }else {
             if ( myMode != TouchMode.NOPE) {
                 endOnePointer(event);
             }
             myMode = TouchMode.NOPE;
-
         }
 
         if (myMode == TouchMode.NOPE) {
@@ -410,6 +411,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 selected.setSelected(false);
             }
         }
+        updatePopUpButtons();
     }
 
     private float dis(Point a, Point b) {
@@ -419,13 +421,13 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     public void removeSelected() {
-        if (selected instanceof PlaceholderEquation) {
-            if (!(selected.parent.size() == 1 && selected.parent != null)) {
-                Equation oldEq = selected;
-                selected.setSelected(false);
-                oldEq.remove();
-            }
-        }
+//        if (selected instanceof PlaceholderEquation) {
+//            if (!(selected.parent.size() == 1 && selected.parent != null)) {
+//                Equation oldEq = selected;
+//                selected.setSelected(false);
+//                oldEq.remove();
+//            }
+//        }
         if (selected != null) {
             if ( selected.parent != null && selected.parent.size() != 1 ) {
                 Equation oldEq = selected;
@@ -536,7 +538,6 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 boolean newIsCurrent = true;
 
                 // if new is all contained we select new
-                boolean newSubSetCurrent = false;
 
 
                 ArrayList<Equation> current = selected.getLeafs();
@@ -883,12 +884,9 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
         return selected;
     }
 
-
-    @Override
-    public void setSelected(Equation equation) {
-        selected=equation;
-
+    public void updatePopUpButtons(){
         AlgebraKeyboard ak = (AlgebraKeyboard) getKeyboad();
+        //TODO remove old all popUpLines
         for (int i= ak.popUpLines.size()-1;i >=0;i--){
             SelectedRow sr =ak.popUpLines.get(i);
             sr.kill();
@@ -896,15 +894,19 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
                 ak.popUpLines.remove(i);
             }
         }
-        //TODO remove old all popUpLines
 
 
-        if (equation != null){
-            SelectedRow toAdd = equation.getSelectedRow();
+        if (selected != null){
+                SelectedRow toAdd = selected.getSelectedRow();
             if (toAdd != null) {
                 ak.popUpLines.add(toAdd);
             }
         }
+    }
+
+    @Override
+    public void setSelected(Equation equation) {
+                selected=equation;
     }
 
     public void tryWarn(Equation equation) {
