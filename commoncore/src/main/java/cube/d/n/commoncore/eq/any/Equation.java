@@ -35,8 +35,26 @@ import cube.d.n.commoncore.Selects;
 
 abstract public class Equation extends ArrayList<Equation> implements Physical {
 
+
+    boolean zoomOverWritten = false;
+    private float myZoom =1;
+    public void overWriteZoom(float newZoom){
+        zoomOverWritten = true;
+        myZoom= newZoom;
+        deepNeedsUpdate();
+    }
+
+    public float getMyZoom(){
+        if (zoomOverWritten){
+            return myZoom;
+        }else {
+            return (float) BaseApp.getApp().zoom;
+        }
+    }
+
+
     protected float PARN_HEIGHT_ADDITION(){
-        return (float) (6 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
+        return (float) (6 * BaseApp.getApp().getDpi()*getMyZoom());
     }
 
     private static int idBacker = 0;
@@ -48,14 +66,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected String display = "";
     private int myWidth;
     protected int getMyWidth(){
-        return (int) (myWidth*BaseApp.getApp().zoom);
+        return (int) (myWidth*root().getMyZoom());
     }
     protected void setMyWidth(int newWidth) {
         myWidth=newWidth;
     }
     private int myHeight;
     protected int getMyHeight(){
-        return (int) (myHeight*BaseApp.getApp().zoom);
+        return (int) (myHeight*root().getMyZoom());
     }
     public Line owner;
     private int id;
@@ -547,7 +565,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
-    private MyPoint getLastPoint(float x, float y) {
+    public MyPoint getLastPoint(float x, float y) {
         for (int i = 0; i < lastPoint.size(); i++) {
             if (lastPoint.get(i).on(x, y,this)) {
                 return lastPoint.get(i);
@@ -588,7 +606,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 targetTextSize = MIN_TEXT_SIZE;
             }
         }
-        mPaint.setTextSize((float) (targetTextSize*BaseApp.getApp().zoom*this.root().myTextScale));
+        mPaint.setTextSize((float) (targetTextSize*this.root().getMyZoom()*this.root().myTextScale));
         return mPaint;
     }
 
@@ -1635,9 +1653,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
         if (owner.parentThesisMode() == Line.pm.WRITE) {
-            return (float) (48 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
+            return (float) (48 * BaseApp.getApp().getDpi()*getMyZoom());
         } else {
-            return (float) (28 * BaseApp.getApp().getDpi()*BaseApp.getApp().zoom);
+            return (float) (28 * BaseApp.getApp().getDpi()*getMyZoom());
         }
     }
 

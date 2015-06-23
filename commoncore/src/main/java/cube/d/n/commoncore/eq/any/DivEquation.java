@@ -11,6 +11,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
@@ -93,7 +94,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			maxWidth += getParnWidthAddition();
 		}
 
-		return maxWidth + BaseApp.getApp().getDivWidthAdd();
+		return maxWidth + BaseApp.getApp().getDivWidthAdd(this);
 	}
 
 	@Override
@@ -112,12 +113,12 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 			get(i).draw(canvas, x, currentY + get(i).measureHeightUpper() );
 			currentY += get(i).measureHeight();
 			if (i != size() - 1) {
-				MyPoint point = new MyPoint(measureWidth() - BaseApp.getApp().getDivWidthAdd(),getMyHeight());
+				MyPoint point = new MyPoint(measureWidth() - BaseApp.getApp().getDivWidthAdd(this),getMyHeight());
 				point.x = (int) x;
 				point.y = (int) (currentY + (getMyHeight()) / 2);
                 // TODO scale by dpi
 				temp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
-				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd())) / 2);
+				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd(this))) / 2);
                 if (canvas !=null ) {
                     canvas.drawLine(point.x - halfwidth, point.y, point.x
                             + halfwidth, point.y, temp);
@@ -128,8 +129,8 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		}
 	}
 
-	@Override
-	public float measureHeight() {
+
+	public float divMeasureHeight() {
 		float totalHeight = getMyHeight();
 
 		for (int i = 0; i < size(); i++) {
@@ -143,12 +144,12 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     @Override
     protected float privateMeasureHeightUpper(){
-        return measureHeight()/2;
+        return divMeasureHeight()/2;
     }
 
     @Override
     protected float privateMeasureHeightLower(){
-        return measureHeight()/2;
+        return divMeasureHeight()/2;
     }
 
 	@Override
@@ -188,24 +189,24 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
 
-        final Equation selected = this;
+        final Equation that = this;
         if (Operations.divide_CanSamePower(a, b)) {
-            buttons.add(new SelectedRowButtons("samePower",new Action(owner) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_samePower(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    selected.replace(Operations.divide_samePower(a, b, owner));
-                    MyPoint p = new MyPoint(getX(),getY());
+                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_samePower(a, b, owner));
                     changed(p);
                 }
             }));
         }
 
         if (Operations.divide_CanSplitUp(a)) {
-            buttons.add(new SelectedRowButtons("split",new Action(owner) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_SplitUp(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    selected.replace(Operations.divide_SplitUp(a, b, owner));
-                    MyPoint p = new MyPoint(getX(),getY());
+                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_SplitUp(a, b, owner));
                     changed(p);
                 }
             }));
@@ -218,33 +219,33 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         final MultiCountData common = Operations.deepFindCommon(top, bot);
 
         if (Operations.divide_CanCancel(common) && !Operations.divide_CanSortaNumbers(top, bot)) {
-            buttons.add(new SelectedRowButtons("cancel",new Action(owner) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_Cancel(owner, new MultiCountData(top), new MultiCountData(bot), common),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    selected.replace(Operations.divide_Cancel(owner, top, bot, common));
-                    MyPoint p = new MyPoint(getX(),getY());
+                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_Cancel(owner, top, bot, common));
                     changed(p);
                 }
             }));
         }
 
         if (Operations.divide_CanSortaNumbers(top, bot) && Operations.divide_CanReduce(top, bot)) {
-            buttons.add(new SelectedRowButtons("reduce",new Action(owner) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    selected.replace(Operations.divide_Reduce(owner, top, bot));
-                    MyPoint p = new MyPoint(getX(),getY());
+                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_Reduce(owner, top, bot));
                     changed(p);
                 }
             }));
         }
 
         if (Operations.divide_CanSortaNumbers(top, bot)) {
-            buttons.add(new SelectedRowButtons("divide",new Action(owner) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    selected.replace(Operations.divide_Divide(owner, top, bot));
-                    MyPoint p = new MyPoint(getX(),getY());
+                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_Divide(owner, top, bot));
                     changed(p);
                 }
             }));

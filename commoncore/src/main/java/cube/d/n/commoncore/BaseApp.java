@@ -18,6 +18,7 @@ import java.util.Random;
 
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.InputLine;
@@ -262,8 +263,8 @@ public abstract class BaseApp extends Application{
         return (float)(1.5f*getDpi()*zoom);
     }
 
-    public float getDivWidthAdd() {
-        return (float)(20*getDpi()*zoom);
+    public float getDivWidthAdd(DivEquation eq) {
+        return (float)(20*getDpi()*eq.root().getMyZoom());
     }
 
     public float getBuffer() {

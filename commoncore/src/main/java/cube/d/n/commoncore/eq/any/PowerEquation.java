@@ -14,6 +14,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
@@ -175,33 +176,33 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             if (power_canPowerZero()) {// if we have asdf^0 return 1
 
 
-                buttons.add(new SelectedRowButtons("1", new Action(owner) {
+                buttons.add(new SeletedRowEquationButton(NumConstEquation.create(BigDecimal.ONE, owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
                         that.power_PowerZero();
-                        MyPoint p = new MyPoint(getX(), getY());
                         changed(p);
                     }
                 }));
 
             } else if (power_canPowerOne()) {// if we have adsfsd^1 return adsfsd
 
-                buttons.add(new SelectedRowButtons("0", new Action(owner) {
+                buttons.add(new SeletedRowEquationButton(NumConstEquation.create(BigDecimal.ZERO, owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
                         that.power_PowerOne();
-                        MyPoint p = new MyPoint(getX(), getY());
                         changed(p);
                     }
                 }));
             } else {
                 if (power_canPowerPower()) {// if it is a power equation
 
-                    buttons.add(new SelectedRowButtons("flatten", new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_PowerPowerEquation(null), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_PowerPower(null, wasEvenRoot);
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
@@ -209,11 +210,11 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
                 if (power_canFlip()) { // a ^-b to (1/a)^b
 
-                    buttons.add(new SelectedRowButtons("flip", new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_flipEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_flip();
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
@@ -221,22 +222,22 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
                 if (power_canDivDistribute()) { // (a/b)^c -> (a^c)/(b^c)
 
-                    buttons.add(new SelectedRowButtons("distribute", new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_DivDistributeEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_DivDistribute();
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
                 }
 
                 if (power_canDistribute()) {
-                    buttons.add(new SelectedRowButtons("distribute", new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_DistributeEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_Distribute();
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
@@ -244,21 +245,23 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
                 if (power_canPowerIsAdd()) {
 
-                    buttons.add(new SelectedRowButtons("powerisadd", new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_PowerIsAddEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_PowerIsAdd();
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
-                } else if (power_canPowerNum()){
+                }
 
-                    buttons.add(new SelectedRowButtons("isNum", new Action(owner) {
+                if (power_canPowerNum()){
+
+                    buttons.add(new SeletedRowEquationButton(power_IsNumEquation(null, wasEven), new Action(owner) {
                         @Override
                         protected void privateAct() {
+                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
                             that.power_PowerNum(null, wasEvenRoot, wasEven);
-                            MyPoint p = new MyPoint(getX(), getY());
                             changed(p);
                         }
                     }));
@@ -302,6 +305,26 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     }
 
     public void power_PowerPower(Equation result, boolean wasEvenRoot) {
+        result = power_PowerPowerEquation(result);
+
+        if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 1) {
+            get(0).replace(get(0).get(0));
+        } else {
+            get(0).get(1).replace(result);
+        }
+
+        if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
+            Equation toReplace= this;
+            while (toReplace.parent instanceof PlusMinusEquation){
+                toReplace=toReplace.parent;
+            }
+            toReplace.replace(get(0).plusMinus());
+        } else {
+            replace(get(0));
+        }
+    }
+
+    private Equation power_PowerPowerEquation(Equation result) {
         // we multi
 
         MultiCountDatas left = new MultiCountDatas(get(0).get(1).copy());
@@ -326,23 +349,9 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 result = result.negate();
             }
         }
-
-        if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 1) {
-            get(0).replace(get(0).get(0));
-        } else {
-            get(0).get(1).replace(result);
-        }
-
-        if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
-            Equation toReplace= this;
-            while (toReplace.parent instanceof PlusMinusEquation){
-                toReplace=toReplace.parent;
-            }
-            toReplace.replace(get(0).plusMinus());
-        } else {
-            replace(get(0));
-        }
+        return result;
     }
+
 
     public boolean power_canFlip() {
         boolean neg = false;
@@ -357,6 +366,12 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     }
 
     public void power_flip() {
+        Equation result = power_flipEquation();
+
+        replace(result);
+    }
+
+    private Equation power_flipEquation() {
         Equation result;// we don't worry about ---4 because if we hit one of those it should have operated first
         Equation exp = get(1).get(0).copy();
         if (get(0) instanceof DivEquation) {
@@ -367,7 +382,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             result = new PowerEquation(owner);
             result.add(inner);
             result.add(exp);
-            replace(result);
+
         } else {
             // else write 1/get(0)
             Equation inner = new PowerEquation(owner);
@@ -376,8 +391,8 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             result = new DivEquation(owner);
             result.add(new NumConstEquation(BigDecimal.ONE, owner));
             result.add(inner);
-            replace(result);
         }
+        return result;
     }
 
     public boolean power_canDivDistribute() {
@@ -385,17 +400,22 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     }
 
     public void power_DivDistribute() {
+        Equation result = power_DivDistributeEquation();
+        replace(result);
+    }
+
+    private Equation power_DivDistributeEquation() {
         Equation result;
         result = new DivEquation(owner);
         Equation top = new PowerEquation(owner);
-        top.add(this.get(0).get(0));
+        top.add(this.get(0).get(0).copy());
         top.add(this.get(1).copy());
         result.add(top);
         Equation bot = new PowerEquation(owner);
-        bot.add(this.get(0).get(1));
+        bot.add(this.get(0).get(1).copy());
         bot.add(this.get(1).copy());
         result.add(bot);
-        replace(result);
+        return result;
     }
 
     public boolean power_canDistribute() {
@@ -403,15 +423,21 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     }
 
     public void power_Distribute() {
+        Equation result = power_DistributeEquation();
+        replace(result);
+    }
+
+    private Equation power_DistributeEquation() {
         Equation result;
         result = new MultiEquation(owner);
-        for (Equation e : get(0)) {
+        Equation cpy = get(0).copy();
+        for (Equation e : cpy ) {
             Equation power = new PowerEquation(owner);
             power.add(e);
             power.add(get(1).copy());
             result.add(power);
         }
-        replace(result);
+        return result;
     }
 
     public boolean power_canPowerIsAdd() {
@@ -419,101 +445,30 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     }
 
     public void power_PowerIsAdd() {
+        Equation result = power_PowerIsAddEquation();
+        replace(result);
+    }
+
+    private Equation power_PowerIsAddEquation() {
         Equation result;
         result = new MultiEquation(owner);
-        for (Equation e : get(1)) {
+        Equation cpy = get(1);
+        for (Equation e : cpy ) {
             Equation pow = new PowerEquation(owner);
             pow.add(get(0).copy());
             pow.add(e.copy());
             result.add(pow);
         }
-        replace(result);
+        return result;
     }
 
     public void power_PowerNum(Equation result, boolean wasEvenRoot, boolean wasEven) {
         // if it's an add split it up
         // if it's numb and number you can just do it
         // if it's numb on top
+        result = power_IsNumEquation(result, wasEven);
 
 
-
-            // if the right is a number
-            Equation temp = get(1).removeNeg();
-
-                // if you have something like ((2^2)^0.5)
-                BigDecimal value = ((NumConstEquation) temp).getValue();
-
-                // if it is an int
-                if ((Math.floor(value.doubleValue()) == value.doubleValue() && !get(0).reallyInstanceOf(NumConstEquation.class) && value.compareTo(new BigDecimal(15)) < 0)) {
-                    int val = value.toBigInteger().intValue();
-
-                    // if left is a var write x^3 -> x*x*x
-                    if (val > 1 && get(0).reallyInstanceOf(VarEquation.class)) {
-                        result = new MultiEquation(owner);
-                        for (int i = 0; i < val; i++) {
-                            result.add(get(0).copy());
-                        }
-                    } else {
-                        MultiCountDatas left = new MultiCountDatas();
-                        left.add(new MultiCountData());
-                        for (int i = 0; i < val; i++) {
-                            MultiCountDatas right = new MultiCountDatas(get(0).copy());
-                            left = Operations.Multiply(left, right, true, owner);
-                        }
-                        if (left.size() == 1) {
-                            MultiCountData mine = ((MultiCountData) left.toArray()[0]);
-                            result = mine.getEquation(owner);
-                        } else if (left.size() > 1) {
-                            result = new AddEquation(owner);
-                            for (MultiCountData e : left) {
-                                result.add(e.getEquation(owner));
-                            }
-                        }
-
-                        if (left.neg) {
-                            if (result instanceof NumConstEquation) {
-                                result = result.get(0);
-                            } else {
-                                result = result.negate();
-                            }
-                        }
-
-                        if (wasEven && result instanceof PlusMinusEquation) {
-                            result = result.get(0);
-                        }
-                    }
-                } else {
-                    boolean innerNeg = false;
-                    boolean plusMinus = false;
-
-                    Equation leftTemp = get(0);
-                    while (leftTemp instanceof MinusEquation || leftTemp instanceof PlusMinusEquation) {
-                        if (leftTemp instanceof MinusEquation) {
-                            innerNeg = !innerNeg;
-                        } else if (leftTemp instanceof PlusMinusEquation) {
-                            plusMinus = true;
-                        }
-                        leftTemp = leftTemp.get(0);
-                    }
-
-                    if (leftTemp instanceof NumConstEquation && (!innerNeg || Math.floor(value.doubleValue()) == value.doubleValue())) {
-
-                        BigDecimal leftValue = ((NumConstEquation) leftTemp).getValue();
-                        leftValue = (innerNeg && !plusMinus ? leftValue.negate() : leftValue);
-
-
-                        double resultValue = Math.pow(leftValue.doubleValue(), value.doubleValue());
-
-                        if (!Double.isInfinite(resultValue) && !Double.isNaN(resultValue)) {
-
-                            result = NumConstEquation.create(new BigDecimal(resultValue), owner);
-                            if (plusMinus && !wasEven) {
-                                result = result.plusMinus();
-                            }
-                        }
-
-                    }
-                }
         if (result != null) {
             if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
                 result= result.plusMinus();
@@ -536,6 +491,87 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 }
             }
         }
+    }
+
+    private Equation power_IsNumEquation(Equation result, boolean wasEven) {
+        // if the right is a number
+        Equation temp = get(1).removeNeg();
+
+        // if you have something like ((2^2)^0.5)
+        BigDecimal value = ((NumConstEquation) temp).getValue();
+
+        // if it is an int
+        if ((Math.floor(value.doubleValue()) == value.doubleValue() && !get(0).reallyInstanceOf(NumConstEquation.class) && value.compareTo(new BigDecimal(15)) < 0)) {
+            int val = value.toBigInteger().intValue();
+
+            // if left is a var write x^3 -> x*x*x
+            if (val > 1 && get(0).reallyInstanceOf(VarEquation.class)) {
+                result = new MultiEquation(owner);
+                for (int i = 0; i < val; i++) {
+                    result.add(get(0).copy());
+                }
+            } else {
+                MultiCountDatas left = new MultiCountDatas();
+                left.add(new MultiCountData());
+                for (int i = 0; i < val; i++) {
+                    MultiCountDatas right = new MultiCountDatas(get(0).copy());
+                    left = Operations.Multiply(left, right, true, owner);
+                }
+                if (left.size() == 1) {
+                    MultiCountData mine = ((MultiCountData) left.toArray()[0]);
+                    result = mine.getEquation(owner);
+                } else if (left.size() > 1) {
+                    result = new AddEquation(owner);
+                    for (MultiCountData e : left) {
+                        result.add(e.getEquation(owner));
+                    }
+                }
+
+                if (left.neg) {
+                    if (result instanceof NumConstEquation) {
+                        result = result.get(0);
+                    } else {
+                        result = result.negate();
+                    }
+                }
+
+                if (wasEven && result instanceof PlusMinusEquation) {
+                    result = result.get(0);
+                }
+            }
+        } else {
+            boolean innerNeg = false;
+            boolean plusMinus = false;
+
+            Equation leftTemp = get(0);
+            while (leftTemp instanceof MinusEquation || leftTemp instanceof PlusMinusEquation) {
+                if (leftTemp instanceof MinusEquation) {
+                    innerNeg = !innerNeg;
+                } else if (leftTemp instanceof PlusMinusEquation) {
+                    plusMinus = true;
+                }
+                leftTemp = leftTemp.get(0);
+            }
+
+            if (leftTemp instanceof NumConstEquation && (!innerNeg || Math.floor(value.doubleValue()) == value.doubleValue())) {
+
+                BigDecimal leftValue = ((NumConstEquation) leftTemp).getValue();
+                leftValue = (innerNeg && !plusMinus ? leftValue.negate() : leftValue);
+
+
+                double resultValue = Math.pow(leftValue.doubleValue(), value.doubleValue());
+
+                if (!Double.isInfinite(resultValue) && !Double.isNaN(resultValue)) {
+
+                    result = NumConstEquation.create(new BigDecimal(resultValue), owner);
+                    if (plusMinus && !wasEven) {
+                        result = result.plusMinus();
+                    }
+                }
+
+            }
+        }
+        return result;
     }
 
     // is used to tell if we need to +/- cases A^(1/(O*2))

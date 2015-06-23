@@ -8,6 +8,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
@@ -93,7 +94,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
     // addition is a little more spread out
     @Override
     protected float myWidthAdd() {
-        return (float) (16 * BaseApp.getApp().getDpi() * BaseApp.getApp().zoom);
+        return (float) (16 * BaseApp.getApp().getDpi() * getMyZoom());
     }
 
     public void tryOperator(ArrayList<Equation> eqs) {
@@ -123,44 +124,48 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
             eqs.add(a);
             eqs.add(b);
 
+            final AddEquation that = this;
+
             final MultiCountData left = new MultiCountData(a);
             final MultiCountData right = new MultiCountData(b);
 
             if (Operations.add_canAddNumber(left, right, owner)) {
-                buttons.add(new SelectedRowButtons("addnums", new Action(owner) {
+                buttons.add(new SeletedRowEquationButton(Operations.add_AddNumber(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_AddNumber(left, right, owner);
                         handleResult(0, result);
-                        MyPoint p = new MyPoint(getX(), getY());
                         changed(p);
                     }
                 }));
             }
 
             if (Operations.add_canCommonDenom(left, right, owner)) {
-                buttons.add(new SelectedRowButtons("comdenom", new Action(owner) {
+                buttons.add(new SeletedRowEquationButton(Operations.add_CommonDenom(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_CommonDenom(left, right, owner);
                         handleResult(0, result);
-                        MyPoint p = new MyPoint(getX(), getY());
+
                         changed(p);
                     }
                 }));
             }
 
 
-            if (Operations.add_canCommon(left, right, owner)) {
-                buttons.add(new SelectedRowButtons("common", new Action(owner) {
+            if (Operations.add_canCommon(left, right, owner) && !Operations.add_canAddNumber(left, right, owner)) {
+                buttons.add(new SeletedRowEquationButton(Operations.add_Common(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_Common(left, right, owner);
                         handleResult(0, result);
-                        MyPoint p = new MyPoint(getX(), getY());
+
                         changed(p);
                     }
                 }));

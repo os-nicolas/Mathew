@@ -14,6 +14,12 @@ import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
 
 /**
@@ -45,8 +51,28 @@ public class AlgebraKeyboard extends KeyBoard {
 
         SelectedRow sr = new SelectedRow(1f/9f);
         ArrayList<SelectedRowButtons> sRow = new ArrayList<>();
-        sRow.add(new SelectedRowButtons( "+", new BothSides((AlgebraLine)line, BothSidesMode.ADD)));
-        sRow.add(new SelectedRowButtons("-", new BothSides((AlgebraLine)line,BothSidesMode.SUB)));
+
+        Equation e = new AddEquation(line);
+        e.add(new NumConstEquation(5,line));
+        e.add(new VarEquation("a",line));
+        e.add(new NumConstEquation(5,line));
+        e.add(new NumConstEquation(5,line));
+        e.add(new VarEquation("a",line));
+        e.add(new NumConstEquation(5,line));
+        e.add(new NumConstEquation(5,line));
+        e.add(new NumConstEquation(5,line));
+        e.add(new VarEquation("a",line));
+        e.add(new NumConstEquation(5,line));
+
+
+        sRow.add(new SeletedRowEquationButton(e, new BothSides((AlgebraLine)line, BothSidesMode.ADD)));
+
+
+        Equation e1 = new DivEquation(line);
+        e1.add(new NumConstEquation(5, line));
+        e1.add(new VarEquation("a",line));
+
+        sRow.add(new SeletedRowEquationButton(e1, new BothSides((AlgebraLine)line,BothSidesMode.SUB)));
         sr.addButtonsRow(sRow,0,1);
         popUpLines.add(sr);
 

@@ -3,10 +3,15 @@ package cube.d.n.commoncore.eq.any;
 
 import android.util.Log;
 
+import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
+import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.Line;
@@ -97,51 +102,11 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
     }
 
     public void tryOperator(ArrayList<Equation> eqs) {
-        //TODO handle inbeddedness
-        String db ="";
-        for (Equation e:eqs){
-            db +=e.toString();
-        }
-        Log.i("try Op",db);
 
 
         int at = Math.min(indexOf(eqs.get(0)), indexOf(eqs.get(1)));
+        Equation result = getMutiplyEquation(eqs.get(0),eqs.get(1));
 
-
-        Equation result = null;
-
-        operateRemove(eqs);
-        // for the bottom and the top
-            // find all the equations on each side
-
-
-        MultiCountDatas left= new MultiCountDatas(eqs.get(0));
-
-        MultiCountDatas right= new MultiCountDatas(eqs.get(1));
-
-        boolean simplify = eqs.get(0).removeSign() instanceof AddEquation && eqs.get(1).removeSign() instanceof AddEquation;
-            // multiply && combine like terms
-        MultiCountDatas fullSet = Operations.Multiply(left, right, simplify,owner);
-
-        if (fullSet.size() == 1) {
-            MultiCountData mine =  fullSet.get(0);
-            //mine.combine = true;
-            result = mine.getEquation(owner);
-        } else if (fullSet.size() > 1) {
-            result = new AddEquation(owner);
-            for (MultiCountData e : fullSet) {
-                //e.combine = true;
-                result.add(e.getEquation(owner));
-            }
-        }
-
-        if (fullSet.neg){
-            if (result instanceof MinusEquation){
-                result = result.get(0);
-            }else{
-                result = result.negate();
-            }
-        }
 
         Equation noChangeResult = new MultiEquation(owner);
         noChangeResult.addAll(eqs);
@@ -160,6 +125,96 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         }
     }
 
+    private Equation getMutiplyEquation(Equation a, Equation b) {
+
+
+
+        Equation result = null;
+
+        ArrayList<Equation> eqs = new ArrayList<>();
+        eqs.add(a);
+        eqs.add(b);
+
+        operateRemove(eqs);
+        // for the bottom and the top
+        // find all the equations on each side
+
+
+        MultiCountDatas left= new MultiCountDatas(eqs.get(0));
+
+        MultiCountDatas right= new MultiCountDatas(eqs.get(1));
+
+        boolean simplify = eqs.get(0).removeSign() instanceof AddEquation && eqs.get(1).removeSign() instanceof AddEquation;
+        // multiply && combine like terms
+        MultiCountDatas fullSet = Operations.Multiply(left, right, simplify, owner);
+
+
+        result = fullSet.getEquation(owner);
+        return result;
+    }
+
+
+    @Override
+    public SelectedRow getSelectedRow() {
+
+
+        ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+
+        final MultiEquation that = this;
+        if (this.size() == 2) {
+            final Equation a = get(0);
+            final Equation b = get(1);
+            final ArrayList<Equation> eqs = new ArrayList<>();
+            eqs.add(a);
+            eqs.add(b);
+
+
+            if (multi_canMulti(eqs)) {
+                buttons.add(new SeletedRowEquationButton(getMutiplyEquation(a.copy(), b.copy()), new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        that.tryOperator(eqs);
+                        changed(p);
+                    }
+                }));
+            }
+        }
+
+
+        if (buttons.size() != 0) {
+            SelectedRow sr = new SelectedRow(1f / 9f);
+            sr.addButtonsRow(buttons, 0, 1);
+            return sr;
+        } else {
+            return null;
+        }
+    }
+
+    private boolean multi_canMulti(ArrayList<Equation> eqs) {
+
+        Equation result = null;
+
+        // for the bottom and the top
+        // find all the equations on each side
+
+        MultiCountDatas left= new MultiCountDatas(eqs.get(0).copy());
+
+        MultiCountDatas right= new MultiCountDatas(eqs.get(1).copy());
+
+        boolean simplify = eqs.get(0).copy().removeSign() instanceof AddEquation && eqs.get(1).copy().removeSign() instanceof AddEquation;
+
+        MultiCountDatas fullSet =  Operations.Multiply(left, right, simplify,owner);
+
+        result = fullSet.getEquation(owner);
+
+        Equation noChangeResult = new MultiEquation(owner);
+        for (Equation e: eqs){
+            noChangeResult.add(e.copy());
+        }
+
+        return !result.same(noChangeResult);
+    }
 
     public boolean hasSign(int i) {
         Equation left = get(i);
