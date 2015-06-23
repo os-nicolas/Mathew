@@ -1,39 +1,87 @@
 package cube.d.n.practice;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
         setContentView(R.layout.activity_main);
+
+        // 1. pass context and data to the custom adapter
+        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, generateData());
+
+        // 2. Get ListView from activity_main.xml
+        ListView listView = (ListView) findViewById(R.id.listview);
+
+        // 3. setListAdapter
+        listView.setAdapter(adapter);
+
+        final Activity that = this;
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+
+            @Override
+            public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
+
+                TopicRow item = adapter.getItem(position);
+
+                Intent intent = new Intent(that,ChooseProblem.class);
+                //based on item add info to intent
+                intent.putExtra("topic",item.name);
+                startActivity(intent);
+
+            }
+        });
     }
 
+    private ArrayList<TopicRow> generateData() {
+        ArrayList<TopicRow> topics = new ArrayList<TopicRow>();
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 1", "First Item on the list"));
+        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        topics.add(new TopicRow("Item 3", "Third Item on the list"));
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return topics;
     }
 }

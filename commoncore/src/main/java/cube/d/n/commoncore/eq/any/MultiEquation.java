@@ -105,6 +105,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
 
         int at = Math.min(indexOf(eqs.get(0)), indexOf(eqs.get(1)));
+        operateRemove(eqs);
         Equation result = getMutiplyEquation(eqs.get(0),eqs.get(1));
 
 
@@ -135,7 +136,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         eqs.add(a);
         eqs.add(b);
 
-        operateRemove(eqs);
+
         // for the bottom and the top
         // find all the equations on each side
 
