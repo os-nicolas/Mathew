@@ -3,14 +3,30 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="20dp">
+    >
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_height="fill_parent">
+
+        <cube.d.n.practice.CircleView
+            android:layout_margin="10dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+
+            android:id="@+id/problem_circle"/>
 
     <TextView
-        android:paddingLeft="10dp"
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="48dip"
+        android:textSize="36dp"
         android:text="Large Text"
-        android:id="@+id/problem_name" />
+        android:id="@+id/problem_name"
+        android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
 </LinearLayout>
