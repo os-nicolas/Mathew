@@ -16,7 +16,7 @@
             android:layout_width="75dp"
             android:layout_height="75dp"
 
-            android:id="@+id/problem_circle"/>
+            android:id="@+id/topic_circle"/>
 
         <LinearLayout
             android:layout_width="wrap_content"

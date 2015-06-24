@@ -27,34 +27,36 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null){
-        // 1. Create inflater
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        if (convertView == null) {
+            // 1. Create inflater
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // 2. Get rowView from inflater
-        View rowView = inflater.inflate(R.layout.topic_row, parent, false);
+            // 2. Get rowView from inflater
+            convertView = inflater.inflate(R.layout.topic_row, parent, false);
+        }
 
-        // 3. Get the two text view from the rowView
-        TextView title = (TextView) rowView.findViewById(R.id.row_title);
+
+        TextView title = (TextView) convertView.findViewById(R.id.row_title);
 
         Typeface djLight = Typeface.createFromAsset(context.getAssets(),
                 "fonts/DejaVuSans-ExtraLight.ttf");
         title.setTypeface(djLight);
 
-        TextView subtitle = (TextView) rowView.findViewById(R.id.row_subtitle);
+        TextView subtitle = (TextView) convertView.findViewById(R.id.row_subtitle);
 
         Typeface dj = Typeface.createFromAsset(context.getAssets(),
                 "fonts/DejaVuSans.ttf");
         subtitle.setTypeface(dj);
 
+            CircleView cir = (CircleView) convertView.findViewById(R.id.topic_circle);
+
+            cir.setColors(position+"",CircleView.getBkgColor(position),CircleView.getTextColor(position));
+
         // 4. Set the text for textView
         title.setText(topics.get(position).name);
         subtitle.setText(topics.get(position).about);
 
-        // 5. retrn rowView
-            convertView= rowView;
-        }
         return  convertView;
     }
 }
