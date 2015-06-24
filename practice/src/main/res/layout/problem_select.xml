@@ -1,12 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseProblem"
+    android:orientation="vertical"
+    android:background="#ffffffff"
+    >
 
-    <ListView
-        android:id="@+id/problem_listView"
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/myrect"
+        android:layout_marginTop="-5px"
+        android:layout_marginLeft="-5px"
+        android:layout_marginRight="-5px"
+        android:paddingBottom="5px"
+        android:id="@+id/main_header">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#6C0304"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+                <TextView
+                    android:text="Problems"
+                    android:textColor="#ffffff"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="25dp"
+                    android:id="@+id/problem_title_text"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+    </LinearLayout>
+
+    <ListView
+
+        android:layout_marginTop="-5px"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@drawable/no_divider"
+        android:id="@+id/problem_listView"
         />
 
 </LinearLayout>

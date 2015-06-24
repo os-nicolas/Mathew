@@ -4,6 +4,7 @@ package cube.d.n.practice;
         import java.util.ArrayList;
 
         import android.content.Context;
+        import android.graphics.Typeface;
         import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
@@ -14,6 +15,7 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
     private final Context context;
     private final ArrayList<TopicRow> topics;
+    private View myView=null;
 
     public TopicArrayAdaptor(Context context, ArrayList<TopicRow> itemsArrayList) {
 
@@ -25,7 +27,7 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
+        if (convertView == null){
         // 1. Create inflater
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -35,13 +37,24 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
         // 3. Get the two text view from the rowView
         TextView title = (TextView) rowView.findViewById(R.id.row_title);
+
+        Typeface djLight = Typeface.createFromAsset(context.getAssets(),
+                "fonts/DejaVuSans-ExtraLight.ttf");
+        title.setTypeface(djLight);
+
         TextView subtitle = (TextView) rowView.findViewById(R.id.row_subtitle);
+
+        Typeface dj = Typeface.createFromAsset(context.getAssets(),
+                "fonts/DejaVuSans.ttf");
+        subtitle.setTypeface(dj);
 
         // 4. Set the text for textView
         title.setText(topics.get(position).name);
         subtitle.setText(topics.get(position).about);
 
         // 5. retrn rowView
-        return rowView;
+            convertView= rowView;
+        }
+        return  convertView;
     }
 }

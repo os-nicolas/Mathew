@@ -2,13 +2,16 @@ package cube.d.n.practice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,6 +26,15 @@ public class MainActivity extends Activity {
 
         // 2. Get ListView from activity_main.xml
         ListView listView = (ListView) findViewById(R.id.listview);
+
+        LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
+
+
+        TextView tv = (TextView)findViewById(R.id.main_title_text);
+        Typeface dj = Typeface.createFromAsset(this.getAssets(),
+                "fonts/DejaVuSans-ExtraLight.ttf");
+        tv.setTypeface(dj);
+
 
         // 3. setListAdapter
         listView.setAdapter(adapter);
@@ -39,7 +51,7 @@ public class MainActivity extends Activity {
 
                 Intent intent = new Intent(that,ChooseProblem.class);
                 //based on item add info to intent
-                intent.putExtra("topic",item.name);
+                intent.putExtra("topic",item.myId);
                 startActivity(intent);
 
             }

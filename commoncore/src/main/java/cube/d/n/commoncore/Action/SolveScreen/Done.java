@@ -1,4 +1,4 @@
-package cube.d.n.calc.Actions.SolveScreen;
+package cube.d.n.commoncore.Action.SolveScreen;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Selects;

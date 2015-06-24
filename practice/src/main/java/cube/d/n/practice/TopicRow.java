@@ -5,12 +5,21 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.lines.NullLine;
+
 /**
  * Created by Colin on 6/23/2015.
  */
 public class TopicRow  {
 
-    public  static HashMap<String,TopicRow> topics = new HashMap<>();
+    public  static HashMap<Integer,TopicRow> topics = new HashMap<>();
+
+    private static int id =0;
+
+    public final int myId = id++;
 
     public final String name;
     public final String about;
@@ -18,10 +27,16 @@ public class TopicRow  {
 
     public TopicRow(String name, String about){
         super();
+        topics.put(id,this);
+
+
         this.name = name;
         this.about = about;
 
-        problems.add(new ProblemRow("1"));
+        Equation eq = new AddEquation(new NullLine());
+        eq.add(NumConstEquation.create(5,new NullLine()));
+        eq.add(NumConstEquation.create(150,new NullLine()));
+        problems.add(new ProblemRow(eq));
         problems.add(new ProblemRow("12"));
         problems.add(new ProblemRow("123"));
         problems.add(new ProblemRow("1234"));

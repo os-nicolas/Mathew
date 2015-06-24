@@ -1,4 +1,4 @@
-package cube.d.n.calc.Actions.BothSides;
+package cube.d.n.commoncore.Action.BothSides;
 
 import java.util.ArrayList;
 

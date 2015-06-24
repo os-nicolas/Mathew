@@ -18,6 +18,10 @@ import java.util.Random;
 
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.BothSides.CancelAction;
+import cube.d.n.commoncore.Action.BothSides.CheckAction;
+import cube.d.n.commoncore.Action.SolveScreen.Done;
+import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.lines.BothSidesLine;
@@ -103,13 +107,22 @@ public abstract class BaseApp extends Application{
         }
     }
 
-    public abstract Action getEnter(InputLine line);
 
-    public abstract Action getDone(Line line);
+    public Action getEnter(InputLine line) {
+        return new Solve(line);
+    }
 
-    public abstract Action getOk(BothSidesLine line);
+    public Action getDone(Line line) {
+        return new Done(line);
+    }
 
-    public abstract Action getCancel(BothSidesLine line);
+    public Action getOk(BothSidesLine line) {
+        return new CheckAction(line);
+    }
+
+    public Action getCancel(BothSidesLine line) {
+        return new CancelAction(line);
+    }
 
     public int getRate() {
         return 5;
@@ -154,6 +167,14 @@ public abstract class BaseApp extends Application{
         darkDarkColor = BaseApp.colorFade(darkDarkColor, Color.BLACK);
         darkDarkColor = BaseApp.colorFade(darkDarkColor, Color.BLACK);
         darkDarkColor = BaseApp.colorFade(darkDarkColor, Color.BLACK);
+
+
+        Log.d("ddc","ddc:alpha "+ android.graphics.Color.alpha(darkDarkColor));
+        Log.d("ddc","ddc:red "+ android.graphics.Color.red(darkDarkColor));
+        Log.d("ddc","ddc:green "+ android.graphics.Color.green(darkDarkColor));
+        Log.d("ddc","ddc:blue "+ android.graphics.Color.blue(darkDarkColor));
+
+
         veryDarkColor=lightColor;
         veryDarkColor = BaseApp.colorFade(veryDarkColor, Color.BLACK);
         veryDarkColor = BaseApp.colorFade(veryDarkColor, Color.BLACK);

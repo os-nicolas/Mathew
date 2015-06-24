@@ -1,4 +1,4 @@
-package cube.d.n.calc.Actions.WriteScreen;
+package cube.d.n.commoncore.Action.WriteScreen;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package cube.d.n.calc;
+package cube.d.n.practice;
 
 import android.app.Activity;
 import android.util.Log;
