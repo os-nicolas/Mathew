@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.Circle;
+
 import cube.d.n.commoncore.EquationView;
 import cube.d.n.commoncore.eq.any.Equation;
 
@@ -27,7 +29,7 @@ public class ProblemRow {
     }
 
 
-    public View getView(Context context, View convertView, ViewGroup parent) {
+    public View getView(int position, Context context, View convertView, ViewGroup parent) {
         if (convertView == null){
             if (this.equation != null){
                 // 1. Create inflater
@@ -37,11 +39,11 @@ public class ProblemRow {
                 // 2. Get rowView from inflater
                 View rowView = inflater.inflate(R.layout.problem_eq_row, parent, false);
 
-                // 3. Get the two text view from the rowView
                 EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
-
-                // 4. Set the text for textView
                 equationView.setEquation(this.equation);
+
+                CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
+                cir.setColors(position+"",CircleView.getBkgColor(position),CircleView.getTextColor(position));
 
                 convertView= rowView;
 
@@ -60,9 +62,15 @@ public class ProblemRow {
                 Typeface dj = Typeface.createFromAsset(context.getAssets(),
                         "fonts/DejaVuSans-ExtraLight.ttf");
                 title.setTypeface(dj);
+                title.setText(name);
+
+
+                CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
+
+                cir.setColors(position+"",CircleView.getBkgColor(position),CircleView.getTextColor(position));
 
                 // 4. Set the text for textView
-                title.setText(name);
+
 
                 convertView= rowView;
             }

@@ -28,6 +28,6 @@ public class ProblemArrayAdapter extends ArrayAdapter<ProblemRow> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // 5. retrn rowView
-        return  problems.get(position).getView(context,convertView,parent);
+        return  problems.get(position).getView(position,context,convertView,parent);
     }
 }

@@ -4,11 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="20dp">
+    <LinearLayout
 
+        android:layout_width="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_height="fill_parent">
+
+        <cube.d.n.practice.CircleView
+            android:layout_margin="10dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+
+            android:id="@+id/problem_circle"/>
     <cube.d.n.commoncore.EquationView
         android:layout_marginLeft="10dp"
         android:layout_width="fill_parent"
         android:layout_height="48dip"
-        android:id="@+id/problem_eq_view" />
+        android:id="@+id/problem_eq_view"
+        android:layout_gravity="center_vertical" />
+        </LinearLayout>
 
 </LinearLayout>
