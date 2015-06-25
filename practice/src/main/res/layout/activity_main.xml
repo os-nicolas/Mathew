@@ -4,30 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    >
+    android:background="#ffffffff">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="75dp"
-        android:layout_marginBottom="-6px"
-        />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="-6px" />
 
 
-    <ListView
-        android:layout_marginTop="-6px"
-        android:id="@+id/listview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:divider="@drawable/no_divider"
-        />
+        <ListView
+            android:layout_marginTop="-6px"
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@drawable/no_divider"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
-    <LinearLayout
+    <View
         android:layout_width="fill_parent"
         android:layout_height="10px"
         android:background="@drawable/myrect"
@@ -35,8 +34,7 @@
         android:layout_marginLeft="-5px"
         android:layout_marginRight="-5px"
 
-        android:layout_gravity="bottom">
-    </LinearLayout>
+        android:layout_gravity="bottom"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -57,6 +55,7 @@
 
             android:layout_gravity="center"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -71,18 +70,18 @@
                     android:layout_marginRight="15dp"
                     android:layout_height="45dp" />
 
-            <TextView
-                android:text="Topics"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:textColor="#ffffff"
-                android:textAlignment="center"
-                android:layout_gravity="center"
-                android:layout_width="fill_parent"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="30dp"
-                android:id="@+id/main_title_text"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:text="Topics"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:textColor="#ffffff"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textSize="30dp"
+                    android:id="@+id/main_title_text"
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 

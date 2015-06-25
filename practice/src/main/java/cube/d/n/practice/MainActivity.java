@@ -21,11 +21,12 @@ public class MainActivity extends Activity {
         super.onCreate(icicle);
         setContentView(R.layout.activity_main);
 
-        // 1. pass context and data to the custom adapter
-        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, generateData());
+        ListView listView = (ListView) findViewById(R.id.listview);
+
+        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, generateData(),listView);
 
         // 2. Get ListView from activity_main.xml
-        ListView listView = (ListView) findViewById(R.id.listview);
+
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
 
@@ -63,36 +64,36 @@ public class MainActivity extends Activity {
         topics.add(new TopicRow("Item 1", "First Item on the list"));
         topics.add(new TopicRow("Item 2", "Second Item on the list"));
         topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
-        topics.add(new TopicRow("Item 3", "Third Item on the list"));
+        topics.add(new TopicRow("Item 4", "First Item on the list"));
+        topics.add(new TopicRow("Item 5", "Second Item on the list"));
+        topics.add(new TopicRow("Item 6", "Third Item on the list"));
+        topics.add(new TopicRow("Item 7", "First Item on the list"));
+        topics.add(new TopicRow("Item 8", "Second Item on the list"));
+        topics.add(new TopicRow("Item 9", "Third Item on the list"));
+        topics.add(new TopicRow("Item 10", "First Item on the list"));
+        topics.add(new TopicRow("Item 11", "Second Item on the list"));
+        topics.add(new TopicRow("Item 12", "Third Item on the list"));
+        topics.add(new TopicRow("Item 13", "First Item on the list"));
+        topics.add(new TopicRow("Item 14", "Second Item on the list"));
+        topics.add(new TopicRow("Item 15", "Third Item on the list"));
+        topics.add(new TopicRow("Item 16", "First Item on the list"));
+        topics.add(new TopicRow("Item 17", "Second Item on the list"));
+        topics.add(new TopicRow("Item 18", "Third Item on the list"));
+        topics.add(new TopicRow("Item 19", "First Item on the list"));
+        topics.add(new TopicRow("Item 20", "Second Item on the list"));
+        topics.add(new TopicRow("Item 21", "Third Item on the list"));
+        topics.add(new TopicRow("Item 22", "First Item on the list"));
+        topics.add(new TopicRow("Item 23", "Second Item on the list"));
+        topics.add(new TopicRow("Item 24", "Third Item on the list"));
+        topics.add(new TopicRow("Item 25", "First Item on the list"));
+        topics.add(new TopicRow("Item 26", "Second Item on the list"));
+        topics.add(new TopicRow("Item 27", "Third Item on the list"));
+        topics.add(new TopicRow("Item 28", "First Item on the list"));
+        topics.add(new TopicRow("Item 29", "Second Item on the list"));
+        topics.add(new TopicRow("Item 30", "Third Item on the list"));
+        topics.add(new TopicRow("Item 31", "First Item on the list"));
+        topics.add(new TopicRow("Item 32", "Second Item on the list"));
+        topics.add(new TopicRow("Item 33", "Third Item on the list"));
 
         return topics;
     }

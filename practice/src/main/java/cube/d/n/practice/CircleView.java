@@ -2,6 +2,7 @@ package cube.d.n.practice;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -17,6 +18,9 @@ import cube.d.n.commoncore.BaseApp;
  * Created by Colin on 6/24/2015.
  */
 public class CircleView extends View {
+
+    float currentR = -1f;
+
     public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setColors("5",0xffff0000,0xff000000);
@@ -44,33 +48,66 @@ public class CircleView extends View {
         textPaint = new Paint();
         textPaint.setColor(textColor);
         textPaint.setAntiAlias(true);
+        textPaint.setTextSize(100);
         Typeface dj = Typeface.createFromAsset(getContext().getAssets(),
                 "fonts/DejaVuSans-ExtraLight.ttf");
         textPaint.setTypeface(dj);
-        invalidate();
+        //invalidate();
     }
+
+
 
     @Override
     public void onDraw(Canvas canvas){
         int h = getHeight();
         int w = getWidth();
 
-        canvas.drawCircle(h/2f,w/2f,Math.min(h/2f,w/2f),bkgPaint);
+        float targetR = Math.min(h/2f,w/2f);
+
+        if (Math.abs(targetR-currentR)< .1){
+            currentR = targetR;
+        }
+
+        float buffer = BaseApp.getApp().getBuffer();
+        if (currentR ==-1){
+            currentR = targetR- buffer;
+        }
+
+
+        canvas.drawCircle(h/2f,w/2f,currentR,bkgPaint);
+
 
         Rect out = new Rect();
-        //TODO scale by dpi
-        float buffer = 0;//BaseApp.getApp().getBuffer();
-        String textToMeasure = text;
-        textPaint.setTextSize(80);
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > Math.min(h/2f,w/2f)/Math.sqrt(2) || out.height() + 2 * buffer > Math.min(h/2f,w/2f)/Math.sqrt(2)) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+
+
+        textPaint.getTextBounds(text, 0, text.length(), out);
+        //if (text.equals("01")){
+        Log.d("wut?",Math.min(h/2f,w/2f)+"");
+        //}
+        while (out.width() + (2* buffer) > Math.min(h,w)/Math.sqrt(2) || out.height() + (2*buffer) > Math.min(h,w)/Math.sqrt(2)) {
+            // if (text.equals("01")){
+            Log.d("wut?",Math.min(h/2f,w/2f)+"");
+            //}
+            textPaint.setTextSize(textPaint.getTextSize()*.9f);
+            textPaint.getTextBounds(text, 0, text.length(), out);
         }
         int textH = out.height();
         int textW = out.width();
+        float textW2 = textPaint.measureText(text);
 
-        canvas.drawText(text, (w/2f)- (textW / 2f), (h/2f) + (textH / 2f), textPaint);
+        //Log.d("do we not understand width?","measureText: "+ textW2 +" out.width: "+ textW);
+
+//        Paint p = new Paint();
+//        p.setColor(Color.WHITE);
+//        Rect r = new Rect((int)((w/2f)- (textW2 / 2f)), (int)((h/2f) - (textH / 2f)),(int)((w/2f)+ (textW2 / 2f)), (int)((h/2f) + (textH / 2f)));
+//        canvas.drawRect(r,p);
+        canvas.drawText(text, (w/2f)- (textW2 / 2f), (h/2f) + (textH / 2f), textPaint);
+
+        currentR = ((currentR*Mathilda.getApp().getRate()*4)+targetR)/(1+(Mathilda.getApp().getRate()*4));
+        if (currentR != targetR){
+            invalidate();
+        }
+
     }
 
     public static Random r = new Random();

@@ -1,6 +1,7 @@
 package cube.d.n.practice;
 
 import android.content.Context;
+import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,7 +72,7 @@ public class TopicRow  {
 
     }
 
-    public ProblemArrayAdapter getAdapter(Context context){
-        return new ProblemArrayAdapter(context,problems);
+    public ProblemArrayAdapter getAdapter(Context context,ListView parent){
+        return new ProblemArrayAdapter(context,problems,parent);
     }
 }

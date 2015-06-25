@@ -39,13 +39,11 @@ public class ChooseProblem extends Activity {
                 "fonts/DejaVuSans-ExtraLight.ttf");
         tv.setTypeface(dj);
 
-        // 1. pass context and data to the custom adapter
-        final ProblemArrayAdapter adapter = myTopic.getAdapter(this);
 
-        // 2. Get ListView from activity_main.xml
         ListView listView = (ListView) findViewById(R.id.problem_listView);
 
-        // 3. setListAdapter
+        final ProblemArrayAdapter adapter = myTopic.getAdapter(this,listView);
+
         listView.setAdapter(adapter);
 
     }
