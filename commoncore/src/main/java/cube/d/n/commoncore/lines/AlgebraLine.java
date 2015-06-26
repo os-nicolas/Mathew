@@ -74,7 +74,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard = new AlgebraKeyboard(owner,this);
+            myKeyBoard =BaseApp.getApp().getSolveScreenKeyboard(owner,this);
         }
         return myKeyBoard;
     }
@@ -885,7 +885,7 @@ public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn
     }
 
     public void updatePopUpButtons(){
-        AlgebraKeyboard ak = (AlgebraKeyboard) getKeyboad();
+        KeyBoard ak = getKeyboad();
         //TODO remove old all popUpLines
         for (int i= ak.popUpLines.size()-1;i >=0;i--){
             SelectedRow sr =ak.popUpLines.get(i);

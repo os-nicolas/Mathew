@@ -571,7 +571,34 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 return lastPoint.get(i);
             }
         }
+        Log.e("getLastPoint","this should probably not be returing null");
+
         return null;
+    }
+
+    public MyPoint getNoneNullLastPoint(float x, float y) {
+        // we get the closest
+
+        float dis = 9999f;
+        MyPoint closets = null;
+
+        for (int i = 0; i < lastPoint.size(); i++) {
+            if (lastPoint.get(i).distance(x,y) <dis) {
+                dis=lastPoint.get(i).distance(x,y);
+                closets= lastPoint.get(i);
+            }
+        }
+
+        if (closets != null){
+            return closets;
+        }else {
+
+            MyPoint p = new MyPoint(0, 0);
+            p.x = (int) x;
+            p.y = (int) y;
+
+            return p;
+        }
     }
 
 
@@ -716,7 +743,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
+            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
             float w = measureWidth();
             float hu = measureHeightUpper();
             float hl = measureHeightLower();

@@ -24,6 +24,10 @@ import cube.d.n.commoncore.Action.SolveScreen.Done;
 import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
+import cube.d.n.commoncore.keyboards.ReturnKeyBoard;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
@@ -280,8 +284,8 @@ public abstract class BaseApp extends Application{
         return (float)(9*getDpi()*zoom);
     }
 
-    public float getStrokeWidth() {
-        return (float)(1.5f*getDpi()*zoom);
+    public float getStrokeWidth(Equation equation) {
+        return (float)(1.5f*getDpi()*equation.root().getMyZoom());
     }
 
     public float getDivWidthAdd(DivEquation eq) {
@@ -336,4 +340,16 @@ public abstract class BaseApp extends Application{
         return new InputLine(owner);
     }
 
+    public KeyBoard getSolveScreenKeyboard(Main owner, AlgebraLine algebraLine) {
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences("crazy", 0);
+        boolean firstTime = settings.getBoolean("firstTime", true);
+
+        if (firstTime){
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("firstTime", false);
+            editor.commit();
+            return new ReturnKeyBoard(owner,algebraLine);
+        }
+        return  new AlgebraKeyboard(owner,algebraLine);
+    }
 }

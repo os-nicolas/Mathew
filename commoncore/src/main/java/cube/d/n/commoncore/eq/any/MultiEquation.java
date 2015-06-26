@@ -175,7 +175,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
                 buttons.add(new SeletedRowEquationButton(temp, new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                         that.tryOperator(eqs);
                         changed(p);
                     }

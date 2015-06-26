@@ -22,7 +22,7 @@
     <string name="tut_4_body" >Drag and Drop pour déplacer termes partout où ils peuvent être légalement .</string>
     <string name="tut_4_at" >4/5</string>
     <string name="tut_5_title" >Il est si facile</string>
-    <string name="tut_5_body" >Swipe droit pour commencer</string>
+    <string name="tut_5_body" >Balayez vers la gauche pour commencer</string>
     <string name="tut_5_at" >5/5</string>
 
 </resources>

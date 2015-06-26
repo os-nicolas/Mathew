@@ -133,7 +133,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SeletedRowEquationButton(Operations.add_AddNumber(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_AddNumber(left, right, owner);
                         handleResult(0, result);
@@ -146,7 +146,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SeletedRowEquationButton(Operations.add_CommonDenom(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_CommonDenom(left, right, owner);
                         handleResult(0, result);
@@ -161,7 +161,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 buttons.add(new SeletedRowEquationButton(Operations.add_Common(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                         operateRemove(eqs);
                         Equation result = Operations.add_Common(left, right, owner);
                         handleResult(0, result);

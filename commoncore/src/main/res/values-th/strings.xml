@@ -21,7 +21,7 @@
     <string name="tut_4_body" >ลากและวาง ที่จะย้าย แง่ ทุกที่ที่ ถูกต้องตามกฎหมาย สามารถ</string>
     <string name="tut_4_at" >4 จาก 5</string>
     <string name="tut_5_title" >มันเป็นเรื่องที่ ง่าย</string>
-    <string name="tut_5_body" >ปัดไปทางขวา เพื่อเริ่มต้น</string>
+    <string name="tut_5_body" >กวาดไปทางซ้ายเพื่อเริ่มต้น</string>
     <string name="tut_5_at" >5 จาก 5</string>
 
 </resources>

@@ -11,9 +11,7 @@ public class EnptyKeyboard extends KeyBoard {
     }
 
     @Override
-    protected void addButtons() {
-
-    }
+    protected void addButtons() {    }
 
     @Override
     public float getBaseButtonsPercent() {

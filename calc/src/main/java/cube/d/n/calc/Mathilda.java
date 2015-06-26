@@ -1,6 +1,7 @@
 package cube.d.n.calc;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,10 @@ import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
+import cube.d.n.commoncore.keyboards.KeyBoard;
+import cube.d.n.commoncore.keyboards.ReturnKeyBoard;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;

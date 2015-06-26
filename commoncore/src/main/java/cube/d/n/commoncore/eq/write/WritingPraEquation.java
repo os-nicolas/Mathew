@@ -71,7 +71,7 @@ public class WritingPraEquation extends WritingLeafEquation {
     protected void drawParentheses(Canvas canvas, float x, float y, Paint temp, boolean left) {
         if (canvas != null) {
             Paint ptemp = new Paint(temp);
-            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth());
+            ptemp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
             float uh = measureHeightUpper() + (this instanceof WritingSqrtEquation ? -BaseApp.getApp().getSqrtHeightAdd(this) : 0) + (getMatch() instanceof WritingSqrtEquation ? -BaseApp.getApp().getSqrtHeightAdd(this) : 0);
             float lh = measureHeightLower();
 
