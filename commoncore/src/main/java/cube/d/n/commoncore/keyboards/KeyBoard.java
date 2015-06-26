@@ -155,27 +155,31 @@ public abstract class KeyBoard implements Measureable {
             myBut.draw(canvas,paint);
         }
 
+
         buttonsPercent = getBaseButtonsPercent();
+        int startAt1 = ((int) (owner.height - measureHeight()));
 
         for (PopUpButton myPUB: popUpButtons) {
             myPUB.updateLocation(this);
             myPUB.draw(canvas, paint);
         }
 
+
+
         for (SelectedRow myPUB: popUpLines) {
             myPUB.updateLocation(this);
             myPUB.draw(canvas, paint);
         }
+        drawShadow(canvas,paint.getAlpha()/2,startAt1);
 
-        drawShadow(canvas,paint.getAlpha());
+        drawShadow(canvas,paint.getAlpha()/2);
     }
 
-    protected void drawShadow(Canvas canvas,int alpha) {
+    private void drawShadow(Canvas canvas, int alpha, int at) {
         Paint p = new Paint();
         int color = Color.BLACK;//BaseApp.getApp().darkDarkColor;
         p.setColor(color);
         p.setAlpha(alpha);
-        int at = ((int) (owner.height - measureHeight()));
 //        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
 //            canvas.drawLine(0,at,width,at,p);
 //            at--;
@@ -186,6 +190,11 @@ public abstract class KeyBoard implements Measureable {
             p.setAlpha((int) (p.getAlpha() / BaseApp.getApp().getShadowFade()));
             at--;
         }
+    }
+
+    protected void drawShadow(Canvas canvas,int alpha) {
+        int startAt = ((int) (owner.height - measureHeight()));
+        drawShadow(canvas,alpha,startAt);
     }
 
     abstract protected void addButtons();

@@ -15,6 +15,7 @@ public class SelectedRowButtons extends PopUpButton {
 
     public SelectedRowButtons( String text, Action myAction) {
         super(text, myAction);
+
     }
 
     public void setTextPaint(Paint textPaint) {

@@ -49,33 +49,6 @@ public class AlgebraKeyboard extends KeyBoard {
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
 
-        SelectedRow sr = new SelectedRow(1f/9f);
-        ArrayList<SelectedRowButtons> sRow = new ArrayList<>();
-
-        Equation e = new AddEquation(line);
-        e.add(new NumConstEquation(5,line));
-        e.add(new VarEquation("a",line));
-        e.add(new NumConstEquation(5,line));
-        e.add(new NumConstEquation(5,line));
-        e.add(new VarEquation("a",line));
-        e.add(new NumConstEquation(5,line));
-        e.add(new NumConstEquation(5,line));
-        e.add(new NumConstEquation(5,line));
-        e.add(new VarEquation("a",line));
-        e.add(new NumConstEquation(5,line));
-
-
-        sRow.add(new SeletedRowEquationButton(e, new BothSides((AlgebraLine)line, BothSidesMode.ADD)));
-
-
-        Equation e1 = new DivEquation(line);
-        e1.add(new NumConstEquation(5, line));
-        e1.add(new VarEquation("a",line));
-
-        sRow.add(new SeletedRowEquationButton(e1, new BothSides((AlgebraLine)line,BothSidesMode.SUB)));
-        sr.addButtonsRow(sRow,0,1);
-        popUpLines.add(sr);
-
     }
 
     @Override

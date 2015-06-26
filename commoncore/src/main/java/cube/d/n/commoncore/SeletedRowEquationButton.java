@@ -18,6 +18,7 @@ public class SeletedRowEquationButton extends SelectedRowButtons {
     public SeletedRowEquationButton(Equation eq, Action myAction) {
         super("", myAction);
         myEq = eq;
+
     }
 
     public void draw(Canvas canvas, Paint p){
@@ -48,18 +49,18 @@ public class SeletedRowEquationButton extends SelectedRowButtons {
 
         int myAlpha = textPaint.getAlpha() * p.getAlpha() / (0xff);
         if (myAlpha != 0){
-        float buffer = BaseApp.getApp().getBuffer();
+            float buffer = BaseApp.getApp().getBuffer();
 
-        int dbCount =0;
+            int dbCount =0;
 
-        myEq.overWriteZoom(1);
-        while (myEq.measureWidth() + 2 * buffer > measureWidth() ||myEq.measureHeight() + 2 * buffer > targetHeight()) {
-            myEq.overWriteZoom(myEq.getMyZoom()*.9f);
-            dbCount++;
-            if (dbCount>20){
-                Log.d("sad", "we are stuck");
+            myEq.overWriteZoom(1);
+            while (myEq.measureWidth() + 2 * buffer > measureWidth() ||myEq.measureHeight() + 2 * buffer > targetHeight()) {
+                myEq.overWriteZoom(myEq.getMyZoom()*.9f);
+                dbCount++;
+                if (dbCount>20){
+                    Log.d("sad", "we are stuck");
+                }
             }
-        }
         myEq.setAlpha(myAlpha);
         myEq.draw(canvas,getX(),getY());
         }

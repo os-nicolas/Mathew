@@ -29,6 +29,7 @@ public class SelectedRow {
         setTargets(targetHeight);
 
         this.textPaint = new TextPaint(BaseApp.getApp().textPaint);
+        this.textPaint.setAlpha(0);
     }
 
     public void setTargets(float targetHeight){

@@ -16,7 +16,8 @@ public class PopUpButton extends Button {
 
     public PopUpButton( String text, Action myAction) {
         super(text, myAction);
-        this.textPaint.setAlpha((int) 0);
+        targetBkgColor = BaseApp.getApp().lightLightColor;
+        this.textPaint.setAlpha(0);
     }
 
     public void setTargets(float targetHeight, float startAtX, float endAtX){
@@ -26,7 +27,7 @@ public class PopUpButton extends Button {
     }
 
     public void updateLocation(KeyBoard owner){
-        float rate = BaseApp.getApp().getRate();
+        float rate = BaseApp.getApp().getRate()/2f;
             if (myAction.canAct()){
                 if (currentHeight < targetHeight) {
                     currentHeight = (currentHeight * (rate - 1) + targetHeight) / rate;
