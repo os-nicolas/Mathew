@@ -1,6 +1,7 @@
 package cube.d.n.practice;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,5 +47,15 @@ public class Mathilda extends BaseApp {
             views.put(mainActivity, result);
         }
         return result;
+    }
+
+    public static Mathilda getMathilda(){
+        return (Mathilda)BaseApp.getApp();
+    }
+
+    public Typeface getDJV(){
+        Typeface dj = Typeface.createFromAsset(this.getAssets(),
+                "fonts/DejaVuSans.ttf");
+        return dj;
     }
 }

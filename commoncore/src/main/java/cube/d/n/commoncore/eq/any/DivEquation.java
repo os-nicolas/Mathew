@@ -31,6 +31,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     public DivEquation(Line owner,DivEquation divEq){
         super(owner,divEq);
+        myHeight = myHeight/2;
         init();
         this.display = divEq.getDisplay(-1);
 

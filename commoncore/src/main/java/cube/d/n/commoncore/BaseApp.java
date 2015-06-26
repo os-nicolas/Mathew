@@ -335,4 +335,5 @@ public abstract class BaseApp extends Application{
     public Line getInputLine(Main owner) {
         return new InputLine(owner);
     }
+
 }

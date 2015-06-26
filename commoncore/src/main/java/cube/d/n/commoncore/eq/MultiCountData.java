@@ -262,6 +262,7 @@ public class MultiCountData {
                 }
                 if (top.size() ==1){
                     top = top.get(0);
+                    top.parent = null;
                 }
 
             }

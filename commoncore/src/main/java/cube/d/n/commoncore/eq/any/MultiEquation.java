@@ -163,15 +163,17 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
         final MultiEquation that = this;
         if (this.size() == 2) {
-            final Equation a = get(0);
-            final Equation b = get(1);
+            final Equation a = get(0).copy();
+            final Equation b = get(1).copy();
             final ArrayList<Equation> eqs = new ArrayList<>();
             eqs.add(a);
             eqs.add(b);
 
 
             if (multi_canMulti(eqs)) {
-                buttons.add(new SeletedRowEquationButton(getMutiplyEquation(a.copy(), b.copy()), new Action(owner) {
+                Equation temp = getMutiplyEquation(a.copy(), b.copy());
+                Log.d("is something wrong here?",temp+"");
+                buttons.add(new SeletedRowEquationButton(temp, new Action(owner) {
                     @Override
                     protected void privateAct() {
                         MyPoint p = that.getLastPoint(that.getX(),that.getY());

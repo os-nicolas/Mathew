@@ -81,13 +81,7 @@ public class CircleView extends View {
 
 
         textPaint.getTextBounds(text, 0, text.length(), out);
-        //if (text.equals("01")){
-        Log.d("wut?",Math.min(h/2f,w/2f)+"");
-        //}
         while (out.width() + (2* buffer) > Math.min(h,w)/Math.sqrt(2) || out.height() + (2*buffer) > Math.min(h,w)/Math.sqrt(2)) {
-            // if (text.equals("01")){
-            Log.d("wut?",Math.min(h/2f,w/2f)+"");
-            //}
             textPaint.setTextSize(textPaint.getTextSize()*.9f);
             textPaint.getTextBounds(text, 0, text.length(), out);
         }
@@ -103,7 +97,7 @@ public class CircleView extends View {
 //        canvas.drawRect(r,p);
         canvas.drawText(text, (w/2f)- (textW2 / 2f), (h/2f) + (textH / 2f), textPaint);
 
-        currentR = ((currentR*Mathilda.getApp().getRate()*4)+targetR)/(1+(Mathilda.getApp().getRate()*4));
+        currentR = ((currentR*Mathilda.getApp().getRate()*2)+targetR)/(1+(Mathilda.getApp().getRate()*2));
         if (currentR != targetR){
             invalidate();
         }

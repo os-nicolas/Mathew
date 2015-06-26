@@ -34,22 +34,22 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         frags.add(TutVideoFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_2_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_2_body),
-                "android.resource://colin.example.algebrator/raw/" + R.raw.overview,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.overview,
                 Mathilda.getApp().getResources().getString(R.string.tut_2_atl)));
         frags.add(TutVideoFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_3_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_3_body),
-                "android.resource://colin.example.algebrator/raw/" + R.raw.doubletap,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.doubletap,
                 Mathilda.getApp().getResources().getString(R.string.tut_3_atl)));
         frags.add(TutVideoFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_4_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_4_body),
-                "android.resource://colin.example.algebrator/raw/" + R.raw.draganddrop,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.draganddrop,
                 Mathilda.getApp().getResources().getString(R.string.tut_4_atl)));
         frags.add(TutVideoFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_6_title),
                 Mathilda.getApp().getResources().getString(R.string.tut_6_body),
-                "android.resource://colin.example.algebrator/raw/" + R.raw.calc,
+                "android.resource://cube.d.n.calc/raw/" + R.raw.calc,
                 Mathilda.getApp().getResources().getString(R.string.tut_6_atl)));
         frags.add(TutTextFrag.make(
                 Mathilda.getApp().getResources().getString(R.string.tut_5_title),

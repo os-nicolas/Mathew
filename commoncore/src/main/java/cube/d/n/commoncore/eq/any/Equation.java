@@ -71,7 +71,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected void setMyWidth(int newWidth) {
         myWidth=newWidth;
     }
-    private int myHeight;
+    protected int myHeight;
     protected int getMyHeight(){
         return (int) (myHeight*root().getMyZoom());
     }

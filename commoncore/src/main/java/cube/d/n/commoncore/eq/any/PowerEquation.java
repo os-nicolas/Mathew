@@ -179,7 +179,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 buttons.add(new SeletedRowEquationButton(NumConstEquation.create(BigDecimal.ONE, owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.lastPoint.get(0);
                         that.power_PowerZero();
                         changed(p);
                     }
@@ -190,7 +190,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 buttons.add(new SeletedRowEquationButton(NumConstEquation.create(BigDecimal.ZERO, owner), new Action(owner) {
                     @Override
                     protected void privateAct() {
-                        MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                        MyPoint p = that.lastPoint.get(0);
                         that.power_PowerOne();
                         changed(p);
                     }
@@ -201,7 +201,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     buttons.add(new SeletedRowEquationButton(power_PowerPowerEquation(null), new Action(owner) {
                         @Override
                         protected void privateAct() {
-                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                            MyPoint p = that.lastPoint.get(0);
                             that.power_PowerPower(null, wasEvenRoot);
                             changed(p);
                         }
@@ -213,7 +213,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     buttons.add(new SeletedRowEquationButton(power_flipEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
-                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                            MyPoint p = that.lastPoint.get(0);
                             that.power_flip();
                             changed(p);
                         }
@@ -225,7 +225,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     buttons.add(new SeletedRowEquationButton(power_DivDistributeEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
-                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                            MyPoint p = that.lastPoint.get(0);
                             that.power_DivDistribute();
                             changed(p);
                         }
@@ -236,7 +236,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     buttons.add(new SeletedRowEquationButton(power_DistributeEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
-                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                            MyPoint p = that.lastPoint.get(0);
                             that.power_Distribute();
                             changed(p);
                         }
@@ -248,7 +248,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     buttons.add(new SeletedRowEquationButton(power_PowerIsAddEquation(), new Action(owner) {
                         @Override
                         protected void privateAct() {
-                            MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                            MyPoint p = that.lastPoint.get(0);
                             that.power_PowerIsAdd();
                             changed(p);
                         }
@@ -281,7 +281,8 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
     private boolean power_canPowerNum() {
         Equation temp = get(1).removeNeg();
-        return temp instanceof NumConstEquation;
+        Equation target = get(0).removeNeg();
+        return  temp instanceof NumConstEquation &&(isPosInt(((NumConstEquation) temp).getValue()) || target instanceof NumConstEquation ) ;
     }
 
     public void power_PowerZero() {
@@ -501,8 +502,8 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         BigDecimal value = ((NumConstEquation) temp).getValue();
 
         // if it is an int
-        if ((Math.floor(value.doubleValue()) == value.doubleValue() && !get(0).reallyInstanceOf(NumConstEquation.class) && value.compareTo(new BigDecimal(15)) < 0)) {
-            int val = value.toBigInteger().intValue();
+        if (isPosInt(((NumConstEquation) temp).getValue())) {
+            int val = ((NumConstEquation) temp).getValue().intValue();
 
             // if left is a var write x^3 -> x*x*x
             if (val > 1 && get(0).reallyInstanceOf(VarEquation.class)) {
@@ -572,6 +573,11 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             }
         }
         return result;
+    }
+
+    private boolean isPosInt(BigDecimal value) {
+       return  (Math.floor(value.doubleValue()) == value.doubleValue() && !get(0).reallyInstanceOf(NumConstEquation.class) && value.compareTo(new BigDecimal(15)) < 0);
+
     }
 
     // is used to tell if we need to +/- cases A^(1/(O*2))

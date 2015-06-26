@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.lines.NullLine;
@@ -24,7 +25,20 @@ public class TopicRow  {
 
     public final String name;
     public final String about;
-    public final ArrayList<ProblemRow> problems = new ArrayList<>();
+    public final Equation equation;
+    public final ArrayList<ProblemRow> problems;
+
+    public TopicRow(String name, Equation equation){
+        super();
+        topics.put(id,this);
+
+
+        this.name = name;
+        this.equation = equation;
+        this.about ="";
+
+        problems = getProblems();
+    }
 
     public TopicRow(String name, String about){
         super();
@@ -33,42 +47,43 @@ public class TopicRow  {
 
         this.name = name;
         this.about = about;
+        this.equation = null;
 
-        Equation eq = new AddEquation(new NullLine());
-        eq.add(NumConstEquation.create(5,new NullLine()));
-        eq.add(NumConstEquation.create(150,new NullLine()));
-        problems.add(new ProblemRow(eq));
-        problems.add(new ProblemRow("12"));
-        problems.add(new ProblemRow("123"));
-        problems.add(new ProblemRow("1234"));
-        problems.add(new ProblemRow("1adf adsf"));
-        problems.add(new ProblemRow("1adsf asdf"));
-        problems.add(new ProblemRow("1adsf asdfas "));
-        problems.add(new ProblemRow("1fasdf sad"));
-        problems.add(new ProblemRow("1asdf asd sdf a "));
-        problems.add(new ProblemRow("123"));
-        problems.add(new ProblemRow("1234"));
-        problems.add(new ProblemRow("1adf adsf"));
-        problems.add(new ProblemRow("1adsf asdf"));
-        problems.add(new ProblemRow("1adsf asdfas "));
-        problems.add(new ProblemRow("1fasdf sad"));
-        problems.add(new ProblemRow("1asdf asd sdf a "));
-        problems.add(new ProblemRow("123"));
-        problems.add(new ProblemRow("1234"));
-        problems.add(new ProblemRow("1adf adsf"));
-        problems.add(new ProblemRow("1adsf asdf"));
-        problems.add(new ProblemRow("1adsf asdfas "));
-        problems.add(new ProblemRow("1fasdf sad"));
-        problems.add(new ProblemRow("1asdf asd sdf a "));
-        problems.add(new ProblemRow("123"));
-        problems.add(new ProblemRow("1234"));
-        problems.add(new ProblemRow("1adf adsf"));
-        problems.add(new ProblemRow("1adsf asdf"));
-        problems.add(new ProblemRow("1adsf asdfas "));
-        problems.add(new ProblemRow("1fasdf sad"));
-        problems.add(new ProblemRow("1asdf asd sdf a "));
+        problems = getProblems();
+    }
 
-
+    private ArrayList<ProblemRow> getProblems() {
+        ArrayList<ProblemRow> probs = new ArrayList<>();
+        probs.add(new ProblemRow("12"));
+        probs.add(new ProblemRow("123"));
+        probs.add(new ProblemRow("1234"));
+        probs.add(new ProblemRow("1adf adsf"));
+        probs.add(new ProblemRow("1adsf asdf"));
+        probs.add(new ProblemRow("1adsf asdfas "));
+        probs.add(new ProblemRow("1fasdf sad"));
+        probs.add(new ProblemRow("1asdf asd sdf a "));
+        probs.add(new ProblemRow("123"));
+        probs.add(new ProblemRow("1234"));
+        probs.add(new ProblemRow("1adf adsf"));
+        probs.add(new ProblemRow("1adsf asdf"));
+        probs.add(new ProblemRow("1adsf asdfas "));
+        probs.add(new ProblemRow("1fasdf sad"));
+        probs.add(new ProblemRow("1asdf asd sdf a "));
+        probs.add(new ProblemRow("123"));
+        probs.add(new ProblemRow("1234"));
+        probs.add(new ProblemRow("1adf adsf"));
+        probs.add(new ProblemRow("1adsf asdf"));
+        probs.add(new ProblemRow("1adsf asdfas "));
+        probs.add(new ProblemRow("1fasdf sad"));
+        probs.add(new ProblemRow("1asdf asd sdf a "));
+        probs.add(new ProblemRow("123"));
+        probs.add(new ProblemRow("1234"));
+        probs.add(new ProblemRow("1adf adsf"));
+        probs.add(new ProblemRow("1adsf asdf"));
+        probs.add(new ProblemRow("1adsf asdfas "));
+        probs.add(new ProblemRow("1fasdf sad"));
+        probs.add(new ProblemRow("1asdf asd sdf a "));
+        return probs;
 
     }
 

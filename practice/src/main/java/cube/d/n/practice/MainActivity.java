@@ -15,6 +15,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.eq.any.AddEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.lines.NullLine;
+
 public class MainActivity extends Activity {
 
     public void onCreate(Bundle icicle) {
@@ -61,8 +67,14 @@ public class MainActivity extends Activity {
 
     private ArrayList<TopicRow> generateData() {
         ArrayList<TopicRow> topics = new ArrayList<TopicRow>();
-        topics.add(new TopicRow("Item 1", "First Item on the list"));
-        topics.add(new TopicRow("Item 2", "Second Item on the list"));
+        Equation eq = new DivEquation(new NullLine());
+        eq.add(NumConstEquation.create(1,new NullLine()));
+        eq.add(NumConstEquation.create(2,new NullLine()));
+        topics.add(new TopicRow("Item 1", eq));
+        Equation eq2 = new AddEquation(new NullLine());
+        eq2.add(NumConstEquation.create(1,new NullLine()));
+        eq2.add(NumConstEquation.create(2,new NullLine()));
+        topics.add(new TopicRow("Item 2", eq2));
         topics.add(new TopicRow("Item 3", "Third Item on the list"));
         topics.add(new TopicRow("Item 4", "First Item on the list"));
         topics.add(new TopicRow("Item 5", "Second Item on the list"));

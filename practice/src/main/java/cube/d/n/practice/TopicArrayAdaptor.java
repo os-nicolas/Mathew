@@ -15,6 +15,10 @@ package cube.d.n.practice;
         import android.widget.ArrayAdapter;
         import android.widget.TextView;
 
+        import cube.d.n.commoncore.EquationView;
+        import cube.d.n.commoncore.eq.any.VarEquation;
+        import cube.d.n.commoncore.lines.NullLine;
+
 public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
     private final Context context;
@@ -52,11 +56,15 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
                 "fonts/DejaVuSans-ExtraLight.ttf");
         title.setTypeface(djLight);
 
-        TextView subtitle = (TextView) res.findViewById(R.id.row_subtitle);
 
-        Typeface dj = Typeface.createFromAsset(context.getAssets(),
-                "fonts/DejaVuSans.ttf");
-        subtitle.setTypeface(dj);
+        EquationView equationView = (EquationView) res.findViewById(R.id.row_subtitle);
+        if (topics.get(position).equation==null) {
+            equationView.setEquation(new VarEquation(topics.get(position).about, new NullLine()), .5f);//,
+        }else{
+            equationView.setEquation(topics.get(position).equation,.5f);
+        }
+        equationView.setFont(Mathilda.getMathilda().getDJV());
+        equationView.setColor(0xff888888);
 
         CircleView cir = (CircleView) res.findViewById(R.id.topic_circle);
 
@@ -66,7 +74,6 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
 
         title.setText(topics.get(position).name);
-        subtitle.setText(topics.get(position).about);
 
 
         views.put(position,res);

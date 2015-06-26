@@ -2,6 +2,7 @@ package cube.d.n.commoncore;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -31,18 +32,35 @@ public class EquationView extends View {
         invalidate();
     }
 
+    float startZoom = 1;
+
+    public void setEquation(Equation e, float startZoom){
+        myEq = e;
+        this.startZoom = startZoom;
+        invalidate();
+
+    }
+
     @Override
     public void onDraw(Canvas canvas){
         if (myEq!= null){
             int h =getHeight();
             int w = getWidth();
 
-            float buffer = BaseApp.getApp().getBuffer();
-            myEq.overWriteZoom(1.5f);
+            float buffer = 0;//BaseApp.getApp().getBuffer();
+            myEq.overWriteZoom(startZoom);
             while (myEq.measureWidth() + 2 * buffer > w ||myEq.measureHeight() + 2 * buffer > h) {
                 myEq.overWriteZoom(myEq.getMyZoom()*.9f);
             }
             myEq.draw(canvas,myEq.measureWidth()/2f,h/2f);
         }
+    }
+
+    public void setFont(Typeface dj){
+        myEq.getPaint().setTypeface(dj);
+    }
+
+    public void setColor(int color){
+        myEq.setColor(color);
     }
 }

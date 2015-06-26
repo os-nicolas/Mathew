@@ -11,6 +11,8 @@ import com.google.android.gms.maps.model.Circle;
 
 import cube.d.n.commoncore.EquationView;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.VarEquation;
+import cube.d.n.commoncore.lines.NullLine;
 
 /**
  * Created by Colin on 6/23/2015.
@@ -21,10 +23,21 @@ public class ProblemRow {
 
     public ProblemRow(String name){
         this.name = name;
+        this.equation = new VarEquation(name,new NullLine());
     }
 
     public ProblemRow(Equation equation){
         this.equation = equation;
+       setFont( Mathilda.getMathilda().getDJV());
+        setColor(0xff888888);
         this.name="";
+    }
+
+    public void setFont(Typeface dj){
+        equation.getPaint().setTypeface(dj);
+    }
+
+    public void setColor(int color){
+        equation.setColor(color);
     }
 }

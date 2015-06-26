@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.util.Log;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
@@ -48,9 +49,16 @@ public class SeletedRowEquationButton extends SelectedRowButtons {
         int myAlpha = textPaint.getAlpha() * p.getAlpha() / (0xff);
         if (myAlpha != 0){
         float buffer = BaseApp.getApp().getBuffer();
+
+        int dbCount =0;
+
         myEq.overWriteZoom(1);
         while (myEq.measureWidth() + 2 * buffer > measureWidth() ||myEq.measureHeight() + 2 * buffer > targetHeight()) {
             myEq.overWriteZoom(myEq.getMyZoom()*.9f);
+            dbCount++;
+            if (dbCount>20){
+                Log.d("sad", "we are stuck");
+            }
         }
         myEq.setAlpha(myAlpha);
         myEq.draw(canvas,getX(),getY());
