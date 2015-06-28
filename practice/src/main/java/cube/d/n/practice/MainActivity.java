@@ -66,7 +66,7 @@ public class MainActivity extends Activity {
         });
 
 
-        Equation eq = Util.stringEquation("=,(,+,5,4,),(,/,a,23,)".split(","));
+        Equation eq = Util.stringEquation("=,(,+,5,-4,),(,/,a,23,)".split(","));
         Log.d("onCreate",eq +"");
     }
 

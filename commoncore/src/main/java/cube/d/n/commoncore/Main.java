@@ -1,14 +1,21 @@
 package cube.d.n.commoncore;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.graphics.drawable.PictureDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -45,9 +52,11 @@ public class Main extends View implements View.OnTouchListener {
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
 
     final ArrayList<Line> lines = new ArrayList<>();
+    View overlay;
 
     public float height;
     public float width;
+    private Bitmap bitMap;
 
     public Main(Context context) {
         super(context);
@@ -82,6 +91,11 @@ public class Main extends View implements View.OnTouchListener {
         keyBoardManager.hardSet(myLine.getKeyboad());
         lines.add(myLine);
         setOnTouchListener(this);
+    }
+
+
+    public void addOverLay(View overlay){
+        this.overlay =  overlay;
     }
 
 
@@ -282,8 +296,11 @@ public class Main extends View implements View.OnTouchListener {
     long startTime = System.currentTimeMillis();
     int frames = 1;
     Equation lastEq = null;
+
     @Override
     protected void onDraw(Canvas canvas) {
+
+
 
 
         if (height == 0) {
@@ -297,6 +314,7 @@ public class Main extends View implements View.OnTouchListener {
         Paint p = new Paint();
         p.setColor(0xffffffff);
         canvas.drawRect(r,p);
+
 
         if (!fingerDown) {
             slide();
@@ -339,6 +357,19 @@ public class Main extends View implements View.OnTouchListener {
             Log.i("current", lastEq.toString()+"");
         }
 
+        if (overlay != null){
+
+            if (bitMap == null && overlay.getMeasuredHeight() != 0){
+                bitMap = getBitMap(overlay,bitMap);
+            }
+
+            if (bitMap!=null){
+                canvas.drawBitmap(bitMap,0,Math.min(bot-bitMap.getHeight(),0),new Paint());
+
+            }
+
+        }
+
         if (trackFinger && fingerDown){
             Paint fingerPaint = new Paint();
             fingerPaint.setARGB(0xff/2,(0xd5-(0xff/2))*2,0x04,0x06);
@@ -347,6 +378,25 @@ public class Main extends View implements View.OnTouchListener {
 
     }
 
+    private Bitmap getBitMap(View overlay,Bitmap old) {
+
+        Picture p = new Picture();
+
+        Canvas c =  p.beginRecording(overlay.getWidth(),overlay.getHeight());
+
+        overlay.draw(c);
+
+        p.endRecording();
+
+        PictureDrawable pd = new PictureDrawable(p);
+        if (old == null) {
+            old = Bitmap.createBitmap(pd.getIntrinsicWidth(), pd.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+        Canvas canvas = new Canvas(old);
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        canvas.drawPicture(pd.getPicture());
+        return old;
+    }
 
 
     public InputLine nextInputLine(int at) {
@@ -399,6 +449,9 @@ public class Main extends View implements View.OnTouchListener {
             for (Line l:lines){
                 maxOffsetY+= l.measureHeight();
             }
+//            if (bitMap != null){
+//                maxOffsetY += bitMap.getHeight();
+//            }
         }
 
         if (offsetY > maxOffsetY){
@@ -453,10 +506,18 @@ public class Main extends View implements View.OnTouchListener {
                 (keyBoardManager.getNextKeyboard()== null || top > height- keyBoardManager.getNextKeyboard().measureHeight())){
             return false;
         }
-        if (top + l.measureHeight() < 0){
+        if (top + l.measureHeight() < top()){
             return false;
         }
         return true;
+    }
+
+    private float top() {
+        //if (bitMap == null) {
+            return 0;
+        //}else{
+        //    return bitMap.getHeight();
+        //}
     }
 
     public void addLine(Line line) {
