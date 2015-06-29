@@ -1,6 +1,7 @@
 package cube.d.n.practice;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,68 +27,46 @@ public class TopicRow  {
     public final String name;
     public final String about;
     public final Equation equation;
-    public final ArrayList<ProblemRow> problems;
+    private ArrayList<ProblemRow> problems;
 
-    public TopicRow(String name, Equation equation){
+    public TopicRow(String line) {
         super();
-        topics.put(id,this);
+        topics.put(myId,this);
+        String[] split = line.split("\t");
 
 
-        this.name = name;
-        this.equation = equation;
-        this.about ="";
-
-        problems = getProblems();
-    }
-
-    public TopicRow(String name, String about){
-        super();
-        topics.put(id,this);
+        this.name = split[0];
+        if (split[1].startsWith("(")){
+            Log.d("wut", split[1]);
+            String[] eqSplit = split[1].substring(2,split[1].length()-2).split(",");
 
 
-        this.name = name;
-        this.about = about;
-        this.equation = null;
-
-        problems = getProblems();
+            this.equation = Util.stringEquation(eqSplit);
+            this.about ="";
+        }else {
+            this.about = split[1];
+            this.equation = null;
+        }
     }
 
     private ArrayList<ProblemRow> getProblems() {
-        ArrayList<ProblemRow> probs = new ArrayList<>();
-        probs.add(new ProblemRow("12"));
-        probs.add(new ProblemRow("123"));
-        probs.add(new ProblemRow("1234"));
-        probs.add(new ProblemRow("1adf adsf"));
-        probs.add(new ProblemRow("1adsf asdf"));
-        probs.add(new ProblemRow("1adsf asdfas "));
-        probs.add(new ProblemRow("1fasdf sad"));
-        probs.add(new ProblemRow("1asdf asd sdf a "));
-        probs.add(new ProblemRow("123"));
-        probs.add(new ProblemRow("1234"));
-        probs.add(new ProblemRow("1adf adsf"));
-        probs.add(new ProblemRow("1adsf asdf"));
-        probs.add(new ProblemRow("1adsf asdfas "));
-        probs.add(new ProblemRow("1fasdf sad"));
-        probs.add(new ProblemRow("1asdf asd sdf a "));
-        probs.add(new ProblemRow("123"));
-        probs.add(new ProblemRow("1234"));
-        probs.add(new ProblemRow("1adf adsf"));
-        probs.add(new ProblemRow("1adsf asdf"));
-        probs.add(new ProblemRow("1adsf asdfas "));
-        probs.add(new ProblemRow("1fasdf sad"));
-        probs.add(new ProblemRow("1asdf asd sdf a "));
-        probs.add(new ProblemRow("123"));
-        probs.add(new ProblemRow("1234"));
-        probs.add(new ProblemRow("1adf adsf"));
-        probs.add(new ProblemRow("1adsf asdf"));
-        probs.add(new ProblemRow("1adsf asdfas "));
-        probs.add(new ProblemRow("1fasdf sad"));
-        probs.add(new ProblemRow("1asdf asd sdf a "));
-        return probs;
+        if (problems == null) {
+            ArrayList<ProblemRow> probs = new ArrayList<>();
+            ArrayList<ProblemRow> allProbs = Mathilda.getMathilda().problems;
+
+            for (ProblemRow prob : allProbs) {
+                if (prob.topic.equals(name)) {
+                    probs.add(prob);
+                }
+            }
+            problems = probs;
+        }
+        return problems;
+
 
     }
 
     public ProblemArrayAdapter getAdapter(Context context,ListView parent){
-        return new ProblemArrayAdapter(context,problems,parent);
+        return new ProblemArrayAdapter(context,getProblems(),parent);
     }
 }
