@@ -3,18 +3,18 @@ package cube.d.n.commoncore.eq.Pro;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
 public class ACosEquation extends TrigEquation<CosEquation> {
 
-    public ACosEquation(Line owner) {
+    public ACosEquation(EquationLine owner) {
         super(owner);
     }
 
-    protected ACosEquation(Line owner, TrigEquation toCopy) {
+    protected ACosEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }
 

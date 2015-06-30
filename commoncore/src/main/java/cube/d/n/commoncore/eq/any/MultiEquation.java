@@ -9,18 +9,17 @@ import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
-import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 import java.util.ArrayList;
 
 public class MultiEquation extends FlexOperation implements MultiDivSuperEquation, BinaryOperator {
 
-    public MultiEquation(Line owner, MultiEquation equations) {
+    public MultiEquation(EquationLine owner, MultiEquation equations) {
         super(owner, equations);
         init();
     }
@@ -80,7 +79,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         }
     }
 
-    public MultiEquation(Line owner) {
+    public MultiEquation(EquationLine owner) {
         super(owner);
         init();
     }

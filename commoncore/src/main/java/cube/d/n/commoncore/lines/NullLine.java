@@ -4,13 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
-import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
  * Created by Colin_000 on 6/24/2015.
  */
-public class NullLine extends  Line {
+public class NullLine extends EquationLine {
 
 
 

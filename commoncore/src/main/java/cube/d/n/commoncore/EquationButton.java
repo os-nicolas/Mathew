@@ -16,7 +16,7 @@ import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -34,14 +34,14 @@ public class EquationButton extends Button {
     private int targetAlpha = 0xff;
     int bkgCurrentAlpha = 0x0;
     int bkgTargetAlpha = 0x0;
-    public Line owner;
+    public EquationLine owner;
     public int targetColor;
     public int currentColor = Color.BLACK;
     private boolean warn = false;
     public Equation warnEq = null;
 
 
-    public EquationButton(Equation e, Line owner) {
+    public EquationButton(Equation e, EquationLine owner) {
         myEq = e;
         e.active = false;
         this.owner = owner;

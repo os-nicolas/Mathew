@@ -10,14 +10,14 @@ import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
 import cube.d.n.commoncore.eq.LegallityCheck;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin on 1/6/2015.
  */
 public class WritingLeafEquation extends LeafEquation implements LegallityCheck {
-    public WritingLeafEquation(String display, Line emilyView) {
+    public WritingLeafEquation(String display, EquationLine emilyView) {
         super(emilyView);
         init(display);
     }

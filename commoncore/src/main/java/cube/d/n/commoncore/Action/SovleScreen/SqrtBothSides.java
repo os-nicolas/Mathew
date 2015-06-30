@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.Action.SovleScreen;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
@@ -18,6 +19,9 @@ public class SqrtBothSides extends Action {
 
     @Override
     protected void privateAct() {
+        if (((Selects)owner).getSelected() != null) {
+            ((Selects) owner).getSelected().setSelected(false);
+        }
         Equation myStupid =  owner.stupid.get().copy();
         if (myStupid instanceof EqualsEquation) {
             for (Equation e : myStupid) {

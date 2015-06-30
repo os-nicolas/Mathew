@@ -1,18 +1,14 @@
 package dash.dev.mathilda.helper.Actions.Solve;
 
-import android.app.Activity;
-
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Selects;
-import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 import dash.dev.mathilda.helper.ColinAct;
 
 /**
  * Created by Colin_000 on 5/20/2015.
  */
 public class DoneAction extends Action {
-    public DoneAction(Line line) {
+    public DoneAction(EquationLine line) {
         super(line);
     }
 

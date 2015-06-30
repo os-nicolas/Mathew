@@ -1,16 +1,13 @@
 package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.Log;
 import android.view.MotionEvent;
 
-import java.io.Console;
 import java.util.ArrayList;
 
 
@@ -28,7 +25,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
 * Created by Colin_000 on 5/7/2015.
 */
-public class InputLine extends Line implements Selects {
+public class InputLine extends EquationLine implements Selects {
 
     private final PlaceholderEquation selected;
 

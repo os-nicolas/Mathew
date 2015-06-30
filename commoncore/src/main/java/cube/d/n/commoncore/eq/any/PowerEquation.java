@@ -21,7 +21,7 @@ import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin on 1/10/2015.
@@ -29,7 +29,7 @@ import cube.d.n.commoncore.lines.Line;
 public class PowerEquation extends Operation implements BinaryEquation, BinaryOperator
 {
 
-    public PowerEquation(Line owner) {
+    public PowerEquation(EquationLine owner) {
         super(owner);
 
         init();
@@ -49,7 +49,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         display = "^";
     }
 
-    public PowerEquation(Line owner, PowerEquation equations) {
+    public PowerEquation(EquationLine owner, PowerEquation equations) {
         super(owner, equations);
         init();
     }
@@ -155,7 +155,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 power_Distribute();
             } else if (power_canPowerIsAdd()) {
                 power_PowerIsAdd();
-            } else if (power_canPowerNum()){
+            } else if (power_canPowerNum(wasEven)){
                 power_PowerNum(result, wasEvenRoot, wasEven);
             }
         }
@@ -255,7 +255,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                     }));
                 }
 
-                if (power_canPowerNum()){
+                if (power_canPowerNum(wasEven)){
 
                     buttons.add(new SeletedRowEquationButton(power_IsNumEquation(null, wasEven), new Action(owner) {
                         @Override
@@ -295,9 +295,10 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         return res;
     }
 
-    private boolean power_canPowerNum() {
+    private boolean power_canPowerNum(boolean wasEven) {
         Equation temp = get(1).removeNeg();
-        Equation target = get(0).removeNeg();
+        Equation target = (wasEven? get(0).removeSign():get(0).removeNeg());
+
         return  temp instanceof NumConstEquation &&(isPosInt(((NumConstEquation) temp).getValue()) || target instanceof NumConstEquation ) ;
     }
 

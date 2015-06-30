@@ -9,7 +9,6 @@ import android.text.TextPaint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.*;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
@@ -29,8 +28,8 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 import cube.d.n.commoncore.keyboards.ReturnKeyBoard;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 4/20/2015.
@@ -116,7 +115,7 @@ public abstract class BaseApp extends Application{
         return new Solve(line);
     }
 
-    public Action getDone(Line line) {
+    public Action getDone(EquationLine line) {
         return new Done(line);
     }
 
@@ -336,7 +335,7 @@ public abstract class BaseApp extends Application{
         return false;
     }
 
-    public Line getInputLine(Main owner) {
+    public EquationLine getInputLine(Main owner) {
         return new InputLine(owner);
     }
 

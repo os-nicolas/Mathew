@@ -6,17 +6,17 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 5/8/2015.
  */
 public abstract class Action {
 
-    public final Line owner;
+    public final EquationLine owner;
 
-    public Action(Line owner){
+    public Action(EquationLine owner){
         this.owner =owner;
     }
 
@@ -133,11 +133,11 @@ public abstract class Action {
         if (owner instanceof  InputLine){
                 InputLine il = (InputLine)owner;
                 PlaceholderEquation phe = il.getSelected();
-                if (phe.getX() +(phe.measureWidth()/2f) > owner.owner.width- 4*Line.getBuffer()){
-                    il.toAddToOffsetX((owner.owner.width- 4*Line.getBuffer())- (phe.getX() +(phe.measureWidth()/2f)));
+                if (phe.getX() +(phe.measureWidth()/2f) > owner.owner.width- 4* EquationLine.getBuffer()){
+                    il.toAddToOffsetX((owner.owner.width- 4* EquationLine.getBuffer())- (phe.getX() +(phe.measureWidth()/2f)));
                 }
-                if (phe.getX() -(phe.measureWidth()/2f) < 4*Line.getBuffer()){
-                    il.toAddToOffsetX((4*Line.getBuffer())- (phe.getX() - (phe.measureWidth()/2f)));
+                if (phe.getX() -(phe.measureWidth()/2f) < 4* EquationLine.getBuffer()){
+                    il.toAddToOffsetX((4* EquationLine.getBuffer())- (phe.getX() - (phe.measureWidth()/2f)));
                 }
 
                 // the bottom of the input should not be off the bottom of the screen
@@ -149,12 +149,12 @@ public abstract class Action {
                 // the place holder should not be off the top of the screen
                 // this probably does not really work since getY stopping being update off screen
                 // it also probably is not need and will never happen because we already scroll if get the last line offscreen
-                if ((phe.getY() -phe.measureHeightUpper() <Line.getBuffer()) ){
-                    owner.owner.toAddToOffsetY((Line.getBuffer())- (phe.getY() - phe.measureHeightUpper()));
+                if ((phe.getY() -phe.measureHeightUpper() < EquationLine.getBuffer()) ){
+                    owner.owner.toAddToOffsetY((EquationLine.getBuffer())- (phe.getY() - phe.measureHeightUpper()));
                 }
                 // the place holder should not be off the bot of the screen
-                if (phe.getY() +phe.measureHeightLower() > owner.owner.height - (owner.owner.keyBoardManager.get().measureHeight()+  Line.getBuffer())) {
-                    owner.owner.toAddToOffsetY((owner.owner.height - (owner.owner.keyBoardManager.get().measureHeight()+  Line.getBuffer()))- (phe.getY() +phe.measureHeightLower()));
+                if (phe.getY() +phe.measureHeightLower() > owner.owner.height - (owner.owner.keyBoardManager.get().measureHeight()+  EquationLine.getBuffer())) {
+                    owner.owner.toAddToOffsetY((owner.owner.height - (owner.owner.keyBoardManager.get().measureHeight()+  EquationLine.getBuffer()))- (phe.getY() +phe.measureHeightLower()));
                 }
 
         }

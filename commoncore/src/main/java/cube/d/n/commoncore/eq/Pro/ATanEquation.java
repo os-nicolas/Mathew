@@ -3,18 +3,18 @@ package cube.d.n.commoncore.eq.Pro;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
 public class ATanEquation extends TrigEquation<TanEquation> {
 
-    public ATanEquation(Line owner) {
+    public ATanEquation(EquationLine owner) {
         super(owner);
     }
 
-    protected ATanEquation(Line owner, TrigEquation toCopy) {
+    protected ATanEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }
 

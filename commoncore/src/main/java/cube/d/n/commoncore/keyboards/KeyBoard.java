@@ -14,9 +14,8 @@ import cube.d.n.commoncore.Measureable;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.SelectedRow;
-import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.TouchMode;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -28,12 +27,12 @@ public abstract class KeyBoard implements Measureable {
     public ArrayList<PopUpButton> popUpButtons = new ArrayList<>();
     public ArrayList<SelectedRow> popUpLines = new ArrayList<>();
     public float buttonsPercent;
-    protected final Line line;
+    protected final EquationLine line;
     private boolean active= true;
 
 
 
-    public KeyBoard(Main owner,Line line){
+    public KeyBoard(Main owner,EquationLine line){
         this.owner = owner;
         this.line = line;
         addButtons();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MinusEquation;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin on 2/16/2015.
@@ -28,7 +28,7 @@ public class MultiCountDatas extends  ArrayList<MultiCountData>{
         super();
     }
 
-    public Equation getEquation(Line owner) {
+    public Equation getEquation(EquationLine owner) {
         Equation result=null;
         if (size() == 1) {
             MultiCountData mine =  get(0);

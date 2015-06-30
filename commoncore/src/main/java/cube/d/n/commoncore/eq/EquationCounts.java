@@ -12,7 +12,7 @@ import cube.d.n.commoncore.eq.any.MinusEquation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 1/18/2015.
@@ -112,7 +112,7 @@ public class EquationCounts {
     }
 
     public Equation getEquation() {
-        Line owner = root.owner;
+        EquationLine owner = root.owner;
         if (equations.size()==0){
             if ( v.doubleValue()  == 1) {
                 return root;

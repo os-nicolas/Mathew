@@ -1,22 +1,14 @@
 package dash.dev.mathilda.helper.Actions.BothSides;
 
-import android.content.Intent;
-
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
-import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
-import cube.d.n.commoncore.lines.OutputLine;
-import dash.dev.mathilda.helper.tuts.TutActivity;
 
 /**
  * Created by Colin_000 on 5/20/2015.

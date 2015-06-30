@@ -18,7 +18,7 @@ import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 
 /**
@@ -28,7 +28,7 @@ public class Operations {
 
     // **************************** MULTIPLY *****************************************
 
-    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify,Line owner) {
+    public static MultiCountDatas Multiply(MultiCountDatas left, MultiCountDatas right, boolean simplify,EquationLine owner) {
 
 
         MultiCountDatas result = new MultiCountDatas();
@@ -59,7 +59,7 @@ public class Operations {
         return result;
     }
 
-    private static MultiCountData Multiply(MultiCountData a, MultiCountData b,Line owner) {
+    private static MultiCountData Multiply(MultiCountData a, MultiCountData b,EquationLine owner) {
         MultiCountData result = new MultiCountData();
 
         for (MultiCountData e : new MultiCountData[]{a, b}) {
@@ -68,7 +68,7 @@ public class Operations {
         return result;
     }
 
-    private static void multiplyHelper(MultiCountData newMcd, MultiCountData result,Line owner) {
+    private static void multiplyHelper(MultiCountData newMcd, MultiCountData result,EquationLine owner) {
 
         MultiCountData at = newMcd;
         MultiCountData target = result;
@@ -121,7 +121,7 @@ public class Operations {
 
     // **************************** ADD *****************************************
 
-    public static Equation Add(MultiCountData left, MultiCountData right,Line owner) {
+    public static Equation Add(MultiCountData left, MultiCountData right,EquationLine owner) {
         if (add_canAddNumber(left,right,owner)){
             return add_AddNumber(left,right,owner);
         }else if (add_canCommonDenom(left, right, owner)){
@@ -241,11 +241,11 @@ public class Operations {
 //        }
     }
 
-    public static Equation add_CombineLikeTerms(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_CombineLikeTerms(MultiCountData left, MultiCountData right, EquationLine owner) {
         return addHelper(left, right,owner);
     }
 
-    public static Equation add_CommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_CommonDenom(MultiCountData left, MultiCountData right, EquationLine owner) {
         MultiCountData under=null;
         if (left.under != null && right.under == null) {
             under = left.under;
@@ -290,19 +290,19 @@ public class Operations {
         return result;
     }
 
-    public static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, Line owner) {
+    public static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, EquationLine owner) {
         return left.under !=null || right.under!=null &&!(overZero(left,owner) || overZero(right,owner));
     }
 
-    public static Equation add_AddNumber(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_AddNumber(MultiCountData left, MultiCountData right, EquationLine owner) {
         return addHelper(left, right, owner);
     }
 
-    public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, Line owner) {
-        return divide_CanSortaNumbers(left,right);
+    public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, EquationLine owner) {
+        return divide_CanSortaNumbers(left,right) && left.key.size() ==0 &&  right.key.size() ==0 ;
     }
 
-    public static Equation add_Common(MultiCountData left, MultiCountData right, Line owner) {
+    public static Equation add_Common(MultiCountData left, MultiCountData right, EquationLine owner) {
         MultiCountData common = findCommon(left, right);
 
         left = remainder(left, common,owner);
@@ -343,7 +343,7 @@ public class Operations {
         }
     }
 
-    public static boolean add_canCombineLikeTerms(MultiCountData left, MultiCountData right, Line owner) {
+    public static boolean add_canCombineLikeTerms(MultiCountData left, MultiCountData right, EquationLine owner) {
 
         Equation result = new AddEquation(owner);
         result.add(left.getEquation(owner));
@@ -352,7 +352,7 @@ public class Operations {
         return !result.same(addHelper(left, right, owner));
     }
 
-    public static boolean add_canCommon(MultiCountData left, MultiCountData right, Line owner) {
+    public static boolean add_canCommon(MultiCountData left, MultiCountData right, EquationLine owner) {
         //TODO
         // atm 3a/5 + 4a will return 7a
         // to protect from that we
@@ -362,14 +362,14 @@ public class Operations {
 
         MultiCountData common = findCommon(left, right);
 
-        return (!common.key.isEmpty() || !common.numbers.isEmpty());
+        return (!common.key.isEmpty() || !(common.getValue().doubleValue() == 1));
     }
 
-    private static boolean overZero(MultiCountData left,Line owner) {
+    private static boolean overZero(MultiCountData left,EquationLine owner) {
         return left.under != null && sortaNumber(left.under.getEquation(owner)) && getValue(left.under.getEquation(owner)).doubleValue()==0;
     }
 
-    private static Equation addHelper(MultiCountData left, MultiCountData right,Line owner) {
+    private static Equation addHelper(MultiCountData left, MultiCountData right,EquationLine owner) {
         // if they are both just numbers make a NumConst
         if (left.key.size() == 0 && right.key.size() == 0 && right.numbers.size() <= 1 && left.numbers.size() <= 1 && !left.plusMinus && !right.plusMinus) {
             BigDecimal sum = right.getValue().add(left.getValue());
@@ -392,7 +392,7 @@ public class Operations {
     }
 
 
-    public static MultiCountData remainder(MultiCountData left, MultiCountData common,Line owner) {
+    public static MultiCountData remainder(MultiCountData left, MultiCountData common,EquationLine owner) {
         MultiCountData result = new MultiCountData();
 
         ArrayList<EquationCounts> leftCopy = new ArrayList<EquationCounts>();
@@ -733,13 +733,15 @@ public class Operations {
 
     // **************************** DIVIDE ****************************
 
-    public static Equation divide(Equation a, Equation b,Line owner) {
+    public static Equation divide(Equation a, Equation b,EquationLine owner) {
         Equation result = null;
 
         // we check to see if they are both power equations of the same power
         // or close to that (just a negetive sign away
 
-        if (divide_CanSamePower(a, b)) {
+        if (divide_CanTopIsZero(a, b)){
+            result = divide_TopIsZero(a, b, owner);
+        }else if (divide_CanSamePower(a, b)) {
             result = divide_samePower(a, b, owner);
 
          //TODO this need to be able to handle negs on the addEquation
@@ -759,6 +761,8 @@ public class Operations {
             }else if (divide_CanBringIn(a)){
                 result = divide_BringIn(a, b, owner);
                 // if we have a/b where a and b are sortaNumbers
+            }else  if (divide_CanFlatten(a,b)){
+                result = divide_Flatten(a, b, owner);
             } else if (divide_CanSortaNumbers(top, bot)) {
 
 
@@ -780,6 +784,51 @@ public class Operations {
         return result;
     }
 
+    public static DivEquation divide_Flatten(Equation oldTop, Equation oldBot, EquationLine owner) {
+        DivEquation result = new DivEquation(owner);
+        Equation top;
+        if (oldBot instanceof DivEquation){
+            top = new MultiEquation(owner);
+            if (oldTop instanceof DivEquation){
+                top.add(oldTop.get(0).copy());
+            }else{
+                top.add(oldTop.copy());
+            }
+            top.add(oldBot.get(1).copy());
+        }else{
+            //oldTop instanceof DivEquation
+            top=oldTop.get(0).copy();
+        }
+        result.add(top);
+
+        Equation bot;
+        if (oldTop instanceof DivEquation){
+            bot = new MultiEquation(owner);
+            bot.add(oldTop.get(1).copy());
+            if (oldBot instanceof DivEquation){
+                bot.add(oldBot.get(0).copy());
+            }else{
+                bot.add(oldBot.copy());
+            }
+
+        }else{
+           //oldBot instanceof DivEquation
+           bot=oldBot.get(0).copy();
+        }
+        result.add(bot);
+
+        return result;
+
+    }
+
+    public static boolean divide_CanFlatten(Equation a, Equation b) {
+        return a instanceof DivEquation || b instanceof DivEquation;
+    }
+
+    public static Equation divide_TopIsZero(Equation a, Equation b, EquationLine owner) {
+        return NumConstEquation.create(0,owner);
+    }
+
     public static boolean divide_CanCancel(MultiCountData common) {
         MultiCountData commonAt = common;
 
@@ -790,10 +839,10 @@ public class Operations {
             }
             commonAt = commonAt.under;
         }
-        return anyCommon;
+        return anyCommon && !common.key.isEmpty();
     }
 
-    public static Equation divide_Divide(Line owner, MultiCountData top, MultiCountData bot) {
+    public static Equation divide_Divide(EquationLine owner, MultiCountData top, MultiCountData bot) {
         Equation result;BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
         bot.numbers = new ArrayList<Equation>();
         top.numbers = new ArrayList<Equation>();
@@ -810,7 +859,7 @@ public class Operations {
         return result;
     }
 
-    public static Equation divide_Reduce(Line owner, MultiCountData top, MultiCountData bot) {
+    public static Equation divide_Reduce(EquationLine owner, MultiCountData top, MultiCountData bot) {
         Equation result;
         int topInt = (int) Math.floor(top.getValue().doubleValue());
         int botInt = (int) Math.floor(bot.getValue().doubleValue());
@@ -842,11 +891,13 @@ public class Operations {
                 && Math.abs(myGcd) != 1;
     }
 
+
+
     public static boolean divide_CanSortaNumbers(MultiCountData top, MultiCountData bot) {
-        return  top.key.size() ==0 &&  bot.key.size() ==0 && bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);
+        return  bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);//
     }
 
-    public static Equation divide_BringIn(Equation a, Equation b, Line owner) {
+    public static Equation divide_BringIn(Equation a, Equation b, EquationLine owner) {
         Equation result;
         result = new PowerEquation(owner);
         // we raise b to the the same power as a and bring it inside
@@ -867,7 +918,7 @@ public class Operations {
         return a.removeSign() instanceof PowerEquation;
     }
 
-    public static Equation divide_Cancel(Line owner, MultiCountData top, MultiCountData bot, MultiCountData common) {
+    public static Equation divide_Cancel(EquationLine owner, MultiCountData top, MultiCountData bot, MultiCountData common) {
         Equation result;
         if (owner instanceof AlgebraLine) {
 
@@ -882,7 +933,7 @@ public class Operations {
         return result;
     }
 
-    public static Equation divide_SplitUp(Equation a, Equation b, Line owner) {
+    public static Equation divide_SplitUp(Equation a, Equation b, EquationLine owner) {
         Equation result;
         result = new AddEquation(owner);
         for (Equation e : a.removeSign()) {
@@ -905,7 +956,7 @@ public class Operations {
                 a.removeSign().get(1).same(b.removeSign().get(1)));
     }
 
-    public static Equation divide_samePower(Equation a, Equation b, Line owner) {
+    public static Equation divide_samePower(Equation a, Equation b, EquationLine owner) {
         boolean neg = a.isNeg() != b.isNeg();
         boolean plusMinus = a.isPlusMinus() != b.isPlusMinus();
         Equation div = new DivEquation(owner);
@@ -926,9 +977,9 @@ public class Operations {
         return result;
     }
 
-    public static Equation getResult(Equation topEq, Equation botEq,Line owner) {
+    public static Equation getResult(Equation topEq, Equation botEq,EquationLine owner) {
         // if the top is 0 and the bottom is not
-        if ((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0))) {
+        if (divide_CanTopIsZero(topEq, botEq)) {
             if (owner instanceof CanWarn) {
                 ((CanWarn) owner).tryWarn(botEq);
             }
@@ -954,6 +1005,10 @@ public class Operations {
             }
     }
 
+    public static boolean divide_CanTopIsZero(Equation topEq, Equation botEq) {
+        return (sortaNumber(topEq) && getValue(topEq).doubleValue() == 0) && !((sortaNumber(botEq) && getValue(botEq).doubleValue() == 0));
+    }
+
     public static BigDecimal getValue(Equation e) {
         BigDecimal minus = BigDecimal.ONE;
         while (e instanceof MinusEquation || e instanceof PlusMinusEquation) {
@@ -969,7 +1024,7 @@ public class Operations {
 
     public static Equation flip(Equation demo) {
 
-        Line owner = demo.owner;
+        EquationLine owner = demo.owner;
         // if it's a div equation flip it over
         if (demo instanceof DivEquation) {
             if (demo.get(0) instanceof NumConstEquation && ((NumConstEquation) demo.get(0)).getValue().doubleValue() == 1) {

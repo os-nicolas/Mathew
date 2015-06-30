@@ -14,7 +14,7 @@ import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 public class AddEquation extends FlexOperation implements BinaryOperator {
 
@@ -50,7 +50,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
         }
     }
 
-    public AddEquation(Line owner, AddEquation addEq) {
+    public AddEquation(EquationLine owner, AddEquation addEq) {
         super(owner, addEq);
         init();
         this.display = addEq.getDisplay(-1);
@@ -82,7 +82,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
         return display;
     }
 
-    public AddEquation(Line owner) {
+    public AddEquation(EquationLine owner) {
         super(owner);
         init();
     }

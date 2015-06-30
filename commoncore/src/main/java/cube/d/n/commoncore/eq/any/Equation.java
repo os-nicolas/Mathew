@@ -30,7 +30,7 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.CanDrag;
 import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.Selects;
 
 abstract public class Equation extends ArrayList<Equation> implements Physical {
@@ -75,7 +75,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected int getMyHeight(){
         return (int) (myHeight*root().getMyZoom());
     }
-    public Line owner;
+    public EquationLine owner;
     private int id;
     private int buffer = 10;
     public ArrayList<Integer> sorceIds = new ArrayList<Integer>();
@@ -85,7 +85,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private int bkgColor = BaseApp.getApp().lightColor;
     public boolean active = true;
 
-    public Equation(Line owner2, Equation eq) {
+    public Equation(EquationLine owner2, Equation eq) {
         init(owner2);
         // copy all the kiddos and set this as their parent
         for (int i = 0; i < eq.size(); i++) {
@@ -101,14 +101,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         // are we an add inside a * or a -
         boolean result = this instanceof AddEquation && (this.parent instanceof MultiEquation || this.parent instanceof MinusEquation);
         // are we an a the first element of a ^
-        if (owner.parentThesisMode() ==  Line.pm.BOTH){
+        if (owner.parentThesisMode() ==  EquationLine.pm.BOTH){
             result =  result || this instanceof WritingEquation && this.size() >1 && this.parent instanceof MultiEquation;
         }
-        if (owner.parentThesisMode() == Line.pm.SOLVE) {
+        if (owner.parentThesisMode() == EquationLine.pm.SOLVE) {
             result = result || (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 && this.size() != 0);
             //result = result || (this.parent instanceof MultiEquation && (this instanceof MinusEquation || this instanceof PlusMinusEquation));
         }
-        if (owner.parentThesisMode() == Line.pm.WRITE) {
+        if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
             if (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0) {
                 return true;
             }
@@ -116,11 +116,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return result;
     }
 
-    public Equation(Line owner2) {
+    public Equation(EquationLine owner2) {
         init(owner2);
     }
 
-    private void init(Line owner2) {
+    private void init(EquationLine owner2) {
         this.owner = owner2;
         id = idBacker++;
         myWidth = BaseApp.getApp().getDefaultSize();
@@ -1034,7 +1034,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
-    public void updateOwner(Line sv) {
+    public void updateOwner(EquationLine sv) {
         owner = sv;
         for (Equation e : this) {
             e.updateOwner(sv);
@@ -1679,7 +1679,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
-        if (owner.parentThesisMode() == Line.pm.WRITE) {
+        if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
             return (float) (48 * BaseApp.getApp().getDpi()*getMyZoom());
         } else {
             return (float) (28 * BaseApp.getApp().getDpi()*getMyZoom());

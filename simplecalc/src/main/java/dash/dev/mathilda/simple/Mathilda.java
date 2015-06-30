@@ -12,8 +12,8 @@ import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 5/22/2015.
@@ -37,7 +37,7 @@ public class Mathilda extends BaseApp {
     }
 
     @Override
-    public Action getDone(Line line) {
+    public Action getDone(EquationLine line) {
         return null;
     }
 
@@ -72,7 +72,7 @@ public class Mathilda extends BaseApp {
         return result;
     }
 
-    public Line getInputLine(Main owner) {
+    public EquationLine getInputLine(Main owner) {
         return new CalcLine(owner);
     }
 }

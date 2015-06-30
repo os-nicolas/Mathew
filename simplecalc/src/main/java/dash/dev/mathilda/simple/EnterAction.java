@@ -1,15 +1,11 @@
 package dash.dev.mathilda.simple;
 
-import java.util.ArrayList;
-
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
-import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
 
 /**
@@ -58,7 +54,7 @@ public class EnterAction extends Action {
 
         Equation newEq = ((WritingEquation) EnterAction.mine).convert();
         ((InputLine)owner).deActivate();
-        Line line = new OutputLine(owner.owner,newEq);
+        EquationLine line = new OutputLine(owner.owner,newEq);
         newEq.updateOwner(line);
         owner.owner.addLine(line);
     }

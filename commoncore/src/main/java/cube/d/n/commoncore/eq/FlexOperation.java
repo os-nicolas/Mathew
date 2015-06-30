@@ -1,7 +1,7 @@
 package cube.d.n.commoncore.eq;
 
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin on 1/3/2015.
@@ -9,9 +9,9 @@ import cube.d.n.commoncore.lines.Line;
 public abstract class FlexOperation extends  Operation{
 
 
-    public FlexOperation(Line owner){super(owner);}
+    public FlexOperation(EquationLine owner){super(owner);}
 
-    public FlexOperation(Line owner, FlexOperation flexOp) {
+    public FlexOperation(EquationLine owner, FlexOperation flexOp) {
         super(owner,flexOp);
     }
 

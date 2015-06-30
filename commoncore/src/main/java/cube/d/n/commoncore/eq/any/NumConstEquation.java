@@ -3,19 +3,19 @@ package cube.d.n.commoncore.eq.any;
 import android.util.Log;
 
 import cube.d.n.commoncore.eq.LegallityCheck;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 
 public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
-	public NumConstEquation(BigDecimal number, Line owner) {
+	public NumConstEquation(BigDecimal number, EquationLine owner) {
 		super(owner);
         init(number);
 	}
 
-    public NumConstEquation(double i, Line emilyView) {
+    public NumConstEquation(double i, EquationLine emilyView) {
         this(new BigDecimal(i), emilyView);
     }
 
@@ -35,7 +35,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
         }
     }
 
-    public NumConstEquation(BigDecimal value, Line owner, NumConstEquation equations) {
+    public NumConstEquation(BigDecimal value, EquationLine owner, NumConstEquation equations) {
         super(owner,equations);
         init(value);
     }
@@ -46,7 +46,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     @Override
     public String getDisplay(int pos){
-        if (owner.parentThesisMode() == Line.pm.WRITE) {
+        if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
             DecimalFormat df = new DecimalFormat();
 
             String result = df.format(getValue());
@@ -103,7 +103,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 		return getValue().equals(e.getValue());
 	}
 
-    public static Equation create(BigDecimal number, Line o) {
+    public static Equation create(BigDecimal number, EquationLine o) {
         if (number.compareTo(BigDecimal.ZERO) < 0){
             return new NumConstEquation(number.negate(),o).negate();
         }else{
@@ -111,7 +111,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
         }
     }
 
-    public static Equation create(double number, Line o) {
+    public static Equation create(double number, EquationLine o) {
         if (number < 0){
             return new NumConstEquation(-number,o).negate();
         }else{

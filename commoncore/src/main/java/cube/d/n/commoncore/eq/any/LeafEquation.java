@@ -11,11 +11,11 @@ import android.util.Log;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 public abstract class LeafEquation extends Equation {
 
-    public LeafEquation(Line owner, LeafEquation leafEqu) {
+    public LeafEquation(EquationLine owner, LeafEquation leafEqu) {
         super(owner,leafEqu);
         init();
     }
@@ -38,7 +38,7 @@ public abstract class LeafEquation extends Equation {
     public void tryOperator(int i) {
     }
 
-	public LeafEquation(Line owner) {
+	public LeafEquation(EquationLine owner) {
 		super(owner);
         init();
 	}

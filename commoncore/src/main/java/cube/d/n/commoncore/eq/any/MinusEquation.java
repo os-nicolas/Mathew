@@ -2,7 +2,7 @@ package cube.d.n.commoncore.eq.any;
 
 
 
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class MinusEquation extends MonaryEquation implements SignEquation{
 
-    public MinusEquation(Line owner2) {
+    public MinusEquation(EquationLine owner2) {
         super(owner2);
         init();
     }
@@ -32,7 +32,7 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
         display ="-";
     }
 
-    public MinusEquation(Line owner, MinusEquation minEq){
+    public MinusEquation(EquationLine owner, MinusEquation minEq){
         super (owner,minEq);
         init();
     }

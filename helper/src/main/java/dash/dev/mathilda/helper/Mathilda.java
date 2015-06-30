@@ -10,8 +10,8 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 import dash.dev.mathilda.helper.Actions.BothSides.CancelAction;
 import dash.dev.mathilda.helper.Actions.BothSides.OkAction;
 import dash.dev.mathilda.helper.Actions.Solve.DoneAction;
@@ -39,7 +39,7 @@ public class Mathilda extends BaseApp {
     }
 
     @Override
-    public Action getDone(Line line) {
+    public Action getDone(EquationLine line) {
         return new DoneAction(line);
     }
 

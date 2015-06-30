@@ -7,7 +7,7 @@ import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.MyPoint;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.HashSet;
  */
 public abstract class MonaryEquation extends Equation {
 
-    public MonaryEquation(Line owner2) {
+    public MonaryEquation(EquationLine owner2) {
         super(owner2);
         init();
     }
@@ -36,7 +36,7 @@ public abstract class MonaryEquation extends Equation {
     }
 
 
-    public MonaryEquation(Line owner, MonaryEquation monEq) {
+    public MonaryEquation(EquationLine owner, MonaryEquation monEq) {
         super(owner,monEq);
         init();
     }

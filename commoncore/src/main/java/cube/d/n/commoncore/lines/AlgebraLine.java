@@ -1,10 +1,8 @@
 package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -25,7 +23,6 @@ import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.DragLocations;
-import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
@@ -38,13 +35,12 @@ import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.TouchMode;
-import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
  * Created by Colin_000 on 5/7/2015.
  */
-public class AlgebraLine extends Line implements CanTrackChanges,Selects,CanWarn {
+public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects,CanWarn {
 
     private Equation selected;
     public int stupidAlpha=0xff;

@@ -5,5 +5,8 @@ package cube.d.n.commoncore;
  */
 public enum InputLineEnum {
     INPUT,
-    CALC
+    CALC,
+    PROBLEM_WC, //Words, Choices
+    PROBLEM_WCI, // Words, Choices, Input
+    PROBLEM_WE, // Words, Equation
 }

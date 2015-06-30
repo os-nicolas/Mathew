@@ -8,8 +8,8 @@ import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
 
 
@@ -58,7 +58,7 @@ public class Solve extends Action {
         Equation newEq = ((WritingEquation) Solve.mine).convert();
         ArrayList<String> vars = getVars(newEq);
         ((InputLine)owner).deActivate();
-        Line line;
+        EquationLine line;
         if (vars.size() != 0 ||  countEquals(((WritingEquation) Solve.mine))==1){
             line = new AlgebraLine(owner.owner,newEq);
 

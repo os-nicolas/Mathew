@@ -2,16 +2,16 @@ package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 
 /**
  * Created by Colin on 1/21/2015.
  */
 public abstract class Animation {
-    public final Line owner;
+    public final EquationLine owner;
 
-    public Animation(Line owner){
+    public Animation(EquationLine owner){
         this.owner =owner;
     }
 

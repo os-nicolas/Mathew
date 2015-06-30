@@ -17,7 +17,7 @@ import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation , BinaryOperator {
 
@@ -29,7 +29,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         }
     }
 
-    public DivEquation(Line owner,DivEquation divEq){
+    public DivEquation(EquationLine owner,DivEquation divEq){
         super(owner,divEq);
         myHeight = myHeight/2;
         init();
@@ -73,7 +73,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		return false;
 	}
 
-	public DivEquation(Line owner) {
+	public DivEquation(EquationLine owner) {
 		super(owner);
         init();
 	}
@@ -217,39 +217,68 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         final MultiCountData top = new MultiCountData(a);
         final MultiCountData bot = new MultiCountData(b);
 
-        final MultiCountData common = Operations.deepFindCommon(top, bot);
 
-        if (Operations.divide_CanCancel(common) && !Operations.divide_CanSortaNumbers(top, bot)) {
+
+
+            final MultiCountData common = Operations.deepFindCommon(top, bot);
+
+        if (Operations.divide_CanTopIsZero(a,b)) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_TopIsZero(a,b,owner),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_TopIsZero(a,b,owner));
+                    changed(p);
+                }
+            }));
+        }else if (Operations.divide_CanCancel(common)) {
             buttons.add(new SeletedRowEquationButton(Operations.divide_Cancel(owner, new MultiCountData(top), new MultiCountData(bot), common),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                     that.replace(Operations.divide_Cancel(owner, top, bot, common));
                     changed(p);
                 }
             }));
-        }
-
-        if (Operations.divide_CanSortaNumbers(top, bot) && Operations.divide_CanReduce(top, bot)) {
-            buttons.add(new SeletedRowEquationButton(Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)),new Action(owner) {
+        }else if (Operations.divide_CanBringIn(a.copy())){
+            buttons.add(new SeletedRowEquationButton(Operations.divide_BringIn(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
-                    that.replace(Operations.divide_Reduce(owner, top, bot));
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_BringIn(a.copy(), b.copy(), owner));
                     changed(p);
                 }
             }));
-        }
-
-        if (Operations.divide_CanSortaNumbers(top, bot)) {
-            buttons.add(new SeletedRowEquationButton(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)),new Action(owner) {
+        }else if (Operations.divide_CanFlatten(a.copy(),b.copy())){
+            buttons.add(new SeletedRowEquationButton(Operations.divide_Flatten(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
-                    that.replace(Operations.divide_Divide(owner, top, bot));
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_Flatten(a.copy(), b.copy(), owner));
                     changed(p);
                 }
             }));
+        }else if (Operations.divide_CanSortaNumbers(top, bot) ) {
+            if (Operations.divide_CanReduce(top, bot)) {
+                buttons.add(new SeletedRowEquationButton(Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)), new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
+                        that.replace(Operations.divide_Reduce(owner, top, bot));
+                        changed(p);
+                    }
+                }));
+            }
+            if (Operations.divide_CanSortaNumbers(top, bot) &&  !Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)).same(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)))) {
+                buttons.add(new SeletedRowEquationButton(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)), new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
+                        that.replace(Operations.divide_Divide(owner, top, bot));
+                        changed(p);
+                    }
+                }));
+            }
         }
 
         if (buttons.size() != 0){

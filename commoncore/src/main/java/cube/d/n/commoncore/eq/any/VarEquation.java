@@ -1,11 +1,11 @@
 package cube.d.n.commoncore.eq.any;
 
 import cube.d.n.commoncore.eq.LegallityCheck;
-import cube.d.n.commoncore.lines.Line;
+import cube.d.n.commoncore.lines.EquationLine;
 
 public class VarEquation extends LeafEquation implements LegallityCheck {
 		
-	public VarEquation(String display, Line owner) {
+	public VarEquation(String display, EquationLine owner) {
 		super(owner);
         init(display);
 
@@ -15,7 +15,7 @@ public class VarEquation extends LeafEquation implements LegallityCheck {
         this.display = display;
     }
 
-    public VarEquation(String display, Line owner, VarEquation equations) {
+    public VarEquation(String display, EquationLine owner, VarEquation equations) {
         super(owner, equations);
         init(display);
     }

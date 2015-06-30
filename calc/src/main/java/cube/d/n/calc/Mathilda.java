@@ -1,27 +1,14 @@
 package cube.d.n.calc;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.HashMap;
 
-import cube.d.n.commoncore.Action.BothSides.CancelAction;
-import cube.d.n.commoncore.Action.BothSides.CheckAction;
-import cube.d.n.commoncore.Action.SolveScreen.Done;
-import cube.d.n.commoncore.Action.WriteScreen.Solve;
-import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
-import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
-import cube.d.n.commoncore.keyboards.KeyBoard;
-import cube.d.n.commoncore.keyboards.ReturnKeyBoard;
-import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.BothSidesLine;
-import cube.d.n.commoncore.lines.InputLine;
-import cube.d.n.commoncore.lines.Line;
 
 /**
  * Created by Colin_000 on 5/9/2015.

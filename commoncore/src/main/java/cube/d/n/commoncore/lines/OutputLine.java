@@ -22,7 +22,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/7/2015.
  */
-public class OutputLine extends Line {
+public class OutputLine extends EquationLine {
 
     float eqY;
     float currentAlpha;

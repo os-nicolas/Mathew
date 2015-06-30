@@ -12,14 +12,11 @@ import android.graphics.Rect;
 import android.graphics.drawable.PictureDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.Action.WriteScreen.PowerAction;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
@@ -27,7 +24,6 @@ import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
 import cube.d.n.commoncore.eq.any.MinusEquation;
-import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
@@ -39,6 +35,8 @@ import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
+import cube.d.n.commoncore.lines.EquationLine;
+import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
@@ -52,11 +50,9 @@ public class Main extends View implements View.OnTouchListener {
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
 
     final ArrayList<Line> lines = new ArrayList<>();
-    View overlay;
 
     public float height;
     public float width;
-    private Bitmap bitMap;
 
     public Main(Context context) {
         super(context);
@@ -79,24 +75,29 @@ public class Main extends View implements View.OnTouchListener {
     }
 
     private void init(Context context, InputLineEnum startLine) {
-        Line myLine;
         if ( startLine == InputLineEnum.INPUT) {
-            myLine = new InputLine(this);
+            lines.add(new InputLine(this));
         }else if (startLine == InputLineEnum.CALC){
-            myLine = new CalcLine(this);
+            lines.add(new CalcLine(this));
+        }else if (startLine == InputLineEnum.PROBLEM_WC){
+            lines.add(new ImageLine(this));
+            lines.add(new InputLine(this));
+        }else if (startLine == InputLineEnum.PROBLEM_WCI){
+            lines.add(new ImageLine(this));
+            lines.add(new InputLine(this));
+        }else if (startLine == InputLineEnum.PROBLEM_WE){
+            lines.add(new ImageLine(this));
+            lines.add(new CalcLine(this));
         }else{
             Log.e("main.init","InputLineEnum not recognized");
-            myLine = new InputLine(this);
+            lines.add(new InputLine(this));
         }
-        keyBoardManager.hardSet(myLine.getKeyboad());
-        lines.add(myLine);
+        keyBoardManager.hardSet(lastLine().getKeyboad());
         setOnTouchListener(this);
     }
 
 
-    public void addOverLay(View overlay){
-        this.overlay =  overlay;
-    }
+
 
 
     float lastDragY;
@@ -183,7 +184,9 @@ public class Main extends View implements View.OnTouchListener {
                     lastCenter = touchCenter;
 
                     for (Line l:lines) {
-                        l.stupid.get().deepNeedsUpdate();
+                        if (l instanceof  EquationLine) {
+                            ((EquationLine)l).stupid.get().deepNeedsUpdate();
+                        }
                     }
                 }
             } else {
@@ -256,11 +259,13 @@ public class Main extends View implements View.OnTouchListener {
             if (moveX){
                 float dx = (event.getX() - lastDragX);
                 for (int i =0;i<lines.size();i++){
-                    Line l = lines.get(i);
-                    if( (l.getY()+ (l.measureHeight()/2f) > event.getY() || i == lines.size()-1) &&
-                            l.getY() - (l.measureHeight()/2f) < event.getY()){//|| i == 0
-                        nextInputLine(i).updateVeloctiyX(stepsPass,maxSteps,dx);
-                        break;
+                    if (lines.get(i) instanceof  EquationLine) {
+                        EquationLine l = (EquationLine)lines.get(i);
+                        if ((l.getY() + (l.measureHeight() / 2f) > event.getY() || i == lines.size() - 1) &&
+                                l.getY() - (l.measureHeight() / 2f) < event.getY()) {//|| i == 0
+                            nextInputLine(i).updateVeloctiyX(stepsPass, maxSteps, dx);
+                            break;
+                        }
                     }
                 }
                 lastDragX = event.getX();
@@ -286,10 +291,9 @@ public class Main extends View implements View.OnTouchListener {
     private void stopSliding() {
         vy=0;
         for (Line l : lines){
-            if (l instanceof InputLine && !(l instanceof BothSidesLine)){
-                ((InputLine)l).stopSliding();
-            }
-
+                if (l instanceof InputLine && !(l instanceof BothSidesLine)) {
+                    ((InputLine) l).stopSliding();
+                }
         }
     }
 
@@ -299,8 +303,6 @@ public class Main extends View implements View.OnTouchListener {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-
 
 
         if (height == 0) {
@@ -332,7 +334,9 @@ public class Main extends View implements View.OnTouchListener {
             Line l = lines.get(i);
             float top = bot - l.measureHeight();
             if (i==lines.size()-1){
-                top+=l.stupid.get().measureHeightLower();
+                if (l instanceof EquationLine) {
+                    top += ((EquationLine)l).stupid.get().measureHeightLower();
+                }
             }
             if (inScreen(l,top)){
                 l.draw(canvas,top,left,new Paint());
@@ -352,23 +356,12 @@ public class Main extends View implements View.OnTouchListener {
             Log.i("fps", "" + frames / elapsedTime);
         }
 
-        if (lastEq == null || !lastLine().stupid.get().reallySame(lastEq) ){
-            lastEq = lastLine().stupid.get().copy();
+        if (lastLine() instanceof EquationLine &&(lastEq == null ||   !((EquationLine)lastLine()).stupid.get().reallySame(lastEq)) ){
+            lastEq = ((EquationLine)lastLine()).stupid.get().copy();
             Log.i("current", lastEq.toString()+"");
         }
 
-        if (overlay != null){
 
-            if (bitMap == null && overlay.getMeasuredHeight() != 0){
-                bitMap = getBitMap(overlay,bitMap);
-            }
-
-            if (bitMap!=null){
-                canvas.drawBitmap(bitMap,0,Math.min(bot-bitMap.getHeight(),0),new Paint());
-
-            }
-
-        }
 
         if (trackFinger && fingerDown){
             Paint fingerPaint = new Paint();
@@ -378,25 +371,7 @@ public class Main extends View implements View.OnTouchListener {
 
     }
 
-    private Bitmap getBitMap(View overlay,Bitmap old) {
 
-        Picture p = new Picture();
-
-        Canvas c =  p.beginRecording(overlay.getWidth(),overlay.getHeight());
-
-        overlay.draw(c);
-
-        p.endRecording();
-
-        PictureDrawable pd = new PictureDrawable(p);
-        if (old == null) {
-            old = Bitmap.createBitmap(pd.getIntrinsicWidth(), pd.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-        Canvas canvas = new Canvas(old);
-        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-        canvas.drawPicture(pd.getPicture());
-        return old;
-    }
 
 
     public InputLine nextInputLine(int at) {
@@ -424,7 +399,7 @@ public class Main extends View implements View.OnTouchListener {
         toAddToOffsetY-= toAdd;
     }
 
-    public void toAddToOffsetX(Line l,float toAdd){
+    public void toAddToOffsetX(EquationLine l,float toAdd){
         int at = lines.indexOf(l);
         InputLine inputLine =  nextInputLine(at);
         inputLine.toAddToOffsetX(toAdd);
@@ -445,7 +420,7 @@ public class Main extends View implements View.OnTouchListener {
             maxOffsetY= height - keyBoardManager.get().measureHeight();
         }else{
             // we know the first line is input
-            maxOffsetY = Math.max(0,height - keyBoardManager.get().measureHeight()- lines.get(0).measureHeight() - 2*Line.getBuffer());
+            maxOffsetY = Math.max(0,height - keyBoardManager.get().measureHeight()- lines.get(0).measureHeight() - 2* EquationLine.getBuffer());
             for (Line l:lines){
                 maxOffsetY+= l.measureHeight();
             }
@@ -459,8 +434,9 @@ public class Main extends View implements View.OnTouchListener {
             vy =0;
         }
 
-        float minOffsetY=Math.min(height - keyBoardManager.get().measureHeight() - (lines.get(lines.size()-1).stupid.get().measureHeight()/2f),(lines.get(lines.size()-1).stupid.get().measureHeight()/2f)
-        + (lines.get(lines.size()-1) instanceof InputLine?Line. getBuffer():0)
+        float minOffsetY=Math.min(
+                height - keyBoardManager.get().measureHeight() - (lines.get(lines.size()-1).measureHeight()/2f),
+                (lines.get(lines.size()-1).measureHeight()/2f) + (lines.get(lines.size()-1) instanceof InputLine? EquationLine.getBuffer():0)
         );
 
         if (offsetY < minOffsetY){
@@ -520,7 +496,7 @@ public class Main extends View implements View.OnTouchListener {
         //}
     }
 
-    public void addLine(Line line) {
+    public void addLine(EquationLine line) {
         if(lastLine().getKeyboad() != null) {
             lastLine().getKeyboad().deactivate();
         }
@@ -553,9 +529,11 @@ public class Main extends View implements View.OnTouchListener {
         if (getLinesSize()!=1){
             Line targetLine = getLine(getLinesSize()-2);
             if (targetLine instanceof OutputLine){
-                Equation result =targetLine.stupid.get().copy();
+                EquationLine el = (OutputLine)targetLine;
+
+                Equation result =el.stupid.get().copy();
                 result = addParnsIfNeeded( convert(result));
-                result.updateOwner(lastLine());
+                result.updateOwner((EquationLine)lastLine());
                 return result;
             }
         }
@@ -657,7 +635,7 @@ public class Main extends View implements View.OnTouchListener {
         return write;
     }
 
-    public int getLineIndex(Line line) {
+    public int getLineIndex(EquationLine line) {
         return lines.indexOf(line);
     }
 
