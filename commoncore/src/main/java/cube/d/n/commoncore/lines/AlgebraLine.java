@@ -17,6 +17,7 @@ import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.EquationButton;
+import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.LongTouch;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.R;
@@ -40,7 +41,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/7/2015.
  */
-public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects,CanWarn {
+public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects,CanWarn,HasHeaderLine {
 
     private Equation selected;
     public int stupidAlpha=0xff;

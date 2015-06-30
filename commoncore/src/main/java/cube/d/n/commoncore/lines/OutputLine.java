@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.Operations;
@@ -22,7 +23,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/7/2015.
  */
-public class OutputLine extends EquationLine {
+public class OutputLine extends EquationLine implements HasHeaderLine {
 
     float eqY;
     float currentAlpha;

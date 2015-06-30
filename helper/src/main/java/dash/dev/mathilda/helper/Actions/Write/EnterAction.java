@@ -68,7 +68,7 @@ public class EnterAction extends Action {
         }
         myAt.replace(((InputLine)main.lastLine()).getSelected());
 
-        main.lastLine().stupid.set(lastLineEq);
+        ((InputLine)main.lastLine()).stupid.set(lastLineEq);
         ((InputLine)main.lastLine()).deActivate();
 
         Equation newEq = ((WritingEquation) mine).convert();

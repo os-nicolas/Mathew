@@ -2,14 +2,10 @@ package cube.d.n.practice;
 
 import cube.d.n.practice.util.SystemUiHider;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -59,7 +55,7 @@ public class ChooseProblem extends Activity {
 
                 Intent intent = new Intent(that,ProblemActivity.class);
                 //based on item add info to intent
-                intent.putExtra("topic",item.myId);
+                intent.putExtra("problem",item.myId);
                 startActivity(intent);
 
             }

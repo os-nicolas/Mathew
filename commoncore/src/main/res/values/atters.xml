@@ -3,4 +3,13 @@
 <declare-styleable name="FadeInTextView">
     <attr name="timeOut" format="integer" />
 </declare-styleable>
+    <declare-styleable name="Main">
+        <attr name="start_layout" format="enum">
+            <enum name="input" value="0"/>
+            <enum name="calc" value="1"/>
+            <enum name="problem_wc" value="2"/>
+            <enum name="problem_wci" value="3"/>
+            <enum name="problem_we" value="4"/>
+        </attr>
+    </declare-styleable>
 </resources>

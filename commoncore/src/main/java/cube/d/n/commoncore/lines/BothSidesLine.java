@@ -3,12 +3,11 @@ package cube.d.n.commoncore.lines;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
-import cube.d.n.commoncore.EquationButton;
+import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
@@ -27,7 +26,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/11/2015.
  */
-public class BothSidesLine extends InputLine {
+public class BothSidesLine extends InputLine implements HasHeaderLine {
 
     BothSidesKeyBoard myKeyboard;
     private BothSidesMode myBothSidesMode;

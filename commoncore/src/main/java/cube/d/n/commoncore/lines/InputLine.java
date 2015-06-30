@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
@@ -25,7 +26,11 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
 * Created by Colin_000 on 5/7/2015.
 */
-public class InputLine extends EquationLine implements Selects {
+// this is a somewhat confused class
+// it does two things
+// it's a header and it handles inputs
+
+public class InputLine extends EquationLine implements Selects, HasHeaderLine {
 
     private final PlaceholderEquation selected;
 
@@ -406,7 +411,7 @@ public class InputLine extends EquationLine implements Selects {
         float maxOffsetX = requestedMaxX();
         float minOffsetX = requestedMinX();
         for (int i =0;i< owner.getLinesSize();i++){
-            if ( owner.nextInputLine(i).equals(this)){
+            if ( this.equals(owner.nextInputLine(i))){
                 maxOffsetX = Math.max(owner.getLine(i).requestedMaxX(),maxOffsetX);
                 minOffsetX = Math.min(owner.getLine(i).requestedMinX(), minOffsetX);
             }

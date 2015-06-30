@@ -1,15 +1,11 @@
 package cube.d.n.commoncore;
 
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Picture;
 import android.graphics.Point;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.graphics.drawable.PictureDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -33,9 +29,11 @@ import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
+import cube.d.n.commoncore.lines.HiddenInputLine;
 import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
@@ -66,12 +64,27 @@ public class Main extends View implements View.OnTouchListener {
 
     public  Main(Context context, AttributeSet attrs){
         super(context,attrs);
-        init(context,InputLineEnum.INPUT);
+        init(context, attrs,InputLineEnum.INPUT);
+    }
+
+    public void init(Context context, AttributeSet attrs,InputLineEnum startLayout) {
+        TypedArray a = context.getTheme().obtainStyledAttributes(
+                attrs,
+                R.styleable.Main,
+                0, 0);
+
+        try {
+            startLayout = InputLineEnum.values()[a.getInteger(R.styleable.Main_start_layout, 0)];
+        } finally {
+            a.recycle();
+        }
+
+        init(context,startLayout);
     }
 
     public  Main(Context context, AttributeSet attrs, int defStyleAttr){
         super(context,attrs,defStyleAttr);
-        init(context,InputLineEnum.INPUT);
+        init(context, attrs,InputLineEnum.INPUT);
     }
 
     private void init(Context context, InputLineEnum startLine) {
@@ -87,7 +100,8 @@ public class Main extends View implements View.OnTouchListener {
             lines.add(new InputLine(this));
         }else if (startLine == InputLineEnum.PROBLEM_WE){
             lines.add(new ImageLine(this));
-            lines.add(new CalcLine(this));
+            lines.add(new HiddenInputLine(this));
+            lines.add(new AlgebraLine(this));
         }else{
             Log.e("main.init","InputLineEnum not recognized");
             lines.add(new InputLine(this));
@@ -329,8 +343,11 @@ public class Main extends View implements View.OnTouchListener {
         float bot = offsetY;
         float left;
         for (int i= lines.size()-1;i>=0;i--){
-
-            left = nextInputLine(i).getOffsetX();
+            if (lines.get(i) instanceof HasHeaderLine) {
+                left = nextInputLine(i).getOffsetX();
+            }else{
+                left = 0;
+            }
             Line l = lines.get(i);
             float top = bot - l.measureHeight();
             if (i==lines.size()-1){
@@ -641,5 +658,18 @@ public class Main extends View implements View.OnTouchListener {
 
     public float getOffsetY() {
         return offsetY;
+    }
+
+    public ImageLine getProblemImage() {
+        if (lines.get(0) instanceof  ImageLine){
+            return (ImageLine)lines.get(0);
+        }
+        Log.e("getProblemImage", "bad to the bone");
+        return null;
+    }
+
+    public void initWE(Equation equation) {
+        ((HiddenInputLine)lines.get(1)).stupid.set(equation.copy());
+        ((AlgebraLine)lines.get(2)).stupid.set(equation.copy());
     }
 }
