@@ -44,7 +44,6 @@ import cube.d.n.commoncore.lines.OutputLine;
 */
 public class Main extends View implements View.OnTouchListener {
 
-
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
 
     final ArrayList<Line> lines = new ArrayList<>();
@@ -109,10 +108,6 @@ public class Main extends View implements View.OnTouchListener {
         keyBoardManager.hardSet(lastLine().getKeyboad());
         setOnTouchListener(this);
     }
-
-
-
-
 
     float lastDragY;
     float lastDragX;
