@@ -1,7 +1,10 @@
 package cube.d.n.practice;
 
 import android.app.Activity;
+import android.content.ComponentName;
+import android.content.ServiceConnection;
 import android.graphics.Typeface;
+import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;

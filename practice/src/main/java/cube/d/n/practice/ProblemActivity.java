@@ -21,9 +21,9 @@ public class ProblemActivity extends Activity {
 
         int problemId= getIntent().getIntExtra("problem", -1);
 
-        myProblem=ProblemRow.problems.get(problemId);
+        myProblem=Problem.problems.get(problemId).getRow();
 
-        if (myProblem.equation == null) {
+        if (myProblem.myProblem.equation == null) {
 
             setContentView(R.layout.problem_activity_wi);
 
@@ -46,7 +46,7 @@ public class ProblemActivity extends Activity {
             ((TextView) text).setTypeface(djLight);
 
             main.getProblemImage().setSource(text);
-            main.initWE(myProblem.equation);
+            main.initWE(myProblem.myProblem.equation);
 
         }
 

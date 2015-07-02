@@ -71,7 +71,7 @@
                     android:layout_height="45dp" />
 
                 <TextView
-                    android:text="Topics"
+                    android:text=""
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
                     android:textColor="#ffffff"

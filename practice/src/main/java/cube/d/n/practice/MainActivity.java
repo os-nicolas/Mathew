@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.listview);
 
-        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, Mathilda.getMathilda().getTopics(),listView);
+        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, getMainRows(),listView);
 
         // 2. Get ListView from activity_main.xml
 
@@ -59,15 +59,27 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
 
-                TopicRow item = adapter.getItem(position);
+                MainRow item = adapter.getItem(position);
 
-                Intent intent = new Intent(that,ChooseProblem.class);
-                //based on item add info to intent
-                intent.putExtra("topic",item.myId);
-                startActivity(intent);
-
+                item.go(that);
             }
         });
+    }
+
+    private ArrayList<MainRow> getMainRows() {
+        ArrayList<TopicRow> topics = Mathilda.getMathilda().getTopics();
+        ArrayList<MainRow> rows = new ArrayList<>();
+
+
+        for (TopicRow t: topics){
+            rows.add(t);
+        }
+
+        rows.add(new MainRow("Feedback", "got an idea, let us know",null));
+        rows.add(new MainRow("Support", "got an idea, let us know",Support.class));
+        rows.add(new MainRow("Tutorial", "how do i use this thing anyway",null));
+
+        return rows;
     }
 
 

@@ -19,13 +19,13 @@ package cube.d.n.practice;
         import cube.d.n.commoncore.eq.any.VarEquation;
         import cube.d.n.commoncore.lines.NullLine;
 
-public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
+public class TopicArrayAdaptor extends ArrayAdapter<MainRow> {
 
     private final Context context;
-    private final ArrayList<TopicRow> topics;
+    private final ArrayList<MainRow> topics;
     public ConcurrentHashMap<Integer,View> views = new ConcurrentHashMap<>();
 
-    public TopicArrayAdaptor(Context context, ArrayList<TopicRow> itemsArrayList,final ViewGroup parent ) {
+    public TopicArrayAdaptor(Context context, ArrayList<MainRow> itemsArrayList,final ViewGroup parent ) {
 
         super(context, R.layout.topic_row, itemsArrayList);
 
@@ -58,22 +58,34 @@ public class TopicArrayAdaptor extends ArrayAdapter<TopicRow> {
 
 
         EquationView equationView = (EquationView) res.findViewById(R.id.row_subtitle);
-        if (topics.get(position).equation==null) {
-            equationView.setEquation(new VarEquation(topics.get(position).about, new NullLine()), .5f);//,
+
+        int at = position+1;
+        CircleView cir = (CircleView) res.findViewById(R.id.topic_circle);
+        String inCircle;
+
+        if (topics.get(position) instanceof TopicRow) {
+            TopicRow myTopic= (TopicRow)topics.get(position);
+
+            if (myTopic.equation == null) {
+                equationView.setEquation(new VarEquation(myTopic.subtitle, new NullLine()), .5f);//,
+            } else {
+                equationView.setEquation(myTopic.equation, .5f);
+            }
+
+            inCircle = (myTopic.myId + 1 <= 9 ? "0" : "") +(myTopic.myId + 1) ;
+
+
         }else{
-            equationView.setEquation(topics.get(position).equation,.5f);
+            MainRow myRow= topics.get(position);
+            equationView.setEquation(new VarEquation(myRow.subtitle, new NullLine()), .5f);//,
+            inCircle=myRow.title.substring(0,2);
         }
+
+        cir.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
         equationView.setFont(Mathilda.getMathilda().getDJV());
         equationView.setColor(0xff888888);
+        title.setText(topics.get(position).title);
 
-        CircleView cir = (CircleView) res.findViewById(R.id.topic_circle);
-
-        // we don
-        int p = position+1;
-        cir.setColors((p<=9?"0":"")+p+"",CircleView.getBkgColor(p),CircleView.getTextColor(p));
-
-
-        title.setText(topics.get(position).name);
 
 
         views.put(position,res);

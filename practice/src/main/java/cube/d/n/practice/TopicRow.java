@@ -1,6 +1,8 @@
 package cube.d.n.practice;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -16,7 +18,7 @@ import cube.d.n.commoncore.lines.NullLine;
 /**
  * Created by Colin on 6/23/2015.
  */
-public class TopicRow  {
+public class TopicRow extends MainRow {
 
     public  static HashMap<Integer,TopicRow> topics = new HashMap<>();
 
@@ -24,29 +26,41 @@ public class TopicRow  {
 
     public final int myId = id++;
 
-    public final String name;
-    public final String about;
     public final Equation equation;
     private ArrayList<ProblemRow> problems;
 
     public TopicRow(String line) {
-        super();
+        super(getTitle(line), getSubtitle(line));
         topics.put(myId,this);
+
         String[] split = line.split("\t");
 
-
-        this.name = split[0];
         if (split[1].startsWith("(")){
             Log.d("wut", split[1]);
             String[] eqSplit = split[1].substring(2,split[1].length()-2).split(",");
-
-
             this.equation = Util.stringEquation(eqSplit);
-            this.about ="";
         }else {
-            this.about = split[1];
             this.equation = null;
         }
+
+    }
+
+    private static String getSubtitle(String line) {
+        String[] split = line.split("\t");
+
+        String about ="";
+        if (split[1].startsWith("(")){
+        }else {
+            about = split[1];
+        }
+        return about;
+    }
+
+    private static String getTitle(String line) {
+        String[] split = line.split("\t");
+
+
+        return split[0];
     }
 
     private ArrayList<ProblemRow> getProblems() {
@@ -55,7 +69,7 @@ public class TopicRow  {
             ArrayList<ProblemRow> allProbs = Mathilda.getMathilda().problems;
 
             for (ProblemRow prob : allProbs) {
-                if (prob.topic.equals(name)) {
+                if (prob.myProblem.topic.equals(title)) {
                     probs.add(prob);
                 }
             }
@@ -68,5 +82,13 @@ public class TopicRow  {
 
     public ProblemArrayAdapter getAdapter(Context context,ListView parent){
         return new ProblemArrayAdapter(context,getProblems(),parent);
+    }
+
+    @Override
+    public void go(Activity that) {
+        Intent intent = new Intent(that,ChooseProblem.class);
+        //based on item add info to intent
+        intent.putExtra("topic",myId);
+        that.startActivity(intent);
     }
 }

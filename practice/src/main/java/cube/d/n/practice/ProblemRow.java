@@ -22,45 +22,40 @@ import cube.d.n.commoncore.lines.NullLine;
  */
 public class ProblemRow {
 
-    public  static HashMap<Integer,ProblemRow> problems = new HashMap<>();
 
-    private  static int IDcount = 0;
-    public final int myId = IDcount++;
+    public final Problem myProblem;
+    public final String title;
 
-    public final String topic;
-    public final String name;
-    public final String text;
-    public final Equation equation;
-    public final boolean input;
 
-    public ProblemRow(String line) {
-        super();
-        problems.put(myId,this);
+    public ProblemRow(String line){
+        myProblem = new Problem(line);
+        title = "";
+        myProblem.setRow(this);
+    }
 
-        String[] split = line.split("\t");
+    public ProblemRow(String name,String circleText){
+        myProblem =null;
+        setCircleText(circleText);
+        title = name;
+    }
 
-        this.topic = split[0];
-        this.name = split[1];
-        this.text =split[2];
-        if (!split[3].equals("")){
-            String[] eqSplit = split[3].substring(1,split[3].length()-1).split(",");
-            this.equation = Util.stringEquation(eqSplit);
-            setFont( Mathilda.getMathilda().getDJV());
-            setColor(0xff888888);
 
+    private  String circleText="";
+    public String getCircleText() {
+        if (!"".equals(circleText)){
+            return circleText;
+        }else if (myProblem!=null){
+            int p =myProblem.myId+1;
+            return (p<10?"0":"")+p;
         }else{
-            this.equation = null;
+            return "";
         }
-        this.input = split[4].equals("yes");
-
     }
-
-
-    public void setFont(Typeface dj){
-        equation.getPaint().setTypeface(dj);
+    public void setCircleText(String circleText){
+        this.circleText = circleText;
     }
-
-    public void setColor(int color){
-        equation.setColor(color);
+    public ProblemRow withCircleText(String circleText){
+        setCircleText(circleText);
+        return this;
     }
 }

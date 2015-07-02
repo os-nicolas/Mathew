@@ -55,7 +55,7 @@ public class ChooseProblem extends Activity {
 
                 Intent intent = new Intent(that,ProblemActivity.class);
                 //based on item add info to intent
-                intent.putExtra("problem",item.myId);
+                intent.putExtra("problem",item.myProblem.myId);
                 startActivity(intent);
 
             }
