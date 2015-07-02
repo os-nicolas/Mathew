@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
             rows.add(t);
         }
 
-        rows.add(new MainRow("Feedback", "got an idea, let us know",null));
+        rows.add(new MainRow("Feedback", "got an idea, let us know",FeedBack.class));
         rows.add(new MainRow("Support", "got an idea, let us know",Support.class));
         rows.add(new MainRow("Tutorial", "how do i use this thing anyway",null));
 

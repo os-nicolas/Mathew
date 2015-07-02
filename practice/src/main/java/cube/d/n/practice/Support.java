@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.graphics.Typeface;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -93,7 +94,23 @@ public class Support extends ActionBarActivity {
                 try {
                     JSONObject jo = new JSONObject(purchaseData);
                     String sku = jo.getString("productId");
+                    final String token = jo.getString("purchaseToken");
                     Log.d("","You have bought the " + sku);
+
+                    Thread thread = new Thread(){
+                        @Override
+                        public void run(){
+                            try {
+                                int response = mService.consumePurchase(3, getPackageName(), token);
+                            }catch (RemoteException re){
+                                Log.e("consumePurchase",re.toString());
+                            }
+                        }
+
+                    };
+                    thread.start();
+
+
                 }
                 catch (JSONException e) {
                     Log.d("","Failed to parse purchase data.");

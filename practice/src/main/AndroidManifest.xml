@@ -31,6 +31,10 @@
             android:name=".Support"
             android:label="@string/title_activity_support" >
         </activity>
+        <activity
+            android:name=".FeedBack"
+            android:label="@string/title_activity_feed_back" >
+        </activity>
     </application>
 
 </manifest>
