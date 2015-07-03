@@ -43,6 +43,8 @@ public class Problem {
         }
         this.input = split[4].equals("yes");
 
+
+        new Foo().bar.innerCall();
     }
 
     public void setFont(Typeface dj){
