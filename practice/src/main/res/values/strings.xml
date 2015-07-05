@@ -9,5 +9,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_support">Support</string>
     <string name="title_activity_feed_back">FeedBack</string>
+    <string name="title_activity_tuts">TutActivity</string>
 
 </resources>

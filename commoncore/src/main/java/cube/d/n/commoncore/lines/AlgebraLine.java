@@ -61,6 +61,10 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
 
     public AlgebraLine(Main owner, Equation newEq) {
         super(owner);
+        initEquation(newEq);
+    }
+
+    public void initEquation(Equation newEq) {
         stupid.set(newEq);
         if (!hasInitedVars){
             initVars();

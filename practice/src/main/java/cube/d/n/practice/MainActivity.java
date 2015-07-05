@@ -59,25 +59,32 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
 
-                MainRow item = adapter.getItem(position);
+                Row item = adapter.getItem(position);
 
-                item.go(that);
+                if (item instanceof Goable){
+                    ((Goable)item).go(that);
+                }
             }
         });
     }
 
-    private ArrayList<MainRow> getMainRows() {
+    private ArrayList<Row> getMainRows() {
         ArrayList<TopicRow> topics = Mathilda.getMathilda().getTopics();
-        ArrayList<MainRow> rows = new ArrayList<>();
+        ArrayList<Row> rows = new ArrayList<>();
 
+        rows.add(new MainRow("Tutorial", "how do i use this thing anyway",TutActivity.class));
+
+        rows.add(new Divider());
 
         for (TopicRow t: topics){
             rows.add(t);
         }
 
+        rows.add(new Divider());
+
         rows.add(new MainRow("Feedback", "got an idea, let us know",FeedBack.class));
         rows.add(new MainRow("Support", "got an idea, let us know",Support.class));
-        rows.add(new MainRow("Tutorial", "how do i use this thing anyway",null));
+
 
         return rows;
     }

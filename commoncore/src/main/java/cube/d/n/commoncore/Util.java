@@ -1,4 +1,4 @@
-package cube.d.n.practice;
+package cube.d.n.commoncore;
 
 import android.util.Log;
 

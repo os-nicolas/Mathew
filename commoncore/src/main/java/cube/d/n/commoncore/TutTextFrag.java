@@ -18,7 +18,6 @@ import android.widget.VideoView;
 public class TutTextFrag extends TutFrag{
 
     public String title;
-
     public String videoSub;
     public String at;
 

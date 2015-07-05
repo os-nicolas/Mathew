@@ -30,6 +30,7 @@ import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.AlgebraLineNoKeyBoard;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -42,7 +43,7 @@ import cube.d.n.commoncore.lines.OutputLine;
 /**
 * Created by Colin_000 on 5/7/2015.
 */
-public class Main extends View implements View.OnTouchListener {
+public class Main extends View implements View.OnTouchListener, NoScroll {
 
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
 
@@ -67,6 +68,7 @@ public class Main extends View implements View.OnTouchListener {
     }
 
     public void init(Context context, AttributeSet attrs,InputLineEnum startLayout) {
+        Log.d("main init","main init");
         TypedArray a = context.getTheme().obtainStyledAttributes(
                 attrs,
                 R.styleable.Main,
@@ -86,7 +88,13 @@ public class Main extends View implements View.OnTouchListener {
         init(context, attrs,InputLineEnum.INPUT);
     }
 
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        this.setMeasuredDimension(widthMeasureSpec,heightMeasureSpec);
+//    }
+
     private void init(Context context, InputLineEnum startLine) {
+        Log.d("life is complex",""+startLine);
         if ( startLine == InputLineEnum.INPUT) {
             lines.add(new InputLine(this));
         }else if (startLine == InputLineEnum.CALC){
@@ -101,6 +109,9 @@ public class Main extends View implements View.OnTouchListener {
             lines.add(new ImageLine(this));
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLine(this));
+        }else if (startLine == InputLineEnum.TUT_E){
+            lines.add(new HiddenInputLine(this));
+            lines.add(new AlgebraLineNoKeyBoard(this));
         }else{
             Log.e("main.init","InputLineEnum not recognized");
             lines.add(new InputLine(this));
@@ -665,6 +676,11 @@ public class Main extends View implements View.OnTouchListener {
 
     public void initWE(Equation equation) {
         ((HiddenInputLine)lines.get(1)).stupid.set(equation.copy());
-        ((AlgebraLine)lines.get(2)).stupid.set(equation.copy());
+        ((AlgebraLine)lines.get(2)).initEquation(equation.copy());
+    }
+
+    public void initE(Equation equation) {
+        ((HiddenInputLine)lines.get(0)).stupid.set(equation.copy());
+        ((AlgebraLine)lines.get(1)).initEquation(equation.copy());
     }
 }

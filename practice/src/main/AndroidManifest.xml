@@ -37,6 +37,10 @@
             android:name=".FeedBack"
             android:label="@string/title_activity_feed_back" >
         </activity>
+        <activity
+            android:name=".TutActivity"
+            android:label="@string/title_activity_tuts" >
+        </activity>
     </application>
 
 </manifest>

@@ -40,55 +40,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<ProblemRow> {
     }
 
     private View makeView(int i, ViewGroup parent) {
-        ProblemRow pr = problems.get(i);
-        View rowView;
-
-        // 1. Create inflater
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        if (pr.myProblem != null) {
-            if (pr.myProblem.equation != null) {
-
-
-                // 2. Get rowView from inflater
-                rowView = inflater.inflate(R.layout.problem_eq_row, parent, false);
-
-                EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
-                equationView.setEquation(pr.myProblem.equation);
-
-
-            } else {
-                // 2. Get rowView from inflater
-                rowView = inflater.inflate(R.layout.problem_row, parent, false);
-
-                // 3. Get the two text view from the rowView
-                TextView title = (TextView) rowView.findViewById(R.id.problem_name);
-
-                Typeface dj = Typeface.createFromAsset(context.getAssets(),
-                        "fonts/DejaVuSans-ExtraLight.ttf");
-                title.setTypeface(dj);
-                title.setText(pr.myProblem.name);
-
-            }
-        } else {
-            // 2. Get rowView from inflater
-            rowView = inflater.inflate(R.layout.problem_row, parent, false);
-
-            // 3. Get the two text view from the rowView
-            TextView title = (TextView) rowView.findViewById(R.id.problem_name);
-
-            Typeface dj = Typeface.createFromAsset(context.getAssets(),
-                    "fonts/DejaVuSans-ExtraLight.ttf");
-            title.setTypeface(dj);
-            title.setText(pr.title);
-        }
-
-
-        CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
-        int p = i + 1;
-        cir.setColors(pr.getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
-
+        View rowView = problems.get(i).makeView(context,parent,i);
         views.put(i, rowView);
         return rowView;
     }

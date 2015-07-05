@@ -9,11 +9,8 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cube.d.n.commoncore.eq.any.AddEquation;
-import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.NumConstEquation;
-import cube.d.n.commoncore.lines.NullLine;
 
 /**
  * Created by Colin on 6/23/2015.
