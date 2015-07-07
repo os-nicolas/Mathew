@@ -47,7 +47,7 @@ public class FeedBack extends ActionBarActivity {
 
                                             final String body = te.getText().toString();
 
-                                            overlay.animate().alpha(1).setDuration(400);//.withLayer();
+                                            overlay.animate().alpha(1).setDuration(400).withLayer();
 
 
                                             final View overlay2 = findViewById(R.id.sending2);
@@ -56,7 +56,7 @@ public class FeedBack extends ActionBarActivity {
 
                                             overlay2.setAlpha(0);
 
-                                            overlay2.animate().alpha(1).setDuration(1000);
+                                            overlay2.animate().alpha(1).setDuration(1000).withLayer();
 
                                             Thread thm = new Thread() {
                                                 @Override
@@ -72,7 +72,7 @@ public class FeedBack extends ActionBarActivity {
                                                     } catch (InterruptedException e) {
                                                         e.printStackTrace();
                                                     }
-                                                    overlay.animate().alpha(0).setDuration(400);
+                                                    overlay.animate().alpha(0).setDuration(400).withLayer();
                                                     try {
                                                         this.sleep(300);
                                                     } catch (InterruptedException e) {

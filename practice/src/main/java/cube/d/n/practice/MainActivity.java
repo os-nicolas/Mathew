@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -20,6 +22,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.InputLineEnum;
+import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
@@ -30,14 +35,29 @@ public class MainActivity extends Activity {
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
+//        Main main = new Main(this, InputLineEnum.TUT_EK);
+//        main.initE(Util.stringEquation("=,5,(,+,(,/,a,2,),3,)".split(",")));//"*,5,(,/,(,+,10,9,-7,),6,)"
+//        main.allowPopups = false;
+//        main.trackFinger = true;
+//        setContentView(main);
+
+//        if (steps != null){
+//            for (String s:steps){
+//                main.addStep(Util.stringEquation(s.split(",")));
+//            }
+//        }
+
+
         setContentView(R.layout.activity_main);
 
         ListView listView = (ListView) findViewById(R.id.listview);
 
         final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, getMainRows(),listView);
-
-        // 2. Get ListView from activity_main.xml
-
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
 
@@ -47,8 +67,6 @@ public class MainActivity extends Activity {
                 "fonts/DejaVuSans-ExtraLight.ttf");
         tv.setTypeface(dj);
 
-
-        // 3. setListAdapter
         listView.setAdapter(adapter);
 
         final Activity that = this;

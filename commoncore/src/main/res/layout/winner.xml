@@ -3,15 +3,7 @@
     android:layout_height="fill_parent"
     android:layout_width="fill_parent">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_height="fill_parent"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:background="#88ffffff"-->
-        <!--android:id="@+id/sending">-->
 
-
-    <!--</LinearLayout>-->
 
     <!--<LinearLayout-->
         <!--android:layout_width="fill_parent"-->

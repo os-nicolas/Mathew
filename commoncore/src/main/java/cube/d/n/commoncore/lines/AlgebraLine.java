@@ -65,11 +65,16 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     }
 
     public void initEquation(Equation newEq) {
-        stupid.set(newEq);
+        addStep(newEq);
         if (!hasInitedVars){
             initVars();
         }
-        history.add(new EquationButton(stupid.get().copy(),this));
+
+    }
+
+    public void addStep(Equation newEq) {
+        history.add(0,new EquationButton(newEq.copy(),this));
+        stupid.set(newEq);
     }
 
     @Override

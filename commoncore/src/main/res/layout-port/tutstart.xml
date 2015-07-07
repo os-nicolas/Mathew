@@ -26,6 +26,7 @@
             android:layout_height="fill_parent"
             android:background="#ff0000"
             android:id="@+id/ribbon"
+            android:orientation="vertical"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="15dp"

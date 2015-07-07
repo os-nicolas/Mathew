@@ -10,5 +10,6 @@ public enum InputLineEnum {
     PROBLEM_WC, //Words, Choices
     PROBLEM_WCI, // Words, Choices, Input
     PROBLEM_WE, // Words, Equation
-    TUT_E //tutorial with an equation to play with
+    TUT_E, //tutorial with an equation to play with
+    TUT_EK // tutorial with an equation and a keyboard
 }

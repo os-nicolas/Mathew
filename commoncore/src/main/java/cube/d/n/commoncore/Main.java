@@ -33,6 +33,7 @@ import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.AlgebraLineNoKeyBoard;
+import cube.d.n.commoncore.lines.AlgebraLineNoReturn;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -41,6 +42,7 @@ import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
+import cube.d.n.commoncore.tuts.TutMainFrag;
 import cube.d.n.commoncore.tuts.YayTutView;
 
 /**
@@ -115,7 +117,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         } else if (startLine == InputLineEnum.TUT_E) {
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoKeyBoard(this));
-        } else {
+        } else if (startLine == InputLineEnum.TUT_EK) {
+            lines.add(new HiddenInputLine(this));
+            lines.add(new AlgebraLineNoReturn(this));
+        }else {
             Log.e("main.init", "InputLineEnum not recognized");
             lines.add(new InputLine(this));
         }
@@ -710,11 +715,13 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     private Equation goal;
     private int overlayId;
     private boolean alreadySolved=false;
+    private TutMainFrag myMainTut;
 
-    public void solvable(Equation goal,int overlayId){
+    public void solvable(Equation goal,int overlayId , TutMainFrag controller){
         allowSolve = true;
         this.goal = goal;
         this.overlayId = overlayId;
+        myMainTut = controller;
     }
 
 
@@ -723,27 +730,29 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             if (copy.same(goal)){
                 alreadySolved = true;
                 //allowTouch =false;
-                View root = this;
-                while (root.getParent() != null && root.getParent() instanceof View){
-                    root = (View)root.getParent();
-                }
+                final View root = (View)this.getParent();;
+//                while (root.getParent() != null && root.getParent() instanceof View){
+//                    root = (View)root.getParent();
+//                }
                 final View overlay = root.findViewById(overlayId);
                 overlay.setVisibility(VISIBLE);
                 overlay.setAlpha(0);
-                Thread th = new Thread() {
+                final Main that = this;
+                myMainTut.headerLooper.mHandler.post(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            this.sleep(200);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        overlay.animate().alpha(1).setDuration(400);
+
+                        overlay.animate().alpha(1).setDuration(400).withLayer().withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                YayTutView ytv = (YayTutView)root.findViewById(R.id.tuttry_yay);
+                                ytv.initOnClickListeners(that);
+                            }
+                        });
                     }
-                };
-                th.start();
-                YayTutView ytv = (YayTutView)root.findViewById(R.id.tuttry_yay);
-                ytv.initOnClickListeners(this);
+                });
+
+
 
             }
         }
@@ -751,44 +760,24 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
     public void reset() {
-        Equation equation =  ((HiddenInputLine) lines.get(0)).stupid.get().copy();
-        lines.clear();
-        lines.add(new HiddenInputLine(this));
-        lines.add(new AlgebraLineNoKeyBoard(this));
-        ((HiddenInputLine) lines.get(0)).stupid.set(equation.copy());
-        ((AlgebraLine) lines.get(1)).initEquation(equation.copy());
-        alreadySolved = false;
+        final Main that = this;
 
-        View root = this;
-        while (root.getParent() != null && root.getParent() instanceof View){
-            root = (View)root.getParent();
-        }
-        final View overlay = root.findViewById(overlayId);
-
-        final Activity context = (Activity)getContext();
-
-        Thread th = new Thread() {
+        Runnable r = new Runnable() {
             @Override
             public void run() {
+                lines.clear();
+                lines.add(new HiddenInputLine(that));
+                lines.add(new AlgebraLineNoKeyBoard(that));
 
-                overlay.animate().alpha(0).setDuration(400);
-                try {
-                    sleep(400);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                context.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        overlay.setVisibility(GONE);
-
-
-                    }
-                });
-
+                alreadySolved = false;
             }
         };
-        th.start();
+
+
+        myMainTut.reset(this,r);
+    }
+
+    public void addStep(Equation equation) {
+        ((AlgebraLine) lines.get(1)).addStep(equation);
     }
 }

@@ -239,6 +239,10 @@ public class EquationButton extends Button {
         y = 0;
         bkgCurrentAlpha = 0x0;
         bkgTargetAlpha = 0x0;
+
+
+            ((AlgebraLine) owner).owner.couldHaveSolved(((AlgebraLine) owner).stupid.get().copy());
+
     }
 
     public void update(int stupidX, int stupidY) {

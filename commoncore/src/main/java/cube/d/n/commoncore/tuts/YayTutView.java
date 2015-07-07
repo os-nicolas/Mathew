@@ -62,9 +62,13 @@ public class YayTutView extends LinearLayout {
 //            }
 //        });
         ((Button)view.findViewById(R.id.reset)).setOnClickListener(new OnClickListener() {
+            boolean clicked = false;
             @Override
             public void onClick(View v) {
-                main.reset();
+                if (!clicked){
+                    clicked = true;
+                    main.reset();
+                }
             }
         });
 //        ((Button)view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {

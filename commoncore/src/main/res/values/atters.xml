@@ -11,6 +11,7 @@
             <enum name="problem_wci" value="3"/>
             <enum name="problem_we" value="4"/>
             <enum name="tut_e" value="5"/>
+            <enum name="tut_ek" value="6"/>
         </attr>
     </declare-styleable>
 </resources>
