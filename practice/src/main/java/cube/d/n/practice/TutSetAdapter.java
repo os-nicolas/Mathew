@@ -10,10 +10,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
-import cube.d.n.commoncore.TutEnd;
-import cube.d.n.commoncore.TutFrag;
-import cube.d.n.commoncore.TutMainFrag;
-import cube.d.n.commoncore.TutStart;
+import cube.d.n.commoncore.tuts.TutEnd;
+import cube.d.n.commoncore.tuts.TutFrag;
+import cube.d.n.commoncore.tuts.TutMainFrag;
+import cube.d.n.commoncore.tuts.TutStart;
 
 /**
  * Created by Colin_000 on 5/2/2015.
@@ -25,10 +25,10 @@ public class TutSetAdapter extends FragmentPagerAdapter {
 
     public TutSetAdapter(FragmentManager fm) {
         super(fm);
-        frags.add(new TutStart());
-        frags.add(TutMainFrag.make(
-                "give it a try!", "+,5,6"));
-        frags.add(new TutEnd());
+        frags.add(new TutStart().withBackgroundColor(0xff6C0304));
+        frags.add(TutMainFrag.make("give it a try!", "+,5,6","11",false,false).withBackgroundColor(0xff6C0304));
+        frags.add(((TutMainFrag)TutMainFrag.make("give it a try!", "+,5,6","+,5,6",false,false).withBackgroundColor(0xff6C0304)).withStep("11"));
+        frags.add(new TutEnd().withBackgroundColor(0xff6C0304));
     }
 
     @Override

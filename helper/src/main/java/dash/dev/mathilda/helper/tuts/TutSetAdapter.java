@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cube.d.n.commoncore.TutEnd;
-import cube.d.n.commoncore.TutFrag;
-import cube.d.n.commoncore.TutTextFrag;
-import cube.d.n.commoncore.TutVideoFrag;
+import cube.d.n.commoncore.tuts.TutEnd;
+import cube.d.n.commoncore.tuts.TutFrag;
+import cube.d.n.commoncore.tuts.TutTextFrag;
+import cube.d.n.commoncore.tuts.TutVideoFrag;
 import dash.dev.mathilda.helper.Mathilda;
 import dash.dev.mathilda.helper.R;
 

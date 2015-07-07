@@ -1,16 +1,18 @@
-package cube.d.n.commoncore;
+package cube.d.n.commoncore.tuts;
 
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import cube.d.n.commoncore.FadeInTextView;
+import cube.d.n.commoncore.R;
 
 /**
  * Created by Colin_000 on 5/2/2015.
@@ -88,8 +90,12 @@ public class TutVideoFrag extends TutFrag{
 
         ((TextView) rootView.findViewById(R.id.tut_title)).setText(title);
         ((TextView) rootView.findViewById(R.id.tut_body)).setText(body);
-
         ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
+
+        rootView.findViewById(R.id.tut_title).setBackgroundColor(ribbonColor);
+        rootView.findViewById(R.id.tut_body).setBackgroundColor(ribbonColor);
+        rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
+
 
 //        String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
 //        Uri video = Uri.parse(vidAddress);
@@ -128,6 +134,4 @@ public class TutVideoFrag extends TutFrag{
         final VideoView vv = ((VideoView) rootView.findViewById(R.id.tut_video));
         vv.pause();
     }
-
-
 }

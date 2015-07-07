@@ -38,10 +38,17 @@ public class Util {
         }else if (inpus[at].equals("=")){
             res = new EqualsEquation(new NullLine());
         }else {
-            Log.e("closeAt","");
+            boolean canConvert = false;
+            try{
+                Double.parseDouble(inpus[at]);
+                canConvert = true;
+            }catch(Exception e){}
 
-            res = new AddEquation(new NullLine());
-            res.add(new VarEquation("Bad!",new NullLine()));
+            if (canConvert){
+                res=NumConstEquation.create(Double.parseDouble(inpus[at]),new NullLine());
+            }else {
+                res=new VarEquation(inpus[at],new NullLine());
+            }
         }
         at++;
         while (at < inpus.length){

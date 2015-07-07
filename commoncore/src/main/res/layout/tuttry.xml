@@ -25,6 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#ff0000"
+            android:id="@+id/ribbon"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:paddingTop="30dp"
@@ -50,7 +51,7 @@
                     android:textColor="#ffffff"
                     android:background="#ff0000" />
 
-                <LinearLayout
+                <FrameLayout
                     android:id="@+id/tut_video_holder"
                     android:layout_width="fill_parent"
                     android:layout_gravity="center"
@@ -67,7 +68,14 @@
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         custom:start_layout="tut_e"/>
-                </LinearLayout>
+
+                    <cube.d.n.commoncore.tuts.YayTutView
+                        android:visibility="gone"
+                        android:id="@+id/tuttry_yay"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+                    </cube.d.n.commoncore.tuts.YayTutView>
+                </FrameLayout>
             </LinearLayout>
         </LinearLayout>
 

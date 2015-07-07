@@ -1,16 +1,14 @@
-package cube.d.n.commoncore;
+package cube.d.n.commoncore.tuts;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
+
+import cube.d.n.commoncore.FadeInTextView;
+import cube.d.n.commoncore.R;
 
 /**
  * Created by Colin_000 on 5/4/2015.
@@ -65,6 +63,10 @@ public class TutTextFrag extends TutFrag{
         ((TextView) rootView.findViewById(R.id.tut_title)).setText(title);
         ((TextView) rootView.findViewById(R.id.tut_text_body)).setText(videoSub);
         ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
+
+        rootView.findViewById(R.id.tut_title).setBackgroundColor(ribbonColor);
+         rootView.findViewById(R.id.tut_text_body).setBackgroundColor(ribbonColor);
+        rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
 
         if (drawOnStart){start(rootView);}
 

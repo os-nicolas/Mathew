@@ -11,7 +11,7 @@ import android.widget.TextView;
 /**
  * Created by Colin_000 on 5/3/2015.
  */
-class FadeInTextView extends TextView {
+public class FadeInTextView extends TextView {
     public long hangTime =500L;
     public int currentColor = 0x00000000;
     public int targetColor;

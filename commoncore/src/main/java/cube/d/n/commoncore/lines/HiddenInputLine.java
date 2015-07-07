@@ -15,6 +15,7 @@ public class HiddenInputLine extends  InputLine implements HasHeaderLine {
         super(owner);
     }
 
+    @Override
     public void innerDraw(Canvas canvas, float top, float left, Paint paint) {
         // do nothing
     }
@@ -31,9 +32,9 @@ public class HiddenInputLine extends  InputLine implements HasHeaderLine {
 
     @Override
     public float requestedMaxX() {
-        return 99999f;
+        return 0f;
     }
 
     @Override
-    public float requestedMinX() {return -9999999f;}
+    public float requestedMinX() {return 0f;}
 }

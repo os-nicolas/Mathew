@@ -135,6 +135,7 @@ public abstract class KeyBoard implements Measureable {
                 return true;
             }
         }
+        if (owner.allowPopups){
         for (Button b : popUpButtons) {
             if (b.couldClick(event)) {
                 return true;
@@ -144,6 +145,7 @@ public abstract class KeyBoard implements Measureable {
             if (pub.couldClick(event)) {
                 return true;
             }
+        }
         }
         return false;
     }
@@ -158,16 +160,17 @@ public abstract class KeyBoard implements Measureable {
         buttonsPercent = getBaseButtonsPercent();
         int startAt1 = ((int) (owner.height - measureHeight()));
 
-        for (PopUpButton myPUB: popUpButtons) {
-            myPUB.updateLocation(this);
-            myPUB.draw(canvas, paint);
-        }
+        if (owner.allowPopups) {
+            for (PopUpButton myPUB : popUpButtons) {
+                myPUB.updateLocation(this);
+                myPUB.draw(canvas, paint);
+            }
 
 
-
-        for (SelectedRow myPUB: popUpLines) {
-            myPUB.updateLocation(this);
-            myPUB.draw(canvas, paint);
+            for (SelectedRow myPUB : popUpLines) {
+                myPUB.updateLocation(this);
+                myPUB.draw(canvas, paint);
+            }
         }
         drawShadow(canvas,paint.getAlpha()/2,startAt1);
 

@@ -270,10 +270,12 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     public boolean onTouch(MotionEvent event) {
 
         boolean nope = true;
-        for (int i = 0; i < history.size(); i++) {
-            if (history.get(i).click(event)) {
-                myMode = TouchMode.HIS;
-                nope =false;
+        if (owner.allowRevert) {
+            for (int i = 0; i < history.size(); i++) {
+                if (history.get(i).click(event)) {
+                    myMode = TouchMode.HIS;
+                    nope = false;
+                }
             }
         }
         if (nope && myMode == TouchMode.HIS){
@@ -387,6 +389,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         Log.i("add to History", stupid.toString());
         changed = false;
         needsToCenter();
+        owner.couldHaveSolved(stupid.get().copy());
 
     }
 

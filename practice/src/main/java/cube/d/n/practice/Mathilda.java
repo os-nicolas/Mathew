@@ -58,11 +58,7 @@ public class Mathilda extends BaseApp {
         return (Mathilda)BaseApp.getApp();
     }
 
-    public Typeface getDJV(){
-        Typeface dj = Typeface.createFromAsset(this.getAssets(),
-                "fonts/DejaVuSans.ttf");
-        return dj;
-    }
+
 
     public ArrayList<TopicRow> getTopics(){
         return topics;

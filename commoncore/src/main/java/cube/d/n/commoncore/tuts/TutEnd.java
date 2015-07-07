@@ -1,4 +1,4 @@
-package cube.d.n.commoncore;
+package cube.d.n.commoncore.tuts;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -11,10 +11,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import cube.d.n.commoncore.FadeInTextView;
+import cube.d.n.commoncore.R;
+
 /**
  * Created by Colin_000 on 5/5/2015.
  */
-public class TutEnd extends Fragment {
+public class TutEnd extends TutFrag {
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -25,6 +28,12 @@ public class TutEnd extends Fragment {
         View rootView = inflater.inflate(
                 R.layout.tutend, container, false);
 
+        rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
+
         return rootView;
+    }
+
+    @Override
+    protected void pstart(View rootView) {
     }
 }

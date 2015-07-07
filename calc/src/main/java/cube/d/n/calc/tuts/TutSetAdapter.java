@@ -10,11 +10,10 @@ import java.util.HashMap;
 
 import cube.d.n.calc.Mathilda;
 import cube.d.n.calc.R;
-import cube.d.n.commoncore.TutEnd;
-import cube.d.n.commoncore.TutFrag;
-import cube.d.n.commoncore.TutStart;
-import cube.d.n.commoncore.TutTextFrag;
-import cube.d.n.commoncore.TutVideoFrag;
+import cube.d.n.commoncore.tuts.TutEnd;
+import cube.d.n.commoncore.tuts.TutFrag;
+import cube.d.n.commoncore.tuts.TutTextFrag;
+import cube.d.n.commoncore.tuts.TutVideoFrag;
 
 /**
  * Created by Colin_000 on 5/2/2015.

@@ -351,4 +351,16 @@ public abstract class BaseApp extends Application{
         }
         return  new AlgebraKeyboard(owner,algebraLine);
     }
+
+    public Typeface getDJV(){
+        Typeface dj = Typeface.createFromAsset(this.getAssets(),
+                "fonts/DejaVuSans.ttf");
+        return dj;
+    }
+
+    public Typeface getDJVL(){
+        Typeface dj = Typeface.createFromAsset(this.getAssets(),
+                "fonts/DejaVuSans-ExtraLight.ttf");
+        return dj;
+    }
 }
