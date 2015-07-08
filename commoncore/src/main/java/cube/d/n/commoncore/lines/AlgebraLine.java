@@ -855,6 +855,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         return animation;
     }
 
+    // TODO this is really slow :/
+    // maybe i should bitmapitize it?
     public void drawProgress(Canvas canvas, float top, float left, float percent, int startAt) {
         Paint p = new Paint();
         p.setColor(BaseApp.getApp().darkColor - 0xff000000);

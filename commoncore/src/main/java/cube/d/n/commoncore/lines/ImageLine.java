@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.PictureDrawable;
+import android.text.TextPaint;
 import android.view.View;
 
 import cube.d.n.commoncore.Main;
@@ -20,15 +21,14 @@ public  class ImageLine extends Line  {
 
 
     private Bitmap bitMap;
-    View source;
+    private TextPaint titlePaint;
+    private TextPaint bodyPaint;
 
     public ImageLine(Main owner) {
         super(owner);
+
     }
 
-    public void setSource(View source){
-        this.source =  source;
-    }
 
     @Override
     public KeyBoard getKeyboad() {
@@ -37,22 +37,37 @@ public  class ImageLine extends Line  {
 
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
-        if (source != null){
 
-            if (bitMap == null && source.getMeasuredHeight() != 0){
-                bitMap = getBitMap(source,bitMap);
+
+
+            if (bitMap == null){
+                bitMap = getBitMap(bitMap,canvas.getWidth());
             }
 
             if (bitMap!=null){
                 canvas.drawBitmap(bitMap,left,top,paint);
             }
-
-        }
     }
 
-    private Bitmap getBitMap(View overlay,Bitmap old) {
+    private Bitmap getBitMap(Bitmap old, int width) {
 
         Picture p = new Picture();
+
+        //so we have problem title a the top
+        // and problem text in a block below it
+
+        // we need to know the hight and width before we start recording
+
+
+
+
+        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
+            textPaint.setTextSize(textPaint.getTextSize() - 1);
+            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        }
+
+
 
         Canvas c =  p.beginRecording(overlay.getWidth(),overlay.getHeight());
 
