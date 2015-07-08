@@ -27,6 +27,7 @@ public class TutMainFrag  extends TutFrag {
     String title;
     String equation;
     String goal;
+    String at;
     boolean allowPopUps;
     boolean allowRevert;
     private String[] steps;
@@ -34,12 +35,13 @@ public class TutMainFrag  extends TutFrag {
     public LooperThread headerLooper;
 
 
-    public static TutMainFrag make(String title,String equation, String goal, boolean allowRevert, boolean allowPopUps) {
+    public static TutMainFrag make(String title,String equation, String goal, String at, boolean allowRevert, boolean allowPopUps) {
             TutMainFrag result = new TutMainFrag();
             Bundle args = new Bundle();
             args.putString("TITLE",title);
             args.putString("EQUATION",equation);
             args.putString("GOAL",goal);
+            args.putString("AT",at);
             args.putBoolean("REVERT",allowRevert);
             args.putBoolean("POPUP",allowPopUps);
             result.setArguments(args);
@@ -47,15 +49,14 @@ public class TutMainFrag  extends TutFrag {
             return result;
         }
 
-
-
     public void updateData(Bundle args){
+        super.updateData(args);
         this.equation = args.getString("EQUATION");
         this.title = args.getString("TITLE");
         this.goal = args.getString("GOAL");
+        this.at = args.getString("AT");
         this.allowRevert = args.getBoolean("REVERT",true);
         this.allowPopUps = args.getBoolean("POPUP",true);
-        this.ribbonColor = args.getInt("RIBBON_COLOR",0xffff0000);
         this.steps = args.getStringArray("STEPS");
     }
 
@@ -94,6 +95,7 @@ public class TutMainFrag  extends TutFrag {
 
        rootView.findViewById(R.id.tut_body).setBackgroundColor(ribbonColor);
        rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
+        ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
 
         Main main = (Main)rootView.findViewById(R.id.tuttry_main);
         setUp(main);

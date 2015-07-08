@@ -28,6 +28,8 @@ public class TutEnd extends TutFrag {
         View rootView = inflater.inflate(
                 R.layout.tutend, container, false);
 
+        updateData(getArguments());
+
         rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
 
         return rootView;

@@ -41,6 +41,7 @@ public class TutVideoFrag extends TutFrag{
         this.title = args.getString("TITLE");
         this.body = args.getString("BODY");
         this.videoLocation = args.getString("VIDEO_LOCATION");
+        this.ribbonColor = args.getInt("RIBBON_COLOR",0xffff0000);
         this.at = args.getString("AT");
     }
 

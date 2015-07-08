@@ -22,6 +22,7 @@ public class TutStart extends TutFrag {
         View rootView = inflater.inflate(
                 R.layout.tutstart, container, false);
 
+        updateData(getArguments());
 
         rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
 

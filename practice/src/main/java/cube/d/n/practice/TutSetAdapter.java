@@ -30,13 +30,25 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                 "Double Tap to add subtract multiply and much more",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.double_tap,
                 "# of #").withBackgroundColor(0xff6C0304));
-        frags.add(TutMainFrag.make("give it a try!", "*,5,(,/,(,+,10,9,-7,),6,)","10",false,false).withBackgroundColor(0xff6C0304));
+        frags.add(TutMainFrag.make("give it a try!",
+                "*,5,(,/,(,+,10,9,-7,),6,)",
+                "10",
+                "# of #",
+                false,
+                false)
+                .withBackgroundColor(0xff6C0304));
         frags.add(TutVideoFrag.make(
                 "Tap and Hold",
                 "Tap and Hold to revert to a previous step",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.revert,
                 "# of #").withBackgroundColor(0xff6C0304));
-        frags.add(((TutMainFrag)TutMainFrag.make("give it a try!", "*,5,(,/,(,+,10,9,-7,),6,)","*,5,(,/,(,+,10,9,-7,),6,)",true,false).withBackgroundColor(0xff6C0304))
+        frags.add(((TutMainFrag)TutMainFrag.make(
+                        "give it a try!",
+                        "*,5,(,/,(,+,10,9,-7,),6,)",
+                        "*,5,(,/,(,+,10,9,-7,),6,)",
+                        "# of #",
+                        true,
+                        false).withBackgroundColor(0xff6C0304))
                 .withStep("*,5,(,/,(,+,19,-7,),6,)")
                 .withStep("*,5,(,/,12,6,)")
                 .withStep("*,5,2")
@@ -47,7 +59,12 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                 "Drag and Drop to move terms around",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.drag,
                 "# of #").withBackgroundColor(0xff6C0304));
-        frags.add(TutMainFrag.make("give it a try!", "=,5,(,+,(,/,a,2,),3,)","=,4,a",true,false).withBackgroundColor(0xff6C0304));
+        frags.add(TutMainFrag.make("give it a try!",
+                "=,5,(,+,(,/,a,2,),3,)",
+                "=,4,a",
+                "# of #",
+                true,
+                false).withBackgroundColor(0xff6C0304));
         frags.add(new TutEnd().withBackgroundColor(0xff6C0304));
     }
 

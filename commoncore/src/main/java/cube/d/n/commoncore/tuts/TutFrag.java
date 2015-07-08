@@ -72,4 +72,8 @@ public abstract class TutFrag extends Fragment {
         hasStarted = false;
         drawOnStart = false;
     }
+
+    public void updateData(Bundle args) {
+        this.ribbonColor = args.getInt("RIBBON_COLOR",0xffff0000);
+    }
 }

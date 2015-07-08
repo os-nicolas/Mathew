@@ -40,6 +40,7 @@ public class TutTextFrag extends TutFrag{
     }
 
     public void updateData(Bundle args){
+        super.updateData(args);
         this.title = args.getString("TITLE");
         this.at = args.getString("AT");
         this.videoSub = args.getString("VIDEO_SUB");
