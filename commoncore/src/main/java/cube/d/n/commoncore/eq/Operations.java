@@ -920,11 +920,7 @@ public class Operations {
 
     public static Equation divide_Cancel(EquationLine owner, MultiCountData top, MultiCountData bot, MultiCountData common) {
         Equation result;
-        if (owner instanceof AlgebraLine) {
 
-            ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
-
-        }
         MultiCountData topData = remainder(top, common,owner);
         MultiCountData botData = remainder(bot, common,owner);
         Equation topEq = topData.getEquation(owner);

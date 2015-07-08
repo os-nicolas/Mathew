@@ -6,12 +6,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Picture;
 import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.graphics.drawable.PictureDrawable;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Physical;
+import cube.d.n.commoncore.TextDrawInfo;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
@@ -23,10 +29,15 @@ public  class ImageLine extends Line  {
     private Bitmap bitMap;
     private TextPaint titlePaint;
     private TextPaint bodyPaint;
+    String title;
+    String body;
 
     public ImageLine(Main owner) {
         super(owner);
-
+        titlePaint = new TextPaint();
+        titlePaint.setTypeface(BaseApp.getApp().getDJVL());
+        titlePaint.setTextSize(32);
+        bodyPaint = new TextPaint();
     }
 
 
@@ -37,9 +48,6 @@ public  class ImageLine extends Line  {
 
     @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
-
-
-
             if (bitMap == null){
                 bitMap = getBitMap(bitMap,canvas.getWidth());
             }
@@ -58,20 +66,12 @@ public  class ImageLine extends Line  {
 
         // we need to know the hight and width before we start recording
 
+        // first me measure the title
+        TextBlockInfo titleLines = getTextDrawInfo(title,width,0,0,titlePaint);
 
+        Canvas c =  p.beginRecording(width,titleLines.getHeight());
 
-
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        }
-
-
-
-        Canvas c =  p.beginRecording(overlay.getWidth(),overlay.getHeight());
-
-        overlay.draw(c);
+        titleLines.draw(c);
 
         p.endRecording();
 
@@ -83,6 +83,48 @@ public  class ImageLine extends Line  {
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         canvas.drawPicture(pd.getPicture());
         return old;
+    }
+
+    private TextBlockInfo getTextDrawInfo(String text, int width, int top, int left, TextPaint paint) {
+        Log.d("max width", ""+ width);
+        TextBlockInfo res =new TextBlockInfo();
+        String[] words = text.split(" ");
+        boolean done = false;
+        int lineSpacing =2;
+        int buffer = 5;
+        int startTop = top;
+        top+= buffer;
+        left += buffer;
+        int at = 0;
+        Rect out = new Rect();
+        paint.getTextBounds("Ay", 0, "Ay".length(), out);
+        float lineHeight = out.height();
+        while (!done) {
+            boolean go = true;
+            String myComString = "";
+            while (go) {
+
+                String nextCompString = myComString+ words[at] + " ";
+                paint.getTextBounds(nextCompString, 0, nextCompString.length(), out);
+                if (out.width() > width-(buffer) || at == words.length -1){
+                    top+= lineHeight;
+                    res.add(new TextDrawInfo(top,left,out,myComString,paint));
+                    //Log.d("my width", ""+ currentWidth + " " + out.width());
+                    //paint.getTextBounds(myComString, 0, myComString.length(), out);
+                    //Log.d("but really my width is", ""+ out.width());
+                    top+=lineSpacing;
+                    go = false;
+                    if (at == words.length -1){
+                        done = true;
+                    }
+                }else {
+                    at++;
+                    myComString=nextCompString;
+                }
+            }
+        }
+        res.setHeight(top + buffer - startTop);
+        return res;
     }
 
 
@@ -104,5 +146,9 @@ public  class ImageLine extends Line  {
     @Override
     public float measureHeight() {
         return (bitMap==null?0:bitMap.getHeight());
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

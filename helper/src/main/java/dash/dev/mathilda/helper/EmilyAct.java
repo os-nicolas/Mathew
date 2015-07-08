@@ -10,6 +10,7 @@ import java.lang.ref.WeakReference;
 
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.lines.EquationLine;
 import dash.dev.mathilda.helper.tuts.TutActivity;
 
 
@@ -50,7 +51,7 @@ public class EmilyAct extends Activity {
        View myView = Mathilda.justGetView(screenName, this);
        if (myView instanceof  Main ){
             for (int i=0;i < ((Main) myView).getLinesSize();i++){
-                Equation st = ((Main) myView).getLine(i).stupid.get();
+                Equation st = ((EquationLine)((Main) myView).getLine(i)).stupid.get();
                 if (st != null) {
                     st.deepNeedsUpdate();
                 }

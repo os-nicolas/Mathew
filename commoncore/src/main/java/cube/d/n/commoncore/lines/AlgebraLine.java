@@ -1,8 +1,13 @@
 package cube.d.n.commoncore.lines;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Picture;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.PictureDrawable;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -51,6 +56,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     public LongTouch lastLongTouch = null;
     private ArrayList<Animation> animation = new ArrayList<>();
     private Equation changedEq;
+    private Bitmap progressBitmap= null;
+    private float pbwidth=-1;
 
 
     public AlgebraLine(Main owner) {
@@ -858,16 +865,33 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     // TODO this is really slow :/
     // maybe i should bitmapitize it?
     public void drawProgress(Canvas canvas, float top, float left, float percent, int startAt) {
+        if (progressBitmap == null || measureWidth() != pbwidth){
+            pbwidth=measureWidth();
+            progressBitmap = generateProgressBitmap(progressBitmap);
+        }
+
         Paint p = new Paint();
-        p.setColor(BaseApp.getApp().darkColor - 0xff000000);
-        float targetAlpha = startAt;
-        p.setAlpha((int) targetAlpha);
+        p.setAlpha(startAt);
+        canvas.drawBitmap(progressBitmap,left-(measureWidth()*(1-percent)),top,p);
+    }
+
+    private Bitmap generateProgressBitmap(Bitmap old) {
+
+        Picture picture = new Picture();
+
         float scaleBy = BaseApp.getApp().getShadowFade();
-        int at = (int)top;
+        int fadelen= (int)Math.ceil(Math.log(0xff)/Math.log(scaleBy));
+
+        Canvas canvas =  picture.beginRecording((int)(measureWidth()+fadelen),BaseApp.getApp().getTopLineWidth()+fadelen);
+
+        Paint p = new Paint();
+        p.setColor(BaseApp.getApp().darkColor);
+        float targetAlpha = 0xff;
+        int at = 0;
         for (int i = 0; i < BaseApp.getApp().getTopLineWidth(); i++) {
             p.setAlpha((int) targetAlpha);
-            canvas.drawLine(left, at, measureWidth() * percent, at, p);
-            float atX = ((int) (left+ measureWidth() * percent));
+            canvas.drawLine(0, at, measureWidth(), at, p);
+            float atX = ((int) (0+ measureWidth()));
             while (p.getAlpha() > 1) {
                 canvas.drawLine(atX, at, atX + 1, at, p);
                 p.setAlpha((int) (p.getAlpha() / scaleBy));
@@ -878,8 +902,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         p.setAlpha(0x7f);
         while (targetAlpha > 1) {
             p.setAlpha((int) targetAlpha);
-            canvas.drawLine(0, at, left+ measureWidth() * percent, at, p);
-            float atX = ((int) (left+ measureWidth() * percent));
+            canvas.drawLine(0, at, measureWidth(), at, p);
+            float atX = ((int) (measureWidth()));
             while (p.getAlpha() > 1) {
                 canvas.drawLine(atX, at, atX + 1, at, p);
                 p.setAlpha((int) (p.getAlpha() / scaleBy));
@@ -888,6 +912,17 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
             targetAlpha = targetAlpha / scaleBy;
             at++;
         }
+
+        picture.endRecording();
+
+        PictureDrawable pd = new PictureDrawable(picture);
+        if (old == null) {
+            old = Bitmap.createBitmap(pd.getIntrinsicWidth(), pd.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+        Canvas canvas2 = new Canvas(old);
+        canvas2.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+        canvas2.drawPicture(pd.getPicture());
+        return old;
     }
 
     @Override

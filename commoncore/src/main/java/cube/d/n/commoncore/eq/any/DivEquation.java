@@ -17,6 +17,7 @@ import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
 import cube.d.n.commoncore.eq.Operations;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.EquationLine;
 
 public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation , BinaryOperator {
@@ -235,6 +236,9 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
             buttons.add(new SeletedRowEquationButton(Operations.divide_Cancel(owner, new MultiCountData(top), new MultiCountData(bot), common),new Action(owner) {
                 @Override
                 protected void privateAct() {
+                    if (owner instanceof AlgebraLine) {
+                        ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
+                    }
                     MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                     that.replace(Operations.divide_Cancel(owner, top, bot, common));
                     changed(p);

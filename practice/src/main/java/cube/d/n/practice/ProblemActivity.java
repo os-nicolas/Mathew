@@ -34,7 +34,7 @@ public class ProblemActivity extends Activity {
                     "fonts/DejaVuSans-ExtraLight.ttf");
             ((TextView) text).setTypeface(djLight);
 
-            main.getProblemImage().setSource(text);
+            main.getProblemImage().setTitle("Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.");
         }else {
             setContentView(R.layout.problem_activity_wi);
 
@@ -45,7 +45,7 @@ public class ProblemActivity extends Activity {
                     "fonts/DejaVuSans-ExtraLight.ttf");
             ((TextView) text).setTypeface(djLight);
 
-            main.getProblemImage().setSource(text);
+            main.getProblemImage().setTitle("Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.");
             main.initWE(myProblem.myProblem.equation);
 
         }
