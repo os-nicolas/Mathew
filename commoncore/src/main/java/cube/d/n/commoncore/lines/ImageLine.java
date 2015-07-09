@@ -27,16 +27,17 @@ public  class ImageLine extends Line  {
 
 
     private Bitmap bitMap;
-    private TextPaint titlePaint;
-    private TextPaint bodyPaint;
+    private TextPaint titlePaint= new TextPaint();
+    private TextPaint bodyPaint= new TextPaint();
     String title;
     String body;
 
     public ImageLine(Main owner) {
         super(owner);
-        titlePaint = new TextPaint();
         titlePaint.setTypeface(BaseApp.getApp().getDJVL());
-        titlePaint.setTextSize(32);
+        titlePaint.setTextSize(64);
+        bodyPaint.setTypeface(BaseApp.getApp().getDJVL());
+        bodyPaint.setTextSize(32);
         bodyPaint = new TextPaint();
     }
 
@@ -68,10 +69,15 @@ public  class ImageLine extends Line  {
 
         // first me measure the title
         TextBlockInfo titleLines = getTextDrawInfo(title,width,0,0,titlePaint);
+        TextBlockInfo bodyLines = getTextDrawInfo(body,width,titleLines.getHeight(),0,bodyPaint);
 
-        Canvas c =  p.beginRecording(width,titleLines.getHeight());
+        int bffr = 10;
+
+        Canvas c =  p.beginRecording(width,titleLines.getHeight() + bffr + bodyLines.getHeight());
+
 
         titleLines.draw(c);
+        bodyLines.draw(c);
 
         p.endRecording();
 
@@ -106,7 +112,7 @@ public  class ImageLine extends Line  {
 
                 String nextCompString = myComString+ words[at] + " ";
                 paint.getTextBounds(nextCompString, 0, nextCompString.length(), out);
-                if (out.width() > width-(buffer) || at == words.length -1){
+                if (out.width() > width-(buffer) ){
                     top+= lineHeight;
                     res.add(new TextDrawInfo(top,left,out,myComString,paint));
                     //Log.d("my width", ""+ currentWidth + " " + out.width());
@@ -114,10 +120,15 @@ public  class ImageLine extends Line  {
                     //Log.d("but really my width is", ""+ out.width());
                     top+=lineSpacing;
                     go = false;
-                    if (at == words.length -1){
+                    if (at == words.length-1) {
                         done = true;
                     }
-                }else {
+                }else if (at == words.length-1){
+                    top+= lineHeight;
+                    res.add(new TextDrawInfo(top,left,out,nextCompString,paint));
+                    go = false;
+                    done = true;
+                }else{
                     at++;
                     myComString=nextCompString;
                 }
@@ -150,5 +161,8 @@ public  class ImageLine extends Line  {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+    public void setBody(String body) {
+        this.body = body;
     }
 }

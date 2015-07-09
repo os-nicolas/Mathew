@@ -1,6 +1,6 @@
 topic	problem name	text	equation	input
-topiv	problem 1			yes
+topiv	problem 3	words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words		yes
 topiv	problem 2			yes
 stuf	test			yes
-And things		solve	(,=,5,(,/,2,(,+,4,a,),),)	yes
-A Longer Topic		Simify	(,/,(,*,4,a,),(,/,6,a,),)	yes
+And things		solve	=,5,(,/,2,(,+,4,a,),)	yes
+A Longer Topic		Simify	/,(,*,4,a,),(,/,6,a,)	yes

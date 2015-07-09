@@ -1,29 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+xmlns:custom="http://schemas.android.com/apk/res-auto"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:id="@+id/stupid">
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes."
-            android:padding="15dp"
-            android:textColor="#ff000000"
-            android:id="@+id/dumb_words"/>
-    </LinearLayout>
-
-    <cube.d.n.commoncore.Main
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        custom:start_layout="problem_wci"
-        android:id="@+id/problem_main" />
+<cube.d.n.commoncore.Main
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    custom:start_layout="problem_wi"
+    android:id="@+id/problem_main" />
 
 </FrameLayout>

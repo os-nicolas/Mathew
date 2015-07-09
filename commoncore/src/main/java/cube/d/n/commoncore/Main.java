@@ -99,6 +99,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     private void init(Context context, InputLineEnum startLine) {
+
         Log.d("life is complex", "" + startLine);
         if (startLine == InputLineEnum.INPUT) {
             lines.add(new InputLine(this));
@@ -120,6 +121,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         } else if (startLine == InputLineEnum.TUT_EK) {
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoReturn(this));
+        } else if (startLine == InputLineEnum.PROBLEM_WI) {
+            lines.add(new ImageLine(this));
+            lines.add(new InputLine(this));
         }else {
             Log.e("main.init", "InputLineEnum not recognized");
             lines.add(new InputLine(this));

@@ -23,32 +23,21 @@ public class ProblemActivity extends Activity {
 
         myProblem=Problem.problems.get(problemId).getRow();
 
+
+
+
+        Main main;
         if (myProblem.myProblem.equation == null) {
-
             setContentView(R.layout.problem_activity_wi);
-
-            Main main = (Main) findViewById(R.id.problem_main);
-            View text = findViewById(R.id.dumb_words);
-
-            Typeface djLight = Typeface.createFromAsset(this.getAssets(),
-                    "fonts/DejaVuSans-ExtraLight.ttf");
-            ((TextView) text).setTypeface(djLight);
-
-            main.getProblemImage().setTitle("Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.");
+            main  = (Main) findViewById(R.id.problem_main);
+            //main.initWI();
         }else {
-            setContentView(R.layout.problem_activity_wi);
-
-            Main main = (Main) findViewById(R.id.problem_main);
-            View text = findViewById(R.id.dumb_words);
-
-            Typeface djLight = Typeface.createFromAsset(this.getAssets(),
-                    "fonts/DejaVuSans-ExtraLight.ttf");
-            ((TextView) text).setTypeface(djLight);
-
-            main.getProblemImage().setTitle("Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.");
+            setContentView(R.layout.problem_activity_we);
+            main  = (Main) findViewById(R.id.problem_main);
             main.initWE(myProblem.myProblem.equation);
-
         }
 
+        main.getProblemImage().setTitle(myProblem.myProblem.name);
+        main.getProblemImage().setBody(myProblem.myProblem.text);
     }
 }

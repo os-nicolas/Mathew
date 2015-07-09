@@ -74,6 +74,9 @@ public abstract class TutFrag extends Fragment {
     }
 
     public void updateData(Bundle args) {
+        if (args == null){
+            args = new Bundle();
+        }
         this.ribbonColor = args.getInt("RIBBON_COLOR",0xffff0000);
     }
 }
