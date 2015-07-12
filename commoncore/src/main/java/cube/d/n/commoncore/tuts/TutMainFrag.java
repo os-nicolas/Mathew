@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cube.d.n.commoncore.FadeInTextView;
+import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.Util;
@@ -22,7 +23,7 @@ import cube.d.n.commoncore.lines.HiddenInputLine;
 /**
  * Created by Colin_000 on 7/3/2015.
  */
-public class TutMainFrag  extends TutFrag {
+public class TutMainFrag  extends TutFrag  implements ISolveController {
 
     String title;
     String equation;
@@ -134,6 +135,12 @@ public class TutMainFrag  extends TutFrag {
     public TutMainFrag withStep(String s) {
         setStep(s);
         return this;
+    }
+
+    @Override
+    public void solved(Runnable runnable) {
+
+        looperThread.mHandler.post(runnable);
     }
 
     public void reset(final Main main, final Runnable r) {

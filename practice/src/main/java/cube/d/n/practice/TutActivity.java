@@ -62,25 +62,6 @@ public class TutActivity extends FragmentActivity {
             };
             th.start();
         }
-//        if (mViewPager.getCurrentItem() == 0) {
-//            Thread th = new Thread() {
-//                @Override
-//                public void run() {
-//                    try {
-//                        Thread.sleep(3000);
-//                        that.runOnUiThread(new Runnable() {
-//                            public void run() {
-//                                mViewPager.setCurrentItem(1, true);
-//                            }
-//                        });
-//
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            };
-//            th.start();
-//        }
     }
 
 
@@ -91,7 +72,6 @@ public class TutActivity extends FragmentActivity {
 
 
         setContentView(R.layout.tut_holder);
-
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
 
@@ -122,6 +102,18 @@ public class TutActivity extends FragmentActivity {
                             Log.i("tab selected", position + "");
                         }
                     });
+        }
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        Log.d("tut act","totally hid the action bar");
+        decorView.setSystemUiVisibility(uiOptions);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
         }
 
     }

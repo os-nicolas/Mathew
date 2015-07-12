@@ -2,6 +2,8 @@ package cube.d.n.commoncore;
 
 import android.util.Log;
 
+import java.math.BigDecimal;
+
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
@@ -38,17 +40,7 @@ public class Util {
         }else if (inpus[at].equals("=")){
             res = new EqualsEquation(new NullLine());
         }else {
-            boolean canConvert = false;
-            try{
-                Double.parseDouble(inpus[at]);
-                canConvert = true;
-            }catch(Exception e){}
-
-            if (canConvert){
-                res=NumConstEquation.create(Double.parseDouble(inpus[at]),new NullLine());
-            }else {
-                res=new VarEquation(inpus[at],new NullLine());
-            }
+            res = getEquation(inpus[at]);
         }
         at++;
         while (at < inpus.length){
@@ -62,20 +54,25 @@ public class Util {
                 res.add(stringEquation(inner));
                 at = end+1;
             }else{
-                boolean canConvert = false;
-                try{
-                    Double.parseDouble(inpus[at]);
-                    canConvert = true;
-                }catch(Exception e){}
-
-                if (canConvert){
-                    res.add(NumConstEquation.create(Double.parseDouble(inpus[at]),new NullLine()));
-                    at++;
-                }else {
-                    res.add(new VarEquation(inpus[at],new NullLine()));
-                    at++;
-                }
+                res.add( getEquation(inpus[at]));
+                at++;
             }
+        }
+        return res;
+    }
+
+    private static Equation getEquation(String inpu) {
+        Equation res;
+        boolean canConvert = false;
+        try{
+            new BigDecimal(inpu);
+            canConvert = true;
+        }catch(Exception e){}
+
+        if (canConvert){
+            res= NumConstEquation.create(new BigDecimal(inpu), new NullLine());
+        }else {
+            res=new VarEquation(inpu,new NullLine());
         }
         return res;
     }

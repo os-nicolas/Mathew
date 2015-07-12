@@ -12,11 +12,11 @@
 
         <LinearLayout
 
-            android:layout_width="300dp"
+            android:layout_width="320dp"
             android:layout_gravity="center"
             android:layout_height="fill_parent">
 
-            <cube.d.n.practice.CircleView
+            <cube.d.n.commoncore.CircleView
                 android:layout_margin="10dp"
                 android:layout_width="65dp"
                 android:layout_height="65dp"

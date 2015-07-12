@@ -1,5 +1,6 @@
 package cube.d.n.practice;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -28,6 +29,17 @@ public class FeedBack extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         Button send = (Button) findViewById(R.id.feedback_send);
         final Activity that= this;

@@ -363,4 +363,10 @@ public abstract class BaseApp extends Application{
                 "fonts/DejaVuSans-ExtraLight.ttf");
         return dj;
     }
+
+    public int getGreyTextColor() {
+        return 0xff888888;
+    }
+
+
 }

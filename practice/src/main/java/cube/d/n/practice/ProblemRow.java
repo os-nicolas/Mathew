@@ -2,25 +2,18 @@ package cube.d.n.practice;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.Circle;
-
-import java.util.HashMap;
-
+import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.EquationView;
-import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.VarEquation;
-import cube.d.n.commoncore.lines.NullLine;
 
 /**
  * Created by Colin on 6/23/2015.
  */
-public class ProblemRow implements Row {
+public class ProblemRow implements Row,CanUpdatePrecent {
 
 
     public final Problem myProblem;
@@ -59,9 +52,11 @@ public class ProblemRow implements Row {
         return this;
     }
 
+    View rowView;
+
     @Override
     public View makeView(Context context,ViewGroup parent,int i) {
-        View rowView;
+
 
         // 1. Create inflater
         LayoutInflater inflater = (LayoutInflater) context
@@ -76,6 +71,8 @@ public class ProblemRow implements Row {
 
                 EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
                 equationView.setEquation(myProblem.equation);
+                equationView.setColor(0xff000000);
+                equationView.setFont(Mathilda.getApp().getDJVL());
 
 
             } else {
@@ -85,9 +82,7 @@ public class ProblemRow implements Row {
                 // 3. Get the two text view from the rowView
                 TextView title = (TextView) rowView.findViewById(R.id.problem_name);
 
-                Typeface dj = Typeface.createFromAsset(context.getAssets(),
-                        "fonts/DejaVuSans-ExtraLight.ttf");
-                title.setTypeface(dj);
+                title.setTypeface(Mathilda.getApp().getDJVL());
                 title.setText(myProblem.name);
 
             }
@@ -108,7 +103,20 @@ public class ProblemRow implements Row {
         CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
         int p = i + 1;
         cir.setColors(getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
+        cir.setPrecent((myProblem.getSolved()?1:0));
 
         return rowView;
+    }
+
+    @Override
+    public void updatePrecent() {
+        // sometimes we have not vet inflated the row
+        // in perticular this happens when you first create the activity
+        // since onresume is called before the views are made
+        // it is ok becuase precent is updated when we make the view
+        if (rowView != null) {
+            CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
+            cir.setPrecent((myProblem.getSolved() ? 1 : 0));
+        }
     }
 }

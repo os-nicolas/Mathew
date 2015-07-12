@@ -16,13 +16,13 @@ import cube.d.n.commoncore.EquationView;
 /**
  * Created by Colin on 6/23/2015.
  */
-public class ProblemArrayAdapter extends ArrayAdapter<ProblemRow> {
+public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 
     private final Context context;
-    private final ArrayList<ProblemRow> problems;
+    private final ArrayList<Row> problems;
     public ConcurrentHashMap<Integer, View> views = new ConcurrentHashMap<>();
 
-    public ProblemArrayAdapter(Context context, ArrayList<ProblemRow> itemsArrayList, final ViewGroup parent) {
+    public ProblemArrayAdapter(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent) {
 
         super(context, R.layout.topic_row, itemsArrayList);
 
@@ -45,7 +45,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<ProblemRow> {
         return rowView;
     }
 
-    public ProblemRow getProblem(int pos){
+    public Row getProblem(int pos){
         return problems.get(pos);
     }
 
@@ -57,5 +57,14 @@ public class ProblemArrayAdapter extends ArrayAdapter<ProblemRow> {
         } else {
             return makeView(position, parent);
         }
+    }
+
+    public void updatePrecents() {
+        for (Row v:problems){
+            if (v instanceof CanUpdatePrecent){
+                ((CanUpdatePrecent)v).updatePrecent();
+            }
+        }
+
     }
 }

@@ -114,7 +114,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         } else if (startLine == InputLineEnum.PROBLEM_WE) {
             lines.add(new ImageLine(this));
             lines.add(new HiddenInputLine(this));
-            lines.add(new AlgebraLine(this));
+            lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.TUT_E) {
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoKeyBoard(this));
@@ -719,9 +719,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     private Equation goal;
     private int overlayId;
     private boolean alreadySolved=false;
-    private TutMainFrag myMainTut;
+    private ISolveController myMainTut;
 
-    public void solvable(Equation goal,int overlayId , TutMainFrag controller){
+    public void solvable(Equation goal,int overlayId , ISolveController controller){
         allowSolve = true;
         this.goal = goal;
         this.overlayId = overlayId;
@@ -742,22 +742,18 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 overlay.setVisibility(VISIBLE);
                 overlay.setAlpha(0);
                 final Main that = this;
-                myMainTut.headerLooper.mHandler.post(new Runnable() {
+                myMainTut.solved(new Runnable() {
                     @Override
                     public void run() {
-
                         overlay.animate().alpha(1).setDuration(400).withLayer().withEndAction(new Runnable() {
                             @Override
                             public void run() {
-                                YayTutView ytv = (YayTutView)root.findViewById(R.id.tuttry_yay);
+                                YayView ytv = (YayView)root.findViewById(overlayId);
                                 ytv.initOnClickListeners(that);
                             }
                         });
                     }
                 });
-
-
-
             }
         }
     }

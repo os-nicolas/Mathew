@@ -9,13 +9,14 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
 
 /**
  * Created by Colin on 6/23/2015.
  */
-public class TopicRow extends MainRow {
+public class TopicRow extends MainRow implements CanUpdatePrecent {
 
     public  static HashMap<Integer,TopicRow> topics = new HashMap<>();
 
@@ -74,12 +75,13 @@ public class TopicRow extends MainRow {
         }
         return problems;
 
-
     }
 
     public ProblemArrayAdapter getAdapter(Context context,ListView parent){
-        return new ProblemArrayAdapter(context,getProblems(),parent);
+        return new ProblemArrayAdapter(context,Utilz.asRowList(getProblems()),parent);
     }
+
+
 
     @Override
     public void go(Activity that) {
@@ -87,5 +89,27 @@ public class TopicRow extends MainRow {
         //based on item add info to intent
         intent.putExtra("topic",myId);
         that.startActivity(intent);
+    }
+
+    @Override
+    public void updatePrecent() {
+        // sometimes we have not vet inflated the row
+        // in perticular this happens when you first create the activity
+        // since onresume is called before the views are made
+        // it is ok becuase precent is updated when we make the view
+        if (rowView != null) {
+            CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
+            cir.setPrecent(getPrecent());
+        }
+    }
+
+    public float getPrecent() {
+        int right = 0;
+        for (ProblemRow pr: problems){
+            if (pr.myProblem.getSolved()){
+                right++;
+            }
+        }
+        return ((float)right)/((float)problems.size());
     }
 }

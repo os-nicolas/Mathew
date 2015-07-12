@@ -15,12 +15,13 @@ import java.util.Random;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
+import cube.d.n.commoncore.YayView;
 
 
 /**
  * Created by Colin_000 on 7/5/2015.
  */
-public class YayTutView extends LinearLayout {
+public class YayTutView extends LinearLayout implements YayView {
     View view;
     public YayTutView(Context context) {
         super(context);

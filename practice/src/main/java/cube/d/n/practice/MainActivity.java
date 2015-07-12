@@ -1,5 +1,6 @@
 package cube.d.n.practice;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -36,8 +37,19 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
+//        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
 
 //        Main main = new Main(this, InputLineEnum.TUT_EK);

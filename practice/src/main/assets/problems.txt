@@ -1,6 +1,6 @@
-topic	problem name	text	equation	input
-topiv	problem 3	words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words words		yes
-topiv	problem 2			yes
-stuf	test			yes
-And things		solve	=,5,(,/,2,(,+,4,a,),)	yes
-A Longer Topic		Simify	/,(,*,4,a,),(,/,6,a,)	yes
+topic	problem name	text	equation	input	a
+topiv	Problem 3	Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.		yes	a
+topiv	Problem 2			yes	a
+stuf	Test			yes	a
+And things		solve	=,5,(,/,2,(,+,4,a,),)	yes	=,a,-3.6
+A Longer Topic		Simify	/,(,*,4,a,),(,/,6,a,)	yes	a

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.EquationView;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.lines.NullLine;
@@ -40,6 +41,7 @@ public class MainRow implements Row,Goable {
         that.startActivity(intent);
     }
 
+    View rowView;
 
     @Override
     public View makeView(Context context, ViewGroup parent, int i) {
@@ -47,19 +49,19 @@ public class MainRow implements Row,Goable {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
-        View res = inflater.inflate(R.layout.topic_row, parent, false);
+        rowView = inflater.inflate(R.layout.topic_row, parent, false);
 
-        TextView title = (TextView) res.findViewById(R.id.row_title);
+        TextView title = (TextView) rowView.findViewById(R.id.row_title);
 
         Typeface djLight = Typeface.createFromAsset(context.getAssets(),
                 "fonts/DejaVuSans-ExtraLight.ttf");
         title.setTypeface(djLight);
 
 
-        EquationView equationView = (EquationView) res.findViewById(R.id.row_subtitle);
+        EquationView equationView = (EquationView) rowView.findViewById(R.id.row_subtitle);
 
         int at = i+1;
-        CircleView cir = (CircleView) res.findViewById(R.id.topic_circle);
+        CircleView cir = (CircleView) rowView.findViewById(R.id.topic_circle);
         String inCircle;
 
         if (this instanceof TopicRow) {
@@ -81,11 +83,14 @@ public class MainRow implements Row,Goable {
         }
 
         cir.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
-        equationView.setFont(Mathilda.getMathilda().getDJV());
-        equationView.setColor(0xff888888);
+        if (this instanceof TopicRow){
+            cir.setPrecent(((TopicRow)this).getPrecent());
+        }
+        equationView.setFont(Mathilda.getMathilda().getDJVL());
+        equationView.setColor(Mathilda.getApp().getGreyTextColor());
         title.setText(this.title);
 
-        return res;
+        return rowView;
 
     }
 }

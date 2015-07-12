@@ -1,5 +1,6 @@
 package cube.d.n.practice;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class Support extends ActionBarActivity {
         @Override
         public void onServiceDisconnected(ComponentName name) {
             mService = null;
+            Log.d("onServiceDisconnected","mService is now null");
         }
 
         @Override
@@ -47,6 +49,19 @@ public class Support extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.activity_support);
+
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
         Intent serviceIntent = new Intent("com.android.vending.billing.InAppBillingService.BIND");
         serviceIntent.setPackage("com.android.vending");
         bindService(serviceIntent, mServiceConn, this.BIND_AUTO_CREATE);
@@ -54,9 +69,8 @@ public class Support extends ActionBarActivity {
 
 
 
-        setContentView(R.layout.activity_support);
 
-        setContentView(R.layout.problem_select);
+
 
         TextView tv = (TextView)findViewById(R.id.problem_title_text);
         Typeface dj = Typeface.createFromAsset(this.getAssets(),
@@ -77,11 +91,12 @@ public class Support extends ActionBarActivity {
 
             @Override
             public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
-                ((DonateRow)adapter.getProblem(position)).go(mService,that);
+                if (adapter.getProblem(position) instanceof DonateRow) {
+                    ((DonateRow) adapter.getProblem(position)).go(mService, that);
+                }
             }
         });
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -123,14 +138,15 @@ public class Support extends ActionBarActivity {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         if (mService != null) {
             unbindService(mServiceConn);
         }
+        super.onDestroy();
     }
 
-    private ArrayList<ProblemRow> getProblems() {
-        ArrayList<ProblemRow> res = new ArrayList<>();
+    private ArrayList<Row> getProblems() {
+        ArrayList<Row> res = new ArrayList<>();
+        res.add(new AboutRow("Mathilda lets you solve problems by dragging terms around and telling it what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes. "));
         res.add(new DonateRow("One Dollar","$1"));
         res.add(new DonateRow("Five Dollars","$5"));
         res.add(new DonateRow("Ten Dollars","$10"));

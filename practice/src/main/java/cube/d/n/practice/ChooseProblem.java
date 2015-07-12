@@ -2,6 +2,7 @@ package cube.d.n.practice;
 
 import cube.d.n.practice.util.SystemUiHider;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -28,11 +29,22 @@ public class ChooseProblem extends Activity {
 
         setContentView(R.layout.problem_select);
 
-        int topicId= getIntent().getIntExtra("topic", -1);
+        View decorView = getWindow().getDecorView();
+        // Hide the status bar.
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+//        // Remember that you should never show the action bar if the
+//        // status bar is hidden, so hide that too if necessary.
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
-        myTopic=TopicRow.topics.get(topicId);
+        int topicId = getIntent().getIntExtra("topic", -1);
 
-        TextView tv = (TextView)findViewById(R.id.problem_title_text);
+        myTopic = TopicRow.topics.get(topicId);
+
+        TextView tv = (TextView) findViewById(R.id.problem_title_text);
         Typeface dj = Typeface.createFromAsset(this.getAssets(),
                 "fonts/DejaVuSans-ExtraLight.ttf");
         tv.setTypeface(dj);
@@ -40,26 +52,37 @@ public class ChooseProblem extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.problem_listView);
 
-        final ProblemArrayAdapter adapter = myTopic.getAdapter(this,listView);
+        final ProblemArrayAdapter adapter = myTopic.getAdapter(this, listView);
 
         listView.setAdapter(adapter);
         final Activity that = this;
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 
             @Override
-            public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
+            public void onItemClick(AdapterView<?> unused, View v, int position, long arg3) {
 
-                ProblemRow item = adapter.getItem(position);
+                Row item = adapter.getItem(position);
 
-                Intent intent = new Intent(that,ProblemActivity.class);
-                //based on item add info to intent
-                intent.putExtra("problem",item.myProblem.myId);
-                startActivity(intent);
+                if (item instanceof ProblemRow) {
+                    Intent intent = new Intent(that, ProblemActivity.class);
+                    //based on item add info to intent
+                    intent.putExtra("problem", ((ProblemRow) item).myProblem.myId);
+                    startActivity(intent);
+                }
 
             }
         });
 
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        // we need to update if we solved anything
+        ListView listView = (ListView) findViewById(R.id.problem_listView);
+        ((ProblemArrayAdapter) listView.getAdapter()).updatePrecents();
+    }
+
 }

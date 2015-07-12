@@ -35,10 +35,14 @@ public  class ImageLine extends Line  {
     public ImageLine(Main owner) {
         super(owner);
         titlePaint.setTypeface(BaseApp.getApp().getDJVL());
-        titlePaint.setTextSize(64);
-        bodyPaint.setTypeface(BaseApp.getApp().getDJVL());
-        bodyPaint.setTextSize(32);
-        bodyPaint = new TextPaint();
+        titlePaint.setTextSize(BaseApp.getApp().getTextSize()*1.2f);
+        titlePaint.setDither(true);
+        titlePaint.setAntiAlias(true);
+        bodyPaint.setTypeface(BaseApp.getApp().getDJV());
+        bodyPaint.setTextSize(BaseApp.getApp().getTextSize()*.6f);
+        bodyPaint.setColor(BaseApp.getApp().getGreyTextColor());
+        bodyPaint.setDither(true);
+        bodyPaint.setAntiAlias(true);
     }
 
 
@@ -68,12 +72,14 @@ public  class ImageLine extends Line  {
         // we need to know the hight and width before we start recording
 
         // first me measure the title
-        TextBlockInfo titleLines = getTextDrawInfo(title,width,0,0,titlePaint);
-        TextBlockInfo bodyLines = getTextDrawInfo(body,width,titleLines.getHeight(),0,bodyPaint);
+        float bffr = BaseApp.getApp().getBuffer();
 
-        int bffr = 10;
+        TextBlockInfo titleLines = getTextDrawInfo(title,width,0,0,titlePaint,(int)(bffr));
+        TextBlockInfo bodyLines = getTextDrawInfo(body,width,(int)(titleLines.getHeight()+bffr),0,bodyPaint,(int)(bffr));
 
-        Canvas c =  p.beginRecording(width,titleLines.getHeight() + bffr + bodyLines.getHeight());
+
+
+        Canvas c =  p.beginRecording(width,(int)(titleLines.getHeight() + 3*bffr + bodyLines.getHeight()));
 
 
         titleLines.draw(c);
@@ -91,13 +97,12 @@ public  class ImageLine extends Line  {
         return old;
     }
 
-    private TextBlockInfo getTextDrawInfo(String text, int width, int top, int left, TextPaint paint) {
+    private TextBlockInfo getTextDrawInfo(String text, int width, int top, int left, TextPaint paint,float buffer) {
         Log.d("max width", ""+ width);
         TextBlockInfo res =new TextBlockInfo();
         String[] words = text.split(" ");
         boolean done = false;
-        int lineSpacing =2;
-        int buffer = 5;
+        float lineSpacing =BaseApp.getApp().getDpi()*5;
         int startTop = top;
         top+= buffer;
         left += buffer;
@@ -134,7 +139,7 @@ public  class ImageLine extends Line  {
                 }
             }
         }
-        res.setHeight(top + buffer - startTop);
+        res.setHeight((int)(top + buffer - startTop));
         return res;
     }
 
