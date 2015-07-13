@@ -103,8 +103,14 @@ public class ProblemRow implements Row,CanUpdatePrecent {
         CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
         int p = i + 1;
         cir.setColors(getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
-        cir.setPrecent((myProblem.getSolved()?1:0));
 
+        // donate rows have no myProblem
+        if (myProblem != null) {
+            cir.setPrecent((myProblem.getSolved() ? 1 : 0));
+            if (myProblem.getSolved()){
+                cir.setSubText("SOLVED");
+            }
+        }
         return rowView;
     }
 
@@ -117,6 +123,9 @@ public class ProblemRow implements Row,CanUpdatePrecent {
         if (rowView != null) {
             CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
             cir.setPrecent((myProblem.getSolved() ? 1 : 0));
+            if (myProblem.getSolved()){
+                cir.setSubText("SOLVED");
+            }
         }
     }
 }

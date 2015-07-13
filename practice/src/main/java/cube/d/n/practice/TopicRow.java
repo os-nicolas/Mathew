@@ -100,12 +100,15 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         if (rowView != null) {
             CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
             cir.setPrecent(getPrecent());
+            if (getPrecent()==1){
+                cir.setSubText("COMPLETE");
+            }
         }
     }
 
     public float getPrecent() {
         int right = 0;
-        for (ProblemRow pr: problems){
+        for (ProblemRow pr: getProblems()){
             if (pr.myProblem.getSolved()){
                 right++;
             }

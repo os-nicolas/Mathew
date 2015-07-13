@@ -48,20 +48,32 @@ public class CircleView extends View {
 
     Paint bkgPaint;
     Paint textPaint;
+    Paint smallPaint;
     Paint circlePaint;
     String text="5";
     Rect out;
+    private String subText = "";
+
+    public void setSubText(String subText){
+        this.subText = subText;
+        invalidate();
+    }
 
     public void setColors(String text,int circleColor,int textColor){
         this.text =text;
         bkgPaint = new Paint();
-       precent = new Random().nextFloat();
+      // precent = new Random().nextFloat();
         bkgPaint.setColor(circleColor);
         bkgPaint.setAntiAlias(true);
         textPaint = new Paint();
         textPaint.setColor(textColor);
         textPaint.setAntiAlias(true);
         textPaint.setTextSize(100);
+        smallPaint = new Paint();
+        smallPaint.setColor(textColor);
+        smallPaint.setAntiAlias(true);
+        smallPaint.setTextSize(10*BaseApp.getApp().getDpi());
+        smallPaint.setTypeface(BaseApp.getApp().getDJVL());
         circlePaint = new Paint();
         circlePaint.setAntiAlias(true);
         circlePaint.setColor(0xffAAAAAA);
@@ -115,12 +127,6 @@ public class CircleView extends View {
         }
 
 
-
-
-
-
-
-
         textPaint.getTextBounds(text, 0, text.length(), out);
         while (out.width() + (2* buffer) > Math.min(h,w)/Math.sqrt(2) || out.height() + (2*buffer) > Math.min(h,w)/Math.sqrt(2)) {
             textPaint.setTextSize(textPaint.getTextSize()*.9f);
@@ -137,12 +143,21 @@ public class CircleView extends View {
 //        Rect r = new Rect((int)((w/2f)- (textW2 / 2f)), (int)((h/2f) - (textH / 2f)),(int)((w/2f)+ (textW2 / 2f)), (int)((h/2f) + (textH / 2f)));
 //        canvas.drawRect(r,p);
         canvas.drawText(text, (w/2f)- (textW2 / 2f), (h/2f) + (textH / 2f), textPaint);
+        if (!subText.equals("")){
+            float wSmall = smallPaint.measureText(subText);
+
+            smallPaint.getTextBounds(subText, 0, subText.length(), out);
+
+            int hSmall = out.height();
+            float padding = 3*BaseApp.getApp().getDpi();
+
+            canvas.drawText(subText, (w/2f)- (wSmall / 2f), (h/2f) + (textH / 2f) + (hSmall) + padding, smallPaint);
+        }
 
         currentR = ((currentR*BaseApp.getApp().getRate()*2)+targetR)/(1+(BaseApp.getApp().getRate()*2));
         if (currentR != targetR || (precent!= -1 &&targetSweep != mySweep)){
             invalidate();
         }
-
     }
 
     public static Random r = new Random();
