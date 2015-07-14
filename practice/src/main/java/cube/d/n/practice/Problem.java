@@ -3,7 +3,9 @@ package cube.d.n.practice;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.util.Log;
+import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import cube.d.n.commoncore.BaseApp;
@@ -31,6 +33,7 @@ public class Problem {
     public final Equation solution;
     public final boolean input;
     private ProblemRow row;
+    public View view;
 
     public Problem(String line) {
         super();
@@ -89,5 +92,19 @@ public class Problem {
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(name, solved);
         editor.commit();
+    }
+
+    public Problem next() {
+        ArrayList<ProblemRow> siblins = TopicRow.topics.get(topic).getProblems();
+        boolean next = false;
+        for (ProblemRow pr: siblins){
+            if (next){
+                return pr.myProblem;
+            }
+            if (pr.myProblem.equals(this)){
+                next = true;
+            }
+        }
+        return null;
     }
 }

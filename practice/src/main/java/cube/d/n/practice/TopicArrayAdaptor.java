@@ -56,4 +56,12 @@ public class TopicArrayAdaptor extends ArrayAdapter<Row> {
             return makeView(position, parent);
         }
     }
+
+    public void updatePrecents() {
+        for (Row v:topics){
+            if (v instanceof CanUpdatePrecent){
+                ((CanUpdatePrecent)v).updatePrecent();
+            }
+        }
+    }
 }

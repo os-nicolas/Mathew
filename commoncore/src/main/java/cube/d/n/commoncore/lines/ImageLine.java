@@ -62,6 +62,10 @@ public  class ImageLine extends Line  {
             }
     }
 
+    public void updateBitMap(int width){
+        bitMap = getBitMap(bitMap,width);
+    }
+
     private Bitmap getBitMap(Bitmap old, int width) {
 
         Picture p = new Picture();
@@ -77,7 +81,7 @@ public  class ImageLine extends Line  {
         TextBlockInfo titleLines = getTextDrawInfo(title,width,0,0,titlePaint,(int)(bffr));
         TextBlockInfo bodyLines = getTextDrawInfo(body,width,(int)(titleLines.getHeight()+bffr),0,bodyPaint,(int)(bffr));
 
-        Canvas c =  p.beginRecording(width,(int)(titleLines.getHeight() +  bodyLines.getHeight()));//3*bffr +
+        Canvas c =  p.beginRecording(width,(int)(titleLines.getHeight() + bffr+ bodyLines.getHeight()));//3*bffr +
 
 
         titleLines.draw(c);

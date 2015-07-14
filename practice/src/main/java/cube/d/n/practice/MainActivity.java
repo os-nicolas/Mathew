@@ -32,7 +32,7 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.lines.NullLine;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FullAct {
 
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -119,5 +119,12 @@ public class MainActivity extends Activity {
         return rows;
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+        // we need to update if we solved anything
+        ListView listView = (ListView) findViewById(R.id.listview);
+        ((TopicArrayAdaptor) listView.getAdapter()).updatePrecents();
+    }
 
 }

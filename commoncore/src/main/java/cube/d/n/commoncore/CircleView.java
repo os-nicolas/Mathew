@@ -72,7 +72,7 @@ public class CircleView extends View {
         smallPaint = new Paint();
         smallPaint.setColor(textColor);
         smallPaint.setAntiAlias(true);
-        smallPaint.setTextSize(10*BaseApp.getApp().getDpi());
+        smallPaint.setTextSize(7*BaseApp.getApp().getDpi()/BaseApp.getApp().scale);
         smallPaint.setTypeface(BaseApp.getApp().getDJVL());
         circlePaint = new Paint();
         circlePaint.setAntiAlias(true);

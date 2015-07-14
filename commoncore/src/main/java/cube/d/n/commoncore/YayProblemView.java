@@ -58,16 +58,21 @@ public class YayProblemView extends LinearLayout implements YayView {
                 }
             }
         });
-        ((android.widget.Button)view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
-            boolean clicked = false;
-            @Override
-            public void onClick(View v) {
-                if (!clicked) {
-                    clicked = true;
-                    Log.d("Next clicked", "Next clicked");
+        if (main.next.hasNext()) {
+            ((android.widget.Button) view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
+                boolean clicked = false;
+
+                @Override
+                public void onClick(View v) {
+                    if (!clicked) {
+                        clicked = true;
+                        main.next.next();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            ((android.widget.Button) view.findViewById(R.id.next)).setEnabled(false);
+        }
 
     }
 }

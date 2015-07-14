@@ -40,9 +40,9 @@ public class ChooseProblem extends Activity {
             actionBar.hide();
         }
 
-        int topicId = getIntent().getIntExtra("topic", -1);
+        String topicName = getIntent().getStringExtra("topic");
 
-        myTopic = TopicRow.topics.get(topicId);
+        myTopic = TopicRow.topics.get(topicName);
 
         TextView tv = (TextView) findViewById(R.id.problem_title_text);
         Typeface dj = Typeface.createFromAsset(this.getAssets(),

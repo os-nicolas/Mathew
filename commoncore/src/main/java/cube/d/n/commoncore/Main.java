@@ -61,6 +61,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     public float height;
     public float width;
+    private InputLineEnum startLine ;
 
     public Main(Context context) {
         super(context);
@@ -101,6 +102,13 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     private void init(Context context, InputLineEnum startLine) {
 
         Log.d("life is complex", "" + startLine);
+        this.startLine=startLine;
+        initStartLines(startLine);
+        keyBoardManager.hardSet(lastLine().getKeyboad());
+        setOnTouchListener(this);
+    }
+
+    private void initStartLines(InputLineEnum startLine) {
         if (startLine == InputLineEnum.INPUT) {
             lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.CALC) {
@@ -128,8 +136,6 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             Log.e("main.init", "InputLineEnum not recognized");
             lines.add(new InputLine(this));
         }
-        keyBoardManager.hardSet(lastLine().getKeyboad());
-        setOnTouchListener(this);
     }
 
     float lastDragY;
@@ -343,14 +349,23 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     @Override
     protected void onDraw(Canvas canvas) {
-
-
+        width = canvas.getWidth();
         if (height == 0) {
             height = canvas.getHeight();
-            offsetY = height / 3f;
+            if (startLine == InputLineEnum.CALC || startLine == InputLineEnum.INPUT) {
+                offsetY = height / 3f;
+            }else if(startLine == InputLineEnum.PROBLEM_WE || startLine == InputLineEnum.PROBLEM_WI){
+                float tolHeight =0;
+                for (Line l: lines){
+                    if (l instanceof ImageLine){
+                        ((ImageLine) l).updateBitMap((int)width);
+                    }
+                    tolHeight += l.measureHeight();
+                }
+                offsetY = tolHeight;
+            }
         }
         height = canvas.getHeight();
-        width = canvas.getWidth();
 
         Rect r = new Rect(0, 0, (int) width, (int) height);
         Paint p = new Paint();
@@ -760,14 +775,13 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
     public void reset() {
-        final Main that = this;
 
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 lines.clear();
-                lines.add(new HiddenInputLine(that));
-                lines.add(new AlgebraLineNoKeyBoard(that));
+
+                initStartLines(startLine);
 
                 alreadySolved = false;
             }
@@ -780,4 +794,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public void addStep(Equation equation) {
         ((AlgebraLine) lines.get(1)).addStep(equation);
     }
+
+
+
+    public Nextmanager next = new Nextmanager();
+
+
 }

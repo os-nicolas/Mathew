@@ -18,7 +18,7 @@ import cube.d.n.commoncore.eq.any.Equation;
  */
 public class TopicRow extends MainRow implements CanUpdatePrecent {
 
-    public  static HashMap<Integer,TopicRow> topics = new HashMap<>();
+    public  static HashMap<String,TopicRow> topics = new HashMap<>();
 
     private static int id =0;
 
@@ -29,7 +29,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
 
     public TopicRow(String line) {
         super(getTitle(line), getSubtitle(line));
-        topics.put(myId,this);
+        topics.put(getTitle(line),this);
 
         String[] split = line.split("\t");
 
@@ -61,7 +61,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         return split[0];
     }
 
-    private ArrayList<ProblemRow> getProblems() {
+    public ArrayList<ProblemRow> getProblems() {
         if (problems == null) {
             ArrayList<ProblemRow> probs = new ArrayList<>();
             ArrayList<ProblemRow> allProbs = Mathilda.getMathilda().problems;
@@ -87,7 +87,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
     public void go(Activity that) {
         Intent intent = new Intent(that,ChooseProblem.class);
         //based on item add info to intent
-        intent.putExtra("topic",myId);
+        intent.putExtra("topic",title);
         that.startActivity(intent);
     }
 
@@ -98,7 +98,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         // since onresume is called before the views are made
         // it is ok becuase precent is updated when we make the view
         if (rowView != null) {
-            CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
+            CircleView cir = (CircleView) rowView.findViewById(R.id.topic_circle);
             cir.setPrecent(getPrecent());
             if (getPrecent()==1){
                 cir.setSubText("COMPLETE");
