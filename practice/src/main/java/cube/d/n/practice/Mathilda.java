@@ -3,6 +3,7 @@ package cube.d.n.practice;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.IBinder;
 import android.util.Log;
@@ -101,5 +102,18 @@ public class Mathilda extends BaseApp {
         }
 
         return problemRows;
+    }
+
+    final static String TUTS_PREF = "tutsComplete";
+    final static String TUTS_PREF_KEY = "tutsComplete";
+    public static boolean hasCompletedTut() {
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(TUTS_PREF, 0);
+        return settings.getBoolean(TUTS_PREF_KEY, false);
+    }
+    public static void completedTut() {
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(TUTS_PREF, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(TUTS_PREF_KEY, true);
+        editor.commit();
     }
 }

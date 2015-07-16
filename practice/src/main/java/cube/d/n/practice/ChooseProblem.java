@@ -48,6 +48,8 @@ public class ChooseProblem extends Activity {
         Typeface dj = Typeface.createFromAsset(this.getAssets(),
                 "fonts/DejaVuSans-ExtraLight.ttf");
         tv.setTypeface(dj);
+        tv.setText(topicName);
+
 
 
         ListView listView = (ListView) findViewById(R.id.problem_listView);

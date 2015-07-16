@@ -56,6 +56,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public boolean allowSolve = false;
 
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
+    public ProgressManager progressManager = new ProgressManager();
 
     final ArrayList<Line> lines = new ArrayList<>();
 
@@ -352,18 +353,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         width = canvas.getWidth();
         if (height == 0) {
             height = canvas.getHeight();
-            if (startLine == InputLineEnum.CALC || startLine == InputLineEnum.INPUT) {
-                offsetY = height / 3f;
-            }else if(startLine == InputLineEnum.PROBLEM_WE || startLine == InputLineEnum.PROBLEM_WI){
-                float tolHeight =0;
-                for (Line l: lines){
-                    if (l instanceof ImageLine){
-                        ((ImageLine) l).updateBitMap((int)width);
-                    }
-                    tolHeight += l.measureHeight();
-                }
-                offsetY = tolHeight;
-            }
+            initOffset();
         }
         height = canvas.getHeight();
 
@@ -404,6 +394,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         }
 
         keyBoardManager.draw(canvas, bot, 0, new Paint());
+        progressManager.draw(canvas);
         // TODO this is probably really bad for CPU and GPU use
         invalidate();
 
@@ -426,6 +417,21 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             canvas.drawCircle(trackFingerX, trackFingerY, 20 * BaseApp.getApp().getDpi(), fingerPaint);
         }
 
+    }
+
+    public void initOffset() {
+        if (startLine == InputLineEnum.CALC || startLine == InputLineEnum.INPUT) {
+            offsetY = height / 3f;
+        }else if(startLine == InputLineEnum.PROBLEM_WE || startLine == InputLineEnum.PROBLEM_WI){
+            float tolHeight =0;
+            for (Line l: lines){
+                if (l instanceof ImageLine){
+                    ((ImageLine) l).updateBitMap((int)width);
+                }
+                tolHeight += l.measureHeight();
+            }
+            offsetY = tolHeight;
+        }
     }
 
 
@@ -723,6 +729,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public void initWE(Equation equation) {
         ((HiddenInputLine) lines.get(1)).stupid.set(equation.copy());
         ((AlgebraLine) lines.get(2)).initEquation(equation.copy());
+        keyBoardManager.hardSet(lines.get(2).getKeyboad());
     }
 
     public void initE(Equation equation) {
@@ -760,7 +767,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 myMainTut.solved(new Runnable() {
                     @Override
                     public void run() {
-                        overlay.animate().alpha(1).setDuration(400).withLayer().withEndAction(new Runnable() {
+                        overlay.animate().alpha(1).setDuration(500).withLayer().withEndAction(new Runnable() {
                             @Override
                             public void run() {
                                 YayView ytv = (YayView)root.findViewById(overlayId);
@@ -775,14 +782,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
     public void reset() {
-
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 lines.clear();
-
                 initStartLines(startLine);
-
                 alreadySolved = false;
             }
         };
@@ -798,6 +802,5 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
     public Nextmanager next = new Nextmanager();
-
 
 }

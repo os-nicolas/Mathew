@@ -2,6 +2,8 @@ package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 
+import java.util.ArrayList;
+
 import cube.d.n.commoncore.lines.EquationLine;
 
 
@@ -9,16 +11,18 @@ import cube.d.n.commoncore.lines.EquationLine;
  * Created by Colin on 1/21/2015.
  */
 public abstract class Animation {
-    public final EquationLine owner;
+    public ArrayList<Animation> holder;
 
-    public Animation(EquationLine owner){
-        this.owner =owner;
+    public Animation(ArrayList<Animation> holder){
+        this.holder =holder;
     }
 
     public abstract void draw(Canvas canvas);
 
     protected void remove(){
-        owner.removeAnimation(this);
+        if (holder != null) {
+            holder.remove(this);
+        }
     }
 
 }

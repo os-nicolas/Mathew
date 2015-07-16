@@ -135,11 +135,12 @@ public class EquationButton extends Button {
             if (lastLongTouch != null && lastLongTouch.started()) {
                 if (lastLongTouch.done()) {
                     Log.i("lastLongTouch", "done");
-                    ((CanTrackChanges) owner).getAfterAnimations().add(new DragStarted(owner, 0x7f,0,left));
+                    ((CanTrackChanges) owner).getAfterAnimations().add(new DragStarted((AlgebraLine)owner, 0x7f,0,left));
                     revert();
                     lastLongTouch = null;
                 } else {
-                    ((AlgebraLine) owner).drawProgress(canvas,0,0, lastLongTouch.percent(), 0xff);
+                     ProgressManager pm = owner.owner.progressManager;
+                     pm.drawProgress(0, lastLongTouch.percent(), 0xff,canvas.getWidth(),canvas.getHeight());
                     Log.i("lastLongTouch", lastLongTouch.percent() + "");
                 }
             }

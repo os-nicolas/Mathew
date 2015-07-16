@@ -54,7 +54,7 @@ public class MyPoint extends Point implements Physical {
     }
 
     public float distance(float x2, float y2) {
-        return (float)Math.sqrt(((x2- this.x)*(x2- this.x))+((y2 - this.y)*(y2- this.y)));
+        return distance(this,new Point((int)x2,(int)y2));
     }
 
     @Override
@@ -75,5 +75,9 @@ public class MyPoint extends Point implements Physical {
     @Override
     public float getY() {
         return y;
+    }
+
+    public static float distance(Point a, Point b) {
+        return (float)Math.sqrt(((a.x- b.x)*(a.x- b.x))+((a.y - b.y)*(a.y- b.y)));
     }
 }

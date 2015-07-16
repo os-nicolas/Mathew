@@ -74,10 +74,10 @@ public class MainActivity extends FullAct {
         LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
 
 
-        TextView tv = (TextView)findViewById(R.id.main_title_text);
-        Typeface dj = Typeface.createFromAsset(this.getAssets(),
-                "fonts/DejaVuSans-ExtraLight.ttf");
-        tv.setTypeface(dj);
+//        TextView tv = (TextView)findViewById(R.id.main_title_text);
+//        Typeface dj = Typeface.createFromAsset(this.getAssets(),
+//                "fonts/DejaVuSans-ExtraLight.ttf");
+//        tv.setTypeface(dj);
 
         listView.setAdapter(adapter);
 
@@ -102,15 +102,21 @@ public class MainActivity extends FullAct {
         ArrayList<TopicRow> topics = Mathilda.getMathilda().getTopics();
         ArrayList<Row> rows = new ArrayList<>();
 
-        rows.add(new MainRow("Tutorial", "how do i use this thing anyway",TutActivity.class));
+        if (!Mathilda.hasCompletedTut()) {
+            rows.add(new MainRow("Tutorial", "how do i use this thing anyway", TutActivity.class));
 
-        rows.add(new Divider());
+            rows.add(new Divider());
+        }
 
         for (TopicRow t: topics){
             rows.add(t);
         }
 
         rows.add(new Divider());
+
+        if (Mathilda.hasCompletedTut()) {
+            rows.add(new MainRow("Tutorial", "how do i use this thing anyway", TutActivity.class));
+        }
 
         rows.add(new MainRow("Feedback", "got an idea, let us know",FeedBack.class));
         rows.add(new MainRow("Support", "got an idea, let us know",Support.class));

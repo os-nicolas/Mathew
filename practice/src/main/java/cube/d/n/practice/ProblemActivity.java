@@ -117,6 +117,8 @@ public class ProblemActivity extends FullAct implements ISolveController {
     public void solved(Runnable runnable) {
         myProblem.setSolved(true);
         solvedLooper.mHandler.post(runnable);
+        HappyView hv = (HappyView)findViewById(R.id.happy);
+        hv.start();
     }
 
     @Override
@@ -174,6 +176,8 @@ public class ProblemActivity extends FullAct implements ISolveController {
                             public void run() {
                                 r.run();
                                 setUp(main);
+                                main.initOffset();
+
                             }
                         });
                         whiteout.animate().alpha(0).setDuration(300).withLayer().withEndAction(new Runnable() {

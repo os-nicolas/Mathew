@@ -2,6 +2,7 @@ package cube.d.n.commoncore.eq.any;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Log;
@@ -505,7 +506,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 boolean closest = true;
                 for (Animation a :((CanTrackChanges)owner).getAfterAnimations()) {
                     if (a instanceof Pop) {
-                        float aDis = ((Pop) a).myPoint.distance(x, y);
+                        float aDis = MyPoint.distance(((Pop) a).myPoint,new Point((int)x, (int)y));
                         closest = ourDis <= aDis;
                         if (!closest) {
                             break;
@@ -520,7 +521,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                             i--;
                         }
                     }
-                    ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint, owner));
+                    ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint,((AlgebraLine)owner).getAnimations()));
                 }
 
                 //}
@@ -541,7 +542,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 i--;
             }
         }
-        ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint, owner));
+        ((CanTrackChanges)owner).getAfterAnimations().add(new Pop(myPoint, ((AlgebraLine)owner).getAnimations()));
 
         if (owner instanceof AlgebraLine) {
             // TODO

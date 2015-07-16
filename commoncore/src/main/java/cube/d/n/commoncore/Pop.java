@@ -2,7 +2,10 @@ package cube.d.n.commoncore;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
+
+import java.util.ArrayList;
 
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -15,12 +18,28 @@ public class Pop extends Animation {
     long runTime = 180;
     long startedAt;
     int startAlpha = 0x90;
-    public MyPoint myPoint;
+    public Point myPoint;
+    int color = BaseApp.getApp().lightColor;
 
-    public Pop(MyPoint myPoint,EquationLine owner) {
-        super(owner);
+    public Pop(Point myPoint,ArrayList<Animation> holder) {
+        super(holder);
+        init(myPoint);
+
+    }
+
+    public Pop(Point myPoint) {
+        super(null);
+        init(myPoint);
+    }
+
+    private void init(Point myPoint) {
         this.startedAt = System.currentTimeMillis();
         this.myPoint = myPoint;
+    }
+
+    public Pop widthColor(int color){
+        this.color = color;
+        return this;
     }
 
     @Override
@@ -29,7 +48,7 @@ public class Pop extends Animation {
         if ((now - startedAt) < runTime) {
             float currentAlpha = (float)(((double)startAlpha)*((float)(runTime -(now - startedAt))/(float)runTime));
             Paint p = new Paint();
-            p.setColor(BaseApp.getApp().lightColor);
+            p.setColor(color);
             p.setAlpha((int) currentAlpha);
             float rad = 25*BaseApp.getApp().getDpi()+((targetRadius)*((now - startedAt)/(float)runTime));
             canvas.drawCircle(myPoint.x, myPoint.y, rad, p);

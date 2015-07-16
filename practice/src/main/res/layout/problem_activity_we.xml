@@ -11,6 +11,11 @@
         custom:start_layout="problem_we"
         android:id="@+id/problem_main" />
 
+<cube.d.n.practice.HappyView
+    android:layout_width="fill_parent"
+    android:layout_height="100dp"
+    android:id="@+id/happy"/>
+
     <cube.d.n.commoncore.YayProblemView
         android:visibility="gone"
         android:id="@+id/problem_yay"
