@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Nextmanager;
@@ -20,6 +22,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
     Problem myProblem;
     private LooperThread headerLooper;
+    Main main;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,6 @@ public class ProblemActivity extends FullAct implements ISolveController {
             setContentView(myProblem.view);
         } else {
 
-            Main main;
             if (myProblem.equation == null) {
                 setContentView(R.layout.problem_activity_wi);
                 main = (Main) findViewById(R.id.problem_main);
@@ -86,9 +88,21 @@ public class ProblemActivity extends FullAct implements ISolveController {
         if (myProblem.name.equals("")) {
             main.getProblemImage().setTitle(myProblem.text);
             main.getProblemImage().setBody("");
+
         } else {
             main.getProblemImage().setTitle(myProblem.name);
             main.getProblemImage().setBody(myProblem.text);
+        }
+
+        int myIndex =  myProblem.getIndex();
+
+        main.getProblemImage().circleDrawer.setColors((myIndex<10?"0":"")+ myIndex,
+                CircleView.getBkgColor(myIndex),//BaseApp.colorFade(CircleView.getBkgColor(myIndex), 0xffffffff, 1.2f),
+                CircleView.getTextColor(myIndex)); //BaseApp.colorFade(CircleView.getTextColor(myIndex),0xffffffff,1.2f));
+        main.getProblemImage().circleDrawer.supText = new String(myProblem.topic).toUpperCase();
+        main.getProblemImage().circleDrawer.setPrecent((myProblem.getSolved() ? 1 : 0));
+        if (myProblem.getSolved()){
+            main.getProblemImage().circleDrawer.setSubText("SOLVED");
         }
 
         Log.d("myProblem.solution", "" + myProblem.solution);
@@ -116,6 +130,8 @@ public class ProblemActivity extends FullAct implements ISolveController {
     @Override
     public void solved(Runnable runnable) {
         myProblem.setSolved(true);
+        main.getProblemImage().circleDrawer.setPrecent(1);
+        main.getProblemImage().circleDrawer.setSubText("SOLVED");
         solvedLooper.mHandler.post(runnable);
         HappyView hv = (HappyView)findViewById(R.id.happy);
         hv.start();

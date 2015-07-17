@@ -104,16 +104,30 @@ public class Mathilda extends BaseApp {
         return problemRows;
     }
 
-    final static String TUTS_PREF = "tutsComplete";
+    final static String _PREF = "misk";
     final static String TUTS_PREF_KEY = "tutsComplete";
     public static boolean hasCompletedTut() {
-        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(TUTS_PREF, 0);
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(_PREF, 0);
         return settings.getBoolean(TUTS_PREF_KEY, false);
     }
     public static void completedTut() {
-        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(TUTS_PREF, 0);
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(_PREF, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(TUTS_PREF_KEY, true);
         editor.commit();
     }
+
+    final static String SUPRT_PREF_KEY = "supporter";
+    public boolean hasSupported() {
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(_PREF, 0);
+        return settings.getBoolean(SUPRT_PREF_KEY, false);
+    }
+
+    public void supporter() {
+        SharedPreferences settings = BaseApp.getApp().getSharedPreferences(_PREF, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(SUPRT_PREF_KEY, true);
+        editor.commit();
+    }
+
 }

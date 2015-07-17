@@ -2,6 +2,8 @@ package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.view.MotionEvent;
 
 import cube.d.n.commoncore.BaseApp;
@@ -37,7 +39,11 @@ public abstract class Line implements Physical {
      */
     public void draw(Canvas canvas, float top, float left, Paint paint){
         updateLocation(top,left);
-        innerDraw(canvas,top,left,paint);
+//        RectF r = new RectF((int)left,(int)top,(int)(left+measureWidth()),(int)(top+measureHeight()));
+//        Paint p = new Paint();
+//        p.setColor(0x88000000);
+//        canvas.drawRoundRect(r,20,20,p);
+        innerDraw(canvas, top, left, paint);
     }
 
     public  static float getBuffer(){

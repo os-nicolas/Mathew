@@ -38,7 +38,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
         if (!"".equals(circleText)){
             return circleText;
         }else if (myProblem!=null){
-            int p =myProblem.myId+1;
+            int p =myProblem.getIndex();
             return (p<10?"0":"")+p;
         }else{
             return "";
@@ -102,13 +102,13 @@ public class ProblemRow implements Row,CanUpdatePrecent {
 
         CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
         int p = i + 1;
-        cir.setColors(getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
+        cir.circleDrawer.setColors(getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
 
         // donate rows have no myProblem
         if (myProblem != null) {
-            cir.setPrecent((myProblem.getSolved() ? 1 : 0));
+            cir.circleDrawer.setPrecent((myProblem.getSolved() ? 1 : 0));
             if (myProblem.getSolved()){
-                cir.setSubText("SOLVED");
+                cir.circleDrawer.setSubText("SOLVED");
             }
         }
         return rowView;
@@ -122,9 +122,9 @@ public class ProblemRow implements Row,CanUpdatePrecent {
         // it is ok becuase precent is updated when we make the view
         if (rowView != null) {
             CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
-            cir.setPrecent((myProblem.getSolved() ? 1 : 0));
+            cir.circleDrawer.setPrecent((myProblem.getSolved() ? 1 : 0));
             if (myProblem.getSolved()){
-                cir.setSubText("SOLVED");
+                cir.circleDrawer.setSubText("SOLVED");
             }
         }
     }

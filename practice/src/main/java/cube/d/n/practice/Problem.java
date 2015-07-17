@@ -107,4 +107,14 @@ public class Problem {
         }
         return null;
     }
+
+    public int getIndex() {
+        ArrayList<ProblemRow> siblins = TopicRow.topics.get(topic).getProblems();
+        for (int i =0;i< siblins.size();i++){
+            if (siblins.get(i).myProblem.equals(this)){
+                return i+1;
+            }
+        }
+        return -1;
+    }
 }

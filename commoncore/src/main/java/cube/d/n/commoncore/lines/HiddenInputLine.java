@@ -22,7 +22,7 @@ public class HiddenInputLine extends  InputLine implements HasHeaderLine {
 
     @Override
     public float measureHeight() {
-        return 0;
+        return 2 *  getBuffer();
     }
 
     @Override

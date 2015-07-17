@@ -230,6 +230,12 @@ public abstract class BaseApp extends Application{
 
     }
 
+
+    /**
+     * large scale more currentColor
+     * scale of 2 is average of current color and target color
+     * scale should be larger than 1
+     */
     public static int colorFade(int currentColor, int targetColor,float scale ) {
         int currentRed = android.graphics.Color.red(currentColor);
         int currentGreen = android.graphics.Color.green(currentColor);

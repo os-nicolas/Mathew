@@ -109,6 +109,7 @@ public class Support extends FullAct  {
                         public void run(){
                             try {
                                 int response = mService.consumePurchase(3, getPackageName(), token);
+                                Mathilda.getMathilda().supporter();
                             }catch (RemoteException re){
                                 Log.e("consumePurchase",re.toString());
                             }

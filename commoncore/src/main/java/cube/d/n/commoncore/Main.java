@@ -737,7 +737,6 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         ((AlgebraLine) lines.get(1)).initEquation(equation.copy());
     }
 
-
     private Equation goal;
     private int overlayId;
     private boolean alreadySolved=false;

@@ -39,6 +39,32 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/myrect"
+        android:paddingTop="5px"
+        android:layout_marginTop="5px"
+        android:layout_marginBottom="-5px"
+        android:layout_marginLeft="-5px"
+        android:layout_marginRight="-5px"
+        android:layout_gravity="bottom"
+        android:visibility="gone"
+        android:id="@+id/thank_you">
+    <TextView
+        android:layout_width="fill_parent"
+        android:background="#000000"
+        android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:gravity="center"
+        android:text="Thank You For Your Support"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/thank_you_text"/>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
             android:background="@drawable/myrect"
             android:layout_marginTop="-5px"
         android:layout_marginLeft="-5px"

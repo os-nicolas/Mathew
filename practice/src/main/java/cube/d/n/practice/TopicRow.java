@@ -99,9 +99,9 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         // it is ok becuase precent is updated when we make the view
         if (rowView != null) {
             CircleView cir = (CircleView) rowView.findViewById(R.id.topic_circle);
-            cir.setPrecent(getPrecent());
+            cir.circleDrawer.setPrecent(getPrecent());
             if (getPrecent()==1){
-                cir.setSubText("COMPLETE");
+                cir.circleDrawer.setSubText("COMPLETE");
             }
         }
     }

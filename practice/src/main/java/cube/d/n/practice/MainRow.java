@@ -82,11 +82,11 @@ public class MainRow implements Row,Goable {
             inCircle=myRow.title.substring(0,2);
         }
 
-        cir.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
+        cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
         if (this instanceof TopicRow){
-            cir.setPrecent(((TopicRow)this).getPrecent());
+            cir.circleDrawer.setPrecent(((TopicRow)this).getPrecent());
             if (((TopicRow)this).getPrecent()==1){
-                cir.setSubText("COMPLETE");
+                cir.circleDrawer.setSubText("COMPLETE");
             }
         }
         equationView.setFont(Mathilda.getMathilda().getDJVL());

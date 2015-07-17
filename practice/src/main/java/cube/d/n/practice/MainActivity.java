@@ -73,6 +73,11 @@ public class MainActivity extends FullAct {
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
 
+        if (Mathilda.getMathilda().hasSupported()){
+            findViewById(R.id.thank_you).setVisibility(View.VISIBLE);
+            ((TextView)findViewById(R.id.thank_you_text)).setTypeface(Mathilda.getMathilda().getDJVL());
+        }
+
 
 //        TextView tv = (TextView)findViewById(R.id.main_title_text);
 //        Typeface dj = Typeface.createFromAsset(this.getAssets(),
