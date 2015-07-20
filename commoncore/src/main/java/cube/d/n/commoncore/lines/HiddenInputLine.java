@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 
 import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
  * Created by Colin on 6/30/2015.

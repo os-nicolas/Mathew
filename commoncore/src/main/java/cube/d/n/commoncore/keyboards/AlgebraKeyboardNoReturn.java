@@ -16,7 +16,7 @@ import cube.d.n.commoncore.lines.AlgebraLine;
 /**
  * Created by Colin_000 on 7/7/2015.
  */
-public class AlgebraKeyboardNoReturn extends KeyBoard {
+public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
 
     public AlgebraKeyboardNoReturn(Main owner, AlgebraLine algebraLine) {
         super(owner,algebraLine);

@@ -42,6 +42,7 @@ import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
@@ -64,7 +65,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         super(owner);
     }
 
-    private KeyBoard myKeyBoard = null;
+    protected KeyBoard myKeyBoard = null;
 
     public AlgebraLine(Main owner, Equation newEq) {
         super(owner);
@@ -87,13 +88,15 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard =BaseApp.getApp().getSolveScreenKeyboard(owner,this);
+            myKeyBoard =(AlgebraKeyboard)BaseApp.getApp().getSolveScreenKeyboard(owner,this);
         }
         return myKeyBoard;
     }
 
-
-
+    @Override
+    public void setKeyBoard(KeyBoard k) {
+        myKeyBoard = (AlgebraKeyboard)k;
+    }
 
 
     private float height = -1;
@@ -317,6 +320,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
                     lastX = event.getX();
                     lastY = event.getY();
                 } else {
+                    resolveSelected(event);
+                    updatePopUpButtons();
                     myMode = TouchMode.NOPE;
                 }
             }
@@ -348,7 +353,10 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
                     tapPoint.x = (int) event.getX();
                     tapPoint.y = (int) event.getY();
                     long tapSpacing = now - lastTapTime;
-                    if (tapSpacing < BaseApp.getApp().doubleTapSpacing && dis(tapPoint, lastTapPoint) < BaseApp.getApp().getDoubleTapDistance() && myMode == TouchMode.SELECT) {
+                    if (owner.allowDoubleTap &&
+                            tapSpacing < BaseApp.getApp().doubleTapSpacing &&
+                            dis(tapPoint, lastTapPoint) < BaseApp.getApp().getDoubleTapDistance() &&
+                            myMode == TouchMode.SELECT) {
                         Log.i("", "doubleTap! dis: " + dis(tapPoint, lastTapPoint) + " time: " + tapSpacing);
 
                         stupid.get().tryOperator(event.getX(),
@@ -462,7 +470,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         float distance = (float) Math.sqrt((lastX - event.getX()) * (lastX - event.getX()) + (lastY - event.getY()) * (lastY - event.getY()));
         if (maxMovement < distance) {
             boolean pass = true;
-            if (selected != null) {
+            if (selected != null && owner.allowDrag) {
                 startDragging();
             }
         }

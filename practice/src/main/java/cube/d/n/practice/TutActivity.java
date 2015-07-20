@@ -83,7 +83,7 @@ public class TutActivity extends FragmentActivity {
                             getSupportFragmentManager());
             mViewPager.setAdapter(adapter);
 
-            final Context that = this;
+            final Activity that = this;
 
             mViewPager.setOnPageChangeListener(
                     new ViewPager.SimpleOnPageChangeListener() {
@@ -95,8 +95,7 @@ public class TutActivity extends FragmentActivity {
 
                             if (position == adptr.getCount() - 1) {
                                 //if we have reach the last tap
-                                Intent myIntent = new Intent(that, MainActivity.class);
-                                that.startActivity(myIntent);
+                                that.finish();
                             }
 
                             Log.i("tab selected", position + "");

@@ -20,142 +20,37 @@ import cube.d.n.commoncore.BaseApp;
  */
 public class CircleView extends View {
 
-    float currentR = -1f;
-    float mySweep =0;
-    private float precent=-1f;
+    public CircleDrawer circleDrawer = new CircleDrawer();
+
+
 
     public CircleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        setColors("5",0xffff0000,0xff000000);
+        circleDrawer.setColors("5",0xffff0000,0xff000000);
+        circleDrawer.setView(this);
     }
 
     public CircleView(Context context) {
         super(context);
-        setColors("5",0xffff0000, 0xff000000);
+        circleDrawer.setColors("5",0xffff0000, 0xff000000);
+        circleDrawer.setView(this);
     }
 
     public CircleView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        setColors("5",0xffff0000,0xff000000);
+        circleDrawer.setColors("5",0xffff0000,0xff000000);
+        circleDrawer.setView(this);
     }
 
-    public void setPrecent(float precent){
-        if (precent != this.precent) {
-            this.precent = precent;
-            invalidate();
-        }
-    }
-
-    Paint bkgPaint;
-    Paint textPaint;
-    Paint smallPaint;
-    Paint circlePaint;
-    String text="5";
-    Rect out;
-    private String subText = "";
-
-    public void setSubText(String subText){
-        this.subText = subText;
-        invalidate();
-    }
-
-    public void setColors(String text,int circleColor,int textColor){
-        this.text =text;
-        bkgPaint = new Paint();
-      // precent = new Random().nextFloat();
-        bkgPaint.setColor(circleColor);
-        bkgPaint.setAntiAlias(true);
-        textPaint = new Paint();
-        textPaint.setColor(textColor);
-        textPaint.setAntiAlias(true);
-        textPaint.setTextSize(100);
-        smallPaint = new Paint();
-        smallPaint.setColor(textColor);
-        smallPaint.setAntiAlias(true);
-        smallPaint.setTextSize(7*BaseApp.getApp().getDpi()/BaseApp.getApp().scale);
-        smallPaint.setTypeface(BaseApp.getApp().getDJVL());
-        circlePaint = new Paint();
-        circlePaint.setAntiAlias(true);
-        circlePaint.setColor(0xffAAAAAA);
-        Typeface dj = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/DejaVuSans-ExtraLight.ttf");
-        textPaint.setTypeface(dj);
-        out = new Rect();
-        //invalidate();
-    }
 
 
 
     @Override
     public void onDraw(Canvas canvas){
-        int h = getHeight();
-        int w = getWidth();
 
-        float targetR = Math.min(h/2f,w/2f);
-        float targetSweep = precent*360;
+        circleDrawer.draw(canvas,Math.min(getHeight()/2f,getWidth()/2f),getWidth()/2,getHeight()/2);
 
-        if (Math.abs(targetR-currentR)< .1){
-            currentR = targetR;
-        }
-
-        float buffer = BaseApp.getApp().getBuffer();
-        if (currentR ==-1){
-            currentR = targetR- buffer;
-        }
-
-        Paint stupidPaint = new Paint();
-        stupidPaint.setColor( BaseApp.colorFade(bkgPaint.getColor(), textPaint.getColor(),7));
-
-        if (precent!= -1) {
-
-            canvas.drawCircle(h / 2f, w / 2f, currentR-3, stupidPaint);
-
-            if (currentR == targetR) {
-
-                RectF oval = new RectF(0, 0, w, h);
-                mySweep = ((mySweep * BaseApp.getApp().getRate() * 2) + targetSweep) / (1 + (BaseApp.getApp().getRate() * 2));
-
-
-                canvas.drawArc(oval, 0, mySweep, true, bkgPaint);
-            }
-//            Paint reallystupidPaint = new Paint();
-//            reallystupidPaint.setColor( BaseApp.colorFade(bkgPaint.getColor(), textPaint.getColor(),2));
-//
-//            canvas.drawCircle(h/2f,w/2f,currentR-6,reallystupidPaint);
-        }else{
-            canvas.drawCircle(h / 2f, w / 2f, currentR , stupidPaint);
-        }
-
-
-        textPaint.getTextBounds(text, 0, text.length(), out);
-        while (out.width() + (2* buffer) > Math.min(h,w)/Math.sqrt(2) || out.height() + (2*buffer) > Math.min(h,w)/Math.sqrt(2)) {
-            textPaint.setTextSize(textPaint.getTextSize()*.9f);
-            textPaint.getTextBounds(text, 0, text.length(), out);
-        }
-        int textH = out.height();
-        int textW = out.width();
-        float textW2 = textPaint.measureText(text);
-
-        //Log.d("do we not understand width?","measureText: "+ textW2 +" out.width: "+ textW);
-
-//        Paint p = new Paint();
-//        p.setColor(Color.WHITE);
-//        Rect r = new Rect((int)((w/2f)- (textW2 / 2f)), (int)((h/2f) - (textH / 2f)),(int)((w/2f)+ (textW2 / 2f)), (int)((h/2f) + (textH / 2f)));
-//        canvas.drawRect(r,p);
-        canvas.drawText(text, (w/2f)- (textW2 / 2f), (h/2f) + (textH / 2f), textPaint);
-        if (!subText.equals("")){
-            float wSmall = smallPaint.measureText(subText);
-
-            smallPaint.getTextBounds(subText, 0, subText.length(), out);
-
-            int hSmall = out.height();
-            float padding = 3*BaseApp.getApp().getDpi();
-
-            canvas.drawText(subText, (w/2f)- (wSmall / 2f), (h/2f) + (textH / 2f) + (hSmall) + padding, smallPaint);
-        }
-
-        currentR = ((currentR*BaseApp.getApp().getRate()*2)+targetR)/(1+(BaseApp.getApp().getRate()*2));
-        if (currentR != targetR || (precent!= -1 &&targetSweep != mySweep)){
+        if (circleDrawer.notDone()){
             invalidate();
         }
     }

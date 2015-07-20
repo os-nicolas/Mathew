@@ -2,6 +2,7 @@ package cube.d.n.commoncore.lines;
 
 import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.keyboards.BothSidesKeyBoard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 
@@ -20,5 +21,10 @@ public class CalcLine extends InputLine  implements HasHeaderLine {
             myKeyBoard = new SimpleCalcKeyboard(owner,this);
         }
         return myKeyBoard;
+    }
+
+    @Override
+    public void setKeyBoard(KeyBoard k) {
+        myKeyBoard = (SimpleCalcKeyboard)k;
     }
 }

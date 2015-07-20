@@ -46,6 +46,11 @@ public class BothSidesLine extends InputLine implements HasHeaderLine {
     }
 
     @Override
+    public void setKeyBoard(KeyBoard k) {
+        myKeyboard = (BothSidesKeyBoard)k;
+    }
+
+    @Override
     public pm parentThesisMode() {
         return null;
     }

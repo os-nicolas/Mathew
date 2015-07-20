@@ -190,6 +190,12 @@ public class OutputLine extends EquationLine implements HasHeaderLine {
         return null;
     }
 
+    @Override
+    public void setKeyBoard(KeyBoard k) {
+
+    }
+
+
     double lastZoom = BaseApp.getApp().zoom;
 
     @Override

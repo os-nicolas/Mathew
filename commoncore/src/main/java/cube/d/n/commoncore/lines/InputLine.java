@@ -22,6 +22,7 @@ import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.TouchMode;
 import cube.d.n.commoncore.keyboards.InputKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
+import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -41,7 +42,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         initEq();
     }
 
-    private KeyBoard myKeyBoard = null;
+    private InputKeyboard myKeyBoard = null;
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
@@ -51,6 +52,11 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
             }
         }
         return myKeyBoard;
+    }
+
+    @Override
+    public void setKeyBoard(KeyBoard k) {
+        myKeyBoard = (InputKeyboard)k;
     }
 
     public void initEq() {
@@ -441,6 +447,9 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         vx = (float) (vx * Math.pow(friction, steps));
         offsetX+=dx;
     }
+
+
+
 
     public void stopSliding() {
         vx = 0;

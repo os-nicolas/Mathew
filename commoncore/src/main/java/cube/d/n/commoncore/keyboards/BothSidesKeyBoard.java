@@ -20,6 +20,7 @@ import cube.d.n.commoncore.Action.WriteScreen.TimesAction;
 import cube.d.n.commoncore.Action.WriteScreen.VarAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
+import cube.d.n.commoncore.EmptyButton;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.lines.BothSidesLine;
@@ -48,7 +49,10 @@ public class BothSidesKeyBoard extends KeyBoard {
         firstRow.add(new Button( "8", new NumberAction((BothSidesLine)line, "8")));
         firstRow.add(new Button( "9", new NumberAction((BothSidesLine)line, "9")));
         firstRow.add(new Button( "a", new VarAction((BothSidesLine)line, "a")));
-        firstRow.add(new Button( "b", new VarAction((BothSidesLine)line, "b")));
+        firstRow.add((BaseApp.getApp().hasB()?
+                new Button( "b", new VarAction((BothSidesLine)line, "b")):
+                new EmptyButton()
+        ));
         firstRow.add(new Button( "+", new PlusAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
         firstRow.add(new Button( "-", new MinusAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
 

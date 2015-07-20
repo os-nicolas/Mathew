@@ -56,10 +56,14 @@ public  class ImageLine extends Line  {
         circleDrawer.setColors("5",BaseApp.colorFade(0xffff0000,0xffffffff,1.2f),BaseApp.colorFade(0xff000000,0xffffffff,1.2f));
     }
 
-
     @Override
     public KeyBoard getKeyboad() {
         return null;
+    }
+
+    @Override
+    public void setKeyBoard(KeyBoard k) {
+
     }
 
     @Override

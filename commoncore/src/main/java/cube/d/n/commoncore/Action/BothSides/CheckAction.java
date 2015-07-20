@@ -66,6 +66,7 @@ public class CheckAction extends Action {
         daLine.updateHistory();
 
         owner.owner.revert();
+        owner.owner.floorScroll();
     }
 
     public CheckAction(BothSidesLine myView) {

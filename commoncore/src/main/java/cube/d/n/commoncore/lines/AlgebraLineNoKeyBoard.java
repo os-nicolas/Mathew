@@ -11,8 +11,6 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
  */
 public class AlgebraLineNoKeyBoard extends AlgebraLine {
 
-    private KeyBoard myKeyBoard = null;
-
     public AlgebraLineNoKeyBoard(Main owner) {
         super(owner);
     }

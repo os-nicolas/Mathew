@@ -375,4 +375,10 @@ public abstract class BaseApp extends Application{
     }
 
 
+    // this is a weird backdoor
+    // a few of my apps only use a in the keyboard
+    // for example algebra practice
+    public boolean hasB() {
+        return true;
+    }
 }

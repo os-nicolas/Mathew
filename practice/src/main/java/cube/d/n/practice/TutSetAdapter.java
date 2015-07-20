@@ -25,6 +25,7 @@ public class TutSetAdapter extends FragmentPagerAdapter {
 
     public TutSetAdapter(FragmentManager fm) {
         super(fm);
+        // ##### DOUBLE TAP
         frags.add(TutVideoFrag.make(
                 "Double Tap",
                 "Double Tap to add subtract multiply and much more",
@@ -33,10 +34,13 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         frags.add(TutMainFrag.make("give it a try!",
                 "*,5,(,/,(,+,10,9,-7,),6,)",
                 "10",
-                "# of #",
-                false,
-                false)
-                .withBackgroundColor(0xff6C0304));
+                "# of #")
+                .withRevert(false)
+                .withPopup(false)
+                .withDrag(false)
+                .withBackgroundColor(0xff6C0304)
+        );
+        // ##### REVERT
         frags.add(TutVideoFrag.make(
                 "Tap and Hold",
                 "Tap and Hold to revert to a previous step",
@@ -46,14 +50,16 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                         "give it a try!",
                         "*,5,(,/,(,+,10,9,-7,),6,)",
                         "*,5,(,/,(,+,10,9,-7,),6,)",
-                        "# of #",
-                        true,
-                        false).withBackgroundColor(0xff6C0304))
+                        "# of #")
+                        .withPopup(false)
+                        .withDrag(false)
+                        .withBackgroundColor(0xff6C0304))
                 .withStep("*,5,(,/,(,+,19,-7,),6,)")
                 .withStep("*,5,(,/,12,6,)")
                 .withStep("*,5,2")
                 .withStep("10")
         );
+        // ##### DRAG AND DROP
         frags.add(TutVideoFrag.make(
                 "Drag and Drop",
                 "Drag and Drop to move terms around",
@@ -62,9 +68,38 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         frags.add(TutMainFrag.make("give it a try!",
                 "=,5,(,+,(,/,a,2,),3,)",
                 "=,4,a",
-                "# of #",
-                true,
-                false).withBackgroundColor(0xff6C0304));
+                "# of #")
+                .withPopup(false)
+                .withBackgroundColor(0xff6C0304));
+
+        // ##### BOTH SIDES
+        frags.add(TutVideoFrag.make(
+                "Modify Both Sides",
+                "Modify Both Sides using the buttons on the bottom of the screen",
+                "android.resource://cube.d.n.practice/raw/" + R.raw.both_sides,
+                "# of #").withBackgroundColor(0xff6C0304));
+        frags.add(TutMainFrag.make("give it a try!",
+                "=,5,(,+,(,/,a,2,),3,)",
+                "=,4,a",
+                "# of #")
+                .withDrag(false)
+                .withPopup(false)
+                .withKeyboard(true)
+                .withBackgroundColor(0xff6C0304));
+
+        // ##### POP UPS
+        frags.add(TutVideoFrag.make(
+                "Pop up Buttons",
+                "Drag and Drop to move terms around",
+                "android.resource://cube.d.n.practice/raw/" + R.raw.pop_up,
+                "# of #").withBackgroundColor(0xff6C0304));
+        frags.add(TutMainFrag.make("give it a try!",
+                "*,5,(,/,(,+,10,9,-7,),6,)",
+                "10",
+                "# of #")
+                .withDouble(false)
+                .withKeyboard(true)
+                .withBackgroundColor(0xff6C0304));
         frags.add(new TutEnd().withBackgroundColor(0xff6C0304));
     }
 

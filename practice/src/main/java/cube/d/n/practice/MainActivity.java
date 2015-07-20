@@ -34,6 +34,8 @@ import cube.d.n.commoncore.lines.NullLine;
 
 public class MainActivity extends FullAct {
 
+    Main main;
+
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
 
@@ -52,17 +54,12 @@ public class MainActivity extends FullAct {
         }
 
 
-//        Main main = new Main(this, InputLineEnum.TUT_EK);
-//        main.initE(Util.stringEquation("=,5,(,+,(,/,a,2,),3,)".split(",")));//"*,5,(,/,(,+,10,9,-7,),6,)"
-//        main.allowPopups = false;
+//        main = new Main(this, InputLineEnum.TUT_E);
+//        main.initE(Util.stringEquation("*,5,(,/,(,+,10,9,-7,),6,)".split(",")));//"*,5,(,/,(,+,10,9,-7,),6,)"
+//        main.allowPopups = true;
 //        main.trackFinger = true;
 //        setContentView(main);
 
-//        if (steps != null){
-//            for (String s:steps){
-//                main.addStep(Util.stringEquation(s.split(",")));
-//            }
-//        }
 
 
         setContentView(R.layout.activity_main);
@@ -133,8 +130,16 @@ public class MainActivity extends FullAct {
     @Override
     public void onResume(){
         super.onResume();
+
+//        // TODO
+//        // TODO
+//        // i put this here so the app will crash when i uncomment the real code in onCreate
+//        // i need to rememeber to uncomment the code below too
+//        // the stuff below "we need to update if we solved anything"
+//        boolean trash = main.allowPopups;
+
         // we need to update if we solved anything
-        ListView listView = (ListView) findViewById(R.id.listview);
+         ListView listView = (ListView) findViewById(R.id.listview);
         ((TopicArrayAdaptor) listView.getAdapter()).updatePrecents();
     }
 

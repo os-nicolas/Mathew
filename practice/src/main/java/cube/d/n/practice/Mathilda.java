@@ -85,6 +85,10 @@ public class Mathilda extends BaseApp {
         return topics;
     }
 
+    public boolean hasB() {
+        return false;
+    }
+
     private ArrayList<ProblemRow> initProblems() {
 
         ArrayList<ProblemRow> problemRows = new ArrayList<ProblemRow>();

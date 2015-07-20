@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Physical;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboardNoReturn;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
@@ -52,6 +53,8 @@ public abstract class Line implements Physical {
 
     public abstract KeyBoard getKeyboad();
 
+    public abstract void setKeyBoard(KeyBoard k);
+
 
     protected abstract void innerDraw(Canvas canvas, float top, float left, Paint paint);
 
@@ -73,4 +76,6 @@ public abstract class Line implements Physical {
     public float measureWidth() {
         return owner.width;
     }
+
+
 }

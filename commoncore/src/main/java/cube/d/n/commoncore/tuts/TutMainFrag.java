@@ -31,20 +31,21 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     String at;
     boolean allowPopUps;
     boolean allowRevert;
+    boolean allowDrag;
+    boolean allowDoubleTap;
     private String[] steps;
     private LooperThread looperThread;
     public LooperThread headerLooper;
+    private boolean keyboard;
 
 
-    public static TutMainFrag make(String title,String equation, String goal, String at, boolean allowRevert, boolean allowPopUps) {
+    public static TutMainFrag make(String title,String equation, String goal, String at) {
             TutMainFrag result = new TutMainFrag();
             Bundle args = new Bundle();
             args.putString("TITLE",title);
             args.putString("EQUATION",equation);
-            args.putString("GOAL",goal);
-            args.putString("AT",at);
-            args.putBoolean("REVERT",allowRevert);
-            args.putBoolean("POPUP",allowPopUps);
+            args.putString("GOAL", goal);
+            args.putString("AT", at);
             result.setArguments(args);
             Log.i("make", "set arguments " + result.hashCode() + " args " + result.getArguments());
             return result;
@@ -58,7 +59,41 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         this.at = args.getString("AT");
         this.allowRevert = args.getBoolean("REVERT",true);
         this.allowPopUps = args.getBoolean("POPUP",true);
+        this.allowDrag = args.getBoolean("DRAG",true);
+        this.allowDoubleTap = args.getBoolean("DOUBLE",true);
+        this.keyboard = args.getBoolean("KEYBOARD",false);
         this.steps = args.getStringArray("STEPS");
+    }
+
+
+    public TutMainFrag withRevert(boolean b){
+        return with("REVERT",b);
+    }
+    public TutMainFrag withPopup(boolean b){
+        return with("POPUP",b);
+    }
+    public TutMainFrag withDrag(boolean b){
+        return with("DRAG",b);
+    }
+    public TutMainFrag withDouble(boolean b){
+        return with("DOUBLE",b);
+    }
+    public TutMainFrag withKeyboard(boolean b){
+        return with("KEYBOARD",b);
+    }
+
+    public TutMainFrag with(String s, boolean b){
+        Bundle args = getOrSetArgs(new Bundle());
+        args.putBoolean(s,b);
+        this.setArguments(args);
+        return  this;
+    }
+
+    private Bundle getOrSetArgs(Bundle bundle) {
+        if (getArguments() == null){
+            setArguments(bundle);
+        }
+        return getArguments();
     }
 
     @Override
@@ -107,6 +142,8 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         }
         main.allowRevert = allowRevert;
         main.allowPopups = allowPopUps;
+        main.allowDrag = allowDrag;
+        main.allowDoubleTap = allowDoubleTap;
 
         if (drawOnStart){start(rootView);}
 
@@ -217,7 +254,11 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     }
 
     private void setUp(Main main) {
-        main.initE(Util.stringEquation(equation.split(",")));
+        if (keyboard){
+            main.initEK(Util.stringEquation(equation.split(",")));
+        }else {
+            main.initE(Util.stringEquation(equation.split(",")));
+        }
 
         if (steps != null){
             for (String s:steps){

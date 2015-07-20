@@ -30,6 +30,7 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
+import cube.d.n.commoncore.keyboards.AlgebraKeyboardNoReturn;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.AlgebraLineNoKeyBoard;
@@ -54,6 +55,8 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public boolean allowPopups = true;
     public boolean allowTouch = true;
     public boolean allowSolve = false;
+    public boolean allowDoubleTap = true;
+    public boolean allowDrag = true;
 
     final public KeyBoardManager keyBoardManager = new KeyBoardManager();
     public ProgressManager progressManager = new ProgressManager();
@@ -352,8 +355,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     protected void onDraw(Canvas canvas) {
         width = canvas.getWidth();
         if (height == 0) {
-            height = canvas.getHeight();
             initOffset();
+        }
+        if (height != canvas.getHeight()){
+            height = canvas.getHeight();
+            width = canvas.getWidth();
         }
         height = canvas.getHeight();
 
@@ -737,6 +743,14 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         ((AlgebraLine) lines.get(1)).initEquation(equation.copy());
     }
 
+    public void initEK(Equation equation) {
+        initE(equation);
+
+        lines.get(1).setKeyBoard(new AlgebraKeyboardNoReturn(this,(AlgebraLine)lines.get(1)));
+
+        keyBoardManager.hardSet(lines.get(1).getKeyboad());
+    }
+
     private Equation goal;
     private int overlayId;
     private boolean alreadySolved=false;
@@ -802,4 +816,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     public Nextmanager next = new Nextmanager();
 
+    public void floorScroll() {
+        if (offsetY >  height - keyBoardManager.get().measureHeight()){
+            toAddToOffsetY(offsetY - (height - keyBoardManager.get().measureHeight()));
+        }
+    }
 }

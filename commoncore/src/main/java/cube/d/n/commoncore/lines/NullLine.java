@@ -24,6 +24,11 @@ public class NullLine extends EquationLine {
     }
 
     @Override
+    public void setKeyBoard(KeyBoard k) {
+        Log.e("error","this should not be called");
+    }
+
+    @Override
     protected void innerDraw(Canvas canvas, float top, float left, Paint paint) {
         Log.e("error","this should not be called");
     }
