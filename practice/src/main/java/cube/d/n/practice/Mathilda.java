@@ -73,6 +73,7 @@ public class Mathilda extends BaseApp {
             InputStream is = getAssets().open("testTopics.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = reader.readLine(); // the first line is the table header so we skip it
+            line = reader.readLine(); // the second line is descriptions we skip it too
             while ((line = reader.readLine()) != null){
                 if (!line.trim().equals("")) {
                     topics.add(new TopicRow(line));
@@ -98,6 +99,7 @@ public class Mathilda extends BaseApp {
             InputStream is = getAssets().open("problems.txt");
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = reader.readLine(); // the first line is the table header so we skip it
+            line = reader.readLine(); // the first line is the table header so we skip it
             while ((line = reader.readLine()) != null){
                 problemRows.add(new ProblemRow(line));
             }
