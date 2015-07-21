@@ -25,5 +25,4 @@
                 android:id="@+id/about_text" />
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

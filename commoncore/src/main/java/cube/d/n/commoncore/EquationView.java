@@ -32,7 +32,7 @@ public class EquationView extends View {
         invalidate();
     }
 
-    float startZoom = 1;
+    float startZoom = .75f;
 
     public void setEquation(Equation e, float startZoom){
         myEq = e;

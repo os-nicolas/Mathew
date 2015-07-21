@@ -43,7 +43,7 @@ public class CircleDrawer {
         smallPaint = new Paint();
         smallPaint.setColor(textColor);
         smallPaint.setAntiAlias(true);
-        smallPaint.setTextSize(7*BaseApp.getApp().getDpi()/BaseApp.getApp().scale);
+        smallPaint.setTextSize(8*BaseApp.getApp().getDpi()/BaseApp.getApp().scale);
         smallPaint.setTypeface(BaseApp.getApp().getDJVL());
         circlePaint = new Paint();
         circlePaint.setAntiAlias(true);
@@ -91,7 +91,7 @@ public class CircleDrawer {
 
         if (precent!= -1) {
 
-            canvas.drawCircle(cx, cy, currentR-3, stupidPaint);
+            canvas.drawCircle(cx, cy, currentR-5, stupidPaint);
 
             if (currentR == targetR) {
 

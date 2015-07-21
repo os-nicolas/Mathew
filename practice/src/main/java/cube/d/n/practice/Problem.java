@@ -20,11 +20,7 @@ public class Problem {
     private static final String PREFS_NAME = "SOLVED";
     public  static HashMap<Integer,Problem> problems = new HashMap<>();
 
-
-
-
-    private  static int IDcount = 0;
-    public final int myId = IDcount++;
+    public final int myId;
 
     public final String topic;
     public final String name;
@@ -37,15 +33,19 @@ public class Problem {
 
     public Problem(String line) {
         super();
-        problems.put(myId,this);
+
+
+        Log.d("Equation Line", line);
 
         String[] split = line.split("\t");
+        myId = Integer.parseInt(split[0]);
 
-        this.topic = split[0];
-        this.name = split[1];
-        this.text =split[2];
-        if (!split[3].equals("")){
-            String[] eqSplit = split[3].split(",");
+        problems.put(myId,this);
+        this.topic = split[1];
+        this.name = split[2];
+        this.text =split[3];
+        if (!split[5].equals("")){
+            String[] eqSplit = split[5].substring(3,split[5].length()-3).split(",");
             this.equation = Util.stringEquation(eqSplit);
             //setFont( Mathilda.getMathilda().getDJV());
             //setColor(0xff888888);
@@ -53,13 +53,14 @@ public class Problem {
         }else{
             this.equation = null;
         }
-        this.input = split[4].equals("yes");
-        if (!split[5].equals("")){
-            String[] eqSplit = split[5].split(",");
+        this.input = split[6].equals("yes");
+        if (!split[8].equals("")){
+            String[] eqSplit = split[8].substring(3,split[8].length()-3).split(",");
             this.solution = Util.stringEquation(eqSplit);
             //setFont( Mathilda.getMathilda().getDJV());
             //setColor(0xff888888);
         }else{
+            Log.e("solutions should not be null!","wikeis!");
             this.solution = null;
         }
 
@@ -84,13 +85,13 @@ public class Problem {
 
     public boolean getSolved(){
         SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
-        return settings.getBoolean(name, false);
+        return settings.getBoolean(myId+"", false);
     }
 
     public void setSolved(boolean solved){
         SharedPreferences settings = BaseApp.getApp().getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putBoolean(name, solved);
+        editor.putBoolean(myId+"", solved);
         editor.commit();
     }
 
@@ -116,5 +117,9 @@ public class Problem {
             }
         }
         return -1;
+    }
+
+    public TopicRow getTopic() {
+        return TopicRow.topics.get(topic);
     }
 }

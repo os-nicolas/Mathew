@@ -12,6 +12,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -56,7 +58,30 @@ public class ChooseProblem extends Activity {
 
         final ProblemArrayAdapter adapter = myTopic.getAdapter(this, listView);
 
+
+
         listView.setAdapter(adapter);
+
+        final TopicRow tt = myTopic;
+
+//        new Thread(){
+//            @Override
+//            public void run() {
+//                ArrayList<Row> probs =tt.getProbs();
+//                for (final Row prob: probs ) {
+//                    runOnUiThread(new Runnable() {
+//                        public void run() {
+//                            adapter.add(prob);
+//                        }
+//                    });
+////                    try {
+////                        sleep(400);
+////                    } catch (InterruptedException e) {
+////                        e.printStackTrace();
+////                    }
+//                }
+//        }}.start();
+
         final Activity that = this;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

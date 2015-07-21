@@ -1,5 +1,6 @@
-TOPICS	DESCRIPTION
-topiv	(,=,(,+,4,5,),(,/,2,a,),)
-stuf	adsf indi alsid al;kf 
-And things	thi sis a tests
-A Longer Topic	yo dogg
+topic	Topic-short	description
+One-step equations	One-step	"(,=,26,(,+,8,a,),)"
+Two-step equations	Two-step	
+Multi-step equations	Multi-step	
+Proportion equations	Proportions	
+Equation Word Problems	Word problems	

@@ -74,7 +74,9 @@ public class Mathilda extends BaseApp {
             BufferedReader reader = new BufferedReader(new InputStreamReader(is));
             String line = reader.readLine(); // the first line is the table header so we skip it
             while ((line = reader.readLine()) != null){
-                topics.add(new TopicRow(line));
+                if (!line.trim().equals("")) {
+                    topics.add(new TopicRow(line));
+                }
             }
             is.close();
         }

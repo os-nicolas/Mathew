@@ -67,6 +67,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
                     //based on item add info to intent
                     intent.putExtra("problem", myProblem.next().myId);
                     startActivity(intent);
+                    that.finish();
                 }
             };
 
@@ -99,13 +100,14 @@ public class ProblemActivity extends FullAct implements ISolveController {
         main.getProblemImage().circleDrawer.setColors((myIndex<10?"0":"")+ myIndex,
                 CircleView.getBkgColor(myIndex),//BaseApp.colorFade(CircleView.getBkgColor(myIndex), 0xffffffff, 1.2f),
                 CircleView.getTextColor(myIndex)); //BaseApp.colorFade(CircleView.getTextColor(myIndex),0xffffffff,1.2f));
-        main.getProblemImage().circleDrawer.supText = new String(myProblem.topic).toUpperCase();
+        main.getProblemImage().circleDrawer.supText = new String(myProblem.getTopic().shortName).toUpperCase();
         main.getProblemImage().circleDrawer.setPrecent((myProblem.getSolved() ? 1 : 0));
         if (myProblem.getSolved()){
             main.getProblemImage().circleDrawer.setSubText("SOLVED");
         }
 
         Log.d("myProblem.solution", "" + myProblem.solution);
+
         if (myProblem.solution != null) {
             main.solvable(myProblem.solution, R.id.problem_yay, this);
         }

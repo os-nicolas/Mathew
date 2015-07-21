@@ -23,6 +23,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
     private static int id =0;
 
     public final int myId = id++;
+    public final String shortName;
 
     public final Equation equation;
     private ArrayList<ProblemRow> problems;
@@ -31,12 +32,19 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         super(getTitle(line), getSubtitle(line));
         topics.put(getTitle(line),this);
 
-        String[] split = line.split("\t");
+        Log.d("line is", line);
 
-        if (split[1].startsWith("(")){
-            Log.d("wut", split[1]);
-            String[] eqSplit = split[1].substring(2,split[1].length()-2).split(",");
-            this.equation = Util.stringEquation(eqSplit);
+        String[] split = line.split("\t");
+        shortName = split[1];
+
+        if (split.length>2) {
+            if (split[2].startsWith("\"(")) {
+                Log.d("wut", split[2]);
+                String[] eqSplit = split[2].substring(3, split[2].length() - 3).split(",");
+                this.equation = Util.stringEquation(eqSplit);
+            } else {
+                this.equation = null;
+            }
         }else {
             this.equation = null;
         }
@@ -47,9 +55,12 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         String[] split = line.split("\t");
 
         String about ="";
-        if (split[1].startsWith("(")){
-        }else {
-            about = split[1];
+
+        if (split.length>2) {
+            if (split[2].startsWith("\"(")) {
+            } else {
+                about = split[2];
+            }
         }
         return about;
     }
@@ -78,9 +89,13 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
     }
 
     public ProblemArrayAdapter getAdapter(Context context,ListView parent){
-        return new ProblemArrayAdapter(context,Utilz.asRowList(getProblems()),parent);
+        return new ProblemArrayAdapter(context,getProbs(),parent);
     }
 
+
+    public ArrayList<Row> getProbs(){
+       return Utilz.asRowList(getProblems());
+    }
 
 
     @Override
@@ -99,9 +114,12 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
         // it is ok becuase precent is updated when we make the view
         if (rowView != null) {
             CircleView cir = (CircleView) rowView.findViewById(R.id.topic_circle);
-            cir.circleDrawer.setPrecent(getPrecent());
-            if (getPrecent()==1){
+            float pcnt = getPrecent();
+            cir.circleDrawer.setPrecent(pcnt);
+            if (pcnt==1f){
                 cir.circleDrawer.setSubText("COMPLETE");
+            }else if (pcnt != 0f){
+                cir.circleDrawer.setSubText((int)(pcnt*100)+"%");
             }
         }
     }

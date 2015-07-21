@@ -25,6 +25,12 @@ public class Util {
         int at =0;
         Equation res;
 
+        String db = "";
+        for (String s: inpus){
+            db+=s+",";
+        }
+        Log.d("stringEquation" ,db);
+
         if (inpus[at].equals("+")){
             res = new AddEquation(new NullLine());
         }else if (inpus[at].equals("-")){

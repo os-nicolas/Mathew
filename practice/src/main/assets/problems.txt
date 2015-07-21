@@ -1,6 +1,16 @@
-topic	problem name	text	equation	input	a
-topiv	Problem 3	Mathilda lets you solve problems by dragging terms around and double tapping what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes.		yes	a
-topiv	Problem 2			yes	a
-stuf	Test			yes	a
-And things		Solve:	=,5,(,/,2,(,+,4,a,),)	yes	=,a,-3.6
-A Longer Topic		Simify	/,(,*,4,a,),(,/,6,a,)	yes	a
+id	topic	problem name	text	equation	machine read	input (yes or no)	answer	machine read a	multiple choose option 1	multiple choose option 2	multiple choose option 3	multiple choose option 4	multiple choose option 5
+1	One-step equations		Solve:	26=8+a	"(,=,26,(,+,8,a,),)"	no	a=18	"(,=,a,18,)"					
+2	One-step equations		Solve:	3+a=8	"(,=,(,+,3,a,),8,)"	no	a=5	"(,=,a,5,)"
+3	One-step equations		Solve:	15+a=23	"(,=,(,+,15,a,),23,)"	no	a=8	"(,=,a,8,)"					
+4	One-step equations		Solve:	a ? 15 = ?27	"(,=,(,+,a,-15,),-27,)"	no	a=-12	"(,=,a,-12,)"					
+5	One-step equations		Solve:	?104 = 8a	"(,=,-104,(,*,8,a,),)"	no	a=-13	"(,=,a,-13,)"					
+6	One-step equations		Solve:	a + 16 = 9	"(,=,(,+,a,16,),9,)"	no	a=-7	"(,=,a,-7,)"					
+7	One-step equations		Solve:	10a = 40	"(,=,(,*,10,a,),40,)"	no	a=4	"(,=,a,4,)"					
+8	One-step equations		Solve:	?6 = a / 18	"(,=,-6,(,/,a,18,),)"	no	a=-108	"(,=,a,-108,)"					
+9	One-step equations		Solve:	?15a = 0	"(,=,(,*,-15,a,),0,)"	no	a=0	"(,=,a,0,)"					
+10	One-step equations		Solve:	?126 = 14a	"(,=,-126,(,*,14,a,),)"	no	a=-9	"(,=,a,-9,)"					
+11	One-step equations		Solve:	?5 = a / 18	"(,=,-5,(,/,a,18,),)"	no	a=-90	"(,=,a,-90,)"					
+12	One-step equations		Solve:	a + 11 = 20	"(,=,(,+,a,11,),20,)"	no	a=9	"(,=,a,9,)"					
+13	One-step equations		Solve:	?16 + a = ?15	"(,=,(,+,-16,a,),-15,)"	no	a=1	"(,=,a,1,)"					
+14	One-step equations		Solve:	a / 4 = ?13	"(,=,(,/,a,4,),-13,)"	no	a=-52	"(,=,a,-52,)"					
+15	One-step equations		Solve:	14a = ?56	"(,=,(,*,14,a,),-56,)"	no	a=-4	"(,=,a,-4,)"

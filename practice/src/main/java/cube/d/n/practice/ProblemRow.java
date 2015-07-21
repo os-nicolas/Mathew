@@ -71,8 +71,13 @@ public class ProblemRow implements Row,CanUpdatePrecent {
 
                 EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
                 equationView.setEquation(myProblem.equation);
-                equationView.setColor(0xff000000);
+                equationView.setColor(0xff000000);//Mathilda.getApp().getGreyTextColor()
                 equationView.setFont(Mathilda.getApp().getDJVL());
+
+                TextView text = (TextView)rowView.findViewById(R.id.problem_eq_text);
+                text.setText(myProblem.text);
+                text.setTextColor(0xff000000);//Mathilda.getApp().getGreyTextColor()
+                text.setTypeface(Mathilda.getApp().getDJVL());
 
 
             } else {

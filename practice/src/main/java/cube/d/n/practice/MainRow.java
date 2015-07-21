@@ -84,10 +84,7 @@ public class MainRow implements Row,Goable {
 
         cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
         if (this instanceof TopicRow){
-            cir.circleDrawer.setPrecent(((TopicRow)this).getPrecent());
-            if (((TopicRow)this).getPrecent()==1){
-                cir.circleDrawer.setSubText("COMPLETE");
-            }
+            ((TopicRow)this).updatePrecent();
         }
         equationView.setFont(Mathilda.getMathilda().getDJVL());
         equationView.setColor(Mathilda.getApp().getGreyTextColor());
