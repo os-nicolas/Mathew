@@ -54,15 +54,12 @@ public class ChooseProblem extends Activity {
 
 
 
-        ListView listView = (ListView) findViewById(R.id.problem_listView);
-
-        final ProblemArrayAdapter adapter = myTopic.getAdapter(this, listView);
 
 
-
-        listView.setAdapter(adapter);
 
         final TopicRow tt = myTopic;
+
+
 
 //        new Thread(){
 //            @Override
@@ -81,6 +78,12 @@ public class ChooseProblem extends Activity {
 ////                    }
 //                }
 //        }}.start();
+
+        ListView listView = (ListView) findViewById(R.id.problem_listView);
+
+        final ProblemArrayAdapter adapter = myTopic.getAdapter(this, listView);
+
+        listView.setAdapter(adapter);
 
         final Activity that = this;
 
