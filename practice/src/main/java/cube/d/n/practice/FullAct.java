@@ -16,7 +16,7 @@ public class FullAct extends Activity {
         hideStatusBar();
     }
 
-    private void hideStatusBar() {
+    protected void hideStatusBar() {
         View decorView = getWindow().getDecorView();
 // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
@@ -28,5 +28,4 @@ public class FullAct extends Activity {
             actionBar.hide();
         }
     }
-
 }

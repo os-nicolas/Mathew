@@ -187,7 +187,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
             } else if (power_canPowerOne()) {// if we have adsfsd^1 return adsfsd
 
-                buttons.add(new SeletedRowEquationButton(NumConstEquation.create(BigDecimal.ZERO, owner), new Action(owner) {
+                buttons.add(new SeletedRowEquationButton(this.get(0).copy(), new Action(owner) {
                     @Override
                     protected void privateAct() {
                         MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());

@@ -211,12 +211,14 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
                         //maybe this should be in snap back, would make sense;
-                        if (BaseApp.getApp().zoom < .7) {
+                        float minZoom = .5f;
+                        float maxZoom = 2f;
+                        if (BaseApp.getApp().zoom < minZoom) {
                             //offsetY = (float) (offsetY * (currentZoomDis / lastZoomDis)*(.7f/BaseApp.getApp().zoom));
-                            BaseApp.getApp().zoom = .7;
-                        } else if (BaseApp.getApp().zoom > 1.5) {
+                            BaseApp.getApp().zoom = minZoom;
+                        } else if (BaseApp.getApp().zoom > maxZoom) {
                             //offsetY = (float) (offsetY * (currentZoomDis / lastZoomDis)*(1.5f/BaseApp.getApp().zoom));
-                            BaseApp.getApp().zoom = 1.5;
+                            BaseApp.getApp().zoom = maxZoom;
                         }
                         //else{
                         //offsetY = (float) (offsetY * (currentZoomDis / lastZoomDis));
@@ -358,8 +360,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             initOffset();
         }
         if (height != canvas.getHeight()){
+            Log.d("setting from height, width" ,height + "," + width);
             height = canvas.getHeight();
             width = canvas.getWidth();
+            Log.d("setting to height, width" ,height + "," + width);
         }
         height = canvas.getHeight();
 

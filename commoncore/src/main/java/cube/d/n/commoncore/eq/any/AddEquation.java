@@ -94,7 +94,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
     // addition is a little more spread out
     @Override
     protected float myWidthAdd() {
-        return (float) (16 * BaseApp.getApp().getDpi() * getMyZoom());
+        return (float) (8 * super.myWidthAdd());
     }
 
     public void tryOperator(ArrayList<Equation> eqs) {

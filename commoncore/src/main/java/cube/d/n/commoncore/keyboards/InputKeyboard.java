@@ -27,6 +27,7 @@ import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
 
@@ -64,7 +65,7 @@ public class InputKeyboard extends KeyBoard {
         firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
         firstRow.add(new Button("a", new VarAction((InputLine)line, "a")));
         firstRow.add((BaseApp.getApp().hasB()?
-                new Button( "b", new VarAction((BothSidesLine)line, "b")):
+                new Button( "b", new VarAction((InputLine)line, "b")):
                 new EmptyButton()
         ));
         firstRow.add(new Button("+", new PlusAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));

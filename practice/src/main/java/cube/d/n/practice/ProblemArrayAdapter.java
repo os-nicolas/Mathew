@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
+import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.EquationView;
 import cube.d.n.commoncore.GS;
 
@@ -26,44 +27,19 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
     private final Context context;
     private final ArrayList<Row> problems;
     public ConcurrentHashMap<Integer, View> views = new ConcurrentHashMap<>();
+    private boolean done = false;
 
     public ProblemArrayAdapter(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent) {
 
-        super(context, R.layout.topic_row, itemsArrayList);
+        super(context, R.layout.topic_row, new ArrayList<Row>());
 
         this.context = context;
         this.problems = itemsArrayList;
 
 
-//        AsyncTask ast = new AsyncTask<Object,Integer,Object>() {
-//            @Override
-//            protected Object doInBackground(Object[] x) {
-////                try {
-////                    Thread.sleep(2000);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-//                for (int i = 0; i < problems.size(); i++) {
-//                    publishProgress(i);
-////                    try {
-////                        Thread.sleep(500);
-////                    } catch (InterruptedException e) {
-////                        e.printStackTrace();
-////                    }
-//                }
-//                return null;
-//            }
-//
-//            protected void onProgressUpdate(Integer... progress) {
-//                makeView(progress[0], parent);
-//
-//                Log.d("loading issues","made view");
-//            }
-//        };
-//
-//        ast.execute();
 
-        addViews(parent);
+
+        addViews(parent,itemsArrayList);
 
         Log.d("loading issues","I am not blocked");
 
@@ -75,34 +51,75 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 //        th.start();
     }
 
-    private void addViews( final ViewGroup parent) {
-        final GS<Integer> i =new GS<>(0);
-
-        makeView(i.get(), parent,new Runnable() {
+    private void addViews(final ViewGroup parent, final ArrayList<Row> itemsArrayList) {
+        final ProblemArrayAdapter that = this;
+        AsyncTask ast = new AsyncTask<Object,Integer,Object>() {
             @Override
-            public void run() {
-                i.set(i.get() + 1);
-                if (i.get()< problems.size()) {
-                    makeView(i.get(),parent,this);
+            protected Object doInBackground(Object[] x) {
+//                try {
+//                    Thread.sleep(100);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+                for (int i = 0; i < problems.size(); i++) {
+                    publishProgress(i);
+                    View rowView = problems.get(i).makeView(context,parent,i);
+                    views.put(i, rowView);
+//                    try {
+//                        Thread.sleep(100);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
                 }
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                that.done = true;
+                return null;
             }
-        });
+
+            protected void onProgressUpdate(Integer... progress) {
+                int i = progress[0];
+                that.add(itemsArrayList.get(i));
+
+
+//                that.add(itemsArrayList.get(i));
+//                makeView(i, parent);
+
+                Log.d("loading issues","made view");
+            }
+        };
+
+        ast.execute();
+
+//        final GS<Integer> i =new GS<>(0);
+//
+//        makeView(i.get(), parent,new Runnable() {
+//            @Override
+//            public void run() {
+//                i.set(i.get() + 1);
+//                if (i.get()< problems.size()) {
+//                    makeView(i.get(),parent,this);
+//                }
+//            }
+//        });
     }
 
-    private View makeView(int i, ViewGroup parent){
-        return  makeView(i,parent, new Runnable() {
-            @Override
-            public void run() {
+//    private View makeView(int i, ViewGroup parent){
+//        return  makeView(i,parent, new Runnable() {
+//            @Override
+//            public void run() {
+//
+//            }
+//        });
+//    }
 
-            }
-        });
-    }
-
-    private View makeView(int i, ViewGroup parent, Runnable afterAdded) {
+    private View makeView(int i, ViewGroup parent) {//, Runnable afterAdded
         View rowView = problems.get(i).makeView(context,parent,i);
-        rowView.animate().alpha(0);
+//        rowView.setAlpha(0);
         views.put(i, rowView);
-        rowView.animate().alpha(0xff).setDuration(1000).withLayer().withEndAction(afterAdded);
         return rowView;
     }
 
@@ -114,7 +131,11 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (views.containsKey(position)) {
-            return views.get(position);
+            View res = views.get(position);
+            if (!done) {
+                ((CircleView)res.findViewById(R.id.problem_circle)).circleDrawer.dontAnimate();
+            }
+            return res;
         } else {
             return makeView(position, parent);
         }

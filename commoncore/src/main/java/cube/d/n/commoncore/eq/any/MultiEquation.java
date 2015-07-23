@@ -127,8 +127,6 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
     private Equation getMutiplyEquation(Equation a, Equation b) {
 
-
-
         Equation result = null;
 
         ArrayList<Equation> eqs = new ArrayList<>();

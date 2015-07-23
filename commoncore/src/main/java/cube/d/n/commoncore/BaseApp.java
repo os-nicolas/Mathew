@@ -273,48 +273,48 @@ public abstract class BaseApp extends Application{
         return alreadyShown;
     }
 
-    public float getPranEdgeX(Equation eq) {
-        return (float)(7*getDpi()*zoom);
+    public float getPranEdgeX(Equation equation) {
+        return (float)(7*getDpi()*equation.root().getMyZoom());
     }
 
-    public float getPranEdgeY(Equation eq) {
-        return (float)(2*getDpi()*zoom);
+    public float getPranEdgeY(Equation equation) {
+        return (float)(2*getDpi()*equation.root().getMyZoom());
     }
 
     public float getCornor() {
         return (float)(10*BaseApp.getApp().getDpi());
     }
 
-    public float getPranIn() {
-        return (float)(9*getDpi()*zoom);
+    public float getPranIn(Equation equation) {
+        return (float)(9*getDpi()*equation.root().getMyZoom());
     }
 
     public float getStrokeWidth(Equation equation) {
         return (float)(1.5f*getDpi()*equation.root().getMyZoom());
     }
 
-    public float getDivWidthAdd(DivEquation eq) {
-        return (float)(20*getDpi()*eq.root().getMyZoom());
+    public float getDivWidthAdd(DivEquation equation) {
+        return (float)(20*getDpi()*equation.root().getMyZoom());
     }
 
     public float getBuffer() {
         return 10*getDpi();
     }
 
-    public float getBuffer(Equation eq) {
-        return (float)(getBuffer()*zoom);
+    public float getBuffer(Equation equation) {
+        return (float)(getBuffer()*equation.root().getMyZoom());
     }
 
-    public float getSqrtWidthAdd(Equation eq) {
-        return(float)( 40*getDpi()*zoom);
+    public float getSqrtWidthAdd(Equation equation) {
+        return(float)( 40*getDpi()*equation.root().getMyZoom());
     }
 
-    public float getSqrtHeightAdd(Equation eq) {
-        return(float)( 20*getDpi()*zoom);
+    public float getSqrtHeightAdd(Equation equation) {
+        return(float)( 20*getDpi()*equation.root().getMyZoom());
     }
 
-    public float getbkgBuffer(Equation eq) {
-        return (float)(5*getDpi()*zoom);
+    public float getbkgBuffer(Equation equation) {
+        return (float)(5*getDpi()*equation.root().getMyZoom());
     }
 
     public int getTopLineWidth() {

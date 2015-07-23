@@ -266,7 +266,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
 
     protected float myWidthAdd() {
-        return 2*BaseApp.getApp().getDpi();
+        return 2*BaseApp.getApp().getDpi()*root().getMyZoom();
     }
 
     public void draw(Canvas canvas, float x, float y) {
@@ -280,13 +280,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
         drawBkgBox(canvas, x, y);
 
-
+//
 //        if (canvas != null) {
 //            Paint p = new Paint();
 //            p.setColor(0x33369745);
 //            RectF r = new RectF((int) (x - measureWidth() / 2),
 //                    (int) (y - measureHeightUpper()),
-//                    (int) (x + measureWidth() / 2), (int) (y + measureHeightLower()));
+//                    (int) (x + measureWidth() / 2),
+//                    (int) (y + measureHeightLower()));
 //            canvas.drawRoundRect(r, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), p);
 //        }
 
@@ -328,7 +329,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
             if (i != size() - 1) {
                 if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                    float pointWidth = getMyWidth() + myWidthAdd();
+                    float pointWidth = getMyWidth() + myWidthAdd();//
                     MyPoint point = new MyPoint(pointWidth, getMyHeight());
 
                     point.x = (int) (x - (totalWidth / 2) + currentX + (pointWidth / 2));
@@ -725,7 +726,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     protected static void drawParentheses(boolean left, Canvas canvas, float x, float y, Paint ptemp, float uh, float lh, Equation myEq) {
         float edgeX = BaseApp.getApp().getPranEdgeX(myEq);
         float edgeY = BaseApp.getApp().getPranEdgeY(myEq);
-        float in = BaseApp.getApp().getPranIn();
+        float in = BaseApp.getApp().getPranIn(myEq);
 
         if (left) {
             //left side
@@ -874,12 +875,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             int index = parent.indexOf(this);
             // oh man does this seem dangerous
             if ((parent instanceof MultiEquation && eq instanceof MultiEquation)
-                ||(parent instanceof MultiEquation && eq instanceof MultiEquation)){
+                ||(parent instanceof AddEquation && eq instanceof AddEquation)){
                 for (Equation e:eq){
                     parent.add(index++,e);
                 }
                 this.parent.remove(this);
-            }else {
+            }else  {
                 this.parent.set(index, eq);
             }
         } else {
@@ -1681,9 +1682,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     //private static final float PARN_WIDTH_ADDITION = 24;
     protected float getParnWidthAddition() {
         if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
-            return (float) (48 * BaseApp.getApp().getDpi()*getMyZoom());
+            return (float) (48 * BaseApp.getApp().getDpi()*root().getMyZoom());
         } else {
-            return (float) (28 * BaseApp.getApp().getDpi()*getMyZoom());
+            return (float) (28 * BaseApp.getApp().getDpi()*root().getMyZoom());
         }
     }
 

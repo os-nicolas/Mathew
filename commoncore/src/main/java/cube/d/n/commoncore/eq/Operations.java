@@ -757,6 +757,9 @@ public class Operations {
 
             if (divide_CanCancel(common)) { // they have anything in common
                 result = divide_Cancel(owner, top, bot, common);
+                if (owner instanceof AlgebraLine) {
+                    ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
+                }
                 // if we have sqrt(5)/23
             }else if (divide_CanBringIn(a)){
                 result = divide_BringIn(a, b, owner);

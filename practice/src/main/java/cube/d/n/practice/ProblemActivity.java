@@ -2,12 +2,17 @@ package cube.d.n.practice;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CircleView;
@@ -37,11 +42,18 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
         myProblem = Problem.problems.get(problemId).getRow().myProblem;
 
+        hideStatusBar();
+
         if (myProblem.view != null) {
             if (myProblem.view.getParent() != null) {
                 ((ViewGroup) myProblem.view.getParent()).removeView(myProblem.view);
             }
+
             setContentView(myProblem.view);
+
+
+
+            main = (Main) myProblem.view.findViewById(R.id.problem_main);
         } else {
 
             if (myProblem.equation == null) {
@@ -75,21 +87,40 @@ public class ProblemActivity extends FullAct implements ISolveController {
             while(at.getParent() != null && at.getParent() instanceof View){
                 at = (View)at.getParent();
             }
-            myProblem.view = at;
+
+
+
+            myProblem.view = at.findViewById(R.id.problem_root);
         }
+
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        int width_one = size.x;
+        int height_one = size.y;
+//        LinearLayout.LayoutParams layoutParms = new LinearLayout.LayoutParams(width_one,height_one);
+//        myProblem.view.setLayoutParams(layoutParms);
+        Log.d("screenHeight , screenWidth",height_one+","+width_one);
+        Log.d("viewHeight , viewWidth",myProblem.view.getMeasuredHeight()+","+myProblem.view.getMeasuredWidth());
     }
 
     private void setUp(Main main) {
         if (myProblem.equation == null) {
             //main.initWI();
-        } else {;
+        } else {
             main.initWE(myProblem.equation);
         }
 
         if (myProblem.name.equals("")) {
             main.getProblemImage().setTitle(myProblem.text);
             main.getProblemImage().setBody("");
-
         } else {
             main.getProblemImage().setTitle(myProblem.name);
             main.getProblemImage().setBody(myProblem.text);
