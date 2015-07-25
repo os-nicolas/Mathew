@@ -80,4 +80,9 @@ public class YayTutView extends LinearLayout implements YayView {
 //        });
 
     }
+
+    @Override
+    public void turnOn(Main that) {
+        //DO NOTHING
+    }
 }

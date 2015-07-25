@@ -28,13 +28,30 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#ffffffff"
+
+        android:orientation="horizontal"
+        android:id="@+id/loading_holder">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/loading_text"
+            android:text="Loading..."
+            android:gravity="center" />
+    </LinearLayout>
+
+    <LinearLayout
     android:layout_width="fill_parent"
     android:layout_height="10px"
     android:background="@drawable/myrect"
     android:layout_marginBottom="-5px"
     android:layout_marginLeft="-5px"
     android:layout_marginRight="-5px"
-    android:layout_gravity="bottom">
+    android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:id="@+id/footer">
 </LinearLayout>
 
     <LinearLayout

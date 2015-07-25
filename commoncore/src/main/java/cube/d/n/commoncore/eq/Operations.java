@@ -741,6 +741,9 @@ public class Operations {
 
         if (divide_CanTopIsZero(a, b)){
             result = divide_TopIsZero(a, b, owner);
+            if (owner instanceof AlgebraLine) {
+                ((AlgebraLine) owner).tryWarn(b.copy());
+            }
         }else if (divide_CanSamePower(a, b)) {
             result = divide_samePower(a, b, owner);
 

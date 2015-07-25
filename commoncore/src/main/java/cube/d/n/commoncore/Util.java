@@ -76,7 +76,7 @@ public class Util {
         }catch(Exception e){}
 
         if (canConvert){
-            res= NumConstEquation.create(new BigDecimal(inpu), new NullLine());
+            res= NumConstEquation.create(new BigDecimal(inpu), new NullLine(),true);
         }else {
             res=new VarEquation(inpu,new NullLine());
         }

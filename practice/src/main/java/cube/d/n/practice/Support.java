@@ -73,7 +73,7 @@ public class Support extends FullAct  {
 
         ListView listView = (ListView) findViewById(R.id.problem_listView);
 
-        final ProblemArrayAdapter adapter = new ProblemArrayAdapter(this,getProblems(),listView);
+        final TwoLineArrayAdaptor adapter = new TwoLineArrayAdaptor(this,getProblems(),listView);
 
         listView.setAdapter(adapter);
         final Activity that = this;
@@ -83,8 +83,8 @@ public class Support extends FullAct  {
 
             @Override
             public void onItemClick(AdapterView<?> unused,View v, int position,long arg3){
-                if (adapter.getProblem(position) instanceof DonateRow) {
-                    ((DonateRow) adapter.getProblem(position)).go(mService, that);
+                if (adapter.getRow(position) instanceof DonateRow) {
+                    ((DonateRow) adapter.getRow(position)).go(mService, that);
                 }
             }
         });
@@ -139,7 +139,7 @@ public class Support extends FullAct  {
 
     private ArrayList<Row> getProblems() {
         ArrayList<Row> res = new ArrayList<>();
-        res.add(new AboutRow("Mathilda lets you solve problems by dragging terms around and telling it what to add, subtract, expand, etc. Mathilda handles all the details and checks your work so that you can focus on the problem. It’s algebra without the busy work and frustrating mistakes. "));
+        res.add(new AboutRow("Donate to help support Mathilda continued development. "));
         res.add(new DonateRow("One Dollar","$1"));
         res.add(new DonateRow("Five Dollars","$5"));
         res.add(new DonateRow("Ten Dollars","$10"));

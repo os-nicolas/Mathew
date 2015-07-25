@@ -49,7 +49,7 @@ public class MainRow implements Row,Goable {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
-        rowView = inflater.inflate(R.layout.topic_row, parent, false);
+        rowView = inflater.inflate(R.layout.two_line_row, parent, false);
 
         TextView title = (TextView) rowView.findViewById(R.id.row_title);
 
@@ -78,7 +78,7 @@ public class MainRow implements Row,Goable {
 
         }else{
             MainRow myRow= this;
-            equationView.setEquation(new VarEquation(myRow.subtitle, new NullLine()), .5f);//,
+            equationView.setEquation(new VarEquation(subtitle, new NullLine()), .5f);//,
             inCircle=myRow.title.substring(0,2);
         }
 

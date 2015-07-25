@@ -88,6 +88,10 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
 
     }
 
+    public ProblemArrayAdapter getAdapter(Context context,ListView parent,Runnable callBack){
+        return new ProblemArrayAdapter(context,getProbs(),parent,callBack);
+    }
+
     public ProblemArrayAdapter getAdapter(Context context,ListView parent){
         return new ProblemArrayAdapter(context,getProbs(),parent);
     }

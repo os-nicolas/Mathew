@@ -6,9 +6,12 @@ import cube.d.n.commoncore.eq.LegallityCheck;
 import cube.d.n.commoncore.lines.EquationLine;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.text.DecimalFormat;
 
 public class NumConstEquation extends LeafEquation implements LegallityCheck {
+
+    private  boolean round = false;
 
 	public NumConstEquation(BigDecimal number, EquationLine owner) {
 		super(owner);
@@ -37,6 +40,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     public NumConstEquation(BigDecimal value, EquationLine owner, NumConstEquation equations) {
         super(owner,equations);
+        round = equations.round;
         init(value);
     }
 
@@ -99,23 +103,43 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 		if (!(eq instanceof NumConstEquation)) {
             return false;
         }
-		NumConstEquation e = (NumConstEquation)eq;
-		return getValue().equals(e.getValue());
+        NumConstEquation e = (NumConstEquation)eq;
+        if (!this.round && !e.round) {
+            return getValue().equals(e.getValue());
+        }else{
+            return Math.abs(getValue().doubleValue() -e.getValue().doubleValue())<.001f;
+        }
 	}
 
-    public static Equation create(BigDecimal number, EquationLine o) {
+    public static Equation create(BigDecimal number, EquationLine o, boolean rounded) {
         if (number.compareTo(BigDecimal.ZERO) < 0){
-            return new NumConstEquation(number.negate(),o).negate();
+            NumConstEquation numConstEquation = new NumConstEquation(number.negate(),o);
+            numConstEquation.round = rounded;
+            return numConstEquation.negate();
         }else{
-            return new NumConstEquation(number,o);
+            NumConstEquation numConstEquation = new NumConstEquation(number,o);
+            numConstEquation.round = rounded;
+            return numConstEquation;
         }
     }
 
+    public static Equation create(BigDecimal number, EquationLine o) {
+        return  create(number,o,false);
+    }
+
     public static Equation create(double number, EquationLine o) {
+        return  create(number,o,false);
+    }
+
+    public static Equation create(double number, EquationLine o,boolean rounded) {
         if (number < 0){
-            return new NumConstEquation(-number,o).negate();
+            NumConstEquation numConstEquation = new NumConstEquation(-number,o);
+            numConstEquation.round = rounded;
+            return numConstEquation.negate();
         }else{
-            return new NumConstEquation(number,o);
+            NumConstEquation numConstEquation = new NumConstEquation(number,o);
+            numConstEquation.round = rounded;
+            return numConstEquation;
         }
     }
 

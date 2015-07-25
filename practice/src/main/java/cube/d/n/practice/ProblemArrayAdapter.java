@@ -1,23 +1,16 @@
 package cube.d.n.practice;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 import cube.d.n.commoncore.CircleView;
-import cube.d.n.commoncore.EquationView;
-import cube.d.n.commoncore.GS;
 
 /**
  * Created by Colin on 6/23/2015.
@@ -29,9 +22,9 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
     public ConcurrentHashMap<Integer, View> views = new ConcurrentHashMap<>();
     private boolean done = false;
 
-    public ProblemArrayAdapter(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent) {
+    public ProblemArrayAdapter(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent, Runnable callback) {
 
-        super(context, R.layout.topic_row, new ArrayList<Row>());
+        super(context, R.layout.two_line_row, new ArrayList<Row>());
 
         this.context = context;
         this.problems = itemsArrayList;
@@ -39,7 +32,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 
 
 
-        addViews(parent,itemsArrayList);
+        addViews(parent,itemsArrayList,callback);
 
         Log.d("loading issues","I am not blocked");
 
@@ -51,7 +44,16 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 //        th.start();
     }
 
-    private void addViews(final ViewGroup parent, final ArrayList<Row> itemsArrayList) {
+    public ProblemArrayAdapter(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent) {
+        this(context,itemsArrayList,parent, new Runnable() {
+            @Override
+            public void run() {
+                //do nothing
+            }
+        });
+    }
+
+    private void addViews(final ViewGroup parent, final ArrayList<Row> itemsArrayList, final Runnable callback) {
         final ProblemArrayAdapter that = this;
         AsyncTask ast = new AsyncTask<Object,Integer,Object>() {
             @Override
@@ -61,6 +63,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 //                } catch (InterruptedException e) {
 //                    e.printStackTrace();
 //                }
+                callback.run();
                 for (int i = 0; i < problems.size(); i++) {
                     publishProgress(i);
                     View rowView = problems.get(i).makeView(context,parent,i);
@@ -69,6 +72,9 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 //                        Thread.sleep(100);
 //                    } catch (InterruptedException e) {
 //                        e.printStackTrace();
+//                    }
+//                    if (i == Math.min(3, problems.size()/3)){
+//                        callback.run();
 //                    }
                 }
                 try {

@@ -184,6 +184,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		return get(0).same(e.get(0)) && get(1).same(e.get(1));
 	}
 
+    @Override
     public SelectedRow getSelectedRow() {
         final Equation a = get(0);
         final Equation b = get(1);
@@ -227,6 +228,9 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
             buttons.add(new SeletedRowEquationButton(Operations.divide_TopIsZero(a,b,owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
+                    if (owner instanceof AlgebraLine) {
+                        ((AlgebraLine) owner).tryWarn(b.copy());
+                    }
                     MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                     that.replace(Operations.divide_TopIsZero(a,b,owner));
                     changed(p);

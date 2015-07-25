@@ -19,6 +19,7 @@ import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Nextmanager;
+import cube.d.n.commoncore.YayProblemView;
 
 /**
  * Created by Colin_000 on 6/27/2015.
@@ -54,6 +55,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
 
             main = (Main) myProblem.view.findViewById(R.id.problem_main);
+            ((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
         } else {
 
             if (myProblem.equation == null) {

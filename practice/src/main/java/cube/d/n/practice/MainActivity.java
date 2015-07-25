@@ -2,35 +2,16 @@ package cube.d.n.practice;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
-import cube.d.n.commoncore.Util;
-import cube.d.n.commoncore.eq.any.AddEquation;
-import cube.d.n.commoncore.eq.any.DivEquation;
-import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.NumConstEquation;
-import cube.d.n.commoncore.lines.NullLine;
 
 public class MainActivity extends FullAct {
 
@@ -66,7 +47,7 @@ public class MainActivity extends FullAct {
 
         ListView listView = (ListView) findViewById(R.id.listview);
 
-        final TopicArrayAdaptor adapter = new TopicArrayAdaptor(this, getMainRows(),listView);
+        final TwoLineArrayAdaptor adapter = new TwoLineArrayAdaptor(this, getMainRows(),listView);
 
         LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
 
@@ -140,7 +121,7 @@ public class MainActivity extends FullAct {
 
         // we need to update if we solved anything
          ListView listView = (ListView) findViewById(R.id.listview);
-        ((TopicArrayAdaptor) listView.getAdapter()).updatePrecents();
+        ((TwoLineArrayAdaptor) listView.getAdapter()).updatePrecents();
     }
 
 }

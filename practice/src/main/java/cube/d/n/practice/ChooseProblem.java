@@ -6,7 +6,9 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -79,13 +81,67 @@ public class ChooseProblem extends Activity {
 //                }
 //        }}.start();
 
-        ListView listView = (ListView) findViewById(R.id.problem_listView);
 
+        final View loadingHolder = findViewById(R.id.loading_holder);
+
+        TextView loading = (TextView)findViewById(R.id.loading_text);
+        loading.setTypeface(Mathilda.getMathilda().getDJVL());
+
+        ListView listView = (ListView) findViewById(R.id.problem_listView);
+        final  Activity that = this;
         final ProblemArrayAdapter adapter = myTopic.getAdapter(this, listView);
+//                , new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                Log.d("Called", "should be animating");
+//                loadingHolder.animate().withLayer().alpha(0).setDuration(400).withEndAction(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        Log.d("Called", "should be hidding");
+//                        that.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                loadingHolder.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
+
+
+        AsyncTask asyncTask = new AsyncTask() {
+            protected Object doInBackground(Object... params) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            protected void onPostExecute(Object o) {
+                loadingHolder.animate().withLayer().alpha(0).setDuration(300).withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Called", "should be hidding");
+                        that.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                loadingHolder.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                });
+            }
+        };
+        asyncTask.execute();
+
 
         listView.setAdapter(adapter);
 
-        final Activity that = this;
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

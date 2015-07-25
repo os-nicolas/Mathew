@@ -2,39 +2,29 @@ package cube.d.n.practice;
 
 
         import java.util.ArrayList;
-        import java.util.HashMap;
         import java.util.concurrent.ConcurrentHashMap;
 
         import android.content.Context;
-        import android.graphics.Typeface;
-        import android.os.AsyncTask;
-        import android.util.Log;
-        import android.view.LayoutInflater;
         import android.view.View;
         import android.view.ViewGroup;
         import android.widget.ArrayAdapter;
-        import android.widget.TextView;
 
-        import cube.d.n.commoncore.EquationView;
-        import cube.d.n.commoncore.eq.any.VarEquation;
-        import cube.d.n.commoncore.lines.NullLine;
-
-public class TopicArrayAdaptor extends ArrayAdapter<Row> {
+public class TwoLineArrayAdaptor extends ArrayAdapter<Row> {
 
     private final Context context;
-    private final ArrayList<Row> topics;
+    private final ArrayList<Row> rows;
     public ConcurrentHashMap<Integer,View> views = new ConcurrentHashMap<>();
 
-    public TopicArrayAdaptor(Context context, ArrayList<Row> itemsArrayList,final ViewGroup parent ) {
+    public TwoLineArrayAdaptor(Context context, ArrayList<Row> itemsArrayList, final ViewGroup parent) {
 
-        super(context, R.layout.topic_row, itemsArrayList);
+        super(context, R.layout.two_line_row, itemsArrayList);
 
         this.context = context;
-        this.topics = itemsArrayList;
+        this.rows = itemsArrayList;
 
         Thread th = new Thread(){
             public void run() {
-                for (int i=0;i< topics.size();i++){
+                for (int i=0;i< rows.size();i++){
                     makeView(i, parent);
                 }
             }
@@ -43,7 +33,7 @@ public class TopicArrayAdaptor extends ArrayAdapter<Row> {
     }
 
     private View makeView(int position, ViewGroup parent) {
-        View res = topics.get(position).makeView(context,parent,position);
+        View res = rows.get(position).makeView(context,parent,position);
         views.put(position,res);
         return  res;
     }
@@ -58,10 +48,14 @@ public class TopicArrayAdaptor extends ArrayAdapter<Row> {
     }
 
     public void updatePrecents() {
-        for (Row v:topics){
+        for (Row v: rows){
             if (v instanceof CanUpdatePrecent){
                 ((CanUpdatePrecent)v).updatePrecent();
             }
         }
+    }
+
+    public Row getRow(int i) {
+        return rows.get(i);
     }
 }

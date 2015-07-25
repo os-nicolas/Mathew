@@ -5,4 +5,6 @@ package cube.d.n.commoncore;
  */
 public interface YayView {
     void initOnClickListeners(Main that);
+
+    void turnOn(Main that);
 }

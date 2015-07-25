@@ -2,6 +2,12 @@ package cube.d.n.commoncore.eq.any;
 
 
 
+import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
+import cube.d.n.commoncore.eq.MyPoint;
+import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.EquationLine;
 
 import java.util.ArrayList;
@@ -16,6 +22,30 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
         init();
     }
 
+    @Override
+    public SelectedRow getSelectedRow() {
+        ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+        final Equation that = this;
+        if (this.get(0) instanceof AddEquation){
+            buttons.add(new SeletedRowEquationButton(negateAll(that.get(0).copy()),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(negateAll(that.get(0).copy()));
+                    changed(p);
+                }
+            }));
+        }
+
+        if (buttons.size() != 0){
+            SelectedRow sr = new SelectedRow(1f/9f);
+            sr.addButtonsRow(buttons,0,1);
+            return sr;
+        }else{
+            return null;
+        }
+
+    }
 
 
     @Override
@@ -53,21 +83,16 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
         }else if (get(0) instanceof PlusMinusEquation){
             replace(get(0));
         }else if (get(0) instanceof AddEquation){
-            if (get(0).size()>1){
-                for (Equation e: get(0)){
-                    e.replace(e.negate());
-                }
-                if (this.parent instanceof AddEquation){
-                    int at = parent.indexOf(this);
-                    this.justRemove();
-                    for (Equation e: get(0)){
-                        parent.add(at,e);
-                        at++;
-                    }
-                }else{
-                    replace(get(0));
-                }
-            }
+            replace(negateAll(get(0).copy()));
         }
+    }
+
+    private Equation negateAll(Equation copy) {
+        //if (get(0).size()>1){
+            for (Equation e: copy){
+                e.replace(e.negate());
+            }
+        return copy;
+        //}
     }
 }

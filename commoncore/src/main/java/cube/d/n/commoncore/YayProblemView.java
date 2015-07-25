@@ -1,5 +1,6 @@
 package cube.d.n.commoncore;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +18,8 @@ import java.util.Random;
  */
 public class YayProblemView extends LinearLayout implements YayView {
     View view;
+    private boolean clicked = false;
+
     public YayProblemView(Context context) {
         super(context);
         init(context);
@@ -42,14 +45,13 @@ public class YayProblemView extends LinearLayout implements YayView {
 
     public String getText() {
         Random r = new Random();
-        String[] res = {"Yay!","Well Done!", "Good Work!", "Easy Peasy!", "Nice!"};
+        String[] res = {"Yay!","Well Done!", "Good Work!", "Solved!", "Nice!"};
         int num = r.nextInt(res.length);
         return res[num];
     }
 
     public void initOnClickListeners(final Main main){
         ((android.widget.Button)view.findViewById(R.id.reset)).setOnClickListener(new OnClickListener() {
-            boolean clicked = false;
             @Override
             public void onClick(View v) {
                 if (!clicked){
@@ -60,8 +62,6 @@ public class YayProblemView extends LinearLayout implements YayView {
         });
         if (main.next.hasNext()) {
             ((android.widget.Button) view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
-                boolean clicked = false;
-
                 @Override
                 public void onClick(View v) {
                     if (!clicked) {
@@ -71,8 +71,29 @@ public class YayProblemView extends LinearLayout implements YayView {
                 }
             });
         }else{
-            ((android.widget.Button) view.findViewById(R.id.next)).setEnabled(false);
+            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
+            nxt.setText("Up");
+            nxt.setOnClickListener(new OnClickListener() {
+               @Override
+                public void onClick(View v) {
+                    if (!clicked) {
+                        ((Activity) getContext()).finish();
+                    }
+                }
+            });
         }
 
+    }
+
+    @Override
+    public void turnOn(Main that) {
+        if (!that.next.hasNext()) {
+            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
+            nxt.setText("Up");
+        }
+    }
+
+    public void reset() {
+        clicked = false;
     }
 }

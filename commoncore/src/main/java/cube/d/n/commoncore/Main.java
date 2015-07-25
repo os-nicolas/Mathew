@@ -784,10 +784,12 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 myMainTut.solved(new Runnable() {
                     @Override
                     public void run() {
+                        final YayView ytv = (YayView)root.findViewById(overlayId);
+                        ytv.turnOn(that);
                         overlay.animate().alpha(1).setDuration(500).withLayer().withEndAction(new Runnable() {
                             @Override
                             public void run() {
-                                YayView ytv = (YayView)root.findViewById(overlayId);
+
                                 ytv.initOnClickListeners(that);
                             }
                         });

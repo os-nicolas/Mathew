@@ -104,7 +104,7 @@ public class CircleDrawer {
             canvas.drawCircle(cx, cy, currentR-5, stupidPaint);
 
             RectF oval = new RectF(cx - targetR, cy - targetR, cx+ targetR, cy + targetR);
-            mySweep = 360*Math.min((float)(now - (startedAt+ sweepStart))/(float)(sweepEnd - sweepStart),1);
+            mySweep = targetSweep*Math.min((float)(now - (startedAt+ sweepStart))/(float)(sweepEnd - sweepStart),1);
 
             canvas.drawArc(oval, 0, mySweep, true, bkgPaint);
 
@@ -125,7 +125,7 @@ public class CircleDrawer {
 
 
         canvas.drawText(text,cx- (textW2 / 2f), cy + (textH / 2f), textPaint);
-        if (!subText.equals("")){
+        if (!subText.equals("") && (!subText.equals("SOLVED") || now > startedAt + sweepEnd)){
             float wSmall = smallPaint.measureText(subText);
 
             smallPaint.getTextBounds(subText, 0, subText.length(), out);
