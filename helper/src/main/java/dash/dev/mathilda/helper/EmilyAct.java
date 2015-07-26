@@ -8,6 +8,7 @@ import android.view.View;
 
 import java.lang.ref.WeakReference;
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -58,6 +59,7 @@ public class EmilyAct extends Activity {
             }
 
        }
+        BaseApp.getApp().recordScreen("input");
     }
 
     @Override

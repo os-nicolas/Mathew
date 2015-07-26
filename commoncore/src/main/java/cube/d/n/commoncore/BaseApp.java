@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import java.util.Random;
@@ -380,5 +381,16 @@ public abstract class BaseApp extends Application{
     // for example algebra practice
     public boolean hasB() {
         return true;
+    }
+
+    public void recordScreen(String s) {
+        // Get tracker.
+        Tracker t = getTracker();
+
+        // Set screen name.
+        t.setScreenName(s);
+
+        // Send a screen view.
+        t.send(new HitBuilders.AppViewBuilder().build());
     }
 }

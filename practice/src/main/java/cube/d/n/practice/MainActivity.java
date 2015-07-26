@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 
 public class MainActivity extends FullAct {
@@ -86,7 +87,7 @@ public class MainActivity extends FullAct {
         ArrayList<Row> rows = new ArrayList<>();
 
         if (!Mathilda.hasCompletedTut()) {
-            rows.add(new MainRow("Tutorial", "how do i use this thing anyway", TutActivity.class));
+            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class));
 
             rows.add(new Divider());
         }
@@ -98,12 +99,11 @@ public class MainActivity extends FullAct {
         rows.add(new Divider());
 
         if (Mathilda.hasCompletedTut()) {
-            rows.add(new MainRow("Tutorial", "how do i use this thing anyway", TutActivity.class));
+            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class));
         }
 
-        rows.add(new MainRow("Feedback", "got an idea, let us know",FeedBack.class));
-        rows.add(new MainRow("Support", "got an idea, let us know",Support.class));
-
+        rows.add(new MainRow("Feedback", "Send us your comments/ideas",FeedBack.class));
+        rows.add(new MainRow("Donate", "",Support.class));
 
         return rows;
     }
@@ -122,6 +122,8 @@ public class MainActivity extends FullAct {
         // we need to update if we solved anything
          ListView listView = (ListView) findViewById(R.id.listview);
         ((TwoLineArrayAdaptor) listView.getAdapter()).updatePrecents();
+
+        BaseApp.getApp().recordScreen("main");
     }
 
 }

@@ -1,5 +1,6 @@
 package cube.d.n.practice;
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.practice.util.SystemUiHider;
 
 import android.app.ActionBar;
@@ -169,6 +170,8 @@ public class ChooseProblem extends Activity {
         // we need to update if we solved anything
         ListView listView = (ListView) findViewById(R.id.problem_listView);
         ((ProblemArrayAdapter) listView.getAdapter()).updatePrecents();
+
+        BaseApp.getApp().recordScreen(myTopic.shortName);
     }
 
 }

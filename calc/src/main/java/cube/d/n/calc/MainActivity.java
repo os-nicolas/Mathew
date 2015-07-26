@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import cube.d.n.calc.tuts.TutActivity;
 import cube.d.n.commoncore.BaseApp;
 
@@ -27,5 +30,11 @@ public class MainActivity extends Activity {
         }
 
         setContentView(Mathilda.getView("mainActivity",this));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        BaseApp.getApp().recordScreen("main");
     }
 }

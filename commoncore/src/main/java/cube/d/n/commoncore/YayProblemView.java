@@ -56,7 +56,12 @@ public class YayProblemView extends LinearLayout implements YayView {
             public void onClick(View v) {
                 if (!clicked){
                     clicked = true;
-                    main.reset();
+                    main.reset(new Runnable(){
+                        @Override
+                        public void run(){
+                            clicked = false;
+                        }
+                    });
                 }
             }
         });

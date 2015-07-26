@@ -62,6 +62,7 @@ public class TutActivity extends FragmentActivity {
             };
             th.start();
         }
+        BaseApp.getApp().recordScreen("tut");
     }
 
 

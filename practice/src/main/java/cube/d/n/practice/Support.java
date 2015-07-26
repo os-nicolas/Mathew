@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.BaseApp;
+
 
 public class Support extends FullAct  {
 
@@ -88,6 +90,12 @@ public class Support extends FullAct  {
                 }
             }
         });
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        BaseApp.getApp().recordScreen("support");
     }
 
     @Override

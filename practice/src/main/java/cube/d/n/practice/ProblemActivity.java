@@ -111,7 +111,13 @@ public class ProblemActivity extends FullAct implements ISolveController {
 //        myProblem.view.setLayoutParams(layoutParms);
         Log.d("screenHeight , screenWidth",height_one+","+width_one);
         Log.d("viewHeight , viewWidth",myProblem.view.getMeasuredHeight()+","+myProblem.view.getMeasuredWidth());
+
+        BaseApp.getApp().recordScreen(myProblem.topic + "-" + myProblem.myId);
     }
+
+
+
+
 
     private void setUp(Main main) {
         if (myProblem.equation == null) {
@@ -182,6 +188,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
 //            root = (View)root.getParent();
 //        }
         final View overlay = root.findViewById(R.id.problem_yay);
+
 
         final Activity context = (Activity)main.getContext();
 

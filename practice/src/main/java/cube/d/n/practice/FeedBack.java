@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import java.util.Properties;
 
@@ -23,6 +24,7 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import cube.d.n.commoncore.BaseApp;
 
 
 public class FeedBack extends FullAct  {
@@ -95,6 +97,12 @@ public class FeedBack extends FullAct  {
                                 });
 
 
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        BaseApp.getApp().recordScreen("feedback");
     }
 
     //TODO call async

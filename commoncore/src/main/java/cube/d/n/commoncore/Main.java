@@ -800,13 +800,14 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
 
-    public void reset() {
+    public void reset(final Runnable runnable) {
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 lines.clear();
                 initStartLines(startLine);
                 alreadySolved = false;
+                runnable.run();
             }
         };
 
