@@ -124,7 +124,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     private void init(EquationLine owner2) {
         this.owner = owner2;
         id = idBacker++;
-        myWidth = BaseApp.getApp().getDefaultSize();
+        myWidth = (int)(BaseApp.getApp().getDefaultSize()/1.2f);
         myHeight = BaseApp.getApp().getDefaultSize();
     }
 
@@ -318,7 +318,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
         Rect out = new Rect();
         //we always want to center operation?
-        temp.getTextBounds(display, 0, display.length(), out);
+        temp.getTextBounds("A", 0, display.length(), out);
         float h = out.height();
         for (int i = 0; i < size(); i++) {
             float currentWidth = get(i).measureWidth();
@@ -492,7 +492,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
 
             if (owner instanceof CanTrackChanges) {
-                MyPoint myPoint = getLastPoint(x, y);
+                MyPoint myPoint = getNoneNullLastPoint(x, y);
                 Log.i("did it change?",old.toString() + " " + owner.stupid.get().toString());
                 if (!(old.same(owner.stupid.get()))) {
                     changed(myPoint);
@@ -567,16 +567,16 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
     }
 
-    public MyPoint getLastPoint(float x, float y) {
-        for (int i = 0; i < lastPoint.size(); i++) {
-            if (lastPoint.get(i).on(x, y,this)) {
-                return lastPoint.get(i);
-            }
-        }
-        Log.e("getLastPoint","this should probably not be returing null");
-
-        return null;
-    }
+//    public MyPoint getLastPoint(float x, float y) {
+//        for (int i = 0; i < lastPoint.size(); i++) {
+//            if (lastPoint.get(i).on(x, y,this)) {
+//                return lastPoint.get(i);
+//            }
+//        }
+//        Log.e("getLastPoint","this should probably not be returing null");
+//
+//        return null;
+//    }
 
     public MyPoint getNoneNullLastPoint(float x, float y) {
         // we get the closest

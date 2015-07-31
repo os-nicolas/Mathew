@@ -53,7 +53,7 @@ public abstract class MonaryEquation extends Equation {
                 currentX+= getParnWidthAddition()/2;
             }
             Rect out = new Rect();
-            temp.getTextBounds(display, 0, display.length(), out);
+            temp.getTextBounds("A", 0, display.length(), out);
             float h = out.height();
 
             // draw the minus sign

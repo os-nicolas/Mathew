@@ -9,5 +9,5 @@ import android.view.ViewGroup;
  */
 public interface Row {
 
-    public abstract View makeView(Context context,ViewGroup parent,int i);
+    public abstract View makeView(Context context,ViewGroup parent,int pos,int size);
 }

@@ -29,20 +29,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="12dp"
                 android:layout_gravity="center_vertical">
 
                 <TextView
-                    android:layout_marginTop="15dp"
+
                     android:text="test"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/problem_eq_text"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
 
                 <cube.d.n.commoncore.EquationView
-
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="15dp"
+                    android:layout_marginLeft="15dp"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/problem_eq_view"

@@ -55,7 +55,6 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
 
             main = (Main) myProblem.view.findViewById(R.id.problem_main);
-            ((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
         } else {
 
             if (myProblem.equation == null) {
@@ -69,28 +68,12 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
             setUp(main);
 
-            final Activity that = this;
-            main.next = new Nextmanager(){
-              @Override
-              public boolean hasNext(){
-                  return myProblem.next()!= null;
-              }
-                @Override
-                public void next(){
-                    Intent intent = new Intent(that, ProblemActivity.class);
-                    //based on item add info to intent
-                    intent.putExtra("problem", myProblem.next().myId);
-                    startActivity(intent);
-                    that.finish();
-                }
-            };
+
 
             View at = main;
             while(at.getParent() != null && at.getParent() instanceof View){
                 at = (View)at.getParent();
             }
-
-
 
             myProblem.view = at.findViewById(R.id.problem_root);
         }
@@ -102,16 +85,28 @@ public class ProblemActivity extends FullAct implements ISolveController {
     public void onResume() {
         super.onResume();
 
-        Display display = getWindowManager().getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int width_one = size.x;
-        int height_one = size.y;
-//        LinearLayout.LayoutParams layoutParms = new LinearLayout.LayoutParams(width_one,height_one);
-//        myProblem.view.setLayoutParams(layoutParms);
-        Log.d("screenHeight , screenWidth",height_one+","+width_one);
-        Log.d("viewHeight , viewWidth",myProblem.view.getMeasuredHeight()+","+myProblem.view.getMeasuredWidth());
+        final Activity that = this;
+        main.next = new Nextmanager(){
+            @Override
+            public boolean hasNext(){
+                return myProblem.next()!= null;
+            }
+            @Override
+            public void next(){
+                Intent intent = new Intent(that, ProblemActivity.class);
+                //based on item add info to intent
+                intent.putExtra("problem", myProblem.next().myId);
+                startActivity(intent);
+                that.finish();
+            }
 
+            @Override
+            public  void finish(){
+                that.finish();
+            }
+        };
+
+        ((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
         BaseApp.getApp().recordScreen(myProblem.topic + "-" + myProblem.myId);
     }
 
@@ -120,7 +115,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
 
     private void setUp(Main main) {
-        if (myProblem.equation == null) {
+        if (myProblem.equation == null || myProblem.input) {
             //main.initWI();
         } else {
             main.initWE(myProblem.equation);
@@ -136,9 +131,11 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
         int myIndex =  myProblem.getIndex();
 
+        int size = myProblem.getTopic().getProblems().size();
+
         main.getProblemImage().circleDrawer.setColors((myIndex<10?"0":"")+ myIndex,
-                CircleView.getBkgColor(myIndex),//BaseApp.colorFade(CircleView.getBkgColor(myIndex), 0xffffffff, 1.2f),
-                CircleView.getTextColor(myIndex)); //BaseApp.colorFade(CircleView.getTextColor(myIndex),0xffffffff,1.2f));
+                CircleView.getBkgColor(myIndex,size),//BaseApp.colorFade(CircleView.getBkgColor(myIndex), 0xffffffff, 1.2f),
+                CircleView.getTextColor(myIndex,size)); //BaseApp.colorFade(CircleView.getTextColor(myIndex),0xffffffff,1.2f));
         main.getProblemImage().circleDrawer.supText = new String(myProblem.getTopic().shortName).toUpperCase();
         main.getProblemImage().circleDrawer.setPrecent((myProblem.getSolved() ? 1 : 0));
         if (myProblem.getSolved()){
@@ -174,7 +171,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
         main.getProblemImage().circleDrawer.setPrecent(1);
         main.getProblemImage().circleDrawer.setSubText("SOLVED");
         solvedLooper.mHandler.post(runnable);
-        HappyView hv = (HappyView)findViewById(R.id.happy);
+        HappyView hv = (HappyView)myProblem.view.findViewById(R.id.happy);
         hv.start();
     }
 

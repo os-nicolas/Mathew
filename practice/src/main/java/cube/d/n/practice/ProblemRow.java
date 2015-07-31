@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.EquationView;
+import cube.d.n.commoncore.eq.any.VarEquation;
+import cube.d.n.commoncore.lines.NullLine;
 
 /**
  * Created by Colin on 6/23/2015.
@@ -55,7 +57,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
     View rowView;
 
     @Override
-    public View makeView(Context context,ViewGroup parent,int i) {
+    public View makeView(Context context,ViewGroup parent,int i,int size) {
 
 
         // 1. Create inflater
@@ -63,7 +65,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (myProblem != null) {
-            if (myProblem.equation != null) {
+            if (!myProblem.input) {
 
 
                 // 2. Get rowView from inflater
@@ -76,7 +78,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
 
                 TextView text = (TextView)rowView.findViewById(R.id.problem_eq_text);
                 text.setText(myProblem.text);
-                text.setTextColor(0xff000000);//Mathilda.getApp().getGreyTextColor()
+                text.setTextColor(Mathilda.getApp().getGreyTextColor());//0xff000000
                 text.setTypeface(Mathilda.getApp().getDJVL());
 
 
@@ -89,6 +91,20 @@ public class ProblemRow implements Row,CanUpdatePrecent {
 
                 title.setTypeface(Mathilda.getApp().getDJVL());
                 title.setText(myProblem.name);
+
+                EquationView equationView = (EquationView) rowView.findViewById(R.id.row_subtitle);
+
+                final int MAX_LEN=50;
+
+                String str =  myProblem.text.substring(0,Math.min(MAX_LEN,myProblem.text.length()));
+                if (str.endsWith(" ")){
+                    str = str.substring(0,str.length()-1);
+                }
+                if (MAX_LEN<myProblem.text.length()){
+                    str = str + "...";
+                }
+
+                equationView.setEquation(new VarEquation(str, new NullLine()), .5f);
 
             }
         } else {
@@ -107,7 +123,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
 
         CircleView cir = (CircleView) rowView.findViewById(R.id.problem_circle);
         int p = i + 1;
-        cir.circleDrawer.setColors(getCircleText(), CircleView.getBkgColor(p), CircleView.getTextColor(p));
+        cir.circleDrawer.setColors(getCircleText(), CircleView.getBkgColor(p,size), CircleView.getTextColor(p,size));
 
         // donate rows have no myProblem
         if (myProblem != null) {

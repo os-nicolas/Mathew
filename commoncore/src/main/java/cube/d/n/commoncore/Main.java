@@ -357,6 +357,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     protected void onDraw(Canvas canvas) {
         width = canvas.getWidth();
         if (height == 0) {
+            height = canvas.getHeight();
             initOffset();
         }
         if (height != canvas.getHeight()){
@@ -365,7 +366,6 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             width = canvas.getWidth();
             Log.d("setting to height, width" ,height + "," + width);
         }
-        height = canvas.getHeight();
 
         Rect r = new Rect(0, 0, (int) width, (int) height);
         Paint p = new Paint();
@@ -821,7 +821,13 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
 
 
-    public Nextmanager next = new Nextmanager();
+    public Nextmanager next = new Nextmanager(){
+        @Override
+        public void next() {}
+
+        @Override
+        public void finish() {}
+    };
 
     public void floorScroll() {
         if (offsetY >  height - keyBoardManager.get().measureHeight()){

@@ -52,7 +52,7 @@ public class EquationView extends View {
             while (myEq.measureWidth() + 2 * buffer > w ||myEq.measureHeight() + 2 * buffer > h) {
                 myEq.overWriteZoom(myEq.getMyZoom()*.9f);
             }
-            myEq.draw(canvas,myEq.measureWidth()/2f,h/2f);
+            myEq.draw(canvas,myEq.measureWidth()/2f,myEq.measureHeight()/2f);
         }
     }
 

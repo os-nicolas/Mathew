@@ -73,7 +73,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
         }
         if (at instanceof MonaryEquation && !((MonaryEquation) at).drawSign()) {
             if (at instanceof MinusEquation) {
-                return "-";
+                return at.getDisplay();
             }
             if (at instanceof PlusMinusEquation) {
                 return "\u00B1";

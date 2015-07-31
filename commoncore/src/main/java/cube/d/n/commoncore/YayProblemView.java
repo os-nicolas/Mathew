@@ -54,6 +54,7 @@ public class YayProblemView extends LinearLayout implements YayView {
         ((android.widget.Button)view.findViewById(R.id.reset)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("bClick","RESET clicked");
                 if (!clicked){
                     clicked = true;
                     main.reset(new Runnable(){
@@ -69,6 +70,8 @@ public class YayProblemView extends LinearLayout implements YayView {
             ((android.widget.Button) view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    Log.d("bClick","NEXT clicked");
                     if (!clicked) {
                         clicked = true;
                         main.next.next();
@@ -81,8 +84,10 @@ public class YayProblemView extends LinearLayout implements YayView {
             nxt.setOnClickListener(new OnClickListener() {
                @Override
                 public void onClick(View v) {
+                   Log.d("bClick","UP clicked");
                     if (!clicked) {
-                        ((Activity) getContext()).finish();
+                        clicked = true;
+                        main.next.finish();
                     }
                 }
             });

@@ -17,7 +17,7 @@ public class AboutRow implements Row {
     }
 
     @Override
-    public View makeView(Context context, ViewGroup parent, int i) {
+    public View makeView(Context context, ViewGroup parent, int i, int size) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View rowView = inflater.inflate(R.layout.about_row, parent, false);

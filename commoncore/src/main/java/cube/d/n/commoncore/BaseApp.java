@@ -261,6 +261,26 @@ public abstract class BaseApp extends Application{
         return currentColor;
     }
 
+    public static int colorPrecent(int currentColor, int targetColor,float p ) {
+        int currentAlpha = android.graphics.Color.alpha(currentColor);
+        int currentRed = android.graphics.Color.red(currentColor);
+        int currentGreen = android.graphics.Color.green(currentColor);
+        int currentBlue = android.graphics.Color.blue(currentColor);
+
+
+        int targetAlpha = android.graphics.Color.alpha(targetColor);
+        int targetRed = android.graphics.Color.red(targetColor);
+        int targetGreen = android.graphics.Color.green(targetColor);
+        int targetBlue = android.graphics.Color.blue(targetColor);
+
+        currentColor = android.graphics.Color.argb(
+                (int) (((1-p) * currentAlpha +  p*targetAlpha) ),
+                (int) (((1-p) * currentRed +  p*targetRed) ),
+                (int) (((1 - p) * currentGreen + p*targetGreen) ),
+                (int) (((1 - p) * currentBlue + p*targetBlue) ));
+        return currentColor;
+    }
+
 
     private boolean useOGColors() {
         SharedPreferences settings = getSharedPreferences("First", 0);

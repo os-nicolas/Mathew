@@ -66,7 +66,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
                 callback.run();
                 for (int i = 0; i < problems.size(); i++) {
                     publishProgress(i);
-                    View rowView = problems.get(i).makeView(context,parent,i);
+                    View rowView = problems.get(i).makeView(context,parent,i,problems.size());
                     views.put(i, rowView);
 //                    try {
 //                        Thread.sleep(100);
@@ -123,7 +123,7 @@ public class ProblemArrayAdapter extends ArrayAdapter<Row> {
 //    }
 
     private View makeView(int i, ViewGroup parent) {//, Runnable afterAdded
-        View rowView = problems.get(i).makeView(context,parent,i);
+        View rowView = problems.get(i).makeView(context,parent,i,problems.size());
 //        rowView.setAlpha(0);
         views.put(i, rowView);
         return rowView;

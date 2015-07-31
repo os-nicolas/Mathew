@@ -22,18 +22,18 @@ public class TwoLineArrayAdaptor extends ArrayAdapter<Row> {
         this.context = context;
         this.rows = itemsArrayList;
 
-        Thread th = new Thread(){
-            public void run() {
+        //Thread th = new Thread(){
+            //public void run() {
                 for (int i=0;i< rows.size();i++){
                     makeView(i, parent);
                 }
-            }
-        };
-        th.start();
+            //}
+        //};
+        //th.start();
     }
 
     private View makeView(int position, ViewGroup parent) {
-        View res = rows.get(position).makeView(context,parent,position);
+        View res = rows.get(position).makeView(context,parent,position,rows.size());
         views.put(position,res);
         return  res;
     }

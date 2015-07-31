@@ -297,7 +297,11 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
     private boolean power_canPowerNum(boolean wasEven) {
         Equation temp = get(1).removeNeg();
-        Equation target = (wasEven? get(0).removeSign():get(0).removeNeg());
+        Equation target = (wasEven? get(0).removeSign():get(0));
+
+        if (!(target instanceof NumConstEquation)){
+            return false;
+        }
 
         return  temp instanceof NumConstEquation &&(isPosInt(((NumConstEquation) temp).getValue()) || target instanceof NumConstEquation ) ;
     }

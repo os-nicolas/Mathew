@@ -44,7 +44,7 @@ public class MainRow implements Row,Goable {
     View rowView;
 
     @Override
-    public View makeView(Context context, ViewGroup parent, int i) {
+    public View makeView(Context context, ViewGroup parent, int i,int size) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -82,7 +82,7 @@ public class MainRow implements Row,Goable {
             inCircle=myRow.title.substring(0,2);
         }
 
-        cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(at), CircleView.getTextColor(at));
+        cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(at,size), CircleView.getTextColor(at,size));
         if (this instanceof TopicRow){
             ((TopicRow)this).updatePrecent();
         }

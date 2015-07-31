@@ -32,13 +32,18 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     public DivEquation(EquationLine owner,DivEquation divEq){
         super(owner,divEq);
-        myHeight = myHeight/2;
         init();
         this.display = divEq.getDisplay(-1);
 
     }
 
-	@Override
+    public DivEquation(EquationLine owner) {
+        super(owner);
+        init();
+    }
+
+
+    @Override
 	public Equation copy() {
 		return new DivEquation(owner,this);
 	}
@@ -74,12 +79,9 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 		return false;
 	}
 
-	public DivEquation(EquationLine owner) {
-		super(owner);
-        init();
-	}
 
     private void init() {
+        myHeight = myHeight/3;
         display = "/";
     }
 
@@ -120,7 +122,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 				point.y = (int) (currentY + (getMyHeight()) / 2);
                 // TODO scale by dpi
 				temp.setStrokeWidth(BaseApp.getApp().getStrokeWidth(this));
-				int halfwidth = (int) ((measureWidth() - (2 * BaseApp.getApp().getDivWidthAdd(this))) / 2);
+				int halfwidth = (int) ((measureWidth()  - BaseApp.getApp().getBuffer(this))/2f );// - ( BaseApp.getApp().getDivWidthAdd(this)))
                 if (canvas !=null ) {
                     canvas.drawLine(point.x - halfwidth, point.y, point.x
                             + halfwidth, point.y, temp);
@@ -197,7 +199,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
             buttons.add(new SeletedRowEquationButton(Operations.divide_samePower(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                     that.replace(Operations.divide_samePower(a, b, owner));
                     changed(p);
                 }
@@ -208,7 +210,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
             buttons.add(new SeletedRowEquationButton(Operations.divide_SplitUp(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
                 protected void privateAct() {
-                    MyPoint p = that.getLastPoint(that.getX(),that.getY());
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
                     that.replace(Operations.divide_SplitUp(a, b, owner));
                     changed(p);
                 }

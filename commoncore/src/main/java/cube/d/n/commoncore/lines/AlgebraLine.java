@@ -88,7 +88,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard =(AlgebraKeyboard)BaseApp.getApp().getSolveScreenKeyboard(owner,this);
+            myKeyBoard =BaseApp.getApp().getSolveScreenKeyboard(owner,this);
         }
         return myKeyBoard;
     }
