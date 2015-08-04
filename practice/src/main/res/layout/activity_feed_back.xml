@@ -33,7 +33,7 @@
                 android:maxWidth="320dp"
                 android:layout_height="wrap_content"
                 android:paddingBottom="20dp"
-                android:text="We are listening! Let's us know what you found frustrating or what topic you want us to add next."
+                android:text="We are listening! Let's us know what you find frustrating or what topic you want us to add next."
                 android:layout_gravity="center_horizontal" />
 
             <EditText

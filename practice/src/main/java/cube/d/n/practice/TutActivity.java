@@ -95,6 +95,7 @@ public class TutActivity extends FragmentActivity {
 
                             if (position == adptr.getCount() - 1) {
                                 //if we have reach the last tap
+                                Mathilda.getMathilda().completedTut();
                                 that.finish();
                             }
 

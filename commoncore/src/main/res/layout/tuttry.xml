@@ -31,7 +31,7 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp"
             android:orientation="vertical"
-            android:paddingBottom="45dp"
+            android:paddingBottom="60dp"
             android:gravity="center">
 
             <cube.d.n.commoncore.FadeInTextView
@@ -79,6 +79,7 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/tut_body"
                             android:padding="2dp"
+                            android:paddingBottom="4dp"
                             android:text="Give it a try!"
                             android:textColor="#ffffff"
                             android:background="#000000" />
@@ -96,6 +97,11 @@
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
                                 custom:start_layout="tut_e" />
+
+                            <cube.d.n.commoncore.HappyView
+                                android:layout_width="fill_parent"
+                                android:layout_height="100dp"
+                                android:id="@+id/happy"/>
 
                             <cube.d.n.commoncore.tuts.YayTutView
                                 android:visibility="gone"

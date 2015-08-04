@@ -598,6 +598,8 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     public void removeLine(int at) {
+
+        offsetY -= lines.get(at).measureHeight();
         toAddToOffsetY(lines.get(at).measureHeight());
         lines.remove(at);
     }

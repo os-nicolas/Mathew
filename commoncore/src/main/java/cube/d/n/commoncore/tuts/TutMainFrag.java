@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import cube.d.n.commoncore.FadeInTextView;
+import cube.d.n.commoncore.HappyView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
@@ -38,6 +39,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     private LooperThread looperThread;
     public LooperThread headerLooper;
     private boolean keyboard;
+    HappyView hv;
 
 
     public static TutMainFrag make(String title,String body,String equation, String goal, String at) {
@@ -139,6 +141,8 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         ((FadeInTextView) rootView.findViewById(R.id.tut_body)).setText(body);
         ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
 
+        hv = (HappyView)rootView.findViewById(R.id.happy);
+
         Main main = (Main)rootView.findViewById(R.id.tuttry_main);
         setUp(main);
 
@@ -184,6 +188,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     @Override
     public void solved(Runnable runnable) {
 
+        hv.start();
         looperThread.mHandler.post(runnable);
     }
 

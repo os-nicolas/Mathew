@@ -12,7 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.Util;
 
 public class MainActivity extends FullAct {
 
@@ -37,8 +39,8 @@ public class MainActivity extends FullAct {
 
 
 //        main = new Main(this, InputLineEnum.TUT_E);
-//        main.initE(Util.stringEquation("*,5,(,/,(,+,10,9,-7,),6,)".split(",")));//"*,5,(,/,(,+,10,9,-7,),6,)"
-//        main.allowPopups = true;
+//        main.initEK(Util.stringEquation("=,5,(,+,(,/,a,2,),3,)".split(",")));//"*,5,(,/,(,+,10,9,-7,),6,)"
+//        main.allowPopups = false;
 //        main.trackFinger = true;
 //        setContentView(main);
 
@@ -102,8 +104,8 @@ public class MainActivity extends FullAct {
             rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class).withSimpleColors());
         }
 
-        rows.add(new MainRow("Feedback", "Send us your comments/ideas",FeedBack.class).withSimpleColors());
-        rows.add(new MainRow("Donate", "",Support.class).withSimpleColors());
+        rows.add(new MainRow("Feedback", "Send us your comments",FeedBack.class).withSimpleColors());
+        //rows.add(new MainRow("Donate", "",Support.class).withSimpleColors());
 
         return rows;
     }

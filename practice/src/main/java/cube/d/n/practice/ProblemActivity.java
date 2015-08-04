@@ -2,20 +2,16 @@ package cube.d.n.practice;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CircleView;
+import cube.d.n.commoncore.HappyView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Nextmanager;
