@@ -57,7 +57,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
             main = (Main) myProblem.view.findViewById(R.id.problem_main);
         } else {
 
-            if (myProblem.equation == null) {
+            if (myProblem.input) {
                 setContentView(R.layout.problem_activity_wi);
                 main = (Main) findViewById(R.id.problem_main);
                 //main.initWI();

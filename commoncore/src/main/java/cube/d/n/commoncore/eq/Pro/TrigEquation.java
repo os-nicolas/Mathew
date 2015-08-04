@@ -39,4 +39,8 @@ public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquat
     }
 
     protected abstract void protectedOperate(Equation equation);
+
+
+
+
 }

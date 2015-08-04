@@ -586,6 +586,8 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         offsetY += line.measureHeight();
         toAddToOffsetY(-line.measureHeight());
         keyBoardManager.set(line.getKeyboad());
+        couldHaveSolved(line.stupid.get().copy());
+
     }
 
     public void revert() {
