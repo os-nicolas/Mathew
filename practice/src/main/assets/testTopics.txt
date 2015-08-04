@@ -1,7 +1,7 @@
 topic	Topic-short	description
 "the name of the topic, should not be empty."	sometimes we need a shorter version of the topic name	this is a little subtitle to give the user a better idea of the topic is. you could also put an example problem here if that is what would be most helpful
-One-Step Equations	One-Step	"(,=,26,(,+,8,a,),)"
-Two-Step Equations	Two-Step	"(,=,(,+,-6,(,/,a,4,),),-5,)"
-Multi-Step Equations	Multi-Step	"(,=,6,(,+,(,+,1,(,*,-2,a,),5,),),)"
-Proportion Equations	Proportions	"(,=,(,/,2,6,),(,/,8,a,),)"
-Word Problems	words	
+One-Step Equations	1Step	"(,=,26,(,+,8,a,),)"
+Two-Step Equations	2Step	"(,=,(,+,-6,(,/,a,4,),),-5,)"
+Multi-Step Equations	*Step	"(,=,6,(,+,(,+,1,(,*,-2,a,),5,),),)"
+Proportion Equations	Props	"(,=,(,/,2,6,),(,/,8,a,),)"
+Word Problems	Words
