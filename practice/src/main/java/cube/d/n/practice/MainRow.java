@@ -23,6 +23,8 @@ public class MainRow implements Row,Goable {
     private Class<?> targetActivity;
     public String title;
     public String subtitle;
+    private int colorIndex = -1;
+    private int colorCount = -1;
 
     public MainRow(String title, String subtitle, Class<?> targetActivity){
         this(title,subtitle);
@@ -82,7 +84,14 @@ public class MainRow implements Row,Goable {
             inCircle=myRow.title.substring(0,2);
         }
 
-        cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(at,size), CircleView.getTextColor(at,size));
+        if (colorIndex==-1){
+            colorIndex = at;
+        }
+        if (colorCount==-1){
+            colorCount = size;
+        }
+
+        cir.circleDrawer.setColors(inCircle, CircleView.getBkgColor(colorIndex,colorCount), CircleView.getTextColor(colorIndex,colorCount));
         if (this instanceof TopicRow){
             ((TopicRow)this).updatePrecent();
         }
@@ -92,6 +101,18 @@ public class MainRow implements Row,Goable {
 
         return rowView;
 
+    }
+
+    public Row withColorSettings(int i, int size) {
+        this.colorCount = size;
+        this.colorIndex =i;
+        return this;
+    }
+
+    public Row withSimpleColors() {
+        this.colorCount = CircleView.SIMPLE_COLORS;
+        this.colorIndex =CircleView.SIMPLE_COLORS;
+        return this;
     }
 }
 

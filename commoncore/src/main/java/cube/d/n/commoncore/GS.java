@@ -12,7 +12,6 @@ public class GS<T> {
         set(inValue);
     }
 
-
     public T get(){
         return value;
     }

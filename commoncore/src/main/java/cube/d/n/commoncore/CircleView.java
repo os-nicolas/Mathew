@@ -15,6 +15,7 @@ import cube.d.n.commoncore.BaseApp;
  */
 public class CircleView extends View {
 
+    public static final int SIMPLE_COLORS = -2;
     public CircleDrawer circleDrawer = new CircleDrawer();
 
 
@@ -53,6 +54,10 @@ public class CircleView extends View {
     public static Random r = new Random();
 
     public static int getBkgColor(int position,int size) {
+        if (position==SIMPLE_COLORS){
+            return BaseApp.getApp().lightColor;
+        }
+
         return BaseApp.colorPrecent(BaseApp.getApp().lightColor,BaseApp.getApp().darkDarkColor,(float)(position-1)/(float)(size-1));
         //return 0xffa02d2d;
         //return 0xffff0000;
@@ -83,6 +88,9 @@ public class CircleView extends View {
     }
 
     public static int getTextColor(int position,int size) {
+        if (position==SIMPLE_COLORS){
+            return 0xff000000;
+        }
         return BaseApp.colorPrecent(BaseApp.getApp().darkDarkColor,0xff000000,(float)(position-1)/(float)(size-1));
 
         //return 0xff250000;

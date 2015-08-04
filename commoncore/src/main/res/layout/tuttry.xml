@@ -21,6 +21,7 @@
         android:orientation="vertical"
         android:id="@+id/linearLayout">
 
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -28,34 +29,35 @@
             android:id="@+id/ribbon"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingTop="30dp"
+            android:paddingTop="15dp"
             android:orientation="vertical"
-            android:paddingBottom="30dp"
+            android:paddingBottom="45dp"
             android:gravity="center">
+
+            <cube.d.n.commoncore.FadeInTextView
+                android:padding="5dp"
+                custom:timeOut="50"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text"
+                android:textSize="25sp"
+                android:layout_gravity="center|bottom"
+                android:gravity="start|bottom"
+                android:textColor="#ffffff"
+                android:background="#ff0000"
+                android:id="@+id/tut_title" />
+
 
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:paddingBottom="35dp"
                 android:gravity="center"
                 android:layout_height="fill_parent"
                 android:orientation="vertical">
 
-                <cube.d.n.commoncore.FadeInTextView
-                    android:padding="15dp"
-                    custom:timeOut="350"
+                <LinearLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tut_body"
-                    android:textSize="20sp"
-                    android:text="A layout animation is a pre-loaded animation that the system runs each time you make a change to the layout configuration. All you need to do is set an attribute in the layout to tell the Android"
-                    android:textColor="#ffffff"
-                    android:background="#ff0000" />
-
-                <FrameLayout
-                    android:id="@+id/tut_video_holder"
-                    android:layout_width="fill_parent"
-                    android:layout_gravity="center"
                     android:layout_height="fill_parent"
                     android:background="@drawable/myrect"
                     android:paddingTop="2px"
@@ -63,32 +65,59 @@
                     android:padding="5px">
 
 
-                    <cube.d.n.commoncore.Main
-                        android:id="@+id/tuttry_main"
-                        android:layout_gravity="center"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        custom:start_layout="tut_e"/>
-
-                    <cube.d.n.commoncore.tuts.YayTutView
-                        android:visibility="gone"
-                        android:id="@+id/tuttry_yay"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-
-
-                    </cube.d.n.commoncore.tuts.YayTutView>
-
                     <LinearLayout
-                        android:visibility="gone"
-                        android:orientation="vertical"
-                        android:layout_height="fill_parent"
+                        android:background="#000000"
                         android:layout_width="fill_parent"
-                        android:background="#ff000000"
-                        android:id="@+id/tuttry_white_out">
-                    </LinearLayout>
+                        android:layout_height="fill_parent"
+                        android:padding="1dp"
+                        android:orientation="vertical">
 
-                </FrameLayout>
+                        <cube.d.n.commoncore.FadeInTextView
+
+                            custom:timeOut="350"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/tut_body"
+                            android:text="Give it a try!"
+                            android:textColor="#ffffff"
+                            android:background="#000000" />
+
+                        <FrameLayout
+                            android:id="@+id/tut_video_holder"
+                            android:layout_width="fill_parent"
+                            android:layout_gravity="center"
+                            android:layout_height="fill_parent">
+
+
+                            <cube.d.n.commoncore.Main
+                                android:id="@+id/tuttry_main"
+                                android:layout_gravity="center"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                custom:start_layout="tut_e" />
+
+                            <cube.d.n.commoncore.tuts.YayTutView
+                                android:visibility="gone"
+                                android:id="@+id/tuttry_yay"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent">
+
+
+                            </cube.d.n.commoncore.tuts.YayTutView>
+
+                            <LinearLayout
+                                android:visibility="gone"
+                                android:orientation="vertical"
+                                android:layout_height="fill_parent"
+                                android:layout_width="fill_parent"
+                                android:background="#ff000000"
+                                android:id="@+id/tuttry_white_out">
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

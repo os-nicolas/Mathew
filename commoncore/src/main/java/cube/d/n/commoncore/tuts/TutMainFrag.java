@@ -29,6 +29,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     String equation;
     String goal;
     String at;
+    String body;
     boolean allowPopUps;
     boolean allowRevert;
     boolean allowDrag;
@@ -39,11 +40,12 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     private boolean keyboard;
 
 
-    public static TutMainFrag make(String title,String equation, String goal, String at) {
+    public static TutMainFrag make(String title,String body,String equation, String goal, String at) {
             TutMainFrag result = new TutMainFrag();
             Bundle args = new Bundle();
             args.putString("TITLE",title);
             args.putString("EQUATION",equation);
+            args.putString("BODY",body);
             args.putString("GOAL", goal);
             args.putString("AT", at);
             result.setArguments(args);
@@ -57,6 +59,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         this.title = args.getString("TITLE");
         this.goal = args.getString("GOAL");
         this.at = args.getString("AT");
+        this.body = args.getString("BODY");
         this.allowRevert = args.getBoolean("REVERT",true);
         this.allowPopUps = args.getBoolean("POPUP",true);
         this.allowDrag = args.getBoolean("DRAG",true);
@@ -99,6 +102,8 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     @Override
     protected void pstart(View rootView){
         ((FadeInTextView) rootView.findViewById(R.id.tut_body)).start();
+        ((FadeInTextView) rootView.findViewById(R.id.tut_title)).start();
+        ((FadeInTextView) rootView.findViewById(R.id.tut_at)).start();
 
         if (extaTimeOut != -1){
             ((FadeInTextView) rootView.findViewById(R.id.tut_body)).hangTime +=extaTimeOut;
@@ -127,10 +132,11 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         Log.i("make","got arguments " +hashCode() +" args "+getArguments());
         updateData(getArguments());
 
-       ((TextView) rootView.findViewById(R.id.tut_body)).setText(title);
+       ((TextView) rootView.findViewById(R.id.tut_title)).setText(title);
 
-       rootView.findViewById(R.id.tut_body).setBackgroundColor(ribbonColor);
+       rootView.findViewById(R.id.tut_title).setBackgroundColor(ribbonColor);
        rootView.findViewById(R.id.ribbon).setBackgroundColor(ribbonColor);
+        ((FadeInTextView) rootView.findViewById(R.id.tut_body)).setText(body);
         ((TextView) rootView.findViewById(R.id.tut_at)).setText(at);
 
         Main main = (Main)rootView.findViewById(R.id.tuttry_main);
@@ -144,6 +150,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
         main.allowPopups = allowPopUps;
         main.allowDrag = allowDrag;
         main.allowDoubleTap = allowDoubleTap;
+        main.holder = main.getParent();
 
         if (drawOnStart){start(rootView);}
 

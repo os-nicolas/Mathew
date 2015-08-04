@@ -42,13 +42,13 @@ public  class ImageLine extends Line  {
     public ImageLine(Main owner) {
         super(owner);
         titlePaint.setTypeface(BaseApp.getApp().getDJVL());
-        titlePaint.setTextSize(BaseApp.getApp().getTextSize()*1.1f);
+        titlePaint.setTextSize(BaseApp.getApp().getTextSize()*.75f);
         titlePaint.setDither(true);
         titlePaint.setAntiAlias(true);
         //tr = (int)((BaseApp.getApp().getTextSize()*1.2f)/2f);
 
         bodyPaint.setTypeface(BaseApp.getApp().getDJVL());
-        bodyPaint.setTextSize(BaseApp.getApp().getTextSize()*.6f);
+        bodyPaint.setTextSize(BaseApp.getApp().getTextSize()*.45f);
         //bodyPaint.setColor(BaseApp.getApp().getGreyTextColor());
         bodyPaint.setDither(true);
         bodyPaint.setAntiAlias(true);
@@ -150,7 +150,7 @@ public  class ImageLine extends Line  {
                     //Log.d("but really my width is", ""+ out.width());
                     top+=lineSpacing;
                     go = false;
-                    if (at == words.length-1) {
+                    if (at == words.length) {
                         done = true;
                     }
                 }else if (at == words.length-1){

@@ -122,7 +122,7 @@ public class TopicRow extends MainRow implements CanUpdatePrecent {
             cir.circleDrawer.setPrecent(pcnt);
             if (pcnt==1f){
                 cir.circleDrawer.setSubText("COMPLETE");
-            }else if (pcnt != 0f){
+            }else {//if (pcnt != 0f)
                 cir.circleDrawer.setSubText((int)(pcnt*100)+"%");
             }
         }

@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.widget.EditText;
 
 import java.util.ArrayList;
@@ -66,6 +67,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public float height;
     public float width;
     private InputLineEnum startLine ;
+    public ViewParent holder;
 
     public Main(Context context) {
         super(context);

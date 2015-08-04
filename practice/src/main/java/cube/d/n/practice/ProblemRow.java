@@ -1,11 +1,14 @@
 package cube.d.n.practice;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.EquationView;
@@ -60,7 +63,7 @@ public class ProblemRow implements Row,CanUpdatePrecent {
     public View makeView(Context context,ViewGroup parent,int i,int size) {
 
 
-        // 1. Create inflater
+
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -68,43 +71,55 @@ public class ProblemRow implements Row,CanUpdatePrecent {
             if (!myProblem.input) {
 
 
-                // 2. Get rowView from inflater
+
                 rowView = inflater.inflate(R.layout.problem_eq_row, parent, false);
 
-                EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
-                equationView.setEquation(myProblem.equation);
-                equationView.setColor(0xff000000);//Mathilda.getApp().getGreyTextColor()
-                equationView.setFont(Mathilda.getApp().getDJVL());
+                final EquationView equationView = (EquationView) rowView.findViewById(R.id.problem_eq_view);
+                final TextView text = (TextView)rowView.findViewById(R.id.problem_eq_text);
+                ((Activity)context).runOnUiThread(new Runnable() {
+                         public void run() {
+                             text.setText(myProblem.text);
+                             text.setTextColor(Mathilda.getApp().getGreyTextColor());//0xff000000
+                             text.setTypeface(Mathilda.getApp().getDJVL());
+                             equationView.setEquation(myProblem.equation);
+                             equationView.setColor(0xff000000);//Mathilda.getApp().getGreyTextColor()
+                             equationView.setFont(Mathilda.getApp().getDJVL());
+                         }
+                     });
 
-                TextView text = (TextView)rowView.findViewById(R.id.problem_eq_text);
-                text.setText(myProblem.text);
-                text.setTextColor(Mathilda.getApp().getGreyTextColor());//0xff000000
-                text.setTypeface(Mathilda.getApp().getDJVL());
 
 
             } else {
-                // 2. Get rowView from inflater
+
                 rowView = inflater.inflate(R.layout.problem_row, parent, false);
 
-                // 3. Get the two text view from the rowView
-                TextView title = (TextView) rowView.findViewById(R.id.problem_name);
+//                int MAX_LEN=130;
+//
+//                while (MAX_LEN < myProblem.text.length() && myProblem.text.charAt(MAX_LEN) != ' '){
+//                    MAX_LEN++;
+//                }
+//
+//                String str =  myProblem.text.substring(0,Math.min(MAX_LEN,myProblem.text.length()));
+//                if (str.endsWith(" ")){
+//                    str = str.substring(0,str.length()-1);
+//                }
+//                if (MAX_LEN<myProblem.text.length()){
+//                    str = str + "...";
+//                }
+                final String fstr = myProblem.text;//str;//
 
-                title.setTypeface(Mathilda.getApp().getDJVL());
-                title.setText(myProblem.name);
+                final TextView title = (TextView) rowView.findViewById(R.id.problem_name);
+                final TextView text = (TextView) rowView.findViewById(R.id.row_subtitle);
+                ((Activity)context).runOnUiThread(new Runnable() {
+                    public void run() {
+                        text.setTextColor(Mathilda.getApp().getGreyTextColor());//0xff000000
+                        text.setTypeface(Mathilda.getApp().getDJVL());
+                        text.setText(fstr);
+                        title.setTypeface(Mathilda.getApp().getDJVL());
+                        title.setText(myProblem.name);
+                    }
+                });
 
-                EquationView equationView = (EquationView) rowView.findViewById(R.id.row_subtitle);
-
-                final int MAX_LEN=50;
-
-                String str =  myProblem.text.substring(0,Math.min(MAX_LEN,myProblem.text.length()));
-                if (str.endsWith(" ")){
-                    str = str.substring(0,str.length()-1);
-                }
-                if (MAX_LEN<myProblem.text.length()){
-                    str = str + "...";
-                }
-
-                equationView.setEquation(new VarEquation(str, new NullLine()), .5f);
 
             }
         } else {

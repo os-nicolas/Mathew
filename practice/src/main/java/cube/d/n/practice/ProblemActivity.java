@@ -68,8 +68,6 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
             setUp(main);
 
-
-
             View at = main;
             while(at.getParent() != null && at.getParent() instanceof View){
                 at = (View)at.getParent();

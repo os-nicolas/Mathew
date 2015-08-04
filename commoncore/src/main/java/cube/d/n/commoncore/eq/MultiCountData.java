@@ -211,7 +211,11 @@ public class MultiCountData {
                     }
                 }else{
                     if (numbers.size() < 2){
-                        top = key.get(0);
+                        if (getValue().doubleValue() ==-1){
+                            top = key.get(0).negate();
+                        }else{
+                            top = key.get(0);
+                        }
                     }else{
                         top = new MultiEquation(owner);
                         for (Equation e:numbers){

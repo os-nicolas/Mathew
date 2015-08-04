@@ -3,5 +3,5 @@ topic	Topic-short	description
 One-Step Equations	One-Step	"(,=,26,(,+,8,a,),)"
 Two-Step Equations	Two-Step	"(,=,(,+,-6,(,/,a,4,),),-5,)"
 Multi-Step Equations	Multi-Step	"(,=,6,(,+,(,+,1,(,*,-2,a,),5,),),)"
-Proportion Equations	Proportions	10/8 = a/10
-Word Problems	Word Problems	word problems
+Proportion Equations	Proportions	"(,=,(,/,2,6,),(,/,8,a,),)"
+Word Problems	words	

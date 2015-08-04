@@ -77,12 +77,13 @@
                     android:padding="5px">
 
 
+
                     <VideoView
                         android:layout_gravity="center"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:id="@+id/tut_video" />
-                </LinearLayout>
+                    </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

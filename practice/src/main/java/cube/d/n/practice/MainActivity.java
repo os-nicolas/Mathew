@@ -87,23 +87,23 @@ public class MainActivity extends FullAct {
         ArrayList<Row> rows = new ArrayList<>();
 
         if (!Mathilda.hasCompletedTut()) {
-            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class));
+            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class).withSimpleColors());
 
             rows.add(new Divider());
         }
 
-        for (TopicRow t: topics){
-            rows.add(t);
+        for (int i=0;i<topics.size();i++){
+            rows.add(topics.get(i).withColorSettings(i+1,topics.size()));
         }
 
         rows.add(new Divider());
 
         if (Mathilda.hasCompletedTut()) {
-            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class));
+            rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class).withSimpleColors());
         }
 
-        rows.add(new MainRow("Feedback", "Send us your comments/ideas",FeedBack.class));
-        rows.add(new MainRow("Donate", "",Support.class));
+        rows.add(new MainRow("Feedback", "Send us your comments/ideas",FeedBack.class).withSimpleColors());
+        rows.add(new MainRow("Donate", "",Support.class).withSimpleColors());
 
         return rows;
     }

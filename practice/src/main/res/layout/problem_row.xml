@@ -4,17 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-
-        android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_height="fill_parent">
 
         <LinearLayout
-
-            android:layout_width="320dp"
+            android:layout_marginLeft="-10dp"
+            android:layout_width="330dp"
             android:layout_gravity="center"
-            android:layout_height="95dp">
+            android:layout_height="wrap_content">
 
             <cube.d.n.commoncore.CircleView
                 android:layout_margin="10dp"
@@ -26,7 +21,7 @@
 
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center_vertical">
@@ -41,14 +36,14 @@
                     android:id="@+id/problem_name"
                     android:layout_gravity="center_vertical" />
 
-                <cube.d.n.commoncore.EquationView
+                <TextView
                     android:layout_marginBottom="15dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:text="This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test This is a Test "
+                    android:layout_height="wrap_content"
                     android:id="@+id/row_subtitle" />
             </LinearLayout>
         </LinearLayout>
 
 
     </LinearLayout>
-</LinearLayout>

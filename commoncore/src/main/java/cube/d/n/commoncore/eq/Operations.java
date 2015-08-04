@@ -881,6 +881,7 @@ public class Operations {
             top.plusMinus = true;
         }
 
+
         Equation topEq = top.getEquation(owner);
         Equation botEq = bot.getEquation(owner);
         result = getResult(topEq, botEq,owner);
