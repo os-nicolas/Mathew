@@ -3,6 +3,7 @@ package cube.d.n.commoncore;
 import android.util.Log;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.Operations;
@@ -221,4 +222,19 @@ public class Util {
         return false;
     }
 
+    public static  ArrayList<String> getVars(Equation stupid) {
+        ArrayList<String> result = new ArrayList<>();
+        if (stupid instanceof VarEquation){
+            result.add(stupid.getDisplay(-1));
+        }
+        for (Equation e: stupid){
+            ArrayList<String> innerResult = getVars(e);
+            for (String s: innerResult){
+                if (!result.contains(s)){
+                    result.add(s);
+                }
+            }
+        }
+        return result;
+    }
 }

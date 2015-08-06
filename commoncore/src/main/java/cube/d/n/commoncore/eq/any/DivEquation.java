@@ -307,11 +307,6 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
         Equation a = get(0);
         Equation b = get(1);
-        //it should cancel any commonalties
-        //if you have .../1 it should handle that
-        //if youhave 0/... needs to handle that too
-        // (6 + 5) / x -> 6/x + 5/x
-        //
 
         Equation result = Operations.divide(a, b,owner);
 
@@ -340,7 +335,6 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     @Override
     public void tryOperator(int i) {
-
         if (i!= size()-1) {
             ArrayList<Equation> toOp = new ArrayList<Equation>();
             toOp.add(get(i));

@@ -3,6 +3,7 @@ package cube.d.n.commoncore.Action.WriteScreen;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
@@ -56,7 +57,7 @@ public class Solve extends Action {
 
 
         Equation newEq = ((WritingEquation) Solve.mine).convert();
-        ArrayList<String> vars = getVars(newEq);
+        ArrayList<String> vars = Util.getVars(newEq);
         ((InputLine)owner).deActivate();
         EquationLine line;
         if (vars.size() != 0 ||  countEquals(((WritingEquation) Solve.mine))==1){
@@ -69,19 +70,5 @@ public class Solve extends Action {
         owner.owner.addLine(line);
     }
 
-    private ArrayList<String> getVars(Equation stupid) {
-        ArrayList<String> result = new ArrayList<>();
-        if (stupid instanceof VarEquation){
-            result.add(stupid.getDisplay(-1));
-        }
-        for (Equation e: stupid){
-            ArrayList<String> innerResult = getVars(e);
-            for (String s: innerResult){
-                if (!result.contains(s)){
-                    result.add(s);
-                }
-            }
-        }
-        return result;
-    }
+
 }

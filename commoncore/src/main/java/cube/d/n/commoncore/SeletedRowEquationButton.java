@@ -17,8 +17,8 @@ public class SeletedRowEquationButton extends SelectedRowButtons {
 
     public SeletedRowEquationButton(Equation eq, Action myAction) {
         super("", myAction);
-        myEq = eq;
-
+        myEq = eq.copy();
+        myEq.parent = null;
     }
 
     public void draw(Canvas canvas, Paint p){
