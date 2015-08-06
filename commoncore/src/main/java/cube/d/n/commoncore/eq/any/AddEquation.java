@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.GS;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.SeletedRowEquationButton;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.BinaryOperator;
 import cube.d.n.commoncore.eq.FlexOperation;
 import cube.d.n.commoncore.eq.MultiCountData;
@@ -117,6 +119,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
     @Override
     public SelectedRow getSelectedRow() {
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+        final AddEquation that = this;
         if (this.size() == 2) {
             final Equation a = get(0);
             final Equation b = get(1);
@@ -124,7 +127,7 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
             eqs.add(a);
             eqs.add(b);
 
-            final AddEquation that = this;
+
 
             final MultiCountData left = new MultiCountData(a);
             final MultiCountData right = new MultiCountData(b);
@@ -171,6 +174,10 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 }));
             }
        }
+
+        // we try to reduce too
+        tryToReduce(buttons, that);
+
 
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);

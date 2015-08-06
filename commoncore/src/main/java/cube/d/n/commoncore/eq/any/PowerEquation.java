@@ -270,6 +270,9 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
             }
         }
+        // we try to reduce too
+        tryToReduce(buttons, that);
+
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);
             sr.addButtonsRow(buttons, 0, 1);

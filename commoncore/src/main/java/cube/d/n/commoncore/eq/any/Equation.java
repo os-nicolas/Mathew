@@ -14,13 +14,18 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 
+import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
+import cube.d.n.commoncore.GS;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.Pop;
 import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.DragLocations;
 import cube.d.n.commoncore.eq.EquationDis;
@@ -1855,12 +1860,39 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
             return lastMeasureHeight;
         }
-
     }
 
     protected float privateMeasureHeight() {
         return measureHeightLower() + measureHeightUpper();
     }
 
+    protected void tryToReduce(ArrayList<SelectedRowButtons> buttons, final Equation that) {
+        GS<Equation> out =new GS<Equation>(this);
+        Util.reduce(out);
+        final  GS<Equation> fout = out;
+
+        boolean addIt = true;
+
+        for (SelectedRowButtons srb: buttons){
+            if (srb instanceof SeletedRowEquationButton){
+                SeletedRowEquationButton sreb = (SeletedRowEquationButton) srb;
+                if (sreb.myEq.same(fout.get())){
+                    addIt = false;
+                    break;
+                }
+            }
+        }
+
+        if (addIt) {
+            buttons.add(new SeletedRowEquationButton(out.get(), new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
+                    that.replace(fout.get());
+                    changed(p);
+                }
+            }));
+        }
+    }
 
 }
