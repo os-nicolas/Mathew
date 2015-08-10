@@ -107,11 +107,13 @@ public class FeedBack extends FullAct  {
 
     //TODO call async
     public void sendEmail(String text){
-
-        Mail m = new Mail("emailerdone@gmail.com", "*^b ( G a & l;a a0[-9j1 md");
+        Mail m = new Mail("emailerdrone@yahoo.com", "sklsodfgnbruioshkfjgbuoishgjkfdbi");
+        //Mail m = new Mail("emailerdrone@myway.com", "sklsodfgnbruioshkfjgbuoishgjkfdbi");
+        //Mail m = new Mail("emailerdone@gmx.com", "*^b(Ga&l;aa0[-9hDFjsdfj1klSSDFmd");
+        //Mail m = new Mail("emailerdone@gmail.com", "*^b ( G a & l;a a0[-9j1 md");
 
         String to ="MathildaApp@gmail.com";
-        m.setFrom("emailerdone@gmail.com");
+        m.setFrom("emailerDrone@yahoo.com");
 
         m.setTo(to);
         m.setSubject("feedback");

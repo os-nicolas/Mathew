@@ -137,7 +137,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
 
         if (!this.get(1).isPlusMinus()) {
-            boolean wasEvenRoot = isEven();
+            boolean wasEvenRoot = isEvenRut();
             boolean wasEven = get(1) instanceof NumConstEquation && ((NumConstEquation) get(1)).getValue().remainder(new BigDecimal(2)).doubleValue() == 0;
 
 
@@ -170,7 +170,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         final PowerEquation that = this;
 
         if (!this.get(1).isPlusMinus()) {
-            final boolean wasEvenRoot = isEven();
+            final boolean wasEvenRoot = isEvenRut();
             final boolean wasEven = get(1) instanceof NumConstEquation && ((NumConstEquation) get(1)).getValue().remainder(new BigDecimal(2)).doubleValue() == 0;
 
             if (power_canPowerZero()) {// if we have asdf^0 return 1
@@ -257,7 +257,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
                 if (power_canPowerNum(wasEven)){
 
-                    buttons.add(new SeletedRowEquationButton(power_IsNumEquation(null, wasEven), new Action(owner) {
+                    buttons.add(new SeletedRowEquationButton(power_IsNumEquation(null, wasEven,wasEvenRoot), new Action(owner) {
                         @Override
                         protected void privateAct() {
                             MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
@@ -491,13 +491,10 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         // if it's an add split it up
         // if it's numb and number you can just do it
         // if it's numb on top
-        result = power_IsNumEquation(result, wasEven);
+        result = power_IsNumEquation(result, wasEven,wasEvenRoot);
 
 
         if (result != null) {
-            if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
-                result= result.plusMinus();
-            }
             if (result instanceof MultiEquation && this.parent instanceof MultiEquation) {
                 int at = this.parent.indexOf(this);
                 for (Equation e : result) {
@@ -518,27 +515,24 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         }
     }
 
-    private Equation power_IsNumEquation(Equation result, boolean wasEven) {
+    private Equation power_IsNumEquation(Equation result, boolean wasEven, boolean wasEvenRoot) {
         // if the right is a number
-        Equation temp = get(1).removeNeg();
-
-        // if you have something like ((2^2)^0.5)
-        BigDecimal value = ((NumConstEquation) temp).getValue();
+        BigDecimal toPowerBD = Operations.getValue(get(1).copy());
 
         // if it is an int
-        if (isPosInt(((NumConstEquation) temp).getValue())) {
-            int val = ((NumConstEquation) temp).getValue().intValue();
+        if (isPosInt(toPowerBD)) {
+            int leftValue = toInt(toPowerBD);
 
             // if left is a var write x^3 -> x*x*x
-            if (val > 1 && get(0).reallyInstanceOf(VarEquation.class)) {
+            if (leftValue > 1 && get(0).reallyInstanceOf(VarEquation.class)) {
                 result = new MultiEquation(owner);
-                for (int i = 0; i < val; i++) {
+                for (int i = 0; i < leftValue; i++) {
                     result.add(get(0).copy());
                 }
             } else {
                 MultiCountDatas left = new MultiCountDatas();
                 left.add(new MultiCountData());
-                for (int i = 0; i < val; i++) {
+                for (int i = 0; i < leftValue; i++) {
                     MultiCountDatas right = new MultiCountDatas(get(0).copy());
                     left = Operations.Multiply(left, right, true, owner);
                 }
@@ -565,55 +559,64 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 }
             }
         } else {
-            boolean innerNeg = false;
+
+            double leftValue = Operations.getValue(get(0).copy()).doubleValue();
+            double rightValue = Operations.getValue(get(1).copy()).doubleValue();
             boolean plusMinus = false;
 
             Equation leftTemp = get(0);
-            while (leftTemp instanceof MinusEquation || leftTemp instanceof PlusMinusEquation) {
-                if (leftTemp instanceof MinusEquation) {
-                    innerNeg = !innerNeg;
-                } else if (leftTemp instanceof PlusMinusEquation) {
+            while (leftTemp instanceof SignEquation ) {
+                if (leftTemp instanceof PlusMinusEquation) {
                     plusMinus = true;
                 }
                 leftTemp = leftTemp.get(0);
             }
 
-            if (leftTemp instanceof NumConstEquation && (!innerNeg || Math.floor(value.doubleValue()) == value.doubleValue())) {
+            if (leftValue ==0){
+                String db = "";
+            }
 
-                BigDecimal leftValue = ((NumConstEquation) leftTemp).getValue();
-                leftValue = (innerNeg && !plusMinus ? leftValue.negate() : leftValue);
+            if (leftTemp instanceof NumConstEquation && (leftValue >=0 || Math.floor(rightValue) == rightValue)) {
 
-
-                double resultValue = Math.pow(leftValue.doubleValue(), value.doubleValue());
+                double resultValue = Math.pow(leftValue, rightValue);
 
                 if (!Double.isInfinite(resultValue) && !Double.isNaN(resultValue)) {
 
-                    result = NumConstEquation.create(new BigDecimal(resultValue), owner);
-                    if (plusMinus && !wasEven) {
+                    result = NumConstEquation.create(new BigDecimal(resultValue), owner,true);
+                    if (plusMinus && !wasEven && resultValue != 0) {
                         result = result.plusMinus();
                     }
                 }
 
             }
         }
+        if (result != null) {
+            if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
+                result = result.plusMinus();
+            }
+        }
+
         return result;
     }
 
     private boolean isPosInt(BigDecimal value) {
        return  (Math.floor(value.doubleValue()) == value.doubleValue() && !get(0).reallyInstanceOf(NumConstEquation.class) && value.compareTo(new BigDecimal(15)) < 0);
-
     }
 
-    // is used to tell if we need to +/- cases A^(1/(O*2))
+    private  int toInt(BigDecimal value){
+        return (int)Math.floor(value.doubleValue());
+    }
 
-    private boolean isEven() {
+    // is used to tell if we need to +/- cases A^(1/(o*2)) where o is odd
+
+    private boolean isEvenRut() {
         if (Operations.sortaNumber(get(1)) && Operations.getValue(get(1)).doubleValue() == 0) {
             return false;
         }
 
-        if (get(1) instanceof NumConstEquation){
-            double power = ((NumConstEquation) get(1)).getValue().doubleValue();
-            if ((1/(power-Math.floor(power)))%2 ==0){
+        if (Operations.sortaNumber(get(1))){
+            double power = Operations.getValue(get(1)).doubleValue();
+            if ((1/(power))%2 ==0){//-Math.floor(power)
                 return true;
             }
         }

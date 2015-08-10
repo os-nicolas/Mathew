@@ -128,11 +128,10 @@ public class Util {
                 }
                 stupid.get().fixIntegrety();
                 if (at<  stupid.get().size()){
-                    if ((stupid.get().get(at) instanceof DivEquation &&
-                            Operations.sortaNumber(stupid.get().get(at).get(1)) &&
-                            Operations.getValue(stupid.get().get(at).get(1)).doubleValue() ==0)||(
-                            stupid.get().get(at) instanceof PlusMinusEquation && stupid.get().get(at).get(0).size()==0
-                    )){
+                    // we want to move things we can't evaluate to the 0 position
+                    if (
+                            cantReduce(stupid.get(), at)
+                    ){
                         Equation oldEq = stupid.get().get(at);
                         stupid.get().get(at).justRemove();
                         stupid.get().add(0,oldEq);
@@ -143,6 +142,16 @@ public class Util {
         }
     }
 
+    private static boolean cantReduce(Equation eq, int at) {
+        return (// we can't reduce (*&@^$(#@)/0
+                eq.get(at) instanceof DivEquation &&
+                Operations.sortaNumber(eq.get(at).get(1)) &&
+                Operations.getValue(eq.get(at).get(1)).doubleValue() == 0
+        ) || ( // or +-(*%()#@$%*&#)
+                !(eq instanceof DivEquation) &&
+                eq.get(at) instanceof PlusMinusEquation &&
+                eq.get(at).get(0).size() == 0);
+    }
 
 
     private static Equation reduce(Equation parent,int index) {
@@ -167,11 +176,7 @@ public class Util {
                 newEq.fixIntegrety();
 
                 if (at<  newEq.size()) {
-                    if ((newEq.get(at) instanceof DivEquation &&
-                            Operations.sortaNumber(newEq.get(at).get(1)) &&
-                            Operations.getValue(newEq.get(at).get(1)).doubleValue() == 0) || (
-                            newEq.get(at) instanceof PlusMinusEquation && newEq.get(at).get(0).size() == 0 && newEq  instanceof AddEquation
-                    )) {
+                    if (cantReduce(newEq,at)) {
                         Equation oldEq = newEq.get(at);
                         newEq.get(at).justRemove();
                         newEq.add(0, oldEq);

@@ -43,7 +43,7 @@ public class Mail extends javax.mail.Authenticator {
 
 
     public Mail() {
-        _host = "smtp.gmail.com"; // default smtp server
+        _host = "smtp.mail.yahoo.com" ;//"smtp.myway.com";// "smtp.gmail.com"; // default smtp server
         _port = "465"; // default smtp port
         _sport = "465"; // default socketfactory port
 
@@ -53,7 +53,7 @@ public class Mail extends javax.mail.Authenticator {
         _subject = ""; // email subject
         _body = ""; // email body
 
-        _debuggable = false; // debug mode on or off - default off
+        _debuggable = true; // debug mode on or off - default off
         _auth = true; // smtp authentication - default on
 
         _multipart = new MimeMultipart();
@@ -80,6 +80,7 @@ public class Mail extends javax.mail.Authenticator {
 
         if(!_user.equals("") && !_pass.equals("") && _to.length > 0 && !_from.equals("") && !_subject.equals("") && !_body.equals("")) {
             Session session = Session.getInstance(props, this);
+            session.setDebug(true);
 
             MimeMessage msg = new MimeMessage(session);
 
@@ -129,19 +130,42 @@ public class Mail extends javax.mail.Authenticator {
         Properties props = new Properties();
 
         props.put("mail.smtp.host", _host);
+        props.put("mail.smtp.starttls.enable","true");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.port", _port);
+
+
+
+
+        props.put("mail.smtp.socketFactory.port", _sport);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+
+        // Use the following if you need SSL
+        props.put("mail.smtp.socketFactory.port", _port);
+        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        props.put("mail.smtp.socketFactory.fallback", "false");
+
 
         if(_debuggable) {
             props.put("mail.debug", "true");
+            props.put("mail.debug.auth", "true");
+        }else{
+            props.put("mail.debug", "false");
         }
 
         if(_auth) {
             props.put("mail.smtp.auth", "true");
         }
 
-        props.put("mail.smtp.port", _port);
-        props.put("mail.smtp.socketFactory.port", _sport);
-        props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        props.put("mail.smtp.socketFactory.fallback", "false");
+
+
+        //props.put("mail.smtp.starttls.enable","true");
+        //props.put("mail.smtp.auth", "true");  // If you need to authenticate
+        // Use the following if you need SSL
+        //props.put("mail.smtp.socketFactory.port", d_port);
+        //props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        //props.put("mail.smtp.socketFactory.fallback", "false");
 
         return props;
     }

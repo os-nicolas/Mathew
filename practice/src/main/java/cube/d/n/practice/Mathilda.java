@@ -10,6 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,6 +36,7 @@ public class Mathilda extends BaseApp {
         super.onCreate();Log.i("Mathilda", "created");
         topics = initTopics();
         problems = initProblems();
+//        SMSer.send("ColinWielga@gmail.com","Hi Colin");
     }
 
     @Override
@@ -57,6 +61,10 @@ public class Mathilda extends BaseApp {
 
     public static Mathilda getMathilda(){
         return (Mathilda)BaseApp.getApp();
+    }
+
+    public AWSCredentials getCreds(){
+    return new BasicAWSCredentials( PropertyLoader.getInstance().getAccessKey(), PropertyLoader.getInstance().getSecretKey() );
     }
 
 

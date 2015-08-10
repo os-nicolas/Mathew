@@ -34,7 +34,7 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         // ##### DOUBLE TAP
         frags.add(TutVideoFrag.make(
                 "Double Tap",
-                "Double tap to add subtract multiply and much more",
+                "Double tap to add, subtract, multiply, and much more",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.double_tap,
                 "2 of 10").withBackgroundColor(0xff6C0304));
         frags.add(TutMainFrag.make("Give it a Try!",

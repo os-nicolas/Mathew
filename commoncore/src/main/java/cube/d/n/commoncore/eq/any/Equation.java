@@ -1892,13 +1892,16 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             final GS<Equation> fout = out;
 
             boolean addIt = true;
-
-            for (SelectedRowButtons srb : buttons) {
-                if (srb instanceof SeletedRowEquationButton) {
-                    SeletedRowEquationButton sreb = (SeletedRowEquationButton) srb;
-                    if (sreb.myEq.same(fout.get())) {
-                        addIt = false;
-                        break;
+            if (this.equals(fout.get())){
+                addIt = false;
+            }else {
+                for (SelectedRowButtons srb : buttons) {
+                    if (srb instanceof SeletedRowEquationButton) {
+                        SeletedRowEquationButton sreb = (SeletedRowEquationButton) srb;
+                        if (sreb.myEq.same(fout.get())) {
+                            addIt = false;
+                            break;
+                        }
                     }
                 }
             }

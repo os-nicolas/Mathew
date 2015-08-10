@@ -128,14 +128,14 @@ public class Operations {
             return add_CommonDenom(left, right, owner);
         }else if (add_canCommon(left, right, owner)){
             return add_Common(left, right, owner);
-        }else{
+        }else {//if (canCombineLikeTerms(left, right, owner)){
             // this is really not combine like terms, it's really do nothing
-            return add_CombineLikeTerms(left, right, owner);
+            //return add_CombineLikeTerms(left, right, owner);
 
-//            Equation result = new AddEquation(owner);
-//            result.add(left.getEquation(owner));
-//            result.add(right.getEquation(owner));
-//            return result;
+            Equation result = new AddEquation(owner);
+            result.add(left.getEquation(owner));
+            result.add(right.getEquation(owner));
+            return result;
         }
 
 //
@@ -241,6 +241,10 @@ public class Operations {
 //        }
     }
 
+    protected static boolean canCombineLikeTerms(MultiCountData left, MultiCountData right, EquationLine owner) {
+        return !overZero(left,owner) && !overZero(right,owner);
+    }
+
     public static Equation add_CombineLikeTerms(MultiCountData left, MultiCountData right, EquationLine owner) {
         return addHelper(left, right,owner);
     }
@@ -291,7 +295,7 @@ public class Operations {
     }
 
     public static boolean add_canCommonDenom(MultiCountData left, MultiCountData right, EquationLine owner) {
-        return left.under !=null || right.under!=null &&!(overZero(left,owner) || overZero(right,owner));
+        return (left.under !=null || right.under!=null) && !(overZero(left,owner) || overZero(right,owner));
     }
 
     public static Equation add_AddNumber(MultiCountData left, MultiCountData right, EquationLine owner) {
