@@ -1044,6 +1044,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public void fixIntegrety() {
+        Log.i("fixIntegrety","fixing integrety");
         for (Equation e : this) {
             e.fixIntegrety();
         }
@@ -1144,11 +1145,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
 
             //peel off the minus signs
-            ArrayList<MinusEquation> minusSigns = new ArrayList<MinusEquation>();
-            while (this.parent instanceof MinusEquation) {
-                minusSigns.add((MinusEquation) this.parent);
-                this.parent.replace(this);
-            }
+//            ArrayList<MinusEquation> minusSigns = new ArrayList<MinusEquation>();
+//            while (this.parent instanceof MinusEquation) {
+//                minusSigns.add((MinusEquation) this.parent);
+//                this.parent.replace(this);
+//            }
 
             if (op == Op.POWER) {
                 dragging.remove();
@@ -1179,11 +1180,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 dragging = update(dragging, notSameSide, thisNeg, dragNeg, op);
                 this.replace(dragging);
                 // bring back the minus signs on demo
-                for (MinusEquation me : minusSigns) {
-                    me.clear();
-                    dragging.replace(me);
-                    me.add(dragging);
-                }
+//                for (MinusEquation me : minusSigns) {
+//                    me.clear();
+//                    dragging.replace(me);
+//                    me.add(dragging);
+//                }
                 return dragging;
             } else if ((parent instanceof AddEquation && op == Op.ADD) ||
                     (parent instanceof MultiEquation && op == Op.MULTI)) {
@@ -1240,12 +1241,12 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 }
             }
             // bring back the minus signs
-            Equation at = this;
-            for (MinusEquation me : minusSigns) {
-                me.clear();
-                at.replace(me);
-                me.add(at);
-            }
+//            Equation at = this;
+//            for (MinusEquation me : minusSigns) {
+//                me.clear();
+//                at.replace(me);
+//                me.add(at);
+//            }
         }
         return dragging;
     }
@@ -1256,16 +1257,23 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         // for example if you have (a/b)/6 and you drag the 6 to the top
         // to get a/(6*b) the root devision is now empty or something bad
         // but myStupid still points to it
+
+
         Equation result = this;
+        int count = 0;
         while (result.parent != null){
             result = result.parent;
+            count++;
+            if (count>100){
+                Log.e("a bad thing has happened","yep bad");
+            }
         }
         return  result;
     }
 
     private Equation update(Equation dragging, boolean notSameSide, boolean thisNeg, boolean dragNeg, Op op) {
         Equation toInsert;
-        if (dragNeg && !thisNeg && !(dragging instanceof PlusMinusEquation)) {
+        if (dragNeg != thisNeg && !(dragging instanceof PlusMinusEquation)) {
             toInsert = dragging.negate();
         } else {
             toInsert = dragging;
@@ -1760,10 +1768,14 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     protected float privateMeasureWidth() {
+       // Log.d("mw",this.toString());
         float totalWidth = 0;
+        float toAdd = getMyWidth() + myWidthAdd();
+       // Log.d("mw-got to add","" + toAdd);
+
         for (int i = 0; i < size() - 1; i++) {
-            if (!(this instanceof MultiEquation) || (((MultiEquation) this).hasSign(i))) {
-                totalWidth += getMyWidth() + myWidthAdd();
+            if ((!(this instanceof MultiEquation)) || (((MultiEquation) this).hasSign(i))) {
+                totalWidth += toAdd;
             }
         }
 
@@ -1774,6 +1786,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (parenthesis()) {
             totalWidth += getParnWidthAddition();
         }
+
         return totalWidth;
     }
 
@@ -1892,7 +1905,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             final GS<Equation> fout = out;
 
             boolean addIt = true;
-            if (this.equals(fout.get())){
+            if (this.same(fout.get())){
                 addIt = false;
             }else {
                 for (SelectedRowButtons srb : buttons) {

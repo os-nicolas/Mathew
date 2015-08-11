@@ -176,21 +176,21 @@ public class MultiCountData {
         Equation result = null;
 
         if (under != null){
-            if (!(under.getValue().doubleValue() ==1 && under.key.size() ==0)) {
+            if (!(under.getNumbersValue().doubleValue() ==1 && under.key.size() ==0)) {
                 bot = under.getEquation(owner);
             }
         }
 
-        if (getValue().doubleValue() == 0){
+        if (getNumbersValue().doubleValue() == 0){
             top = new NumConstEquation(BigDecimal.ZERO,owner);
             if (under != null){
-                if (!(under.getValue().doubleValue()==0.0)){
+                if (!(under.getNumbersValue().doubleValue()==0.0)){
                     bot =null;
                 }
             }
         }else if (key.size() == 0) {
             if (combine) {
-                top = NumConstEquation.create(getValue(),owner);
+                top = NumConstEquation.create(getNumbersValue(),owner);
             }else if (numbers.size() == 1 ){
                 top = numbers.get(0);
             }else if (numbers.size() > 1){
@@ -202,16 +202,18 @@ public class MultiCountData {
                 top = new NumConstEquation(BigDecimal.ONE, owner);
             }
         } else {
-            if (key.size() == 1 && getValue().abs().doubleValue()==1.0) {
+            if (key.size() == 1 && getNumbersValue().abs().doubleValue()==1.0) {
                 if (combine) {
-                    if (getValue().doubleValue()==1) {
+                    // we just use getNumbersValue since negetive get included at the very end
+                    if (getNumbersValue().doubleValue()==1) {
                         top = key.get(0);
                     } else {
                         top= key.get(0).negate();
                     }
                 }else{
+                    // we just use getNumbersValue since negetive get included at the very end
                     if (numbers.size() < 2){
-                        if (getValue().doubleValue() ==-1){
+                        if (getNumbersValue().doubleValue() ==-1){
                             top = key.get(0).negate();
                         }else{
                             top = key.get(0);
@@ -228,8 +230,8 @@ public class MultiCountData {
                 top = new MultiEquation(owner);
 
                 if (combine){
-                    if (!(getValue().abs().doubleValue() == 1)) {
-                        top.add(NumConstEquation.create(getValue(),owner));
+                    if (!(getNumbersValue().abs().doubleValue() == 1)) {
+                        top.add(NumConstEquation.create(getNumbersValue(),owner));
                     }
                 }
 

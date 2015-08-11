@@ -132,9 +132,9 @@ public class Operations {
             // this is really not combine like terms, it's really do nothing
             //return add_CombineLikeTerms(left, right, owner);
 
-            Equation result = new AddEquation(owner);
-            result.add(left.getEquation(owner));
-            result.add(right.getEquation(owner));
+            AddEquation result = new AddEquation(owner);
+            result.smartAdd(left.getEquation(owner));
+            result.smartAdd(right.getEquation(owner));
             return result;
         }
 
@@ -303,7 +303,7 @@ public class Operations {
     }
 
     public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, EquationLine owner) {
-        return divide_CanSortaNumbers(left,right) && left.key.size() ==0 &&  right.key.size() ==0 ;
+        return left.numbers.size() == 1 && right.numbers.size() == 1 && left.under == null && right.under == null && left.key.size() ==0 &&  right.key.size() ==0 ;
     }
 
     public static Equation add_Common(MultiCountData left, MultiCountData right, EquationLine owner) {
@@ -342,6 +342,12 @@ public class Operations {
                         holder.add(common.getEquation(owner));
                         return holder;
                     }
+        } else if (common.plusMinus){
+            Log.e("add_Common","we should never factor out a plusMinus");
+            return result;
+        }else if (common.negative){
+            // we factored out a minus sign
+                return result.negate();
         } else {
             return result;
         }

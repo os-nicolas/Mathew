@@ -79,17 +79,35 @@ public abstract class MonaryEquation extends Equation {
     }
 
     public boolean drawSign() {
-        Equation lft = left();
         if (parenthesis()){
             return true;
         }
-        if (parent instanceof MinusEquation){
-            return true;
-        }
+
+        // if you have 5-(4a+6) we want to write it 5+-(4a+6) so they can tap the - to distribute
         if (get(0) instanceof AddEquation && get(0).size() >1){
             return true;
         }
-        return lft == null || !(lft.parent instanceof AddEquation);
+        Equation at = parent;
+        int count = 0;
+        while (at instanceof  AddEquation) {
+                if (parent.indexOf(this) != 0) {
+                    return false;
+                }
+            at = at.parent;
+            count++;
+            if (count >30){
+                Log.e("the bed is","shat");
+            }
+        }
+        return true;
+
+//        Equation lft = left();
+
+//        if (parent instanceof MinusEquation){
+//            return true;
+//        }
+
+//        return lft == null || !(lft.parent instanceof AddEquation);
     }
 
     @Override

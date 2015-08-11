@@ -27,11 +27,12 @@ public class SES {
 
     Message feedbackMessage = new Message(subjectContent,messageBody);
 
-    String email = PropertyLoader.getInstance().getVerifiedEmail();
-    Destination destination = new Destination().withToAddresses(email);
+    //String email = PropertyLoader.getInstance().getVerifiedEmail();
+    Destination destination = new Destination().withToAddresses(receiver);
 
-    SendEmailRequest request = new SendEmailRequest(email,destination,feedbackMessage);
-    SendEmailResult result = clientManager.ses().sendEmail(request);
+    SendEmailRequest request = new SendEmailRequest(receiver,destination,feedbackMessage);
+    SendEmailResult result =  sesClient.sendEmail(request);
+        //SendEmailResult result = client.ses().sendEmail(request);
     }
 
 }

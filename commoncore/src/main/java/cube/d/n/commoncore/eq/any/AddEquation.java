@@ -219,4 +219,14 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
             tryOperator(toOp);
         }
     }
+
+    public void smartAdd(Equation equation) {
+        if (equation instanceof  AddEquation){
+            for (Equation eq: equation){
+                add(eq);
+            }
+        }else{
+            add(equation);
+        }
+    }
 }

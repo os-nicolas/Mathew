@@ -219,16 +219,27 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
     public boolean hasSign(int i) {
         Equation left = get(i);
+        int count = 0;
         while (left instanceof MultiEquation){
             left = left.get(left.size()-1);
+            count ++;
+            if (count > 100){
+                Log.e("hasSign looper","fuck left");
+            }
         }
 
 //        if (left.parenthesis()){
 //            return false;
 //        }
+        count = 0;
         Equation right =get(i+1);// left.right();
         while (right instanceof MultiEquation){
             right = right.get(0);
+
+            count ++;
+            if (count > 100){
+                Log.e("hasSign looper","fuck left");
+            }
         }
 //        if (right.parenthesis()){
 //            return false;

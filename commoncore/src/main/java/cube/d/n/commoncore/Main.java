@@ -249,9 +249,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 fingerDown = false;
             }
 
-
+            //Log.d("Main.onTouch","closing out on touch");
             return true;
         } else {
+            //Log.d("Main.onTouch","closing out on touch");
             return false;
         }
     }
@@ -357,16 +358,17 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //Log.d("draw","I drew!");
         width = canvas.getWidth();
         if (height == 0) {
             height = canvas.getHeight();
             initOffset();
         }
         if (height != canvas.getHeight()){
-            Log.d("setting from height, width" ,height + "," + width);
+            //Log.d("setting from height, width" ,height + "," + width);
             height = canvas.getHeight();
             width = canvas.getWidth();
-            Log.d("setting to height, width" ,height + "," + width);
+            //Log.d("setting to height, width" ,height + "," + width);
         }
 
         Rect r = new Rect(0, 0, (int) width, (int) height);
@@ -399,13 +401,18 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 }
             }
             if (inScreen(l, top)) {
+                //Log.d("started drawing line",l.toString());
                 l.draw(canvas, top, left, new Paint());
+                //Log.d("drew line",l.toString());
 
             }
             bot = top;
         }
 
+        //Log.d("started drawing keyboaed","yep");
         keyBoardManager.draw(canvas, bot, 0, new Paint());
+
+        //Log.d("drew keyboaed","yep");
         progressManager.draw(canvas);
         // TODO this is probably really bad for CPU and GPU use
         invalidate();

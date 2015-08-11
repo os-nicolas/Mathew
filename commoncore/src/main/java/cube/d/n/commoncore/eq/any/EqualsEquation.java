@@ -62,7 +62,14 @@ public class EqualsEquation extends Equation {
     // this is badly named this is draw centered on the equals
     public void drawCentered(Canvas canvas, float x, float y) {
         // we need to figure out where the equals is
+        Equation at = this;
+        while (at != null){
+            Log.d("drawCentered",at.toString());
+            at = at.parent;
+        }
+
         float diffX = (float) (+this.measureWidth()/2 - get(0).measureWidth() - (getMyWidth() + myWidthAdd())/2f);
+        Log.d("drawCentered","done diffX");
         super.draw(canvas, x+diffX, y);
     }
 

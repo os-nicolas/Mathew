@@ -1,5 +1,10 @@
 package cube.d.n.commoncore.eq.any;
 
+import android.util.Log;
+
+import java.util.ArrayList;
+
+import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.EquationLine;
 
 /**
@@ -20,6 +25,21 @@ public class PlusMinusEquation extends MonaryEquation implements SignEquation {
         super(owner, equations);
         myPlusMinusId = equations.myPlusMinusId;
         init();
+    }
+
+    @Override
+    public void tryOperator(ArrayList<Equation> equation) {
+        if (equation.size() == 1){
+            Equation eq= equation.get(0);
+            if (Operations.sortaNumber(eq)){
+                replace(NumConstEquation.create(Operations.getValue(eq),owner));
+            }
+        }else {
+            // it should really always be zero
+            Log.e("MonaryEquation","should always have one element");
+
+        }
+
     }
 
     @Override

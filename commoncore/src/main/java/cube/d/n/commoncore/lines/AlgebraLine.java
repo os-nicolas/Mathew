@@ -129,6 +129,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
             }
         }
 
+        //Log.d("AlgebraLine.innerDraw","internalOffset");
+
 //        Rect r = new Rect((int)0,(int)top,(int)(0+ measureWidth()),(int)(top+measureHeight()));
 //        Paint p = new Paint();
 //        p.setAlpha(paint.getAlpha());
@@ -145,12 +147,15 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         int rate = BaseApp.getApp().getRate();
         stupidAlpha = (stupidAlpha * rate + targetAlpha) / (rate + 1);
         stupid.get().setAlpha(stupidAlpha);
+        //Log.d("AlgebraLine.innerDraw","updated offset");
 
         if (stupid.get() instanceof EqualsEquation){
             ((EqualsEquation) stupid.get()).drawCentered(canvas, left +internalOffset + (measureWidth() / 2f), top + measureHeight() - getBuffer() - stupid.get().measureHeightLower());
         }else {
             stupid.get().draw(canvas, left + measureWidth() / 2f, top + measureHeight() - getBuffer() - stupid.get().measureHeightLower());
         }
+
+        //Log.d("AlgebraLine.innerDraw","drew");
 
 
         if (dragging != null) {
@@ -175,14 +180,17 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
                 owner.toAddToOffsetY(((owner.height -owner.keyBoardManager.get().measureHeight() -slideBuffer)-(dragging.eq.getY() + dragging.eq.measureHeightLower() ))/10f);
             }
         }
+        Log.d("AlgebraLine.innerDraw","dragging");
 
         for (EquationButton eb : history) {
             eb.tryRevert(canvas,top,left);
         }
+        Log.d("AlgebraLine.innerDraw","tryRevert");
 
         for (int i = 0; i < animation.size(); i++) {
             animation.get(i).draw(canvas);
         }
+        Log.d("AlgebraLine.innerDraw","draw Animations");
 
 //     for (DragLocation dl:dragLocations){
 //            float dlx = dl.x + stupid.get().getCenter();
@@ -194,6 +202,9 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
 
 
         drawHistory(canvas,top,left,paint);
+
+
+        Log.d("AlgebraLine.innerDraw","draw History");
     }
 
 
@@ -382,6 +393,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
                     }
                     lastLongTouch = null;
                 }
+                Log.d("figure up current is",stupid.get().toString());
 
             }
         }else {
@@ -391,6 +403,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
             myMode = TouchMode.NOPE;
         }
 
+        Log.d("closing out onTouch",stupid.get().toString());
         if (myMode == TouchMode.NOPE) {
             return false;
         }else{
@@ -755,6 +768,7 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
                 lcp.setSelected(true);
             }
         }
+        Log.d("current", stupid.get().toString());
     }
 
     private float getHistoryBuffer() {
@@ -888,7 +902,10 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
 
 
         if (selected != null){
+            Log.i("getting the thing","yep");
                 SelectedRow toAdd = selected.getSelectedRow();
+
+            Log.i("done getting the thing","yep");
             if (toAdd != null) {
                 ak.popUpLines.add(toAdd);
             }
