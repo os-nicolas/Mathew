@@ -28,8 +28,6 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:support-v4:21.0.3'
-    compile 'com.amazonaws:aws-android-sdk-core:2.2.5'
-    compile 'com.amazonaws:aws-android-sdk-ses:2.2.5'
     compile project(':commoncore')
 //    compile files('libs/activation.jar')
 //    compile files('libs/additionnal.jar')

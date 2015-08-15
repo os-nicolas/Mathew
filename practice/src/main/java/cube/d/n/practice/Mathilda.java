@@ -65,17 +65,7 @@ public class Mathilda extends BaseApp {
         return (Mathilda)BaseApp.getApp();
     }
 
-    public AWSCredentials getCreds(){
-        // Initialize the Amazon Cognito credentials provider
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getApplicationContext(),
-                "us-east-1:16e09fa5-2934-44b2-bc02-f4b887bd1712", // Identity Pool ID
-                Regions.US_EAST_1 // Region
-        );
-        return credentialsProvider.getCredentials();
 
-    //return new BasicAWSCredentials( PropertyLoader.getInstance().getAccessKey(), PropertyLoader.getInstance().getSecretKey() );
-    }
 
 
 

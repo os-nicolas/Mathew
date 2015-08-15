@@ -1,30 +1,14 @@
 package cube.d.n.practice;
 
-import android.app.ActionBar;
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-
-import java.util.Properties;
-
-import javax.mail.Message;
-import javax.mail.MessagingException;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.SES;
 
 
 public class FeedBack extends FullAct  {
@@ -120,7 +104,7 @@ public class FeedBack extends FullAct  {
         //m.setBody(text);
 
         try{
-            SES.sendEmail("MathildaApp@gmail.com",text);
+            SES.sendEmail("MathildaApp@gmail.com","feedback", text);
            // m.send();
         } catch(Exception e) {
 

@@ -10,6 +10,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.WindowManager;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.regions.Regions;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
@@ -66,7 +69,14 @@ public abstract class BaseApp extends Application{
         super.onCreate();
         instance = this;
 
+
+
         Log.i("BaseApp", "created");
+
+        Thread.UncaughtExceptionHandler x = Thread.getDefaultUncaughtExceptionHandler();
+                Thread.setDefaultUncaughtExceptionHandler(new ErrorReporter(x));
+
+        int a =1/0;
 
         initColors();
 
@@ -194,6 +204,18 @@ public abstract class BaseApp extends Application{
 
     public static BaseApp getApp(){
         return instance;
+    }
+
+    public AWSCredentials getCreds(){
+        // Initialize the Amazon Cognito credentials provider
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                getApplicationContext(),
+                "us-east-1:16e09fa5-2934-44b2-bc02-f4b887bd1712", // Identity Pool ID
+                Regions.US_EAST_1 // Region
+        );
+        return credentialsProvider.getCredentials();
+
+        //return new BasicAWSCredentials( PropertyLoader.getInstance().getAccessKey(), PropertyLoader.getInstance().getSecretKey() );
     }
 
     public int getDefaultSize() {
