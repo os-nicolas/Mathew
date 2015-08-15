@@ -279,7 +279,8 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
                     }
                 }));
             }
-            if (Operations.divide_CanSortaNumbers(top, bot) &&  !Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)).same(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)))) {
+            // if we can't reduce it, or divide gives us a different result than reduce go ahead and divide
+            if (!Operations.divide_CanReduce(new MultiCountData(top), new MultiCountData(bot)) ||  !Operations.divide_Reduce(owner, new MultiCountData(top), new MultiCountData(bot)).same(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)))) {
                 buttons.add(new SeletedRowEquationButton(Operations.divide_Divide(owner, new MultiCountData(top), new MultiCountData(bot)), new Action(owner) {
                     @Override
                     protected void privateAct() {
