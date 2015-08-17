@@ -110,7 +110,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
     private void setUp(Main main) {
         if (myProblem.equation == null || myProblem.input) {
-            //main.initWI();
+            main.initWI();
         } else {
             main.initWE(myProblem.equation);
         }

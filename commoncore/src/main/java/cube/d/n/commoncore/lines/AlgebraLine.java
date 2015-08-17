@@ -22,6 +22,7 @@ import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.CanWarn;
 import cube.d.n.commoncore.DragLocation;
 import cube.d.n.commoncore.EquationButton;
+import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.LongTouch;
 import cube.d.n.commoncore.PopUpButton;
@@ -412,6 +413,8 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
     }
 
     public void updateHistory() {
+        ErrorReporter.log("current",stupid.get().toString());
+
         // if they could have divided by 0 we need to warn them
         // we don't have to worry warn checks for null
         history.get(0).warn(changedEq);
@@ -419,7 +422,6 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
 
         // add a new Equation to history
         history.add(0, new EquationButton(stupid.get().copy(), this));
-        Log.i("add to History", stupid.toString());
         changed = false;
         needsToCenter();
         owner.couldHaveSolved(stupid.get().copy());

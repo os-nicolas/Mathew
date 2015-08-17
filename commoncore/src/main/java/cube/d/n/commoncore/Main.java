@@ -539,8 +539,6 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 ((InputLine) l).snapBack();
             }
         }
-
-
     }
 
     private void slide() {
@@ -755,6 +753,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         keyBoardManager.hardSet(lines.get(2).getKeyboad());
     }
 
+    public void initWI() {
+        keyBoardManager.hardSet(lines.get(1).getKeyboad());
+    }
+
     public void initE(Equation equation) {
         ((HiddenInputLine) lines.get(0)).stupid.set(equation.copy());
         ((AlgebraLine) lines.get(1)).initEquation(equation.copy());
@@ -847,4 +849,6 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             toAddToOffsetY(offsetY - (height - keyBoardManager.get().measureHeight()));
         }
     }
+
+
 }

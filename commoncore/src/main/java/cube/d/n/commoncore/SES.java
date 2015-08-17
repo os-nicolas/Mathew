@@ -1,5 +1,7 @@
 package cube.d.n.commoncore;
 
+import android.util.Log;
+
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.model.Body;
@@ -14,25 +16,30 @@ import com.amazonaws.services.simpleemail.model.SendEmailResult;
  */
 public class SES {
 
-    public static void sendEmail(String receiver,String title,String message){
-
-        AWSCredentials credentials = BaseApp.getApp().getCreds();
-        AmazonSimpleEmailServiceClient sesClient = new AmazonSimpleEmailServiceClient( credentials );
+    public static SendEmailResult sendEmail(String receiver,String title,String message){
+        try {
+            AWSCredentials credentials = BaseApp.getApp().getCreds();
+            AmazonSimpleEmailServiceClient sesClient = new AmazonSimpleEmailServiceClient(credentials);
 
 //    String subjectText = "Feedback from " + nameField.getText();
-    Content subjectContent = new Content(title);
+            Content subjectContent = new Content(title);
 
 //    String bodyText = "Rating: " + ratingBar.getRating() + "\nComments\n" + commentsField.getText();
-    Body messageBody = new Body(new Content(message));
+            Body messageBody = new Body(new Content(message));
 
-    Message feedbackMessage = new Message(subjectContent,messageBody);
+            Message feedbackMessage = new Message(subjectContent, messageBody);
 
-    //String email = PropertyLoader.getInstance().getVerifiedEmail();
-    Destination destination = new Destination().withToAddresses(receiver);
+            //String email = PropertyLoader.getInstance().getVerifiedEmail();
+            Destination destination = new Destination().withToAddresses(receiver);
 
-    SendEmailRequest request = new SendEmailRequest(receiver,destination,feedbackMessage);
-    SendEmailResult result =  sesClient.sendEmail(request);
-        //SendEmailResult result = client.ses().sendEmail(request);
+            SendEmailRequest request = new SendEmailRequest(receiver, destination, feedbackMessage);
+            SendEmailResult result = sesClient.sendEmail(request);
+            //SendEmailResult result = client.ses().sendEmail(request);
+            return result;
+        }catch (Exception e){
+            Log.e("expt",e.toString());
+            return null;
+        }
     }
 
 }

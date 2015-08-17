@@ -10,11 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.regions.Regions;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

@@ -57,9 +57,7 @@ public abstract class BaseApp extends Application{
     public int veryDarkColor;
     public int darkDarkColor;
     private Tracker myTracker = null;
-
     public int at=0;
-
     public int lightColor;
     public TextPaint textPaint = new TextPaint();
     public long acceptedTime = 1000l;
@@ -69,14 +67,10 @@ public abstract class BaseApp extends Application{
         super.onCreate();
         instance = this;
 
-
-
         Log.i("BaseApp", "created");
 
         Thread.UncaughtExceptionHandler x = Thread.getDefaultUncaughtExceptionHandler();
-                Thread.setDefaultUncaughtExceptionHandler(new ErrorReporter(x));
-
-        int a =1/0;
+        Thread.setDefaultUncaughtExceptionHandler(new ErrorReporter(x));
 
         initColors();
 
