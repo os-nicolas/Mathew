@@ -91,6 +91,11 @@ public class Mathilda extends BaseApp {
         return topics;
     }
 
+    @Override
+    public String about(){
+        return "Algebra Practice \n" + super.about();
+    }
+
     public boolean hasB() {
         return false;
     }

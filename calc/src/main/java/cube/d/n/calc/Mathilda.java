@@ -7,8 +7,7 @@ import android.view.ViewGroup;
 
 import java.util.HashMap;
 
-import cube.d.n.commoncore.BaseApp;
-import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.*;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -18,6 +17,11 @@ public class Mathilda extends BaseApp {
     @Override
     public void onCreate() {
         super.onCreate();Log.i("Mathilda", "created");
+    }
+
+    @Override
+    public String about(){
+        return "Algebra Calculator \n" + super.about();
     }
 
     @Override

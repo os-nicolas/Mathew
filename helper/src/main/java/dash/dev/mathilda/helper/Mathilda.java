@@ -27,6 +27,10 @@ public class Mathilda extends BaseApp {
         super.onCreate();
     }
 
+    @Override
+    public String about(){
+        return "Algebra Helper \n" + super.about();
+    }
 
     @Override
     public String getPropertyId(){

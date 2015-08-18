@@ -2,6 +2,8 @@ package cube.d.n.commoncore;
 
 import android.app.Application;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -113,6 +115,17 @@ public abstract class BaseApp extends Application{
             myTracker.enableAdvertisingIdCollection(true);
             return  myTracker;
         }
+    }
+
+    public String about(){
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+
+            return "Version Code: " + pInfo.versionCode + " Version Name: " + pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 
