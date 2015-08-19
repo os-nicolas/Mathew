@@ -164,6 +164,7 @@ public class Util {
 
             while (at < newEq.size()) {
                 reduce(newEq,at);
+                newEq = parent.get(at);
                 newEq.fixIntegrety();
                 if (at+1 < newEq.size()){
                     reduce(newEq,at+1);
