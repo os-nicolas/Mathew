@@ -18,7 +18,7 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
 
     @Override
     public void uncaughtException(Thread thread, final Throwable ex){
-        final String res = "THROWABLE:\n\n"+ Log.getStackTraceString(ex)+"RECENT LOG:\n\n"+ recentLog();
+        final String res = BaseApp.getApp().about() + "\n\nTHROWABLE:\n\n"+ Log.getStackTraceString(ex)+"\n\nRECENT LOG:\n\n"+ recentLog();
         Log.e("got a err",res);
         Thread th = new Thread( new Runnable() {
             @Override
@@ -33,6 +33,9 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
 
     private static String recentLog() {
         String res = "";
+
+
+
         for (String s: que ){
             res +=s +'\n';
         }
