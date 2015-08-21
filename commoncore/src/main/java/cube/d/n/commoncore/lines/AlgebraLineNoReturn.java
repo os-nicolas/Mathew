@@ -28,5 +28,4 @@ public class AlgebraLineNoReturn extends AlgebraLine {
             }
             return myKeyBoard;
         }
-
 }

@@ -782,6 +782,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         myMainTut = controller;
     }
 
+    public Equation getGoal(){
+        return goal;
+    }
+
 
     public void couldHaveSolved(Equation copy) {
         if (allowSolve && ! alreadySolved){

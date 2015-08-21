@@ -153,7 +153,6 @@ public class Util {
                 eq.get(at).get(0).size() == 0);
     }
 
-
     private static Equation reduce(Equation parent,int index) {
         Equation outerLast = null;
         Equation newEq = parent.get(index);
@@ -164,7 +163,7 @@ public class Util {
 
             while (at < newEq.size()) {
                 reduce(newEq,at);
-                newEq = parent.get(at);
+                newEq = parent.get(index);
                 newEq.fixIntegrety();
                 if (at+1 < newEq.size()){
                     reduce(newEq,at+1);
@@ -221,7 +220,6 @@ public class Util {
 
         }
 
-
         if (equation instanceof MonaryEquation){
             return true;
         }
@@ -242,5 +240,28 @@ public class Util {
             }
         }
         return result;
+    }
+
+    public static Equation sub(Equation equation, VarEquation toReplace, Equation replaceWith){
+        if (equation.same(toReplace)){
+            return replaceWith.copy();
+        }
+        else{
+            for (Equation inner : equation){
+                innerSub(inner,toReplace,replaceWith);
+            }
+        }
+        return equation;
+    }
+
+    private static void innerSub(Equation equation, VarEquation toReplace, Equation replaceWith) {
+        if (equation.same(toReplace)){
+            equation.replace(replaceWith.copy());
+        }
+        else{
+            for (Equation inner : equation){
+                innerSub(inner,toReplace,replaceWith);
+            }
+        }
     }
 }

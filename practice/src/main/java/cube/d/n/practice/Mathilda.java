@@ -17,8 +17,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -60,7 +63,9 @@ public class Mathilda extends BaseApp {
         return (Mathilda)BaseApp.getApp();
     }
 
-
+    public Action getEnter(InputLine line) {
+        return new EnterAction(line);
+    }
 
 
 

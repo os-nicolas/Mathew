@@ -41,6 +41,10 @@ public class Solve extends Action {
                 return false;
             }
 
+        if (failsAdditionalConditions(mine)){
+            return false;
+        }
+
         // we need to follow the path to selected
         // and remove it from mine
         if (mine instanceof WritingEquation) {
@@ -52,23 +56,37 @@ public class Solve extends Action {
         return false;
     }
 
+    protected boolean failsAdditionalConditions(Equation mine) {
+        return false;
+    }
+
     @Override
     protected void privateAct() {
 
 
         Equation newEq = ((WritingEquation) Solve.mine).convert();
-        ArrayList<String> vars = Util.getVars(newEq);
-        ((InputLine)owner).deActivate();
-        EquationLine line;
-        if (vars.size() != 0 ||  countEquals(((WritingEquation) Solve.mine))==1){
-            line = new AlgebraLine(owner.owner,newEq);
+        if (passes(newEq.copy())) {
 
+            ArrayList<String> vars = Util.getVars(newEq);
+            ((InputLine) owner).deActivate();
+            EquationLine line;
+            if (vars.size() != 0 || countEquals(((WritingEquation) Solve.mine)) == 1) {
+                line = new AlgebraLine(owner.owner, newEq);
+
+            } else {
+                line = new OutputLine(owner.owner, newEq);
+            }
+            newEq.updateOwner(line);
+            owner.owner.addLine(line);
         }else{
-            line = new OutputLine(owner.owner,newEq);
+            planB();
         }
-        newEq.updateOwner(line);
-        owner.owner.addLine(line);
     }
 
+    protected boolean passes(Equation equation) {
+        return true;
+    }
 
+    protected void planB() {
+    }
 }
