@@ -54,6 +54,7 @@ public class PopUpButton extends Button {
                     currentHeight = (currentHeight * (rate - 1) + 0) / rate;
                     if ((int)currentHeight*100==(int)((currentHeight * (rate - 1) + 0)*100 / rate)){
                         currentHeight=0;
+                        fullyHidden();
                     }
                 }
             }
@@ -64,6 +65,9 @@ public class PopUpButton extends Button {
 
             setLocation(startAtX,endAtX,ytop,ybot);
 
+    }
+
+    protected void fullyHidden() {
     }
 
     protected float targetHeight() {

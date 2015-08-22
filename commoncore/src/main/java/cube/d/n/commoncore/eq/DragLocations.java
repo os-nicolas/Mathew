@@ -17,7 +17,7 @@ public class DragLocations implements Iterable<DragLocation> {
     public void add(DragLocation dragLocation) {
         boolean pass = true;
         for (DragLocation dl:backEnd){
-            if (dl.myStupid.reallySame(dragLocation.myStupid)){
+            if (dl.myStupid.reallySame(dragLocation.myStupid) && demoInSamePlace(dl,dragLocation)){
                 pass = false;
                 if (dragLocation.og){
                     dl.og=true;
@@ -32,6 +32,15 @@ public class DragLocations implements Iterable<DragLocation> {
         if (pass) {
             backEnd.add(dragLocation);
         }
+    }
+
+    private boolean demoInSamePlace(DragLocation dl, DragLocation dragLocation) {
+        if (dl.myDemo.parent == null && dragLocation.myDemo.parent ==null){
+            return true;
+        }
+        return dl.myDemo.parent.indexOf(dl.myDemo) == dragLocation.myDemo.parent.indexOf(dragLocation.myDemo);
+
+        //return false;
     }
 
     //TODO scale by Dpi

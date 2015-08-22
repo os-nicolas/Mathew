@@ -3,6 +3,7 @@ package cube.d.n.commoncore.Action.WriteScreen;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.VarEquation;
@@ -71,7 +72,8 @@ public class Solve extends Action {
             ((InputLine) owner).deActivate();
             EquationLine line;
             if (vars.size() != 0 || countEquals(((WritingEquation) Solve.mine)) == 1) {
-                line = new AlgebraLine(owner.owner, newEq);
+
+                line = getAlgebraLine(((InputLine) owner).owner,newEq);
 
             } else {
                 line = new OutputLine(owner.owner, newEq);
@@ -81,6 +83,10 @@ public class Solve extends Action {
         }else{
             planB();
         }
+    }
+
+    protected EquationLine getAlgebraLine(Main main, Equation newEq) {
+        return new AlgebraLine(main, newEq);
     }
 
     protected boolean passes(Equation equation) {

@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.Action.WriteScreen;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.TimeOutAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.InputLine;
@@ -8,13 +9,12 @@ import cube.d.n.commoncore.lines.InputLine;
 /**
  * Created by Colin_000 on 3/27/2015.
  */
-public class ClearAction extends Action {
+public class ClearAction extends TimeOutAction {
 
 
     public ClearAction(InputLine emilyView) {
         super(emilyView);
     }
-
 
     long lastCalled=0l;
     long lastShown=0l;
@@ -37,13 +37,19 @@ public class ClearAction extends Action {
         return false;
     }
 
+    protected void timeout() {
+        lastActed = System.currentTimeMillis();
+    }
+
     @Override
     public void privateAct(){
-        lastActed = System.currentTimeMillis();
+        timeout();
         ((InputLine)owner).initEq();
 
         ((InputLine)owner).getSelected().goDark();
     }
+
+
 
 
 }

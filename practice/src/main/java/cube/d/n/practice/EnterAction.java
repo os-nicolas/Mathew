@@ -4,10 +4,15 @@ import android.util.Log;
 
 import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.GS;
+import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
+import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.AlgebraLineNoReturn;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
 /**
@@ -40,11 +45,18 @@ public class EnterAction extends Solve {
         gsLeft.get().parent = null;
         gsLeft.get().addWatcher(gsLeft);
         Util.reduce(gsLeft);
+        if (gsLeft.get() instanceof NumConstEquation){
+            ((NumConstEquation)gsLeft.get()).setRound(true);
+        }
+
         Log.d("EnterAction.passes","reduces left to: " + gsLeft.get().toString());
         GS<Equation> gsRight = new GS<>(Util.sub(inputCopy.get(1),var,subWith));
         gsRight.get().parent = null;
         gsRight.get().addWatcher(gsRight);
         Util.reduce(gsRight);
+        if (gsRight.get() instanceof NumConstEquation){
+            ((NumConstEquation)gsRight.get()).setRound(true);
+        }
         Log.d("EnterAction.passes","reduces right to: " + gsRight.get().toString());
 
         return gsLeft.get().same(gsRight.get());
@@ -52,11 +64,16 @@ public class EnterAction extends Solve {
 
     @Override
     protected void planB() {
+        owner.owner.message("Equation is incorrect");
         Log.d("EnterAction.planB","not a good equation");
     }
 
+    @Override
+    protected EquationLine getAlgebraLine(Main main, Equation newEq) {
+        return new AlgebraLineNoReturn(main, newEq);
+    }
+
     public static boolean hasA(Equation stupid) {
-        int count = 0;
         for (Equation e : stupid) {
             if (e instanceof VarEquation && e.getDisplay(-1).equals("a")) {
                 return true;
