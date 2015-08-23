@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
@@ -117,8 +118,10 @@ public class WritingEquation extends Equation {
     public Equation convert() {
 
         //TODO flatten?
+        ErrorReporter.log("converting:",toString());
 
         addImpliedMultiplication();
+
         Log.i("after doing implied multiplication", toString());
 
         Equation root = null;

@@ -19,6 +19,7 @@ import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CanTrackChanges;
 import cube.d.n.commoncore.DragLocation;
+import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.GS;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.Pop;
@@ -177,6 +178,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public void setSelected(boolean selected) {
+        ErrorReporter.log("selected: ", this.toString());
         if (owner instanceof Selects) {
             Log.i("selecting", this.toString());
             if (selected) {
