@@ -1625,6 +1625,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return null;
     }
 
+    public void addWatcher(GS<Equation> watcher) {
+        watchers.add(watcher);
+    }
+
     private class Clostest {
         public float dis;
         public HashSet<Equation> eqs;

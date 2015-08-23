@@ -13,6 +13,10 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     private  boolean round = false;
 
+    public void setRound(boolean round){
+        this.round = round;
+    }
+
 	public NumConstEquation(BigDecimal number, EquationLine owner) {
 		super(owner);
         init(number);

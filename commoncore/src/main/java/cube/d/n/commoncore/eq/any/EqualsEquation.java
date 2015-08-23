@@ -64,12 +64,12 @@ public class EqualsEquation extends Equation {
         // we need to figure out where the equals is
         Equation at = this;
         while (at != null){
-            Log.d("drawCentered",at.toString());
+//            Log.d("drawCentered",at.toString());
             at = at.parent;
         }
 
         float diffX = (float) (+this.measureWidth()/2 - get(0).measureWidth() - (getMyWidth() + myWidthAdd())/2f);
-        Log.d("drawCentered","done diffX");
+//        Log.d("drawCentered","done diffX");
         super.draw(canvas, x+diffX, y);
     }
 

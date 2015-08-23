@@ -32,6 +32,7 @@ import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
 import cube.d.n.commoncore.eq.write.WritingSqrtEquation;
 import cube.d.n.commoncore.keyboards.AlgebraKeyboardNoReturn;
+import cube.d.n.commoncore.keyboards.KeyBoard;
 import cube.d.n.commoncore.keyboards.KeyBoardManager;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.AlgebraLineNoKeyBoard;
@@ -782,6 +783,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         myMainTut = controller;
     }
 
+    public Equation getGoal(){
+        return goal;
+    }
+
 
     public void couldHaveSolved(Equation copy) {
         if (allowSolve && ! alreadySolved){
@@ -850,5 +855,34 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         }
     }
 
+    public void message(final String toDisp){
+
+        Line ll = lastLine();
+        final KeyBoard k = ll.getKeyboad();
+        if (k!= null&& ll instanceof EquationLine){
+            final MessageButton mb = new MessageButton(toDisp,(EquationLine)ll);
+            k.popUpButtons.add(mb);
+            new Thread(new Runnable() {
+
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    for (PopUpButton pub: k.popUpButtons){
+                        if (!mb.equals(pub) &&pub instanceof  MessageButton && ((MessageButton)pub).message.equals(toDisp)){
+                            ((MessageAction)pub.myAction).done();
+                        }
+
+                    }
+                }
+            }).start();
+
+
+
+        }
+    }
 
 }
