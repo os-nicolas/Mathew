@@ -12,6 +12,7 @@ public class SineEquation extends TrigEquation<ASineEquation> {
 
     public  SineEquation(EquationLine owner) {
         super(owner);
+        display = "Sin";
     }
 
     protected   SineEquation(EquationLine owner, TrigEquation toCopy) {

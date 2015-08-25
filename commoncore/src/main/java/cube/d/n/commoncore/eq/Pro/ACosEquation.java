@@ -12,6 +12,7 @@ public class ACosEquation extends TrigEquation<CosEquation> {
 
     public ACosEquation(EquationLine owner) {
         super(owner);
+        display = "Arccos";
     }
 
     protected ACosEquation(EquationLine owner, TrigEquation toCopy) {

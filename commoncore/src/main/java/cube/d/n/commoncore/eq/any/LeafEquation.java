@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.DragEquation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.MyPoint;
@@ -90,7 +91,9 @@ public abstract class LeafEquation extends Equation {
     @Override
     protected float privateMeasureWidth() {
 		// not tested
-		float totalWidth= (float) (getMyWidth()) + getPaint().measureText(getDisplay(-1)) -getPaint().measureText("A");//Math.max(myWidth,textPaint.measureText(display)); //-textPaint.measureText(display.subSequence(0, 1)+"")
+
+
+		float totalWidth= Util.varWidth(getMyWidth(), getDisplay(-1),getPaint());//Math.max(myWidth,textPaint.measureText(display)); //-textPaint.measureText(display.subSequence(0, 1)+"")
 		
 		if (parenthesis()){
 			totalWidth += getParnWidthAddition();
@@ -116,7 +119,24 @@ public abstract class LeafEquation extends Equation {
 	public void privateDraw(Canvas canvas, float x, float y) {
 		//drawBkgBox(canvas, x, y);
 
-        if (canvas !=null ) {
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+        //TODO
+
+            Paint temp = getPaint();
+            if (parenthesis()) {
+                drawParentheses(canvas, x, y, temp);
+                currentX += getParnWidthAddition() / 2;
+            }
+
             Paint temp = getPaint();
             if (parenthesis()){
                 drawParentheses(canvas,x,y,temp);
@@ -125,8 +145,10 @@ public abstract class LeafEquation extends Equation {
             temp.getTextBounds("A", 0, "A".length(),out);
             float h= out.height();
             float w= out.width();
-            canvas.drawText(getDisplay(-1), x, y + (h / 2), temp);
-        }
+            if (canvas != null) {
+                canvas.drawText(getDisplay(-1), x, y + (h / 2), temp);
+            }
+
 
         lastPoint =new ArrayList<MyPoint>();
 		MyPoint point = new MyPoint(measureWidth(),measureHeight());

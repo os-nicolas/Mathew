@@ -12,6 +12,7 @@ public class TanEquation  extends TrigEquation<ATanEquation> {
 
     public TanEquation(EquationLine owner) {
         super(owner);
+        display = "Tan";
     }
 
     protected TanEquation(EquationLine owner, TrigEquation toCopy) {

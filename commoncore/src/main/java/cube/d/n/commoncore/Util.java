@@ -1,5 +1,6 @@
 package cube.d.n.commoncore;
 
+import android.graphics.Paint;
 import android.util.Log;
 
 import java.math.BigDecimal;
@@ -263,5 +264,9 @@ public class Util {
                 innerSub(inner,toReplace,replaceWith);
             }
         }
+    }
+
+    public static float varWidth(int min, String display, Paint paint) {
+        return (float) (min) + paint.measureText(display) -paint.measureText("A");
     }
 }

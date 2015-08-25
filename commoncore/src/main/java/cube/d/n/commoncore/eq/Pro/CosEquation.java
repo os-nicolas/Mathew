@@ -12,6 +12,7 @@ public class CosEquation extends TrigEquation<ACosEquation> {
 
     public CosEquation(EquationLine owner) {
         super(owner);
+        display = "Cos";
     }
 
     protected CosEquation(EquationLine owner, TrigEquation toCopy) {
