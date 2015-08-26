@@ -2,6 +2,7 @@ package cube.d.n.commoncore.Action;
 
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
@@ -52,19 +53,41 @@ public abstract class Action {
         return canMove(true,current);
     }
 
-    private static boolean canMove(boolean left,Equation current){
-        return getMoveCurrent(left,current) instanceof BinaryEquation;
+    private static boolean canMove(boolean left,Equation selected){
+        // we go up
+//        Equation last = selected;
+//        Equation current = selected.parent;
+//        while (true){
+//            if (current == null){
+//                // we can't move left
+//                return false;
+//            }
+//            if ((left&&current.indexOf(last)==0) || (!left && current.indexOf(last) == current.size()-1)){
+//                last = current;
+//                current = current.parent;
+//            }else{
+//                break;
+//            }
+//        }
+//        // we check and see if we can go over
+//        int at =  current.indexOf(last);
+//        if (left){
+//            return at != 0f;
+//        }else{
+//            return at != current.size()-1;
+//        }
+        return true;
     }
 
-    private static Equation getMoveCurrent(boolean left,Equation current) {
-        while (current.parent != null && current.parent.indexOf(current) == (left?0:current.parent.size()-1)) {
-            current = current.parent;
-            if (current instanceof BinaryEquation) {
-                return current;
-            }
-        }
-        return null;
-    }
+//    private static Equation getMoveCurrent(boolean left,Equation current) {
+//        while (current.parent != null && current.parent.indexOf(current) == (left?0:current.parent.size()-1)) {
+//            current = current.parent;
+//            if (current instanceof BinaryEquation) {
+//                return current;
+//            }
+//        }
+//        return null;
+//    }
 
     public static void tryMoveRight(Equation current) {
         tryMove(false ,current);
@@ -75,81 +98,51 @@ public abstract class Action {
     }
 
     public static void  tryMove(boolean left,Equation selected) {
-        // this seems really simple
+        // this seems kinda simple
         // you go up util you can go over
         Equation last = selected;
         Equation current = selected.parent;
-        while (true){
-            if (current == null){
-                // we can't move left
-                return;
-            }
-            if ((left&&current.indexOf(last)==0) || (!left && current.indexOf(last) == current.size()-1)){
+        if ((left&&current.indexOf(last)>0) || (!left && current.indexOf(last) < current.size()-1)){
+
+        }else{
+             do {
+                if (current == null){
+                    return;
+                }
                 last = current;
                 current = current.parent;
-            }else{
-                break;
-            }
+            }while (!(current instanceof WritingEquation || (current instanceof BinaryEquation &&
+                    (
+                            (left && current.indexOf(last)==1) ||
+                            (!left && current.indexOf(last)==0)
+                    ))));
         }
         // then you go over
         int at =  current.indexOf(last);
         at = (left? at-1:at+1);
 
-
-        // then you go down until you can anymore
-
-
-        Equation current = getMoveCurrent(left,selected);
-        if (current != null){
-            Equation oldEq =selected;
-            oldEq.remove();
-            int at = current.parent.indexOf(current);
-            if (current.parent instanceof BinaryEquation) {
-                Equation newEq = new WritingEquation((InputLine)current.owner);
-                current.replace(newEq);
-                if (left){
-                    newEq.add(oldEq);
-                    newEq.add(current);
-                }else{
-                    newEq.add(current);
-                    newEq.add(oldEq);
-                }
-            }else{
-                current.parent.add(at +(left?0:1), oldEq);
-            }
+        // then you go down util you hit a writing equation
+        if (at == current.size()){
+            selected.remove();
+            current.add(selected);
         }else {
-            Equation next = (left? selected.left(): selected.right());
-            if (next != null) {
-                Equation oldEq = selected;
-
-                while (next.size() != 0) {
-                    next = next.get((left?next.size() - 1:0));
-                }
-                if (next.parent.equals(selected.parent)) {
-                    int at = next.parent.indexOf(next);
-                    oldEq.justRemove();
-                    // at does not need to be adjusted since we remove the old equation
-                    next.parent.add(at, oldEq);
-                } else {
-                    if (next.parent instanceof BinaryEquation || next instanceof MonaryEquation) {
-                        Equation oldNext = next;
-                        Equation newEq = new WritingEquation((InputLine)selected.owner);
-                        next.replace(newEq);
-                        if (left){
-                            newEq.add(oldNext);
-                            oldEq.remove();
-                            newEq.add(oldEq);
-                        }else{
-                            oldEq.remove();
-                            newEq.add(oldEq);
-                            newEq.add(oldNext);
-
-                        }
-                    } else {
-                        int at = next.parent.indexOf(next) + (left?1:0);
-                        oldEq.remove();
-                        next.parent.add(at, oldEq);
+            Equation target = current.get(at);
+            if (target.size() == 0) {
+                selected.remove();
+                current.add(at, selected);
+            } else {
+                if (left) {
+                    while (!(target instanceof WritingEquation)) {
+                        target = target.get(target.size() - 1);
                     }
+                    selected.remove();
+                    target.add(selected);
+                } else {
+                    while (!(target instanceof WritingEquation)) {
+                        target = target.get(0);
+                    }
+                    selected.remove();
+                    target.add(0, selected);
                 }
             }
         }

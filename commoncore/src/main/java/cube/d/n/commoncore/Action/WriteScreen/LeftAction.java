@@ -1,5 +1,7 @@
 package cube.d.n.commoncore.Action.WriteScreen;
 
+import android.util.Log;
+
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.lines.InputLine;
 
@@ -20,6 +22,8 @@ public class LeftAction extends Action {
     protected void privateAct() {
         ((InputLine) owner).getSelected().goDark();
         tryMoveLeft(((InputLine) owner).getSelected());
+        Log.d("moved left", owner.stupid.get().toString());
         updateOffset();
+
     }
 }

@@ -833,7 +833,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         Equation result = super.remove(pos);
         needsUpdate();
         if (result != null) {
-            if (this.size() == 1 && !(this instanceof WritingEquation && owner.stupid.get().equals(this))) {
+            if (this.size() == 1 && !(this instanceof WritingEquation)) { //&& owner.stupid.get().equals(this)
                 this.replace(get(0));
             } else if (size() == 0) {
                 remove();
