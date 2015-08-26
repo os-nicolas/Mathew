@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/helper" />
             <option value="$PROJECT_DIR$/practice" />
             <option value="$PROJECT_DIR$/simplecalc" />
+            <option value="$PROJECT_DIR$/trigcalc" />
           </set>
         </option>
       </GradleProjectSettings>

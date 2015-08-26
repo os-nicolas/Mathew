@@ -4,14 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.eq.Pro.SineEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.EquationLine;
+import cube.d.n.commoncore.lines.InputLine;
 import dash.dev.mathilda.helper.tuts.TutActivity;
 
 
@@ -52,7 +58,25 @@ public class EmilyAct extends Activity {
        View myView = Mathilda.justGetView(screenName, this);
        if (myView instanceof  Main ){
             for (int i=0;i < ((Main) myView).getLinesSize();i++){
-                Equation st = ((EquationLine)((Main) myView).getLine(i)).stupid.get();
+
+
+                EquationLine el = ((EquationLine)((Main) myView).getLine(i));
+
+                Equation write = new WritingEquation(el);
+                Equation eq = new SineEquation(el);
+                    Equation div = new DivEquation(el);
+                    div.add(NumConstEquation.create(1,el));
+                    div.add(NumConstEquation.create(2,el));
+                eq.add(div);
+                write.add(eq);
+                if (el instanceof InputLine) {
+                    write.add(((InputLine) el).getSelected());
+                }
+
+                Log.d("setting Eq:", write.toString());
+
+                el.stupid.set(write);
+                Equation st = el.stupid.get();
                 if (st != null) {
                     st.deepNeedsUpdate();
                 }

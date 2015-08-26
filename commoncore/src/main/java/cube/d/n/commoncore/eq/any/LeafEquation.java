@@ -119,40 +119,24 @@ public abstract class LeafEquation extends Equation {
 	public void privateDraw(Canvas canvas, float x, float y) {
 		//drawBkgBox(canvas, x, y);
 
-        float LHSwidth = measureWidth() - get(0).measureWidth() - (parenthesis()? getParnWidthAddition():0);
-
-        float leftSide = x - measureWidth()/2f;
-
-
-        Paint temp = getPaint();
-        if (parenthesis()) {
-            drawParentheses(canvas, x, y, temp);
-            leftSide += getParnWidthAddition() / 2;
-            if (canvas != null) {
-                drawParentheses(canvas, x, y, temp);
+        if (canvas !=null ) {
+            Paint temp = getPaint();
+            if (parenthesis()){
+                drawParentheses(canvas,x,y,temp);
             }
+                Rect out =new Rect();
+                temp.getTextBounds("A", 0, "A".length(),out);
+                 float h= out.height();
+                 float w= out.width();
+
+            canvas.drawText(getDisplay(-1), x, y + (h / 2), temp);
         }
 
-        Rect out = new Rect();
-        temp.getTextBounds("A", 0, "A".length(), out);
-        float h = out.height();
-        float w = out.width();
-        if (canvas != null) {
-            canvas.drawText(getDisplay(-1), leftSide, y + (h / 2), temp);
-        }
-
-
-        lastPoint = new ArrayList<MyPoint>();
-        MyPoint point = new MyPoint(measureWidth(), measureHeight());
-        point.x = (int) (leftSide + (LHSwidth/2f));
+        lastPoint =new ArrayList<MyPoint>();
+        MyPoint point = new MyPoint(measureWidth(),measureHeight());
+        point.x = (int) x;
         point.y = (int) y;
         lastPoint.add(point);
-
-        leftSide += LHSwidth;
-
-        if (canvas!= null) {
-            get(0).draw(canvas,leftSide+(get(0).measureWidth()/2f),y);
-        }
     }
 
 	public void tryOperator(ArrayList< Equation> yos){}

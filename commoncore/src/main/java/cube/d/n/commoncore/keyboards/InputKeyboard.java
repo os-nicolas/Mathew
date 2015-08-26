@@ -55,10 +55,6 @@ public class InputKeyboard extends KeyBoard {
     @Override
     protected void addButtons() {
 
-
-
-
-
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
         firstRow.add(new Button("8", new NumberAction((InputLine)line, "8")));

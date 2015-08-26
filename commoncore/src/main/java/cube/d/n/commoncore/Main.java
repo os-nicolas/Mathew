@@ -45,6 +45,7 @@ import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
 import cube.d.n.commoncore.lines.OutputLine;
+import cube.d.n.commoncore.lines.TrigInput;
 import cube.d.n.commoncore.tuts.TutMainFrag;
 import cube.d.n.commoncore.tuts.YayTutView;
 
@@ -116,7 +117,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     private void initStartLines(InputLineEnum startLine) {
-        if (startLine == InputLineEnum.INPUT) {
+        if (startLine == InputLineEnum.TRIG) {
+            lines.add(new TrigInput(this));
+        } else if (startLine == InputLineEnum.INPUT) {
             lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.CALC) {
             lines.add(new CalcLine(this));

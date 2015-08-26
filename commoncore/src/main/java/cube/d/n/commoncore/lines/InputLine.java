@@ -42,7 +42,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         initEq();
     }
 
-    private InputKeyboard myKeyBoard = null;
+    protected InputKeyboard myKeyBoard = null;
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){

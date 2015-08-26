@@ -12,5 +12,6 @@ public enum InputLineEnum {
     PROBLEM_WE, // Words, Equation
     TUT_E, //tutorial with an equation to play with
     TUT_EK, // tutorial with an equation and a keyboard
-    PROBLEM_WI // Words, Input
+    PROBLEM_WI, // Words, Input
+    TRIG
 }
