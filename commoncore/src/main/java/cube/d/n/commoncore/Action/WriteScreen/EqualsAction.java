@@ -72,7 +72,6 @@ public class EqualsAction extends Action {
                     tryMoveRight(((InputLine) owner).getSelected());
                 }
             }
-
             ((InputLine) owner).insert(newEq);
         }
         updateOffset();

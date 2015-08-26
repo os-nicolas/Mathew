@@ -10,8 +10,6 @@ public class MinusAction extends MonaryAction {
         super(emilyView);
     }
 
-
-
     @Override
     protected void privateAct() {
 

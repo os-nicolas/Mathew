@@ -359,6 +359,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 }
             }
         }
+        if (size() == 0){
+            canvas.drawText("?", x, y, temp);
+        }
     }
 
 
@@ -1783,6 +1786,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if ((!(this instanceof MultiEquation)) || (((MultiEquation) this).hasSign(i))) {
                 totalWidth += toAdd;
             }
+        }
+        if (size() ==0){
+            totalWidth = Util.varWidth(getMyWidth(),"?",getPaint());
         }
 
         for (int i = 0; i < size(); i++) {

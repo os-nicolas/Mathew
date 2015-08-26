@@ -29,14 +29,13 @@ public abstract class TrigAction extends Action {
 
         Equation newEq = getEquation();
         Equation oldEq = ((InputLine)owner).getSelected();
+        oldEq.replace(newEq);
 
-        if (((InputLine)owner).getSelected().parent instanceof WritingEquation) {
-            oldEq.replace(newEq);
-        } else {
-            Equation holder = new WritingEquation(((InputLine)owner));
-            oldEq.replace(holder);
-            holder.add(newEq);
-        }
+        Equation holder = new WritingEquation(owner);
+
+        newEq.add(holder);
+        holder.add(oldEq);
+
         newEq.add(oldEq);
         updateOffset();
     }

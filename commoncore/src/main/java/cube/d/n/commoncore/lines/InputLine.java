@@ -448,10 +448,28 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         offsetX+=dx;
     }
 
+    public Equation imedateRight() {
+        int at = getSelected().parent.indexOf(getSelected());
+        if (at==getSelected().parent.size()-1){
+            return null;
+        }else{
+            return getSelected().parent.get(at+1);
+        }
+    }
 
-
+    public Equation imedateLeft() {
+        int at = getSelected().parent.indexOf(getSelected());
+        if (at==0){
+            return null;
+        }else{
+            return getSelected().parent.get(at-1);
+        }
+    }
 
     public void stopSliding() {
         vx = 0;
     }
+
+
+
 }

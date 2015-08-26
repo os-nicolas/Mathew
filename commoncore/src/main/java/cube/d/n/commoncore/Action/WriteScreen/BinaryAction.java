@@ -50,16 +50,19 @@ public abstract class BinaryAction extends Action {
         boolean can = canAct();
         boolean block = can && canBlock();
 
+        newEq.add(new WritingEquation(owner));
+        newEq.add(new WritingEquation(owner));
+
         if (l== null && can) {
             Equation oldEq =owner.owner.getLast();
 
             ((InputLine) owner).getSelected().replace(newEq);
             if (oldEq instanceof WritingEquation && oldEq.size() ==1){
-                newEq.add(oldEq.get(0));
+                newEq.get(0).add(oldEq.get(0));
             }else {
-                newEq.add(oldEq);
+                newEq.get(0).add(oldEq);
             }
-            newEq.add(((InputLine) owner).getSelected());
+            newEq.get(1).add(((InputLine) owner).getSelected());
         }else
 
         if (can && !block) {
@@ -67,8 +70,8 @@ public abstract class BinaryAction extends Action {
             Equation oldEq = l;
 
             oldEq.replace(newEq);
-            newEq.add(oldEq);
-            newEq.add(((InputLine) owner).getSelected());
+            newEq.get(0).add(oldEq);
+            newEq.get(1).add(((InputLine) owner).getSelected());
         }else
 
         if (can && block) {
@@ -90,10 +93,10 @@ public abstract class BinaryAction extends Action {
             } else {
                 oldEq.replace(newEq);
             }
-            newEq.add(oldEq);
+            newEq.get(0).add(oldEq);
             Equation placeHolder = ((InputLine) owner).getSelected();
             ((InputLine) owner).getSelected().justRemove();
-            newEq.add(placeHolder);
+            newEq.get(1).add(placeHolder);
         }
         updateOffset();
     }

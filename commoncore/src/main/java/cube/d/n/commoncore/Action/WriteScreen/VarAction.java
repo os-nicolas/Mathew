@@ -27,20 +27,9 @@ public class VarAction extends Action {
     protected void privateAct() {
         ((InputLine)owner).getSelected().goDark();
 
-        if (!(((InputLine)owner).getSelected().parent instanceof BinaryEquation)) {
-            Equation newEq = new VarEquation(var, owner);
-            ((InputLine)owner).insert(newEq);
-        } else {
-            Equation oldEq = ((InputLine)owner).getSelected();
-            Equation holder = new WritingEquation(((InputLine)owner));
-            Equation newEq = new VarEquation(var, owner);
-            oldEq.replace(holder);
-            holder.add(newEq);
-            holder.add(oldEq);
-            oldEq.setSelected(true);
-        }
+        Equation newEq = new VarEquation(var, owner);
+        ((InputLine)owner).insert(newEq);
+
         updateOffset();
     }
-
-
 }

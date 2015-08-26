@@ -27,6 +27,8 @@ public class DeleteAction extends Action {
 
     @Override
     protected void privateAct() {
+        //TODO
+
         ((InputLine)owner).getSelected().goDark();
         Equation l = ((InputLine)owner).left();
         if (l.parent instanceof BinaryEquation) {

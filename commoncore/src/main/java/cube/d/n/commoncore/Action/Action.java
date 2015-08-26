@@ -75,6 +75,30 @@ public abstract class Action {
     }
 
     public static void  tryMove(boolean left,Equation selected) {
+        // this seems really simple
+        // you go up util you can go over
+        Equation last = selected;
+        Equation current = selected.parent;
+        while (true){
+            if (current == null){
+                // we can't move left
+                return;
+            }
+            if ((left&&current.indexOf(last)==0) || (!left && current.indexOf(last) == current.size()-1)){
+                last = current;
+                current = current.parent;
+            }else{
+                break;
+            }
+        }
+        // then you go over
+        int at =  current.indexOf(last);
+        at = (left? at-1:at+1);
+
+
+        // then you go down until you can anymore
+
+
         Equation current = getMoveCurrent(left,selected);
         if (current != null){
             Equation oldEq =selected;

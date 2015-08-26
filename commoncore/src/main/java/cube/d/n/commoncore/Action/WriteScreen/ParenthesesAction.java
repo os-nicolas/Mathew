@@ -51,16 +51,8 @@ public class ParenthesesAction extends Action {
         Equation newEq = new WritingPraEquation(left, ((InputLine)owner));
         ((InputLine)owner).getSelected().goDark();
 
-        if (!(((InputLine)owner).getSelected().parent instanceof BinaryEquation)) {
-            ((InputLine)owner).insert(newEq);
-        } else {
-            Equation oldEq = ((InputLine)owner).getSelected();
-            Equation holder = new WritingEquation(((InputLine)owner));
-            oldEq.replace(holder);
-            holder.add(newEq);
-            holder.add(oldEq);
-            oldEq.setSelected(true);
-        }
+        ((InputLine)owner).insert(newEq);
+
         updateOffset();
     }
 

@@ -23,16 +23,8 @@ public abstract class MonaryAction extends Action {
     protected void monaryInsert(Equation newEq) {
         ((InputLine)owner).getSelected().goDark();
 
-        if (((InputLine)owner).getSelected().parent instanceof WritingEquation) {
-            ((InputLine)owner).insert(newEq);
-        } else {
-            Equation oldEq = ((InputLine)owner).getSelected();
-            Equation holder = new WritingEquation(((InputLine)owner));
-            oldEq.replace(holder);
-            holder.add(newEq);
-            holder.add(oldEq);
-            oldEq.setSelected(true);
-        }
+        ((InputLine)owner).insert(newEq);
+
         updateOffset();
     }
 }
