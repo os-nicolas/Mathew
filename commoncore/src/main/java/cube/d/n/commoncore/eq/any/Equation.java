@@ -117,7 +117,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             result =  result || this instanceof WritingEquation && this.size() >1 && this.parent instanceof MultiEquation;
         }
         if (owner.parentThesisMode() == EquationLine.pm.SOLVE) {
-            result = result || (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 && this.size() != 0);
+            result = result ||
+                    (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 && this.size() != 0) ||
+                    this.parent instanceof TrigEquation && this.parent.indexOf(this) == 0;
             //result = result || (this.parent instanceof MultiEquation && (this instanceof MinusEquation || this instanceof PlusMinusEquation));
         }
         if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
@@ -190,7 +192,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 ((Selects)owner).setSelected(null);
             }
         }else{
-            Log.e("Equation,setSelected","owner does not suppert selection");
+            Log.e("Equation,setSelected", "owner does not suppert selection");
         }
     }
 
@@ -499,9 +501,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 }
             }
             Log.i("tryOperator", debug);
-            if (onsList.size() != 0) {
-                tryOperator(onsList);
-            } else if (this instanceof MinusEquation) {
+            if (willOperateOn(onsList)) {
                 tryOperator(onsList);
             }
 
@@ -544,6 +544,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             }
         }
         return false;
+    }
+
+    protected boolean willOperateOn(ArrayList<Equation> onsList) {
+        return onsList.size() != 0;
     }
 
     public void changed(MyPoint myPoint) {

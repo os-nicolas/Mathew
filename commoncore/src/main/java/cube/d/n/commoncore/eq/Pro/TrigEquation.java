@@ -3,49 +3,113 @@ package cube.d.n.commoncore.eq.Pro;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.util.Log;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.SelectedRowButtons;
+import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.Util;
+import cube.d.n.commoncore.eq.FixedSize;
+import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.
  */
-public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquation {
+public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquation implements FixedSize {
 
 
     public TrigEquation(EquationLine owner) {
         super(owner);
     }
 
+
     protected  TrigEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner,toCopy);
+        this.display = toCopy.getDisplay(-1);
     }
 
     public boolean canOperate(){
-        try{
-            Inverse test = ((Inverse)get(0));
-            return true;
-        }catch(ClassCastException e){
-            // hush it up
+        return isInverse(get(0)) || Operations.sortaNumber(get(0));
+    }
+
+    @Override
+    protected boolean willOperateOn(ArrayList<Equation> onsList) {
+        return true;
+    }
+
+    @Override
+    public SelectedRow getSelectedRow() {
+        final Equation a = get(0);
+
+
+        ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
+
+        final Equation that = this;
+
+        if (canOperate()) {
+            buttons.add(new SeletedRowEquationButton(innerOperate(get(0).copy()),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(innerOperate(get(0).copy()));
+                    changed(p);
+                }
+            }));
         }
-        return Operations.sortaNumber(get(0));
+
+
+        // we try to reduce too
+        tryToReduce(buttons, that);
+
+        if (buttons.size() != 0){
+            SelectedRow sr = new SelectedRow(1f/9f);
+            sr.addButtonsRow(buttons,0,1);
+            return sr;
+        }else{
+            return null;
+        }
     }
 
     @Override
     public void tryOperator(ArrayList<Equation> equation) {
-        if (canOperate()){
-            protectedOperate(equation.get(0));
+        Log.d("tried trig", this.toString());
+        if (canOperate()) {
+            Equation newEq = innerOperate(get(0));
+            this.replace(newEq);
         }
     }
 
-    protected abstract void protectedOperate(Equation equation);
+    protected abstract Equation protectedOperate(Equation equation);
+
+
+    protected Equation innerOperate(Equation equation){
+        if (isInverse(equation)){
+            return equation.get(0);
+        }
+        return protectedOperate(equation);
+    }
+
+    protected abstract boolean isInverse(Equation equation);
+//    {
+//        try{
+//            Inverse test = ((Inverse)equation);
+//            int temp = test.size();
+//            return true;
+//        }catch(ClassCastException e){
+//            // hush it up
+//        }
+//        return false;
+//    }
 
     @Override
     public void privateDraw(Canvas canvas, float x, float y){

@@ -8,7 +8,7 @@ import cube.d.n.commoncore.lines.InputLine;
 /**
  * Created by Colin_000 on 8/25/2015.
  */
-public class AcosAction   extends TrigAction {
+public class AcosAction extends TrigAction {
     public AcosAction(InputLine owner) {
         super(owner);
     }

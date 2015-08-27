@@ -13,6 +13,7 @@ import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
+import cube.d.n.commoncore.eq.FixedSize;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operation;
@@ -20,7 +21,7 @@ import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.EquationLine;
 
-public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation , BinaryOperator {
+public class DivEquation extends Operation implements MultiDivSuperEquation, BinaryEquation , BinaryOperator,FixedSize {
 
     @Override
     public void integrityCheck(){

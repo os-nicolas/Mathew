@@ -6,9 +6,9 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
-import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.Util;
+import cube.d.n.commoncore.eq.FixedSize;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
@@ -435,10 +435,10 @@ public class WritingEquation extends Equation {
 
         if (at instanceof WritingEquation) {
             return ((WritingEquation) at).convert();
-        } else if (at instanceof BinaryEquation) {
+        } else if (at instanceof FixedSize) {
             // convert the top and the bottom
             // and then add it
-            at = convertBinary((BinaryEquation) at);
+            at = convertFixedSize((FixedSize) at);
             return at;
         } else {
             return at;
@@ -475,12 +475,10 @@ public class WritingEquation extends Equation {
         return (Equation) at;
     }
 
-    private Equation convertBinary(BinaryEquation at) {
+    private Equation convertFixedSize(FixedSize at) {
         for (Equation e : (Equation) at) {
             if (e instanceof WritingEquation) {
                 e.replace(((WritingEquation) e).convert());
-            } else if (e instanceof BinaryEquation) {
-                e.replace(convertBinary((BinaryEquation) e));
             }
         }
         return (Equation) at;

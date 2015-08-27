@@ -16,6 +16,7 @@ import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.SeletedRowEquationButton;
 import cube.d.n.commoncore.eq.BinaryOperator;
+import cube.d.n.commoncore.eq.FixedSize;
 import cube.d.n.commoncore.eq.MultiCountData;
 import cube.d.n.commoncore.eq.MultiCountDatas;
 import cube.d.n.commoncore.eq.MyPoint;
@@ -26,7 +27,7 @@ import cube.d.n.commoncore.lines.EquationLine;
 /**
  * Created by Colin on 1/10/2015.
  */
-public class PowerEquation extends Operation implements BinaryEquation, BinaryOperator
+public class PowerEquation extends Operation implements BinaryEquation, BinaryOperator,FixedSize
 {
 
     public PowerEquation(EquationLine owner) {

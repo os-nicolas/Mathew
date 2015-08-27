@@ -20,12 +20,18 @@ public class ASineEquation extends TrigEquation<SineEquation> {
     }
 
     @Override
-    protected void protectedOperate(Equation equation) {
+    protected Equation protectedOperate(Equation equation) {
 
         double input = Operations.getValue(equation).doubleValue();
 
         double output = Math.asin(input);
-        this.replace(NumConstEquation.create(output, owner));
+        return NumConstEquation.create(output, owner);
+    }
+
+
+    @Override
+    protected boolean isInverse(Equation equation) {
+        return equation instanceof  SineEquation;
     }
 
     @Override

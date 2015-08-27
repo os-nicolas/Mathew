@@ -30,7 +30,7 @@ public abstract class Action {
     public void act(){
         if (canAct()){
             privateAct();
-            ErrorReporter.log("acted",owner.stupid.toString());
+            ErrorReporter.log("acted",owner.stupid.get().toString());
         }
     }
 

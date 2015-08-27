@@ -23,6 +23,11 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
     }
 
     @Override
+    protected boolean willOperateOn(ArrayList<Equation> onsList) {
+        return true;
+    }
+
+    @Override
     public SelectedRow getSelectedRow() {
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
         final Equation that = this;
