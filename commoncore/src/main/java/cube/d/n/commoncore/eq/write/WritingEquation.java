@@ -1,11 +1,14 @@
 package cube.d.n.commoncore.eq.write;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.ErrorReporter;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
@@ -51,12 +54,19 @@ public class WritingEquation extends Equation {
     }
 
     private boolean deepLegal(Equation eq) {
+        if (illegal()){
+            return false;
+        }
         for (Equation e : eq) {
              if (e instanceof WritingLeafEquation) {
                 if (((WritingLeafEquation) e).illegal()) {
                     return false;
                 }
-            }  else {
+            } else  if (e instanceof  WritingEquation){
+                if (!((WritingEquation) e).deepLegal()){
+                   return false;
+                }
+            } else {
                 if (!deepLegal(e)) {
                     return false;
                 }
@@ -69,6 +79,21 @@ public class WritingEquation extends Equation {
     public Equation copy() {
         Equation result = new WritingEquation((InputLine)owner,this);
         return result;
+    }
+
+    @Override
+    public Paint getPaint() {
+        // check if we are legal
+        if (illegal()){
+            Paint temp = new Paint(super.getPaint());
+            temp.setColor(Color.RED);
+            return temp;
+        }
+        return super.getPaint();
+    }
+
+    private boolean illegal() {
+        return size()==0;
     }
 
     /**
@@ -84,15 +109,26 @@ public class WritingEquation extends Equation {
             drawParentheses(canvas, x, y, temp);
             currentX += getParnWidthAddition() / 2;
         }
-        Rect out = new Rect();
-        temp.getTextBounds(display, 0, display.length(), out);
-        float h = out.height();
+
         for (int i = 0; i < size(); i++) {
             float currentWidth = get(i).measureWidth();
             float currentHeight = get(i).measureHeight();
             get(i).draw(canvas,
                     x - (totalWidth / 2) + currentX + (currentWidth / 2), y);
             currentX += currentWidth;
+        }
+        if (size() == 0){
+            if (canvas != null ) {
+                Rect out = new Rect();
+                temp.getTextBounds("A", 0, "A".length(), out);
+                float h = out.height();
+                float w = out.width();
+                canvas.drawText("?", x, y + (h / 2), temp);
+            }
+            MyPoint point = new MyPoint(getMyWidth(), getMyHeight());
+            point.x = (int) (x);
+            point.y = (int) (y);
+            lastPoint.add(point);
         }
     }
 
@@ -101,14 +137,43 @@ public class WritingEquation extends Equation {
         // do nothing!
     }
 
+    protected float privateMeasureHeightUpper() {
+        if (size() != 0){
+            return super.privateMeasureHeightUpper();
+        }else {
+            float totalHeight= (float) (getMyHeight());
+
+            if (parenthesis()){
+                totalHeight += PARN_HEIGHT_ADDITION();
+            }
+            return totalHeight/2f;
+        }
+    }
+
+    protected float privateMeasureHeightLower() {
+        if (size() != 0){
+            return super.privateMeasureHeightLower();
+        }else {
+            float totalHeight= (float) (getMyHeight());
+
+            if (parenthesis()){
+                totalHeight += PARN_HEIGHT_ADDITION();
+            }
+            return totalHeight/2f;
+        }
+    }
+
     @Override
     protected float privateMeasureWidth() {
         float totalWidth = 0;
 
-        for (int i = 0; i < size(); i++) {
-            totalWidth += get(i).measureWidth();
+        if (size() ==0){
+            totalWidth = Util.varWidth(getMyWidth(), "?", getPaint());
+        }else {
+            for (int i = 0; i < size(); i++) {
+                totalWidth += get(i).measureWidth();
+            }
         }
-
         if (parenthesis()) {
             totalWidth += getParnWidthAddition();
         }

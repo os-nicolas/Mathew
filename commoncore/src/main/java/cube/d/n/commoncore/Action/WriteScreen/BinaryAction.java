@@ -93,7 +93,11 @@ public abstract class BinaryAction extends Action {
             } else {
                 oldEq.replace(newEq);
             }
-            newEq.get(0).add(oldEq);
+            if (oldEq instanceof WritingEquation) {
+                newEq.set(0,oldEq);
+            }else{
+                newEq.get(0).add(oldEq);
+            }
             Equation placeHolder = ((InputLine) owner).getSelected();
             ((InputLine) owner).getSelected().justRemove();
             newEq.get(1).add(placeHolder);

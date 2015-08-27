@@ -33,6 +33,7 @@ import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.MyPoint;
 import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
+import cube.d.n.commoncore.eq.Pro.TrigEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.CanDrag;
@@ -120,7 +121,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             //result = result || (this.parent instanceof MultiEquation && (this instanceof MinusEquation || this instanceof PlusMinusEquation));
         }
         if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
-            if (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0) {
+            if (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 ||
+                    this.parent instanceof TrigEquation && this.parent.indexOf(this) == 0
+                    ) {
                 return true;
             }
         }
@@ -358,9 +361,6 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                     lastPoint.add(point);
                 }
             }
-        }
-        if (size() == 0){
-            canvas.drawText("?", x, y, temp);
         }
     }
 
@@ -836,7 +836,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (this.size() == 1 && !(this instanceof WritingEquation)) { //&& owner.stupid.get().equals(this)
                 this.replace(get(0));
             } else if (size() == 0) {
-                remove();
+                //remove();
             }
             result.parent = null;
         }
@@ -1782,18 +1782,18 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         float toAdd = getMyWidth() + myWidthAdd();
        // Log.d("mw-got to add","" + toAdd);
 
-        for (int i = 0; i < size() - 1; i++) {
-            if ((!(this instanceof MultiEquation)) || (((MultiEquation) this).hasSign(i))) {
-                totalWidth += toAdd;
-            }
-        }
-        if (size() ==0){
-            totalWidth = Util.varWidth(getMyWidth(),"?",getPaint());
-        }
 
-        for (int i = 0; i < size(); i++) {
-            totalWidth += get(i).measureWidth();
-        }
+
+
+            for (int i = 0; i < size() - 1; i++) {
+                if ((!(this instanceof MultiEquation)) || (((MultiEquation) this).hasSign(i))) {
+                    totalWidth += toAdd;
+                }
+            }
+
+            for (int i = 0; i < size(); i++) {
+                totalWidth += get(i).measureWidth();
+            }
 
         if (parenthesis()) {
             totalWidth += getParnWidthAddition();

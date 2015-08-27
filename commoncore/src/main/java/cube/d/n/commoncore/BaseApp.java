@@ -396,15 +396,15 @@ public abstract class BaseApp extends Application{
     }
 
     public KeyBoard getSolveScreenKeyboard(Main owner, AlgebraLine algebraLine) {
-        SharedPreferences settings = BaseApp.getApp().getSharedPreferences("crazy", 0);
-        boolean firstTime = settings.getBoolean("firstTime", true);
-
-        if (firstTime){
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean("firstTime", false);
-            editor.commit();
-            return new ReturnKeyBoard(owner,algebraLine);
-        }
+//        SharedPreferences settings = BaseApp.getApp().getSharedPreferences("crazy", 0);
+//        boolean firstTime = settings.getBoolean("firstTime", true);
+//
+//        if (firstTime){
+//            SharedPreferences.Editor editor = settings.edit();
+//            editor.putBoolean("firstTime", false);
+//            editor.commit();
+//            return new ReturnKeyBoard(owner,algebraLine);
+//        }
         return  new AlgebraKeyboard(owner,algebraLine);
     }
 

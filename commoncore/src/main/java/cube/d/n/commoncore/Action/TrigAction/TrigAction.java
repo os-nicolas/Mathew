@@ -35,8 +35,6 @@ public abstract class TrigAction extends Action {
 
         newEq.add(holder);
         holder.add(oldEq);
-
-        newEq.add(oldEq);
         updateOffset();
     }
 }

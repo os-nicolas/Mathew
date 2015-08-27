@@ -46,5 +46,4 @@ public class Mathilda extends BaseApp {
             }
             return result;
         }
-
 }

@@ -67,8 +67,6 @@ public class Mathilda extends BaseApp {
         return new EnterAction(line);
     }
 
-
-
     public ArrayList<TopicRow> getTopics(){
         return topics;
     }
