@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.Action.Action;
@@ -39,8 +40,10 @@ public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquat
     }
 
     public boolean canOperate(){
-        return isInverse(get(0)) || Operations.sortaNumber(get(0));
+        return isInverse(get(0)) || Operations.sortaNumber(get(0)) && inDomain(Operations.getValue(get(0)).doubleValue());
     }
+
+    protected abstract boolean inDomain(double value);
 
     @Override
     protected boolean willOperateOn(ArrayList<Equation> onsList) {

@@ -110,19 +110,24 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public boolean parenthesis() {
+        return parenthesis(owner.parentThesisMode());
+
+    }
+
+    public boolean parenthesis(EquationLine.pm mode) {
         // are we an add inside a * or a -
         boolean result = this instanceof AddEquation && (this.parent instanceof MultiEquation || this.parent instanceof MinusEquation);
         // are we an a the first element of a ^
-        if (owner.parentThesisMode() ==  EquationLine.pm.BOTH){
+        if (mode ==  EquationLine.pm.BOTH){
             result =  result || this instanceof WritingEquation && this.size() >1 && this.parent instanceof MultiEquation;
         }
-        if (owner.parentThesisMode() == EquationLine.pm.SOLVE) {
+        if (mode == EquationLine.pm.SOLVE) {
             result = result ||
                     (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 && this.size() != 0) ||
                     this.parent instanceof TrigEquation && this.parent.indexOf(this) == 0;
             //result = result || (this.parent instanceof MultiEquation && (this instanceof MinusEquation || this instanceof PlusMinusEquation));
         }
-        if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
+        if (mode == EquationLine.pm.WRITE) {
             if (this.parent instanceof PowerEquation && this.parent.indexOf(this) == 0 ||
                     this.parent instanceof TrigEquation && this.parent.indexOf(this) == 0
                     ) {

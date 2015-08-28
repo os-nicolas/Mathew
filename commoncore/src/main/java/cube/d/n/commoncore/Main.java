@@ -16,6 +16,13 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.eq.Pro.ACosEquation;
+import cube.d.n.commoncore.eq.Pro.ASineEquation;
+import cube.d.n.commoncore.eq.Pro.ATanEquation;
+import cube.d.n.commoncore.eq.Pro.CosEquation;
+import cube.d.n.commoncore.eq.Pro.SineEquation;
+import cube.d.n.commoncore.eq.Pro.TanEquation;
+import cube.d.n.commoncore.eq.Pro.TrigEquation;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
@@ -701,13 +708,41 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 write = new PowerEquation(owner);
             }
             for (Equation e : eq) {
-                toAdd = convert(e);
-                write.add(toAdd);
+                Equation inner =convert(e);
+                if (!(inner instanceof WritingEquation)){
+                    Equation holder = new WritingEquation(owner);
+                    holder.add(inner);
+                    inner = holder;
+                }
+                write.add(inner);
             }
         } else if (eq instanceof LeafEquation) {
             write = eq.copy();
+        } else  if (eq instanceof TrigEquation){
+            if (eq instanceof SineEquation){
+                write = new SineEquation(owner);
+            }else if (eq instanceof ASineEquation){
+                write = new ASineEquation(owner);
+            }else if (eq instanceof CosEquation){
+                write = new CosEquation(owner);
+            }else if (eq instanceof ACosEquation){
+                write = new ACosEquation(owner);
+            }else if (eq instanceof TanEquation){
+                write = new TanEquation(owner);
+            }else if (eq instanceof ATanEquation){
+                write = new ATanEquation(owner);
+            }else{
+                Log.e("Main.convert", "I should have hit one of those cases");
+            }
+            Equation inner =convert(eq.get(0));
+            if (!(inner instanceof WritingEquation)){
+                Equation holder = new WritingEquation(owner);
+                holder.add(inner);
+                inner = holder;
+            }
+            write.add(inner);
         }
-        if (eq.parenthesis()) {
+        if (eq.parenthesis(EquationLine.pm.SOLVE) && !eq.parenthesis(EquationLine.pm.WRITE)) {
             if (write instanceof WritingEquation) {
                 write.add(0, new WritingPraEquation(true, owner));
                 write.add(new WritingPraEquation(false, owner));

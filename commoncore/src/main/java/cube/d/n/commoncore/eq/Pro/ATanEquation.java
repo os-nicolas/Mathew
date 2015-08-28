@@ -15,6 +15,11 @@ public class ATanEquation extends TrigEquation<TanEquation> {
         display = "Arctan";
     }
 
+    @Override
+    protected boolean inDomain(double value) {
+        return true;
+    }
+
     protected ATanEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }

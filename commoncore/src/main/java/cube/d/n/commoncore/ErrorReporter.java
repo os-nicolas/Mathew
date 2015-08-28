@@ -36,8 +36,6 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
     private static String recentLog() {
         String res = "";
 
-
-
         for (String s: que ){
             res +=s +'\n';
         }

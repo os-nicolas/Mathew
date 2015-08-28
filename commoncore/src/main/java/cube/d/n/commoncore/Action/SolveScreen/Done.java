@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.Action.SolveScreen;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
@@ -16,7 +17,7 @@ public class Done extends Action {
     @Override
     protected void privateAct() {
         ((Selects)owner.owner.lastLine()).setSelected(null);
-        InputLine line = new InputLine(owner.owner);
+        InputLine line = (InputLine)BaseApp.getApp().getInputLine(owner.owner);
         owner.owner.addLine(line);
     }
 }

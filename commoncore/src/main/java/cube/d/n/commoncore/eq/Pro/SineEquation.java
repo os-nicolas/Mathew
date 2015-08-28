@@ -15,6 +15,11 @@ public class SineEquation extends TrigEquation<ASineEquation> {
         display = "Sin";
     }
 
+    @Override
+    protected boolean inDomain(double value) {
+        return true;
+    }
+
     protected   SineEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner,toCopy);
     }

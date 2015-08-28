@@ -15,6 +15,11 @@ public class CosEquation extends TrigEquation<ACosEquation> {
         display = "Cos";
     }
 
+    @Override
+    protected boolean inDomain(double value) {
+        return true;
+    }
+
     protected CosEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }

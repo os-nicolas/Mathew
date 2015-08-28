@@ -15,6 +15,11 @@ public class ASineEquation extends TrigEquation<SineEquation> {
         display = "Arcsin";
     }
 
+    @Override
+    protected boolean inDomain(double value) {
+        return value <=1 && value >= -1;
+    }
+
     protected   ASineEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner,toCopy);
     }

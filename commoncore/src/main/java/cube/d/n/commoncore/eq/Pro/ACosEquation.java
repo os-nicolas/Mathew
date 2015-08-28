@@ -20,6 +20,11 @@ public class ACosEquation extends TrigEquation<CosEquation> {
     }
 
     @Override
+    protected boolean inDomain(double value) {
+        return value <=1 && value >= -1;
+    }
+
+    @Override
     protected Equation protectedOperate(Equation equation) {
 
         double input = Operations.getValue(equation).doubleValue();

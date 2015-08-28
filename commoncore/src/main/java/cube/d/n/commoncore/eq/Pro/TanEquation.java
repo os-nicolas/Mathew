@@ -15,6 +15,11 @@ public class TanEquation  extends TrigEquation<ATanEquation> {
         display = "Tan";
     }
 
+    @Override
+    protected boolean inDomain(double value) {
+        return !Double.isNaN(Math.tan(value));
+    }
+
     protected TanEquation(EquationLine owner, TrigEquation toCopy) {
         super(owner, toCopy);
     }
