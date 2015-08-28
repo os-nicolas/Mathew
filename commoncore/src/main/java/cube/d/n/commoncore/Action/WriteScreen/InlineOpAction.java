@@ -26,7 +26,7 @@ public abstract class InlineOpAction extends Action {
             can = false;
         }
 
-        if (l == null && owner.owner.getLast() == null) {
+        if (l == null ) {//&& owner.owner.getLast() == null
             can = false;
         }
 
@@ -38,17 +38,18 @@ public abstract class InlineOpAction extends Action {
         Equation l = ((InputLine) owner).left();
         if (l!=null) {
             ((InputLine) owner).insert(newEq);
-        }else{
-            Equation oldEq = owner.owner.getLast();
-            if (oldEq instanceof WritingEquation) {
-                for (Equation e:oldEq) {
-                    ((InputLine) owner).insert(e);
-                }
-            }else{
-                ((InputLine) owner).insert(oldEq);
-            }
-            ((InputLine) owner).insert(newEq);
         }
+//        else{
+//            Equation oldEq = owner.owner.getLast();
+//            if (oldEq instanceof WritingEquation) {
+//                for (Equation e:oldEq) {
+//                    ((InputLine) owner).insert(e);
+//                }
+//            }else{
+//                ((InputLine) owner).insert(oldEq);
+//            }
+//            ((InputLine) owner).insert(newEq);
+//        }
         updateOffset();
     }
 }

@@ -10,6 +10,7 @@ import cube.d.n.commoncore.Action.WriteScreen.DecimalAction;
 import cube.d.n.commoncore.Action.WriteScreen.DeleteAction;
 import cube.d.n.commoncore.Action.WriteScreen.DivAction;
 import cube.d.n.commoncore.Action.WriteScreen.EqualsAction;
+import cube.d.n.commoncore.Action.WriteScreen.LastAction;
 import cube.d.n.commoncore.Action.WriteScreen.LeftAction;
 import cube.d.n.commoncore.Action.WriteScreen.MinusAction;
 import cube.d.n.commoncore.Action.WriteScreen.NumberAction;
@@ -54,6 +55,10 @@ public class InputKeyboard extends KeyBoard {
 
     @Override
     protected void addButtons() {
+
+        if(owner.getLast()!=null) {
+            popUpButtons.add((PopUpButton) (new PopUpButton("last", new LastAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
+        }
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));

@@ -26,9 +26,9 @@ public abstract class BinaryAction extends Action {
         Equation l = ((InputLine) owner).left();
         boolean can = true;
         if (l== null){
-        if ( owner.owner.getLast() == null) {
+        //if ( owner.owner.getLast() == null) {
             can = false;
-        }
+        //}
         }
         if (can && (l instanceof WritingLeafEquation || l instanceof VarEquation || l instanceof NumConstEquation)) {
             can = !l.isOpLeft();
@@ -53,17 +53,17 @@ public abstract class BinaryAction extends Action {
         newEq.add(new WritingEquation(owner));
         newEq.add(new WritingEquation(owner));
 
-        if (l== null && can) {
-            Equation oldEq =owner.owner.getLast();
-
-            ((InputLine) owner).getSelected().replace(newEq);
-            if (oldEq instanceof WritingEquation && oldEq.size() ==1){
-                newEq.get(0).add(oldEq.get(0));
-            }else {
-                newEq.get(0).add(oldEq);
-            }
-            newEq.get(1).add(((InputLine) owner).getSelected());
-        }else
+//        if (l== null && can) {
+//            Equation oldEq =owner.owner.getLast();
+//
+//            ((InputLine) owner).getSelected().replace(newEq);
+//            if (oldEq instanceof WritingEquation && oldEq.size() ==1){
+//                newEq.get(0).add(oldEq.get(0));
+//            }else {
+//                newEq.get(0).add(oldEq);
+//            }
+//            newEq.get(1).add(((InputLine) owner).getSelected());
+//        }else
 
         if (can && !block) {
             ((InputLine) owner).getSelected().justRemove();

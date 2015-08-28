@@ -635,6 +635,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public Equation getLast() {
         if (getLinesSize() != 1) {
             Line targetLine = getLine(getLinesSize() - 2);
+            //TODO remove this limitation
             if (targetLine instanceof OutputLine) {
                 EquationLine el = (OutputLine) targetLine;
 
