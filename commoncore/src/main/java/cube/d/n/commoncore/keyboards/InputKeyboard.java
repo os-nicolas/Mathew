@@ -26,6 +26,7 @@ import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.EmptyButton;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.PopUpButton;
+import cube.d.n.commoncore.PopUpEquationButton;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -57,7 +58,7 @@ public class InputKeyboard extends KeyBoard {
     protected void addButtons() {
 
         if(owner.getLast()!=null) {
-            popUpButtons.add((PopUpButton) (new PopUpButton("last", new LastAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
+            popUpButtons.add((PopUpButton) (new PopUpEquationButton(owner.getLast().copy(), new LastAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
         }
 
         ArrayList<Button> firstRow = new ArrayList<Button>();

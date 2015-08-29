@@ -34,6 +34,7 @@ import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.any.SignEquation;
+import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
 import cube.d.n.commoncore.eq.write.WritingPraEquation;
@@ -636,13 +637,28 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         if (getLinesSize() != 1) {
             Line targetLine = getLine(getLinesSize() - 2);
             //TODO remove this limitation
-            if (targetLine instanceof OutputLine) {
-                EquationLine el = (OutputLine) targetLine;
+            if (targetLine instanceof EquationLine) {
+                EquationLine el = (EquationLine) targetLine;
 
                 Equation result = el.stupid.get().copy();
-                result = addParnsIfNeeded(convert(result));
-                result.updateOwner((EquationLine) lastLine());
-                return result;
+                if (result instanceof EqualsEquation){
+                    if (result.get(0) instanceof VarEquation){
+                        result = convert(result.get(1));//addParnsIfNeeded()
+                        result.updateOwner((EquationLine) lastLine());
+                        return result;
+                    }else if (result.get(1) instanceof VarEquation){
+                        result = convert(result.get(0));//addParnsIfNeeded()
+                        result.updateOwner((EquationLine) lastLine());
+                        return result;
+                    }else {
+                        return null;
+                    }
+                }else {
+
+                    result = convert(result);//addParnsIfNeeded()
+                    result.updateOwner((EquationLine) lastLine());
+                    return result;
+                }
             }
         }
         return null;
@@ -754,9 +770,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 write.add(old);
                 write.add(new WritingPraEquation(false, owner));
             }
-
         }
-
         return write;
     }
 

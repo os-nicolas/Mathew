@@ -3,6 +3,7 @@ package cube.d.n.commoncore.Action.WriteScreen;
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.VarEquation;
+import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
@@ -12,6 +13,7 @@ import cube.d.n.commoncore.lines.InputLine;
 public class LastAction extends Action {
 
     Equation last;
+    private boolean done= false;
 
     public LastAction(EquationLine owner) {
         super(owner);
@@ -20,15 +22,24 @@ public class LastAction extends Action {
 
     @Override
     public boolean canAct() {
-        return last != null;
+
+        return last != null && !done;
     }
 
     @Override
     protected void privateAct() {
         ((InputLine)owner).getSelected().goDark();
 
-        ((InputLine)owner).insert(last);
+
+        if (last instanceof WritingEquation){
+            for (Equation e: last) {
+                ((InputLine) owner).insert(e);
+            }
+        }else {
+            ((InputLine) owner).insert(last);
+        }
 
         updateOffset();
+         done = true;
     }
 }

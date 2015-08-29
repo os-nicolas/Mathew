@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.Action.WriteScreen;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.eq.Pro.TrigEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
@@ -18,10 +19,15 @@ public class DeleteAction extends Action {
     @Override
     public boolean canAct() {
 
-            Equation l = ((InputLine)owner).left();
-            if (l != null) {
+        Equation l = ((InputLine) owner).left();
+        if (l != null) {
+            return true;
+        }
+        if (l==null &&((InputLine) owner).getSelected().parent != null) {
+            if (((InputLine) owner).getSelected().parent.parent instanceof TrigEquation) {
                 return true;
             }
+        }
         return false;
     }
 
@@ -29,20 +35,18 @@ public class DeleteAction extends Action {
     protected void privateAct() {
         //TODO
 
-        ((InputLine)owner).getSelected().goDark();
-        Equation l = ((InputLine)owner).left();
+        ((InputLine) owner).getSelected().goDark();
+        Equation l = ((InputLine) owner).left();
         if (l.parent instanceof BinaryEquation) {
-            l.parent.replace(l);
-            // didn't we just check this? confusing i know but since the replace our l.parent has changed
-            if (!(l.parent instanceof BinaryEquation)) {
-                int pos = l.parent.indexOf(l);
-                l.parent.add(pos + 1, ((InputLine)owner).getSelected());
-            } else {
-                Equation write = new WritingEquation(((InputLine)owner));
-                l.replace(write);
-                write.add(l);
-                write.add(((InputLine)owner).getSelected());
-            }
+            //keep the left kid kill the right
+            BinaryEquation be = (BinaryEquation)(l.parent);
+            WritingEquation superHolder = (WritingEquation)(l.parent.parent);
+            int index = superHolder.indexOf(be);
+            ((Equation)be).remove();
+            WritingEquation leftSide = (WritingEquation)(((Equation) be).get(0));
+                for (int i=leftSide.size()-1;i>=0;i--){
+                    superHolder.add(index,leftSide.get(i));
+                }
         } else if (l instanceof NumConstEquation) {
             if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
                 String display = ((NumConstEquation) l).getDisplaySimple();
@@ -55,7 +59,18 @@ public class DeleteAction extends Action {
             if (((NumConstEquation) l).getDisplaySimple().length() == 0) {
                 l.remove();
             }
-        } else {
+        } else if (l==null &&((InputLine) owner).getSelected().parent != null) {
+            WritingEquation holder = (WritingEquation)(((InputLine) owner).getSelected().parent);
+            if (holder.parent instanceof TrigEquation) {
+                TrigEquation trigEq = (TrigEquation)(holder.parent);
+                WritingEquation superHolder = (WritingEquation)(trigEq.parent);
+                int index = superHolder.indexOf(trigEq);
+                trigEq.remove();
+                for (int i=holder.size()-1;i>=0;i--){
+                    superHolder.add(index,holder.get(i));
+                }
+            }
+        }else{
             l.remove();
         }
         updateOffset();

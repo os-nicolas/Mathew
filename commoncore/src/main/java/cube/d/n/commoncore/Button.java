@@ -5,10 +5,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.text.TextPaint;
+import android.util.Log;
 import android.view.MotionEvent;
 
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.eq.any.Equation;
 
 public class Button implements Physical {
     // in percent of width (1 = full width)
@@ -235,4 +237,48 @@ public class Button implements Physical {
         return (top() + bottom()) / 2;
     }
 
+
+    public static void drawEqButton(Button b, Canvas canvas, Paint p, Equation myEq) {
+        b.canvasHeight = canvas.getHeight();
+        b.canvasWidth = canvas.getWidth();
+
+        if (!b.hover) {
+            int currentColor = b.bkgPaint.getColor();
+            currentColor = BaseApp.colorFade(currentColor, b.targetBkgColor);
+            b.bkgPaint.setColor(currentColor);
+        }
+        Paint bkgbkgPaint = new Paint();
+        bkgbkgPaint.setColor(b.targetBkgColor);
+        bkgbkgPaint.setAlpha(p.getAlpha());
+        RectF r = new RectF(b.left(), b.top(), b.right(), b.bottom());
+        canvas.drawRect(r, bkgbkgPaint);
+
+
+        // if they are the same color, but both are somewhat transparent it looks weird
+        // this happen on fade ins
+        if (p.getAlpha() == 0xff) {
+            float smaller = 3 * BaseApp.getApp().getDpi();
+            RectF r2 = new RectF(b.left() + smaller, b.top() + smaller, b.right() - smaller, b.bottom() - smaller);
+            b.bkgPaint.setAlpha(p.getAlpha());
+            canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), b.bkgPaint);
+        }
+
+        int myAlpha = b.textPaint.getAlpha() * p.getAlpha() / (0xff);
+        if (myAlpha != 0){
+            float buffer = BaseApp.getApp().getBuffer();
+
+            int dbCount =0;
+
+            myEq.overWriteZoom(1);
+            while (myEq.measureWidth() + 2 * buffer > b.measureWidth() ||myEq.measureHeight() + 2 * buffer > b.targetHeight()) {
+                myEq.overWriteZoom(myEq.getMyZoom()*.9f);
+                dbCount++;
+                if (dbCount>20){
+                    Log.d("sad", "we are stuck");
+                }
+            }
+            myEq.setAlpha(myAlpha);
+            myEq.draw(canvas,b.getX(),b.getY());
+        }
+    }
 }
