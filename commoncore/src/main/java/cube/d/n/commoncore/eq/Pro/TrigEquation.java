@@ -190,4 +190,6 @@ public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquat
         }
         return totalHeight;
     }
+
+    public abstract Inverse emptyInverse();
 }

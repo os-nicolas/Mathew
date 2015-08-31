@@ -5,6 +5,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.eq.Pro.TrigEquation;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
@@ -50,9 +51,11 @@ public class DragEquation {
         if (equation.parent instanceof PowerEquation && equation.parent.indexOf(equation) == 1){
             ops.add(Equation.Op.POWER);
         }
+        if (equation instanceof TrigEquation && equation.parent instanceof EqualsEquation){
+            ops.add(Equation.Op.FUNCTION);
+        }
         if (ops.size()==0){
             Log.i("this seems bad", "");
         }
     }
-
 }

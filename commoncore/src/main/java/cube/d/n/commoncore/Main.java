@@ -171,7 +171,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     private Point lastCenter;
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
+    public synchronized boolean onTouch(View v, MotionEvent event) {
         // we need to finish up a touch that the user has started
         // even if we are not allowing touches
         if (allowTouch || event.getAction() != MotionEvent.ACTION_DOWN) {
@@ -369,7 +369,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     Equation lastEq = null;
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected synchronized void onDraw(Canvas canvas) {
         //Log.d("draw","I drew!");
         width = canvas.getWidth();
         if (height == 0) {
@@ -522,8 +522,10 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             }
             maxOffsetY = Math.max(0, maxOffsetY);
 
-            for (Line l : lines) {
-                maxOffsetY += l.measureHeight();
+
+            // this has throw concurrent modification
+            for (int i =0; i< lines.size(); i++) {
+                maxOffsetY += lines.get(i).measureHeight();
             }
 //            if (bitMap != null){
 //                maxOffsetY += bitMap.getHeight();

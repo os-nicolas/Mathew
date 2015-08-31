@@ -40,6 +40,11 @@ public class ASineEquation extends TrigEquation<SineEquation> {
     }
 
     @Override
+    public SineEquation emptyInverse() {
+        return new SineEquation(owner);
+    }
+
+    @Override
     public Equation copy() {
         return new ASineEquation(owner,this);
     }

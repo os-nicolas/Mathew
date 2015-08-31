@@ -39,6 +39,11 @@ public class TanEquation  extends TrigEquation<ATanEquation> {
     }
 
     @Override
+    public ATanEquation emptyInverse() {
+        return new ATanEquation(owner);
+    }
+
+    @Override
     public Equation copy() {
         return new TanEquation(owner, this);
     }

@@ -1123,18 +1123,23 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (parent != null && parent.indexOf(this) == -1) {
             Log.i("", "dead on arrival");
         }
-        boolean can = false;
-        if (op == Op.ADD) {
-            can = CanAdd(dragging,right);
-        } else if (op == Op.MULTI) {
-            can = canMuli(dragging,right);
-        } else if (op == Op.DIV) {
-            can = canDiv(dragging);
-        } else if (op == Op.POWER) {
-            can = canPower(dragging);
-        }
 
-        if (can) {
+
+
+//        boolean can = false;
+//        if (op == Op.ADD) {
+//            can = CanAdd(dragging,right);
+//        } else if (op == Op.MULTI) {
+//            can = canMuli(dragging,right);
+//        } else if (op == Op.DIV) {
+//            can = canDiv(dragging);
+//        } else if (op == Op.POWER) {
+//            can = canPower(dragging);
+//        } else if (op == Op.FUNCTION) {
+//            can = canFunction(dragging);
+//        }
+//
+//        if (can) {
             boolean notSameSide = (op == Op.ADD && side() != dragging.side());
 
             boolean thisNeg = false;
@@ -1164,8 +1169,21 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 //                minusSigns.add((MinusEquation) this.parent);
 //                this.parent.replace(this);
 //            }
+            if (op == Op.FUNCTION) {
+                // this is pretty straight forward
 
-            if (op == Op.POWER) {
+                EqualsEquation eq = (EqualsEquation) dragging.parent;
+                int otherSideIndex = (0== eq.side(dragging)?1:0);
+
+                dragging.replace(dragging.get(0));
+
+                Equation otherSide = eq.get(otherSideIndex);
+                Equation newOtherSide = ((TrigEquation)dragging).emptyInverse();
+                otherSide.replace(newOtherSide);
+                newOtherSide.add(otherSide);
+
+                dragging = newOtherSide;
+            } else if (op == Op.POWER) {
                 dragging.remove();
                 Equation power;
                 // write as 1/8 or decimal?
@@ -1261,7 +1279,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 //                at.replace(me);
 //                me.add(at);
 //            }
-        }
+//        }
         return dragging;
     }
 
@@ -1495,6 +1513,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 DragLocation newset = new DragLocation(Op.POWER, dragging, this, false);
                 dragLocations.add(newset);
             }
+            if (ops.contains(Op.FUNCTION) && canFunction(dragging)) {
+                DragLocation newset = new DragLocation(Op.FUNCTION, dragging, this, false);
+                dragLocations.add(newset);
+            }
 
         }
         if (dragging.equals(this)) {
@@ -1506,6 +1528,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 e.getDragLocations(dragging, dragLocations, ops);
             }
         }
+    }
+
+    private boolean canFunction(Equation dragging) {
+        return dragging instanceof TrigEquation && ((TrigEquation) dragging).parent instanceof EqualsEquation;
     }
 
     private boolean canMuli(Equation dragging) {
@@ -1758,7 +1784,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return y - measureHeightUpper() + (measureHeight()/2);
     }
 
-    public enum Op {ADD, DIV, POWER, MULTI}
+    public enum Op {ADD, DIV, POWER, MULTI, FUNCTION}
 
 
     // ######################## Measure stuff ########################################
