@@ -1125,7 +1125,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         }
         boolean can = false;
         if (op == Op.ADD) {
-            can = CanAdd(dragging,right);
+            can = canAdd(dragging);
         } else if (op == Op.MULTI) {
             can = canMuli(dragging,right);
         } else if (op == Op.DIV) {
@@ -1331,7 +1331,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         super.remove(equation);
     }
 
-    private boolean CanAdd(Equation dragging,boolean right) {
+    public boolean canAdd(Equation dragging) {
         // if we are already added it's a bit silly
 //        if (this.parent instanceof AddEquation && this.parent.contains(dragging) && this.parent.indexOf(this) == this.parent.indexOf(dragging) + (right?1:-1)){
 //            return false;
@@ -1481,10 +1481,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (ops.contains(Op.MULTI) && canMuli(dragging,false) && !(this instanceof MultiEquation)) {
                 dragLocations.add(new DragLocation(Op.MULTI, dragging, this, false));
             }
-            if (ops.contains(Op.ADD) && CanAdd(dragging,true) && !(this instanceof AddEquation)) {
+            if (ops.contains(Op.ADD) && canAdd(dragging) && !(this instanceof AddEquation)) {
                 dragLocations.add(new DragLocation(Op.ADD, dragging, this, true));
             }
-            if (ops.contains(Op.ADD) && CanAdd(dragging,false) && !(this instanceof AddEquation)) {
+            if (ops.contains(Op.ADD) && canAdd(dragging) && !(this instanceof AddEquation)) {
                 dragLocations.add(new DragLocation(Op.ADD, dragging, this, false));
             }
             if (ops.contains(Op.DIV) && canDiv(dragging)) {

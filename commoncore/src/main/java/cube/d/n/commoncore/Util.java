@@ -191,6 +191,17 @@ public class Util {
         return newEq;
     }
 
+    public static Equation getSimilarEquation(Equation stupid1, Equation sub1,Equation stupid2) {
+        Equation at1 = stupid1;
+        Equation at2 = stupid2;
+        while (!at1.equals(sub1)) {
+            int index = at1.deepIndexOf(sub1);
+            at1 = at1.get(index);
+            at2 = at2.get(index);
+        }
+        return at2;
+    }
+
     private static boolean shouldOperate(Equation equation, int at) {
         if (equation instanceof BinaryOperator &&  at +1 <equation.size() ){
             if ((equation.get(at).removeNeg() instanceof NumConstEquation)&&

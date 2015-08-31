@@ -24,24 +24,14 @@ public class DragLocation implements Comparable<DragLocation> {
         } else {
             this.owner = (AlgebraLine)equation.owner;
             myStupid = equation.owner.stupid.get().copy();
+
+            Equation ownerStupid = owner.stupid.get();
+
+            Equation ourEquation = Util.getSimilarEquation(ownerStupid, equation, myStupid);
+
             //let's follow the path down
             Equation at = owner.stupid.get();
-            Equation myAt = myStupid;
-            while (!at.equals(equation)) {
-                int index = at.deepIndexOf(equation);
-                at = at.get(index);
-                myAt = myAt.get(index);
-            }
-            Equation ourEquation = myAt;
-
-            at = equation.owner.stupid.get();
-            myAt = myStupid;
-            while (!at.equals(dragging)) {
-                int index = at.deepIndexOf(dragging);
-                at = at.get(index);
-                myAt = myAt.get(index);
-            }
-            myDemo = myAt;
+            myDemo = Util.getSimilarEquation(ownerStupid, dragging, myStupid);
 
             // try op with our copies
             int lookingForId = myDemo.hashCode();
