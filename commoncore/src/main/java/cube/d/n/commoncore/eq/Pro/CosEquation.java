@@ -39,6 +39,11 @@ public class CosEquation extends TrigEquation<ACosEquation> {
     }
 
     @Override
+    public ACosEquation emptyInverse() {
+        return new ACosEquation(owner);
+    }
+
+    @Override
     public Equation copy() {
         return new CosEquation(owner, this);
     }

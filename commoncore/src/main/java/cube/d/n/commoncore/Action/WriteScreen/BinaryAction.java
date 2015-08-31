@@ -25,11 +25,13 @@ public abstract class BinaryAction extends Action {
     public boolean canAct() {
         Equation l = ((InputLine) owner).left();
         boolean can = true;
-        if (l== null){
+        if (l== null || ((InputLine) owner).getSelected().parent.size() ==1){
         //if ( owner.owner.getLast() == null) {
             can = false;
         //}
         }
+
+
         if (can && (l instanceof WritingLeafEquation || l instanceof VarEquation || l instanceof NumConstEquation)) {
             can = !l.isOpLeft();
         }

@@ -37,43 +37,55 @@ public class DeleteAction extends Action {
 
         ((InputLine) owner).getSelected().goDark();
         Equation l = ((InputLine) owner).left();
-        if (l.parent instanceof BinaryEquation) {
-            //keep the left kid kill the right
-            BinaryEquation be = (BinaryEquation)(l.parent);
-            WritingEquation superHolder = (WritingEquation)(l.parent.parent);
-            int index = superHolder.indexOf(be);
-            ((Equation)be).remove();
-            WritingEquation leftSide = (WritingEquation)(((Equation) be).get(0));
-                for (int i=leftSide.size()-1;i>=0;i--){
-                    superHolder.add(index,leftSide.get(i));
+        // this first case is pretty unique
+        // its Sin(|) you hit delete
+        // it's "( Sin( "(|) ) )
+        Equation selected  =((InputLine) owner).getSelected();
+
+        if (selected.parent != null && (selected.parent).indexOf(selected)== 0 && selected.parent.parent instanceof TrigEquation) {
+            selected.parent.parent.replace(selected);
+        } else {
+            if (l.parent instanceof BinaryEquation) {
+                //keep the left kid kill the right
+                BinaryEquation be = (BinaryEquation) (l.parent);
+                WritingEquation superHolder = (WritingEquation) (l.parent.parent);
+                int index = superHolder.indexOf(be);
+                ((Equation) be).remove();
+                ((InputLine) owner).getSelected().justRemove();
+                superHolder.add(index, ((InputLine) owner).getSelected());
+                WritingEquation leftSide = (WritingEquation) (((Equation) be).get(0));
+                for (int i = leftSide.size() - 1; i >= 0; i--) {
+                    superHolder.add(index, leftSide.get(i));
                 }
-        } else if (l instanceof NumConstEquation) {
-            if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
-                String display = ((NumConstEquation) l).getDisplaySimple();
-                String toSet = (String) display.subSequence(0, display.length() - 1);
-                if (toSet.length() != 0 && toSet.charAt(0) == '-') {
-                    toSet = toSet.substring(1, toSet.length());
+
+            } else if (l instanceof NumConstEquation) {
+                if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
+                    String display = ((NumConstEquation) l).getDisplaySimple();
+                    String toSet = (String) display.subSequence(0, display.length() - 1);
+                    if (toSet.length() != 0 && toSet.charAt(0) == '-') {
+                        toSet = toSet.substring(1, toSet.length());
+                    }
+                    ((NumConstEquation) l).setDisplay(toSet);
                 }
-                ((NumConstEquation) l).setDisplay(toSet);
-            }
-            if (((NumConstEquation) l).getDisplaySimple().length() == 0) {
+                if (((NumConstEquation) l).getDisplaySimple().length() == 0) {
+                    l.remove();
+                }
+            } else if (l == null && ((InputLine) owner).getSelected().parent != null) {
+                WritingEquation holder = (WritingEquation) (((InputLine) owner).getSelected().parent);
+                if (holder.parent instanceof TrigEquation) {
+                    TrigEquation trigEq = (TrigEquation) (holder.parent);
+                    WritingEquation superHolder = (WritingEquation) (trigEq.parent);
+                    int index = superHolder.indexOf(trigEq);
+                    trigEq.remove();
+                    for (int i = holder.size() - 1; i >= 0; i--) {
+                        superHolder.add(index, holder.get(i));
+                    }
+                }
+            } else {
                 l.remove();
             }
-        } else if (l==null &&((InputLine) owner).getSelected().parent != null) {
-            WritingEquation holder = (WritingEquation)(((InputLine) owner).getSelected().parent);
-            if (holder.parent instanceof TrigEquation) {
-                TrigEquation trigEq = (TrigEquation)(holder.parent);
-                WritingEquation superHolder = (WritingEquation)(trigEq.parent);
-                int index = superHolder.indexOf(trigEq);
-                trigEq.remove();
-                for (int i=holder.size()-1;i>=0;i--){
-                    superHolder.add(index,holder.get(i));
-                }
-            }
-        }else{
-            l.remove();
+            updateOffset();
         }
-        updateOffset();
     }
 
 }
