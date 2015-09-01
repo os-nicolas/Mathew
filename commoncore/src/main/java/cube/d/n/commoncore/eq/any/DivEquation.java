@@ -188,7 +188,8 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 	}
 
     @Override
-    public SelectedRow getSelectedRow() {
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> startWith = super.getSelectedRow();
         final Equation a = get(0);
         final Equation b = get(1);
 
@@ -299,10 +300,9 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         if (buttons.size() != 0){
             SelectedRow sr = new SelectedRow(1f/9f);
             sr.addButtonsRow(buttons,0,1);
-            return sr;
-        }else{
-            return null;
+            startWith.add(sr);
         }
+        return startWith;
     }
 	
 	public void tryOperator(ArrayList<Equation> eqs) {

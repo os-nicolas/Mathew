@@ -8,11 +8,14 @@ import java.util.ArrayList;
 import cube.d.n.commoncore.Action.SovleScreen.AddSelectedToBothSIdes;
 import cube.d.n.commoncore.Action.SovleScreen.BothSides;
 import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
+import cube.d.n.commoncore.Action.SovleScreen.DivBySelected;
+import cube.d.n.commoncore.Action.SovleScreen.MultiBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.PopUpButton;
+import cube.d.n.commoncore.PopUpEquationDisplay;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
@@ -35,7 +38,7 @@ public class AlgebraKeyboard extends KeyBoard {
     @Override
     protected void addButtons() {
 
-        popUpButtons.add(new PopUpButton("add",new AddSelectedToBothSIdes(((AlgebraLine)line))));
+
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button( "+", new BothSides((AlgebraLine)line, BothSidesMode.ADD)));

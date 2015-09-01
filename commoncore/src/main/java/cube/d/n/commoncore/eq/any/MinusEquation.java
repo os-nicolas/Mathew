@@ -28,7 +28,10 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
     }
 
     @Override
-    public SelectedRow getSelectedRow() {
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> startWith = super.getSelectedRow();
+
+
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
         final Equation that = this;
         if (this.get(0) instanceof AddEquation){
@@ -48,10 +51,9 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
         if (buttons.size() != 0){
             SelectedRow sr = new SelectedRow(1f/9f);
             sr.addButtonsRow(buttons,0,1);
-            return sr;
-        }else{
-            return null;
+            startWith.add(sr);
         }
+        return startWith;
 
     }
 

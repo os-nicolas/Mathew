@@ -903,11 +903,11 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
 
         if (selected != null){
             Log.i("getting the thing","yep");
-                SelectedRow toAdd = selected.getSelectedRow();
+            ArrayList<SelectedRow> toAdd = selected.getSelectedRow();
 
             Log.i("done getting the thing","yep");
-            if (toAdd != null) {
-                ak.popUpLines.add(toAdd);
+            for (SelectedRow sr : toAdd){
+                ak.popUpLines.add(sr);
             }
         }
     }

@@ -30,7 +30,7 @@ android:layout_height="match_parent">
         android:orientation="vertical"
         android:layout_height="fill_parent"
         android:layout_width="fill_parent"
-        android:background="#ff000000"
+        android:background="#ffddd7d7"
         android:id="@+id/problem_white_out">
     </LinearLayout>
 

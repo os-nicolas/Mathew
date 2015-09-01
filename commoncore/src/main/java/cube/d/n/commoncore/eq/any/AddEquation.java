@@ -117,7 +117,8 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
     }
 
     @Override
-    public SelectedRow getSelectedRow() {
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> startWith = super.getSelectedRow();
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
         final AddEquation that = this;
         if (this.size() == 2) {
@@ -182,10 +183,9 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);
             sr.addButtonsRow(buttons, 0, 1);
-            return sr;
-        } else {
-            return null;
+            startWith.add(sr);
         }
+        return startWith;
     }
 
     private void handleResult(int at, Equation result) {

@@ -44,6 +44,7 @@ public class Button implements Physical {
         this.bkgPaint = new TextPaint(BaseApp.getApp().bkgPaint);
         this.highlightColor = BaseApp.getApp().darkColor;
         targetBkgColor = BaseApp.getApp().lightColor;
+        bkgPaint.setColor(targetBkgColor);
         this.textPaint = new TextPaint(BaseApp.getApp().textPaint);
         //TODO scale by dpi
         //TODO does not work at all
@@ -89,7 +90,7 @@ public class Button implements Physical {
         }
         Paint bkgbkgPaint = new Paint();
         bkgbkgPaint.setColor(targetBkgColor);
-        bkgbkgPaint.setAlpha(p.getAlpha());
+        bkgbkgPaint.setAlpha(Math.min(p.getAlpha() ,bkgbkgPaint.getAlpha()));
         RectF r = new RectF(left(), top(), right(), bottom());
         canvas.drawRect(r, bkgbkgPaint);
 

@@ -10,7 +10,7 @@ import cube.d.n.commoncore.eq.any.Equation;
  * Created by Colin_000 on 8/28/2015.
  */
 public class PopUpEquationButton extends  PopUpButton {
-    public final Equation myEq;
+    public Equation myEq;
 
     public PopUpEquationButton(Equation eq, Action myAction) {
         super("", myAction);

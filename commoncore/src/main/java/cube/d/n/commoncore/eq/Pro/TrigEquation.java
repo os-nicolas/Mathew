@@ -51,7 +51,8 @@ public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquat
     }
 
     @Override
-    public SelectedRow getSelectedRow() {
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> startWith = super.getSelectedRow();
         final Equation a = get(0);
 
 
@@ -77,10 +78,9 @@ public abstract class TrigEquation<Inverse extends Equation> extends MonaryEquat
         if (buttons.size() != 0){
             SelectedRow sr = new SelectedRow(1f/9f);
             sr.addButtonsRow(buttons,0,1);
-            return sr;
-        }else{
-            return null;
+            startWith.add(sr);
         }
+        return startWith;
     }
 
     @Override

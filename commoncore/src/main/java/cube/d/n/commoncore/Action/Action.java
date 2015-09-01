@@ -4,11 +4,13 @@ import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
+import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.LeafEquation;
 import cube.d.n.commoncore.eq.any.MonaryEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.eq.write.WritingLeafEquation;
+import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
@@ -32,6 +34,14 @@ public abstract class Action {
             privateAct();
             ErrorReporter.log("acted",owner.stupid.get().toString());
         }
+    }
+
+    protected void setNewStupid(EqualsEquation myStup) {
+        myStup.fixIntegrety();
+        owner.stupid.set(myStup);
+        ((AlgebraLine)owner).getSelected().setSelected(false);
+        ((AlgebraLine)owner).changed();
+        ((AlgebraLine)owner).updateHistory();
     }
 
     protected abstract void privateAct();

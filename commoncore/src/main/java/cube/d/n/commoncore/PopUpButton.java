@@ -13,10 +13,15 @@ public class PopUpButton extends Button {
     float endAtX=1f;
     float targetHeight=1f/9f;
     float currentHeight=0f;
+    protected boolean can = false;
 
     public PopUpButton( String text, Action myAction) {
         super(text, myAction);
         targetBkgColor = BaseApp.getApp().lightLightColor;
+
+//        targetBkgColor = targetBkgColor%0x1000000;
+//        targetBkgColor = targetBkgColor + 0x88000000;
+
         this.textPaint.setAlpha(0);
     }
 
@@ -28,7 +33,8 @@ public class PopUpButton extends Button {
 
     public void updateLocation(KeyBoard owner){
         float rate = BaseApp.getApp().getRate()/2f;
-            if (myAction.canAct()){
+        updateCanAct();
+            if (can){
                 if (currentHeight < targetHeight) {
                     currentHeight = (currentHeight * (rate - 1) + targetHeight) / rate;
                     if ((int)(currentHeight*100)==(int)((currentHeight * (rate - 1) + targetHeight)*100 / rate)){
@@ -65,6 +71,10 @@ public class PopUpButton extends Button {
 
             setLocation(startAtX,endAtX,ytop,ybot);
 
+    }
+
+    protected void updateCanAct() {
+        can = myAction.canAct();
     }
 
     protected void fullyHidden() {

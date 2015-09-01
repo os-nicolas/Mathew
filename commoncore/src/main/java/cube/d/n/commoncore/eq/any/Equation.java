@@ -15,6 +15,10 @@ import java.util.Collections;
 import java.util.HashSet;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.SovleScreen.AddSelectedToBothSIdes;
+import cube.d.n.commoncore.Action.SovleScreen.DivBySelected;
+import cube.d.n.commoncore.Action.SovleScreen.MultiBySelected;
+import cube.d.n.commoncore.Action.SovleScreen.SelectedOpAction;
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.CanTrackChanges;
@@ -1657,8 +1661,31 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return x;
     }
 
-    public SelectedRow getSelectedRow() {
-        return null;
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> res = new ArrayList<>();
+        if (BaseApp.getApp().bothSidesPopUps()){
+            ArrayList<SelectedRowButtons> butts = new ArrayList<>();
+            if (AddSelectedToBothSIdes.canAct(this,owner.stupid.get())){
+                SelectedOpAction a = new AddSelectedToBothSIdes((AlgebraLine)owner);
+                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+            }
+            if (MultiBySelected.canAct(this, owner.stupid.get())){
+                SelectedOpAction a = new MultiBySelected((AlgebraLine)owner);
+                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+            }
+            if (DivBySelected.canAct(this, owner.stupid.get())){
+                SelectedOpAction a = new DivBySelected((AlgebraLine)owner);
+                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+            }
+            if (butts.size()!= 0 ){
+
+                SelectedRow row = new SelectedRow(1f/9f);
+                row.addButtonsRow(butts,0f,1f);
+                res.add(row);
+            }
+
+        }
+        return res;
     }
 
     public void addWatcher(GS<Equation> watcher) {

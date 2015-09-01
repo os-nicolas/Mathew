@@ -153,7 +153,8 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
 
 
     @Override
-    public SelectedRow getSelectedRow() {
+    public ArrayList<SelectedRow> getSelectedRow() {
+        ArrayList<SelectedRow> startWith = super.getSelectedRow();
 
 
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
@@ -186,10 +187,9 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);
             sr.addButtonsRow(buttons, 0, 1);
-            return sr;
-        } else {
-            return null;
+            startWith.add(sr);
         }
+        return startWith;
     }
 
     private boolean multi_canMulti(ArrayList<Equation> eqs) {

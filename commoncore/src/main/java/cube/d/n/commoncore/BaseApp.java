@@ -442,4 +442,6 @@ public abstract class BaseApp extends Application{
         // Send a screen view.
         t.send(new HitBuilders.AppViewBuilder().build());
     }
+
+    public abstract boolean bothSidesPopUps();
 }

@@ -103,6 +103,11 @@ public class Mathilda extends BaseApp {
         return false;
     }
 
+    @Override
+    public boolean bothSidesPopUps() {
+        return true;
+    }
+
     private ArrayList<ProblemRow> initProblems() {
 
         ArrayList<ProblemRow> problemRows = new ArrayList<ProblemRow>();

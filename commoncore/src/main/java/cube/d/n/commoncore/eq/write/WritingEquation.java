@@ -20,6 +20,7 @@ import cube.d.n.commoncore.eq.any.PowerEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
+import cube.d.n.commoncore.lines.Line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class WritingEquation extends Equation {
         display = "\"";
     }
 
-    public WritingEquation(InputLine owner, WritingEquation equations) {
+    public WritingEquation(EquationLine owner, WritingEquation equations) {
         super(owner, equations);
         init();
     }
@@ -77,7 +78,7 @@ public class WritingEquation extends Equation {
 
     @Override
     public Equation copy() {
-        Equation result = new WritingEquation((InputLine)owner,this);
+        Equation result = new WritingEquation(owner,this);
         return result;
     }
 
