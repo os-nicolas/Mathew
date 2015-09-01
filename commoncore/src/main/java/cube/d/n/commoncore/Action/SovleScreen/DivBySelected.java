@@ -9,6 +9,7 @@ import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MultiDivSuperEquation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
+import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.SignEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
@@ -33,6 +34,7 @@ public class DivBySelected extends SelectedOpAction {
 
     @Override
     protected void privateAct() {
+
         setNewStupid((EqualsEquation)getResultEq());
     }
 
@@ -51,8 +53,11 @@ public class DivBySelected extends SelectedOpAction {
 
         Equation mySel = Util.getSimilarEquation(stup, sel, myStup);
         int side = (myStup.side(mySel)==0?1:0);
-        mySel.remove();
-
+        if (mySel.parent.equals(myStup)){
+            mySel.replace(NumConstEquation.create(1.0,mySel.owner));
+        }else {
+            mySel.remove();
+        }
         //hmm here is a Question
         // 4*a = 12/5 do they want it to go to 4*a = (12/5)/4 or 4*a = (12/(5*4))
         // probably (12/5)/4
@@ -68,7 +73,11 @@ public class DivBySelected extends SelectedOpAction {
     }
 
     public static boolean canAct(Equation stup, Equation sel) {
-        if (sel != null){
+
+        if (sel != null  && stup instanceof EqualsEquation){
+            while (sel.parent instanceof SignEquation){
+                sel = sel.parent;
+            }
             if (stup instanceof EqualsEquation && stup.DivMultiContain(sel)){
 
                 // sadly we are not done.
@@ -82,11 +91,13 @@ public class DivBySelected extends SelectedOpAction {
                 // 4 = 55 where 4 is selected
                 int side = ((EqualsEquation)stup).side(sel);
                 Equation sideRoot = stup.get(side);
+                if (sideRoot.equals(sel)){
+                    return true;
+                }
                 while (sideRoot instanceof SignEquation){
                     sideRoot = sideRoot.get(0);
                 }
-                return sideRoot.equals(sel) ||
-                        (sideRoot.contains(sel)&& sideRoot instanceof MultiEquation) ||
+                return (sideRoot.contains(sel)&& sideRoot instanceof MultiEquation) ||
                         (sideRoot instanceof DivEquation && sideRoot.get(0).equals(sel)) ;
 
 

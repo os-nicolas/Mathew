@@ -41,6 +41,7 @@ public abstract class Action {
         owner.stupid.set(myStup);
         ((AlgebraLine)owner).getSelected().setSelected(false);
         ((AlgebraLine)owner).changed();
+        ((AlgebraLine)owner).updatePopUpButtons();
         ((AlgebraLine)owner).updateHistory();
     }
 

@@ -75,8 +75,11 @@ public class MultiBySelected extends SelectedOpAction {
     }
 
     public static boolean canAct(Equation stup, Equation sel) {
-        if (sel != null){
-            if (stup instanceof EqualsEquation && stup.DivMultiContain(sel)){
+        if (sel != null && stup instanceof EqualsEquation){
+            while (sel.parent instanceof SignEquation){
+                sel = sel.parent;
+            }
+
                 // sadly we are not done.
                 // we need find the multiDivEqaution
                 // that is closest to root on sel side
@@ -93,7 +96,7 @@ public class MultiBySelected extends SelectedOpAction {
                 // and see if sel is on top
                 // if it's not on top return true
                 //return !((MultiDivSuperEquation)sideRoot).onTop(sel);
-            }
+
         }
         return false;
     }

@@ -66,14 +66,25 @@ public class AddSelectedToBothSIdes extends SelectedOpAction {
     public boolean canAct() {
         Equation sel = getSel();
         Equation stup = ((AlgebraLine)owner).stupid.get();
-        return canAct(sel, stup);
+        return canAct(stup,sel);
     }
 
-    public static boolean canAct(Equation sel, Equation stup) {
-        if (sel != null){
-            if (stup instanceof EqualsEquation && stup.addContain(sel)){
+    public static boolean canAct(Equation stup,Equation sel) {
+
+        if (sel != null  && stup instanceof EqualsEquation){
+            while (sel.parent instanceof SignEquation){
+                sel = sel.parent;
+            }
+
+            int side = ((EqualsEquation)stup).side(sel);
+            Equation sideRoot = stup.get(side);
+            if (sideRoot.equals(sel)){
                 return true;
             }
+            while (sideRoot instanceof SignEquation){
+                sideRoot = sideRoot.get(0);
+            }
+            return (sideRoot.contains(sel)&& sideRoot instanceof AddEquation);
         }
         return false;
     }

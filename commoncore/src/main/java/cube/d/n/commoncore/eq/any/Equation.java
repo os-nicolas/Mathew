@@ -1062,7 +1062,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public void fixIntegrety() {
-        Log.i("fixIntegrety","fixing integrety");
+        //Log.i("fixIntegrety","fixing integrety");
         for (Equation e : this) {
             e.fixIntegrety();
         }
@@ -1665,15 +1665,18 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         ArrayList<SelectedRow> res = new ArrayList<>();
         if (BaseApp.getApp().bothSidesPopUps()){
             ArrayList<SelectedRowButtons> butts = new ArrayList<>();
-            if (AddSelectedToBothSIdes.canAct(this,owner.stupid.get())){
+            if (AddSelectedToBothSIdes.canAct(owner.stupid.get(),this)){
+                Log.i("Generating Selected Row","Add");
                 SelectedOpAction a = new AddSelectedToBothSIdes((AlgebraLine)owner);
                 butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
             }
-            if (MultiBySelected.canAct(this, owner.stupid.get())){
+            if (MultiBySelected.canAct(owner.stupid.get(),this)){
+                Log.i("Generating Selected Row","Multi");
                 SelectedOpAction a = new MultiBySelected((AlgebraLine)owner);
                 butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
             }
-            if (DivBySelected.canAct(this, owner.stupid.get())){
+            if (DivBySelected.canAct(owner.stupid.get(),this)){
+                Log.i("Generating Selected Row","Div");
                 SelectedOpAction a = new DivBySelected((AlgebraLine)owner);
                 butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
             }
