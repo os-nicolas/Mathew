@@ -48,9 +48,9 @@ public class BothSidesKeyBoard extends KeyBoard {
         firstRow.add(new Button( "7", new NumberAction((BothSidesLine)line, "7")));
         firstRow.add(new Button( "8", new NumberAction((BothSidesLine)line, "8")));
         firstRow.add(new Button( "9", new NumberAction((BothSidesLine)line, "9")));
-        firstRow.add(new Button( "a", new VarAction((BothSidesLine)line, "a")));
+        firstRow.add(new Button( BaseApp.getApp().getVar1(), new VarAction((BothSidesLine)line, BaseApp.getApp().getVar1())));
         firstRow.add((BaseApp.getApp().hasB()?
-                new Button( "b", new VarAction((BothSidesLine)line, "b")):
+                new Button( BaseApp.getApp().getVar2(), new VarAction((BothSidesLine)line, BaseApp.getApp().getVar2())):
                 new EmptyButton()
         ));
         firstRow.add(new Button( "+", new PlusAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
@@ -65,8 +65,7 @@ public class BothSidesKeyBoard extends KeyBoard {
         secondRow.add(new Button( "6", new NumberAction((BothSidesLine)line, "6")));
         secondRow.add(new Button( "(", new ParenthesesAction((BothSidesLine)line, true)));
         secondRow.add(new Button( ")", new ParenthesesAction((BothSidesLine)line, false)));
-        char[] timesUnicode = {'\u00D7'};
-        secondRow.add(new Button( new String(timesUnicode), new TimesAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        secondRow.add(new Button( BaseApp.getApp().getMultiSymbol(), new TimesAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] divisionUnicode = {'\u00F7'};
         secondRow.add(new Button( new String(divisionUnicode), new DivAction((BothSidesLine)line)).withColor(BaseApp.getApp().darkLightColor));
 

@@ -65,9 +65,9 @@ public class InputKeyboard extends KeyBoard {
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
         firstRow.add(new Button("8", new NumberAction((InputLine)line, "8")));
         firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
-        firstRow.add(new Button("a", new VarAction((InputLine)line, "a")));
+        firstRow.add(new Button(BaseApp.getApp().getVar1(), new VarAction((InputLine)line, BaseApp.getApp().getVar1())));
         firstRow.add((BaseApp.getApp().hasB()?
-                new Button( "b", new VarAction((InputLine)line, "b")):
+                new Button( BaseApp.getApp().getVar2(), new VarAction((InputLine)line, BaseApp.getApp().getVar2())):
                 new EmptyButton()
         ));
         firstRow.add(new Button("+", new PlusAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
@@ -86,8 +86,7 @@ public class InputKeyboard extends KeyBoard {
         secondRow.add(new Button("6", new NumberAction((InputLine)line, "6")));
         secondRow.add(new Button("(", new ParenthesesAction((InputLine)line, true)));
         secondRow.add(new Button(")", new ParenthesesAction((InputLine)line, false)));
-        char[] timesUnicode = {'\u00D7'};
-        secondRow.add(new Button(new String(timesUnicode), new TimesAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        secondRow.add(new Button(BaseApp.getApp().getMultiSymbol(), new TimesAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] divisionUnicode = {'\u00F7'};
         secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] leftUnicode = {'\u2190'};

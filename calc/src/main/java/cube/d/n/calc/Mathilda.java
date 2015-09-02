@@ -25,6 +25,11 @@ public class Mathilda extends BaseApp {
     }
 
     @Override
+    public boolean bothSidesPopUps() {
+        return false;
+    }
+
+    @Override
     public String getPropertyId(){
         return "UA-59613283-3";
     }
@@ -42,5 +47,17 @@ public class Mathilda extends BaseApp {
             views.put(mainActivity, result);
         }
         return result;
+    }
+
+    public String getMultiSymbol() {
+        return "*";
+    }
+
+    public String getVar1() {
+        return "x";
+    }
+
+    public String getVar2() {
+        return "y";
     }
 }

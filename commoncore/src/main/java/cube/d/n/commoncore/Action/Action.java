@@ -57,8 +57,6 @@ public abstract class Action {
         return count;
     }
 
-
-
     protected static boolean canMoveRight(Equation current) {
         return canMove(false,current);
     }

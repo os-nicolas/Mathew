@@ -27,11 +27,13 @@ public class PlusMinusEquation extends MonaryEquation implements SignEquation {
         init();
     }
 
+
+
     @Override
     public void tryOperator(ArrayList<Equation> equation) {
         if (equation.size() == 1){
             Equation eq= equation.get(0);
-            if (Operations.sortaNumber(eq)){
+            if (Operations.sortaNumber(eq) && Operations.getValue(eq).doubleValue()==0){
                 replace(NumConstEquation.create(Operations.getValue(eq),owner));
             }
         }else {

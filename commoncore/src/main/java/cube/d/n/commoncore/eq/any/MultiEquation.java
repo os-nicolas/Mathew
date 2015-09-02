@@ -4,6 +4,7 @@ package cube.d.n.commoncore.eq.any;
 import android.util.Log;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.SelectedRowButtons;
 import cube.d.n.commoncore.SeletedRowEquationButton;
@@ -85,8 +86,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
     }
 
     private void init() {
-        char[] timesUnicode = { '\u00D7'};
-        display = new String(timesUnicode);
+        display = BaseApp.getApp().getMultiSymbol();
     }
 
     @Override

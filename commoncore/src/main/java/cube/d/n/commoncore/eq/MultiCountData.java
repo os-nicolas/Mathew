@@ -69,7 +69,7 @@ public class MultiCountData {
     }
 
     public MultiCountData(Equation e) {
-        update(e);
+        update(e.copy());
     }
 
     private void update(Equation e) {
@@ -338,5 +338,9 @@ public class MultiCountData {
 
     public boolean notOne() {
         return key.size() != 0 || (numbers.size() != 0 && !(numbers.size() == 1 && getValue().doubleValue() == 1));
+    }
+
+    public boolean sortaNumber() {
+        return under == null && key.size() ==0;
     }
 }

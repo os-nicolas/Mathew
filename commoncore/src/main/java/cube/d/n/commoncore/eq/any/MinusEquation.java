@@ -94,6 +94,8 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
             replace(get(0));
         }else if (get(0) instanceof AddEquation){
             replace(negateAll(get(0).copy()));
+        }else if (Operations.sortaNumber(get(0)) && Operations.getValue(get(0)).doubleValue() ==0){
+            replace(NumConstEquation.create(0,owner));
         }
     }
 

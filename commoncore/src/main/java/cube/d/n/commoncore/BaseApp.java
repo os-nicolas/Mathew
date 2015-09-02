@@ -444,4 +444,17 @@ public abstract class BaseApp extends Application{
     }
 
     public abstract boolean bothSidesPopUps();
+
+    public String getMultiSymbol() {
+        char[] timesUnicode = { '\u00D7'};
+        return new String(timesUnicode);
+    }
+
+    public String getVar1() {
+        return "a";
+    }
+
+    public String getVar2() {
+        return "b";
+    }
 }

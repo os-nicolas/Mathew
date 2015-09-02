@@ -37,8 +37,7 @@ public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
 //        ArrayList<Button> firstRow = new ArrayList<Button>();
 //        firstRow.add(new Button( "+", new BothSides((AlgebraLine)line, BothSidesMode.ADD)));
 //        firstRow.add(new Button( "-", new BothSides((AlgebraLine)line,BothSidesMode.SUB)));
-//        char[] timesUnicode = {'\u00D7'};
-//        firstRow.add(new Button( new String(timesUnicode), new BothSides((AlgebraLine)line,BothSidesMode.MULTI)));
+//        firstRow.add(new Button( BaseApp.getApp().getMultiSymbol(), new BothSides((AlgebraLine)line,BothSidesMode.MULTI)));
 //        char[] divisionUnicode = {'\u00F7'};
 //        firstRow.add(new Button( new String(divisionUnicode), new BothSides((AlgebraLine)line,BothSidesMode.DIV)));
 //        firstRow.add(new Button( "cⁿ", new BothSides((AlgebraLine)line,BothSidesMode.POWER)));

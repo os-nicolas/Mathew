@@ -88,9 +88,9 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
         return true;
     }
 
-    BigDecimal value;
+
 	public BigDecimal getValue(){
-        value = new BigDecimal(display);
+        BigDecimal value = new BigDecimal(display);
 		return value;
 	}
 	

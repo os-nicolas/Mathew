@@ -7,6 +7,7 @@ import android.util.Log;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.eq.MyPoint;
+import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.lines.EquationLine;
 
 import java.math.BigDecimal;
@@ -87,6 +88,10 @@ public abstract class MonaryEquation extends Equation {
         if (get(0) instanceof AddEquation && get(0).size() >1){
             return true;
         }
+        if (Operations.sortaNumber(get(0)) && Operations.getValue(get(0)).doubleValue() == 0){
+            return true;
+        }
+
         Equation at = parent;
         int count = 0;
         while (at instanceof  AddEquation) {

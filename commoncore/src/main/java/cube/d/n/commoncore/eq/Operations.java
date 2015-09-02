@@ -115,7 +115,7 @@ public class Operations {
                 findEquation(ee, set);
             }
         } else {
-            set.add(new MultiCountData(e.copy()));
+            set.add(new MultiCountData(e));
         }
     }
 
@@ -128,6 +128,8 @@ public class Operations {
             return add_CommonDenom(left, right, owner);
         }else if (add_canCommon(left, right, owner)){
             return add_Common(left, right, owner);
+        }else  if (add_canZero(left, right, owner)){
+            return add_Zero(left, right, owner);
         }else {//if (canCombineLikeTerms(left, right, owner)){
             // this is really not combine like terms, it's really do nothing
             //return add_CombineLikeTerms(left, right, owner);
@@ -1056,4 +1058,15 @@ public class Operations {
     }
 
 
+    public static boolean add_canZero(MultiCountData left, MultiCountData right, EquationLine owner) {
+        return (left.sortaNumber() && left.getValue().doubleValue() == 0) || (right.sortaNumber() && right.getValue().doubleValue() ==0);
+    }
+
+    public static Equation add_Zero(MultiCountData left, MultiCountData right, EquationLine owner) {
+        if (left.sortaNumber() && left.getValue().doubleValue() == 0){
+            return right.getEquation(owner);
+        }else{
+            return left.getEquation(owner);
+        }
+    }
 }
