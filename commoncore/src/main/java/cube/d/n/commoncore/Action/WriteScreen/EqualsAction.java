@@ -22,9 +22,9 @@ public class EqualsAction extends Action {
             // we can't add it if there is nothing to the left && nothing we can pull from the last line
             boolean can = true;
             if (l== null){
-                if ( owner.owner.getLast() == null) {
+                //if ( owner.owner.getLast() == null) {
                     can = false;
-                }
+                //}
             }
 
             // we can't add if the last char was an op
@@ -54,18 +54,18 @@ public class EqualsAction extends Action {
         ((InputLine)owner).getSelected().goDark();
         Equation l = ((InputLine)owner).left();
         Equation newEq = new WritingLeafEquation("=", (InputLine) owner);
-        if (l== null){
-            Equation oldEq =owner.owner.getLast();
-
-            if (oldEq instanceof WritingEquation) {
-                for (Equation e:oldEq) {
-                    ((InputLine) owner).insert(e);
-                }
-            }else{
-                ((InputLine) owner).insert(oldEq);
-            }
-            ((InputLine) owner).insert(newEq);
-        }else {
+//        if (l== null){
+//            Equation oldEq =owner.owner.getLast();
+//
+//            if (oldEq instanceof WritingEquation) {
+//                for (Equation e:oldEq) {
+//                    ((InputLine) owner).insert(e);
+//                }
+//            }else{
+//                ((InputLine) owner).insert(oldEq);
+//            }
+//            ((InputLine) owner).insert(newEq);
+//        }else {
 
             if (((InputLine) owner).getSelected().right() == null) {
                 while (canMoveRight(((InputLine) owner).getSelected())) {
@@ -73,7 +73,7 @@ public class EqualsAction extends Action {
                 }
             }
             ((InputLine) owner).insert(newEq);
-        }
+//        }
         updateOffset();
     }
 }

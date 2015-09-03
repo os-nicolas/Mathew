@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ff0000"
+            android:background="#6C0304"
             android:id="@+id/ribbon"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -52,7 +52,7 @@
                     android:layout_gravity="center|bottom"
                     android:gravity="start|bottom"
                     android:textColor="#ffffff"
-                    android:background="#ff0000"
+                    android:background="#6C0304"
                     android:id="@+id/tut_title" />
 
                 <cube.d.n.commoncore.FadeInTextView
@@ -64,7 +64,7 @@
                     android:textSize="20sp"
                     android:text="A layout animation is a pre-loaded animation that the system runs each time you make a change to the layout configuration. All you need to do is set an attribute in the layout to tell the Android"
                     android:textColor="#ffffff"
-                    android:background="#ff0000" />
+                    android:background="#6C0304" />
 
                 <LinearLayout
                     android:id="@+id/tut_video_holder"

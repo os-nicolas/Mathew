@@ -154,4 +154,9 @@ public class Mathilda extends BaseApp {
         editor.commit();
     }
 
+    @Override
+    public boolean showReduce(){
+        return false;
+    }
+
 }

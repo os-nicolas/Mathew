@@ -29,14 +29,13 @@ public class TutSetAdapter extends FragmentPagerAdapter {
         frags.add(TutTextFrag.make(
                 "Tutorial",
                 "Swipe right to get started",
-                "1 of 10")
-                .withBackgroundColor(0xff6C0304));
+                "1 of 10"));
         // ##### DOUBLE TAP
         frags.add(TutVideoFrag.make(
                 "Double Tap",
                 "Double tap to add, subtract, multiply, and much more",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.double_tap,
-                "2 of 10").withBackgroundColor(0xff6C0304));
+                "2 of 10"));
         frags.add(TutMainFrag.make("Give it a Try!",
                 "Evaluate the expression below by double tapping.",
                 "*,5,(,/,(,+,10,9,-7,),6,)",
@@ -45,14 +44,13 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                 .withRevert(false)
                 .withPopup(false)
                 .withDrag(false)
-                .withBackgroundColor(0xff6C0304)
         );
         // ##### REVERT
         frags.add(TutVideoFrag.make(
                 "Tap and Hold",
                 "Tap and hold to revert to a previous step",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.revert,
-                "4 of 10").withBackgroundColor(0xff6C0304));
+                "4 of 10"));
         frags.add(((TutMainFrag)TutMainFrag.make(
                         "Give it a Try!",
                         "Revert to the first step by tapping and holding.",
@@ -60,8 +58,7 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                         "*,5,(,/,(,+,10,9,-7,),6,)",
                         "5 of 10")
                         .withPopup(false)
-                        .withDrag(false)
-                        .withBackgroundColor(0xff6C0304))
+                        .withDrag(false))
                 .withStep("*,5,(,/,(,+,19,-7,),6,)")
                 .withStep("*,5,(,/,12,6,)")
                 .withStep("*,5,2")
@@ -72,14 +69,13 @@ public class TutSetAdapter extends FragmentPagerAdapter {
                 "Drag and Drop",
                 "Drag and Drop to move terms around",
                 "android.resource://cube.d.n.practice/raw/" + R.raw.drag,
-                "6 of 10").withBackgroundColor(0xff6C0304));
+                "6 of 10"));
         frags.add(TutMainFrag.make("Give it a try!",
                 "Solve the equation below by dragging terms around.",
                 "=,5,(,+,(,/,a,2,),3,)",
                 "=,4,a",
                 "7 of 10")
-                .withPopup(false)
-                .withBackgroundColor(0xff6C0304));
+                .withPopup(false));
 
         // ##### BOTH SIDES
         frags.add(TutVideoFrag.make(

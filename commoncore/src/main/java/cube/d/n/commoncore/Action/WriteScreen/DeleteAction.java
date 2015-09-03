@@ -6,6 +6,7 @@ import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
 public class DeleteAction extends Action {
@@ -23,7 +24,7 @@ public class DeleteAction extends Action {
         if (l != null) {
             return true;
         }
-        if (l==null &&((InputLine) owner).getSelected().parent != null) {
+        if (l == null && ((InputLine) owner).getSelected().parent != null) {
             if (((InputLine) owner).getSelected().parent.parent instanceof TrigEquation) {
                 return true;
             }
@@ -40,9 +41,9 @@ public class DeleteAction extends Action {
         // this first case is pretty unique
         // its Sin(|) you hit delete
         // it's "( Sin( "(|) ) )
-        Equation selected  =((InputLine) owner).getSelected();
+        Equation selected = ((InputLine) owner).getSelected();
 
-        if (selected.parent != null && (selected.parent).indexOf(selected)== 0 && selected.parent.parent instanceof TrigEquation) {
+        if (selected.parent != null && (selected.parent).indexOf(selected) == 0 && selected.parent.parent instanceof TrigEquation) {
             selected.parent.parent.replace(selected);
         } else {
             if (l.parent instanceof BinaryEquation) {
@@ -59,6 +60,15 @@ public class DeleteAction extends Action {
                 }
 
             } else if (l instanceof NumConstEquation) {
+                // there is a sticky stituation involving last
+                // you can pull something like 1.2345678901234565678132123345345 from last
+                // we don't want to alwasy display all of those so we leave it in SOLVE mode
+                // when they delete we want to truncate the back in to match the front end
+                // and then do our normal thing
+                if (l.owner.parentThesisMode() == EquationLine.pm.SOLVE &&
+                        ((NumConstEquation) l).decimalDigits() > 3) {
+                    ((NumConstEquation) l).cutDecimalsDown();
+                }
                 if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
                     String display = ((NumConstEquation) l).getDisplaySimple();
                     String toSet = (String) display.subSequence(0, display.length() - 1);

@@ -146,19 +146,19 @@ public class AddEquation extends FlexOperation implements BinaryOperator {
                 }));
             }
 
-//            if (Operations.add_canCommonDenom(left, right, owner)) {
-//                buttons.add(new SeletedRowEquationButton(Operations.add_CommonDenom(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
-//                    @Override
-//                    protected void privateAct() {
-//                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
-//                        operateRemove(eqs);
-//                        Equation result = Operations.add_CommonDenom(left, right, owner);
-//                        handleResult(0, result);
-//
-//                        changed(p);
-//                    }
-//                }));
-//            }
+            if (Operations.add_canCommonDenom(left, right, owner)) {
+                buttons.add(new SeletedRowEquationButton(Operations.add_CommonDenom(new MultiCountData(left),new MultiCountData(right), owner), new Action(owner) {
+                    @Override
+                    protected void privateAct() {
+                        MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                        operateRemove(eqs);
+                        Equation result = Operations.add_CommonDenom(left, right, owner);
+                        handleResult(0, result);
+
+                        changed(p);
+                    }
+                }));
+            }
 
 
             if (Operations.add_canCommon(left, right, owner) && !Operations.add_canAddNumber(left, right, owner)) {

@@ -21,7 +21,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ff0000"
+            android:background="#6C0304"
             android:id="@+id/ribbon"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -51,14 +51,14 @@
                         android:textSize="40sp"
                         android:layout_gravity="center|bottom"
                         android:gravity="center|bottom"
-                        android:background="#ff0000"
+                        android:background="#6C0304"
                         android:textColor="#ffffff"
                         android:id="@+id/tut_title" />
 
                     <cube.d.n.commoncore.FadeInTextView
                         custom:timeOut="350"
                         android:id="@+id/tut_text_body"
-                        android:background="#ff0000"
+                        android:background="#6C0304"
                         android:textColor="#ffffff"
                         android:text="yo yo yo yo yo yo yo"
                         android:textSize="25sp"

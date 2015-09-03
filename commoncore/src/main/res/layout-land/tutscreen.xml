@@ -23,7 +23,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ff0000"
+            android:background="#6C0304"
             android:id="@+id/ribbon"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
@@ -59,7 +59,7 @@
                             android:textSize="40sp"
                             android:layout_gravity="center|bottom"
                             android:gravity="start|bottom"
-                            android:background="#ff0000"
+                            android:background="#6C0304"
                             android:textColor="#ffffff"
                             android:id="@+id/tut_title" />
 
@@ -70,7 +70,7 @@
                                 android:textSize="20sp"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
-                                android:background="#ff0000"
+                                android:background="#6C0304"
                                 android:textColor="#ffffff"
                                 android:id="@+id/tut_body"
                                 android:text="A layout animation is a pre-loaded animation that the system runs each time you make a change to the layout configuration. All you need to do is set an attribute in the layout to tell the Android" />

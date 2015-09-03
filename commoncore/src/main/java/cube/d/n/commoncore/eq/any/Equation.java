@@ -1963,46 +1963,49 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     protected void tryToReduce(ArrayList<SelectedRowButtons> buttons, final Equation that) {
-        ArrayList<String> vars = Util.getVars(this);
-        if (vars.size() == 0) {
+        if (BaseApp.getApp().showReduce()) {
 
-            GS<Equation> out = new GS<Equation>(this.copy()){
-              @Override
-            public  void set(Equation eq){
-                  if (get() != null) {
-                      get().watchers.remove(this);
-                  }
-                  super.set(eq);
-                  eq.watchers.add(this);
-              }
-            };
-            Util.reduce(out);
-            final GS<Equation> fout = out;
+            ArrayList<String> vars = Util.getVars(this);
+            if (vars.size() == 0) {
 
-            boolean addIt = true;
-            if (this.same(fout.get())){
-                addIt = false;
-            }else {
-                for (SelectedRowButtons srb : buttons) {
-                    if (srb instanceof SeletedRowEquationButton) {
-                        SeletedRowEquationButton sreb = (SeletedRowEquationButton) srb;
-                        if (sreb.myEq.same(fout.get())) {
-                            addIt = false;
-                            break;
+                GS<Equation> out = new GS<Equation>(this.copy()) {
+                    @Override
+                    public void set(Equation eq) {
+                        if (get() != null) {
+                            get().watchers.remove(this);
+                        }
+                        super.set(eq);
+                        eq.watchers.add(this);
+                    }
+                };
+                Util.reduce(out);
+                final GS<Equation> fout = out;
+
+                boolean addIt = true;
+                if (this.same(fout.get())) {
+                    addIt = false;
+                } else {
+                    for (SelectedRowButtons srb : buttons) {
+                        if (srb instanceof SeletedRowEquationButton) {
+                            SeletedRowEquationButton sreb = (SeletedRowEquationButton) srb;
+                            if (sreb.myEq.same(fout.get())) {
+                                addIt = false;
+                                break;
+                            }
                         }
                     }
                 }
-            }
 
-            if (addIt) {
-                buttons.add(new SeletedRowEquationButton(fout.get().copy(), new Action(owner) {
-                    @Override
-                    protected void privateAct() {
-                        MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
-                        that.replace(fout.get().copy());
-                        changed(p);
-                    }
-                }));
+                if (addIt) {
+                    buttons.add(new SeletedRowEquationButton(fout.get().copy(), new Action(owner) {
+                        @Override
+                        protected void privateAct() {
+                            MyPoint p = that.getNoneNullLastPoint(that.getX(), that.getY());
+                            that.replace(fout.get().copy());
+                            changed(p);
+                        }
+                    }));
+                }
             }
         }
     }

@@ -24,7 +24,7 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#ff0000"
+            android:background="#6C0304"
             android:id="@+id/ribbon"
             android:orientation="vertical"
             android:paddingLeft="15dp"

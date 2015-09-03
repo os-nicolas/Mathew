@@ -457,4 +457,8 @@ public abstract class BaseApp extends Application{
     public String getVar2() {
         return "b";
     }
+
+    public boolean showReduce(){
+        return true;
+    }
 }

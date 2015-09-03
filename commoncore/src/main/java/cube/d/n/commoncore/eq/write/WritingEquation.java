@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.FixedSize;
@@ -29,9 +30,6 @@ import java.util.ArrayList;
  * Created by Colin on 1/6/2015.
  */
 public class WritingEquation extends Equation {
-
-    char[] timesUnicode = { '\u00D7'};
-    String times = new String(timesUnicode);
 
     public WritingEquation(EquationLine o) {
         super(o);
@@ -206,7 +204,7 @@ public class WritingEquation extends Equation {
                 Log.i("left", (left == null ? "null" : left.toString()));
                 if (at.getDisplay(-1).equals("+")) {
                     currentToAdd = new AddEquation(owner);
-                } else if (at.getDisplay(-1).equals(times)) {
+                } else if (at.getDisplay(-1).equals(times())) {
                     currentToAdd = new MultiEquation(owner);
                 } else if (at.getDisplay(-1).equals("=")) {
                     currentToAdd = new EqualsEquation(owner);
@@ -274,19 +272,19 @@ public class WritingEquation extends Equation {
                     Equation newEq = null;
                     if (at.getDisplay(-1).equals("+")) {
                         newEq = new AddEquation(owner);
-                    } else if (at.getDisplay(-1).equals(times)) {
+                    } else if (at.getDisplay(-1).equals(times())) {
                         newEq = new MultiEquation(owner);
                     } else if (at.getDisplay(-1).equals("=")) {
                         newEq = new EqualsEquation(owner);
                     } else if (at instanceof WritingPraEquation && ((WritingPraEquation) at).left) {
                         //openParen = true;
                     } else if (at.getDisplay(-1).equals("-")) {
-                        if (!get(i - 1).getDisplay(-1).equals(times)) {
+                        if (!get(i - 1).getDisplay(-1).equals(times())) {
                             newEq = new AddEquation(owner);
                         }
                         minus++;
                     } else if (at.getDisplay(-1).equals("\u00B1")) {
-                        if (!get(i - 1).getDisplay(-1).equals(times)) {
+                        if (!get(i - 1).getDisplay(-1).equals(times())) {
                             newEq = new AddEquation(owner);
                         }
                         plusMinus = true;
@@ -432,6 +430,10 @@ public class WritingEquation extends Equation {
         }
     }
 
+    private String times() {
+        return BaseApp.getApp().getMultiSymbol();
+    }
+
     private Equation convert(Equation at) {
 
         if (at instanceof WritingEquation) {
@@ -460,7 +462,7 @@ public class WritingEquation extends Equation {
             if ((left instanceof BinaryEquation || left instanceof NumConstEquation || left instanceof VarEquation || (left instanceof WritingPraEquation && !((WritingPraEquation) left).left)) &&
                     (right instanceof BinaryEquation || right instanceof NumConstEquation || right instanceof VarEquation || (right instanceof WritingPraEquation && ((WritingPraEquation) right).left))) {
                 // we need to insert a *
-                add(i + 1, new WritingLeafEquation(times, (InputLine)owner));
+                add(i + 1, new WritingLeafEquation(times(), (InputLine)owner));
             }
         }
     }

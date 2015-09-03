@@ -151,6 +151,27 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
     public boolean isZero() {
         return getValue().doubleValue() == 0.0;
     }
+
+    public int decimalDigits() {
+        if (display.contains(".")){
+            int count = 0;
+            for (int at = display.length()-1;at>=0 && display.charAt(at) != '.';at--){
+                count++;
+            }
+            return count;
+        }
+        return 0;
+    }
+
+    public void cutDecimalsDown() {
+        if (display.contains(".")){
+            int end = display.length()-1;
+            for (;end>=0 && display.charAt(end) != '.';end--){
+            }
+            display = display.substring(0,end+3);
+        }
+    }
+
 }
 
 
