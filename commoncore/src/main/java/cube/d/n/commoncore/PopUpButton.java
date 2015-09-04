@@ -15,6 +15,10 @@ public class PopUpButton extends Button {
     float currentHeight=0f;
     protected boolean can = false;
 
+    public boolean getCan(){
+        return can;
+    }
+
     public PopUpButton( String text, Action myAction) {
         super(text, myAction);
         targetBkgColor = BaseApp.getApp().lightLightColor;
@@ -73,7 +77,7 @@ public class PopUpButton extends Button {
 
     }
 
-    protected void updateCanAct() {
+    public void updateCanAct() {
         can = myAction.canAct();
     }
 
@@ -82,5 +86,9 @@ public class PopUpButton extends Button {
 
     protected float targetHeight() {
         return targetHeight*canvasHeight;
+    }
+
+    public float getTargetHeight() {
+        return targetHeight;
     }
 }

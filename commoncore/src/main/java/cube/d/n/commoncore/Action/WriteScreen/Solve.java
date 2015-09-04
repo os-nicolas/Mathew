@@ -80,7 +80,7 @@ public class Solve extends Action {
             }
             newEq.updateOwner(line);
             owner.owner.addLine(line);
-        }else{
+            }else{
             planB();
         }
     }

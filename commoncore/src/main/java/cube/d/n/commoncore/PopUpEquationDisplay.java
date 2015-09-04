@@ -20,7 +20,7 @@ public class PopUpEquationDisplay extends PopUpEquationButton {
         al = owner;
     }
 
-    protected void updateCanAct() {
+    public void updateCanAct() {
         super.updateCanAct();
         if (can && !((AlgebraLine)al).getSelected().equals(lastSelect)){
             myEq = ((ActionWithDisplay)myAction).getDisplay();

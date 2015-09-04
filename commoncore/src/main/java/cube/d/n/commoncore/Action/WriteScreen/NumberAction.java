@@ -27,6 +27,7 @@ public class NumberAction extends Action {
         Equation r = ((InputLine) owner).imedateRight();
         if (l != null) {
             if ((l instanceof NumConstEquation) && (l.parent.equals(((InputLine) owner).getSelected().parent))) {
+                ((NumConstEquation) l).showAll=true;
                 if (l instanceof NumConstEquation && !l.getDisplay(-1).equals("0")) {
                     l.setDisplay(((NumConstEquation) l).getDisplaySimple() + num);
                 } else if (l instanceof NumConstEquation && l.getDisplay(-1).equals("0")) {
@@ -38,6 +39,7 @@ public class NumberAction extends Action {
             }
         } else {
             if (r instanceof NumConstEquation) {
+                ((NumConstEquation) r).showAll=true;
                 if (!r.getDisplay(-1).equals("0")) {
                     r.setDisplay(num + ((NumConstEquation) r).getDisplaySimple());
                 } else {

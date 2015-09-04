@@ -79,64 +79,8 @@ public class Button implements Physical {
     }
 
     public void draw(Canvas canvas, Paint p){
+        draw(canvas, p,0);
 
-        canvasHeight = canvas.getHeight();
-        canvasWidth = canvas.getWidth();
-
-        if (!hover) {
-            int currentColor = bkgPaint.getColor();
-            currentColor = BaseApp.colorFade(currentColor, targetBkgColor);
-            bkgPaint.setColor(currentColor);
-        }
-        Paint bkgbkgPaint = new Paint();
-        bkgbkgPaint.setColor(targetBkgColor);
-        bkgbkgPaint.setAlpha(Math.min(p.getAlpha() ,bkgbkgPaint.getAlpha()));
-        RectF r = new RectF(left(), top(), right(), bottom());
-        canvas.drawRect(r, bkgbkgPaint);
-
-
-        // if they are the same color, but both are somewhat transparent it looks weird
-        // this happen on fade ins
-        if (p.getAlpha() == 0xff) {
-            float smaller = 3 * BaseApp.getApp().getDpi();
-            RectF r2 = new RectF(left() + smaller, top() + smaller, right() - smaller, bottom() - smaller);
-            bkgPaint.setAlpha(p.getAlpha());
-            canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), bkgPaint);
-        }
-
-        Rect out = new Rect();
-        //TODO scale by dpi
-        float buffer = BaseApp.getApp().getBuffer();
-        String textToMeasure = text;
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        }
-        textToMeasure = "A";
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        }
-        float h = out.height();
-
-
-        //TODO this seems ugly
-        if (!(this instanceof PopUpButton ) ){
-            float rate = BaseApp.getApp().getRate();
-            if (myAction.canAct()) {
-                float currentAlpha = this.textPaint.getAlpha();
-                currentAlpha = (currentAlpha * (rate - 1) + 0xff) / rate;
-                this.textPaint.setAlpha((int) currentAlpha);
-            } else {
-                float currentAlpha = this.textPaint.getAlpha();
-                currentAlpha = (currentAlpha * (rate - 1) + (0xff) / 2) / rate;
-                this.textPaint.setAlpha((int) currentAlpha);
-            }
-        }
-        textPaint.setAlpha(textPaint.getAlpha() * p.getAlpha() / (0xff));
-        canvas.drawText(text, getX(), getY() + h / 2, textPaint);
     }
 
     public void draw(Canvas canvas) {
@@ -281,5 +225,67 @@ public class Button implements Physical {
             myEq.setAlpha(myAlpha);
             myEq.draw(canvas,b.getX(),b.getY());
         }
+    }
+
+    public void draw(Canvas canvas, Paint p, float t) {
+        canvasHeight = canvas.getHeight();
+        canvasWidth = canvas.getWidth();
+
+        float localTop =top()+t;
+
+        if (!hover) {
+            int currentColor = bkgPaint.getColor();
+            currentColor = BaseApp.colorFade(currentColor, targetBkgColor);
+            bkgPaint.setColor(currentColor);
+        }
+        Paint bkgbkgPaint = new Paint();
+        bkgbkgPaint.setColor(targetBkgColor);
+        bkgbkgPaint.setAlpha(Math.min(p.getAlpha() ,bkgbkgPaint.getAlpha()));
+        RectF r = new RectF(left(), localTop, right(), bottom());
+        canvas.drawRect(r, bkgbkgPaint);
+
+
+        // if they are the same color, but both are somewhat transparent it looks weird
+        // this happen on fade ins
+        if (p.getAlpha() == 0xff) {
+            float smaller = 3 * BaseApp.getApp().getDpi();
+            RectF r2 = new RectF(left() + smaller, localTop + smaller, right() - smaller, bottom() - smaller);
+            bkgPaint.setAlpha(p.getAlpha());
+            canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), bkgPaint);
+        }
+
+        Rect out = new Rect();
+        //TODO scale by dpi
+        float buffer = BaseApp.getApp().getBuffer();
+        String textToMeasure = text;
+        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
+            textPaint.setTextSize(textPaint.getTextSize() - 1);
+            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        }
+        textToMeasure = "A";
+        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
+            textPaint.setTextSize(textPaint.getTextSize() - 1);
+            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+        }
+        float h = out.height();
+
+
+        //TODO this seems ugly
+        if (!(this instanceof PopUpButton ) ){
+            float rate = BaseApp.getApp().getRate();
+            if (myAction.canAct()) {
+                float currentAlpha = this.textPaint.getAlpha();
+                currentAlpha = (currentAlpha * (rate - 1) + 0xff) / rate;
+                this.textPaint.setAlpha((int) currentAlpha);
+            } else {
+                float currentAlpha = this.textPaint.getAlpha();
+                currentAlpha = (currentAlpha * (rate - 1) + (0xff) / 2) / rate;
+                this.textPaint.setAlpha((int) currentAlpha);
+            }
+        }
+        textPaint.setAlpha(textPaint.getAlpha() * p.getAlpha() / (0xff));
+        canvas.drawText(text, getX(), (getY() + h + t) / 2, textPaint);
     }
 }

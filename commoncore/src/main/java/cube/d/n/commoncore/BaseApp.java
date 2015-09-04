@@ -25,13 +25,12 @@ import java.util.Random;
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Action.BothSides.CancelAction;
 import cube.d.n.commoncore.Action.BothSides.CheckAction;
-import cube.d.n.commoncore.Action.SolveScreen.Done;
+import cube.d.n.commoncore.Action.SovleScreen.Done;
 import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
-import cube.d.n.commoncore.keyboards.ReturnKeyBoard;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.EquationLine;
@@ -460,5 +459,9 @@ public abstract class BaseApp extends Application{
 
     public boolean showReduce(){
         return true;
+    }
+
+    public float buttonHeight() {
+        return 1f/9f;
     }
 }

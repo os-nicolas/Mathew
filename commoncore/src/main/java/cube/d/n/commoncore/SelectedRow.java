@@ -131,4 +131,8 @@ public class SelectedRow {
     public boolean done() {
         return dead && currentHeight == 0;
     }
+
+    public float getTargetHeight() {
+        return targetHeight;
+    }
 }

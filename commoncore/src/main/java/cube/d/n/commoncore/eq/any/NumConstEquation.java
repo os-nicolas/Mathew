@@ -4,6 +4,7 @@ import android.util.Log;
 
 import cube.d.n.commoncore.eq.LegallityCheck;
 import cube.d.n.commoncore.lines.EquationLine;
+import cube.d.n.commoncore.lines.InputLine;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -12,6 +13,7 @@ import java.text.DecimalFormat;
 public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     private  boolean round = false;
+    public boolean showAll = false;
 
     public void setRound(boolean round){
         this.round = round;
@@ -19,8 +21,12 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
 	public NumConstEquation(BigDecimal number, EquationLine owner) {
 		super(owner);
+        if (owner instanceof InputLine){
+            showAll = true;
+        }
         init(number);
 	}
+
 
     public NumConstEquation(double i, EquationLine emilyView) {
         this(new BigDecimal(i), emilyView);
@@ -54,19 +60,25 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 
     @Override
     public String getDisplay(int pos){
-        if (owner.parentThesisMode() == EquationLine.pm.WRITE) {
+        if (showAll) {
             DecimalFormat df = new DecimalFormat();
+
+            df.setMaximumFractionDigits(500);
 
             String result = df.format(getValue());
             // we need to deel with trailing zeros
-            int at = display.length()-1;
-            String toAdd ="";
-            while (at >=0&&display.charAt(at)=='0'){
-                toAdd = toAdd +'0';
-                at--;
-            }
-            if (at >=0 && display.charAt(at)=='.'){
-                result += "."+toAdd;
+            if (display.contains(".")) {
+                int at = display.length() - 1;
+                String toAdd = "";
+                while (at >= 0 && display.charAt(at) == '0') {
+                    toAdd = toAdd + '0';
+                    at--;
+                }
+                if (at >= 0 && display.charAt(at) == '.') {
+                    result += "." + toAdd;
+                } else {
+                    result += toAdd;
+                }
             }
             return result;
         }else {
@@ -168,7 +180,9 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
             int end = display.length()-1;
             for (;end>=0 && display.charAt(end) != '.';end--){
             }
-            display = display.substring(0,end+3);
+            // +4 because we are including the '.'
+            display = display.substring(0,Math.min(end + 4, display.length()));
+
         }
     }
 

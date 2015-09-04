@@ -471,5 +471,33 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
     }
 
 
+    public void updateOffset() {
+            PlaceholderEquation phe = this.getSelected();
+            if (phe.getX() + (phe.measureWidth() / 2f) > owner.width - 4 * EquationLine.getBuffer()) {
+                this.toAddToOffsetX((owner.width - 4 * EquationLine.getBuffer()) - (phe.getX() + (phe.measureWidth() / 2f)));
+            }
+            if (phe.getX() - (phe.measureWidth() / 2f) < 4 * EquationLine.getBuffer()) {
+                this.toAddToOffsetX((4 * EquationLine.getBuffer()) - (phe.getX() - (phe.measureWidth() / 2f)));
+            }
+
+            // the bottom of the input should not be off the bottom of the screen
+            if (owner.getOffsetY() + (this.stupid.get().measureHeight() / 2f) > owner.height - getKeyboad().measureTargetHeight() && (this.stupid.get().measureHeight() < owner.height - owner.keyBoardManager.get().measureHeight())) {
+                owner.toAddToOffsetY((owner.height - getKeyboad().measureTargetHeight())
+                        - (owner.getOffsetY() + (this.stupid.get().measureHeight() / 2f)));
+            }
+
+            // the place holder should not be off the top of the screen
+            // this probably does not really work since getY stopping being update off screen
+            // it also probably is not need and will never happen because we already scroll if get the last line offscreen
+            if ((phe.getY() - phe.measureHeightUpper() < EquationLine.getBuffer())) {
+                owner.toAddToOffsetY((EquationLine.getBuffer()) - (phe.getY() - phe.measureHeightUpper()));
+            }
+            // the place holder should not be off the bot of the screen
+//            if (phe.getY() + phe.measureHeightLower() > owner.height - (getKeyboad().measureTargetHeight() + EquationLine.getBuffer())) {
+//                owner.toAddToOffsetY((owner.height - (getKeyboad().measureTargetHeight() + EquationLine.getBuffer())) - (phe.getY() + phe.measureHeightLower()));
+//            }
+
+        Log.d("updatedOffset","target: "+ getKeyboad().measureTargetHeight() + " normal: "+ getKeyboad().measureHeight() + " total: "+ owner.height);
+        }
 
 }

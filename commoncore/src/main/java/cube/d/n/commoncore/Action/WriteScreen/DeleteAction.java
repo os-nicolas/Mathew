@@ -65,9 +65,11 @@ public class DeleteAction extends Action {
                 // we don't want to alwasy display all of those so we leave it in SOLVE mode
                 // when they delete we want to truncate the back in to match the front end
                 // and then do our normal thing
-                if (l.owner.parentThesisMode() == EquationLine.pm.SOLVE &&
-                        ((NumConstEquation) l).decimalDigits() > 3) {
-                    ((NumConstEquation) l).cutDecimalsDown();
+                if (!((NumConstEquation)l).showAll){
+                        if(((NumConstEquation) l).decimalDigits() > 3) {
+                            ((NumConstEquation) l).cutDecimalsDown();
+                        }
+                    ((NumConstEquation) l).showAll = true;
                 }
                 if (((NumConstEquation) l).getDisplaySimple().length() != 0) {
                     String display = ((NumConstEquation) l).getDisplaySimple();

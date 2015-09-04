@@ -15,6 +15,7 @@ import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.lines.EquationLine;
 
 /**
@@ -36,10 +37,30 @@ public abstract class KeyBoard implements Measureable {
         this.owner = owner;
         this.line = line;
         addButtons();
+        buttonsPercent = getBaseButtonsPercent();
     }
 
     public float measureHeight(){
         return owner.height*buttonsPercent;
+    }
+
+    public float measureTargetHeight(){
+        float baseHeight = measureHeight();
+
+
+        float contextButPercent=0f;
+        if (owner.allowPopups) {
+            for (PopUpButton b : popUpButtons) {
+                b.updateCanAct();
+                if (b.getCan()) {
+                    contextButPercent += b.getTargetHeight();
+                }
+            }
+            for (SelectedRow pub : popUpLines) {
+                contextButPercent += pub.getTargetHeight();
+            }
+        }
+        return baseHeight + (contextButPercent*owner.height);
     }
 
     protected boolean inButtons(MotionEvent event) {
@@ -177,26 +198,14 @@ public abstract class KeyBoard implements Measureable {
         drawShadow(canvas,paint.getAlpha()/2);
     }
 
-    private void drawShadow(Canvas canvas, int alpha, int at) {
-        Paint p = new Paint();
-        int color = Color.BLACK;//BaseApp.getApp().darkDarkColor;
-        p.setColor(color);
-        p.setAlpha(alpha);
-//        for (int i=0;i<2f/Algebrator.getAlgebrator().getDpi();i++){
-//            canvas.drawLine(0,at,width,at,p);
-//            at--;
-//        }
-        p.setAlpha((int)(0x8f*(alpha/((float)0xff))));
-        while (p.getAlpha() > 1) {
-            canvas.drawLine(0, at, measureWidth(), at, p);
-            p.setAlpha((int) (p.getAlpha() / BaseApp.getApp().getShadowFade()));
-            at--;
-        }
+    private void drawShadow(Canvas canvas, int alpha, int startAt) {
+        Util.drawShadow(canvas, alpha, startAt,measureWidth(),false);
     }
+
 
     protected void drawShadow(Canvas canvas,int alpha) {
         int startAt = ((int) (owner.height - measureHeight()));
-        drawShadow(canvas,alpha,startAt);
+        Util.drawShadow(canvas, alpha, startAt,measureWidth(),false);
     }
 
     abstract protected void addButtons();

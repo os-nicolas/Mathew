@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
+import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.HasHeaderLine;
 import cube.d.n.commoncore.Main;
@@ -49,7 +50,10 @@ public class OutputLine extends EquationLine implements HasHeaderLine {
             public void run() {
                 try {
                     sleep(500l);
-                    owner.addLine(BaseApp.getApp().getInputLine(owner));
+                    InputLine inputLine = (InputLine)BaseApp.getApp().getInputLine(owner);
+                    owner.addLine(inputLine);
+                    //sleep(500l);
+                    inputLine.updateOffset();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

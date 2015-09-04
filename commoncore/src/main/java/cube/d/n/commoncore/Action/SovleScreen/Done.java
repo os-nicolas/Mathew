@@ -1,4 +1,4 @@
-package cube.d.n.commoncore.Action.SolveScreen;
+package cube.d.n.commoncore.Action.SovleScreen;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
@@ -19,5 +19,6 @@ public class Done extends Action {
         ((Selects)owner.owner.lastLine()).setSelected(null);
         InputLine line = (InputLine)BaseApp.getApp().getInputLine(owner.owner);
         owner.owner.addLine(line);
+        line.updateOffset();
     }
 }
