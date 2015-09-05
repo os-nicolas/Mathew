@@ -48,6 +48,7 @@ import cube.d.n.commoncore.lines.AlgebraLineNoReturn;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
+import cube.d.n.commoncore.lines.HeaderLine;
 import cube.d.n.commoncore.lines.HiddenInputLine;
 import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
@@ -135,9 +136,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             lines.add(new ImageLine(this));
             lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.PROBLEM_WCI) {
+            lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
             lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.PROBLEM_WE) {
+            lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoReturn(this));
@@ -148,6 +151,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.PROBLEM_WI) {
+            lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
             lines.add(new InputLine(this));
         }else {
@@ -195,6 +199,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             boolean keepGoing = true;
             if (keepGoing && keyBoardManager.getNextKeyboard() == null) {
                 keepGoing = !keyBoardManager.get().onTouch(event);
+            }
+            if (keepGoing && getTopBar() != null) {
+                keepGoing = !getTopBar().onTouch(event);
             }
             if (keepGoing) {
                 keepGoing = !lines.get(lines.size() - 1).onTouch(event);
@@ -511,6 +518,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         float maxOffsetY;
         if (lines.size() == 1) {
             maxOffsetY = height - keyBoardManager.get().measureHeight();
+        }else if (lines.get(0) instanceof  HeaderLine){
+            maxOffsetY=0;
+            for (int i =0; i< lines.size(); i++) {
+                maxOffsetY += lines.get(i).measureHeight();
+            }
         } else {
             maxOffsetY = height - keyBoardManager.get().measureHeight();// - lines.get(0).measureHeight() - lines.get(0).measureHeight() - 2* EquationLine.getBuffer()
             if (lines.get(0) instanceof HiddenInputLine) {
@@ -579,9 +591,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     private boolean inScreen(Line l, float top) {
-        if (top > height - keyBoardManager.get().measureHeight() &&
-                (keyBoardManager.getNextKeyboard() == null || top > height - keyBoardManager.getNextKeyboard().measureHeight())) {
-            return false;
+        if (!(l instanceof HeaderLine)) {
+            if (top > height - keyBoardManager.get().measureHeight() &&
+                    (keyBoardManager.getNextKeyboard() == null || top > height - keyBoardManager.getNextKeyboard().measureHeight())) {
+                return false;
+            }
         }
         if (top + l.measureHeight() < top()) {
             return false;
@@ -796,17 +810,18 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     public ImageLine getProblemImage() {
-        if (lines.get(0) instanceof ImageLine) {
-            return (ImageLine) lines.get(0);
+        if (lines.get(1) instanceof ImageLine) {
+            return (ImageLine) lines.get(1);
         }
         Log.e("getProblemImage", "bad to the bone");
         return null;
     }
 
-    public void initWE(Equation equation) {
-        ((HiddenInputLine) lines.get(1)).stupid.set(equation.copy());
-        ((AlgebraLine) lines.get(2)).initEquation(equation.copy());
-        keyBoardManager.hardSet(lines.get(2).getKeyboad());
+    public void initWE(Equation equation,ArrayList<Button> buttons) {
+        ((HeaderLine) lines.get(0)).setButtonsRow(buttons,0,1);
+        ((HiddenInputLine) lines.get(2)).stupid.set(equation.copy());
+        ((AlgebraLine) lines.get(3)).initEquation(equation.copy());
+        keyBoardManager.hardSet(lines.get(3).getKeyboad());
     }
 
     public void initWI() {
@@ -856,6 +871,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 overlay.setVisibility(VISIBLE);
                 overlay.setAlpha(0);
                 final Main that = this;
+                final Activity acti = (Activity) getContext();
                 myMainTut.solved(new Runnable() {
                     @Override
                     public void run() {
@@ -866,6 +882,23 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                             public void run() {
 
                                 ytv.initOnClickListeners(that);
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            Thread.sleep(2200);
+                                            acti.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    overlay.animate().alpha(0).setDuration(500).withLayer();
+                                                }
+                                            });
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }).start();
+
                             }
                         });
                     }
@@ -902,6 +935,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
         @Override
         public void finish() {}
+
+        @Override
+        public void last() {}
     };
 
     public void floorScroll() {
@@ -940,4 +976,11 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         }
     }
 
+    public Line getTopBar() {
+        if (lines.get(0) instanceof HeaderLine) {
+            return lines.get(0);
+        }else{
+            return null;
+        }
+    }
 }

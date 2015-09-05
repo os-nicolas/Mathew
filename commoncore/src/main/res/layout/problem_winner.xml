@@ -43,19 +43,19 @@
                 android:textSize="25dp"
                 android:id="@+id/winner_yaytext"
                 android:layout_height="wrap_content"
-                android:gravity="center|left" />
+                android:gravity="center" />
 
-            <Button
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:text="Reset"
-                android:id="@+id/reset" />
+            <!--<Button-->
+                <!--android:layout_width="75dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Reset"-->
+                <!--android:id="@+id/reset" />-->
 
-            <Button
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:id="@+id/next" />
+            <!--<Button-->
+                <!--android:layout_width="75dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Next"-->
+                <!--android:id="@+id/next" />-->
 
 
         </LinearLayout>

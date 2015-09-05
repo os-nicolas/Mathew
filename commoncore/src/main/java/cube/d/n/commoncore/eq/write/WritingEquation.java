@@ -9,9 +9,12 @@ import android.util.Log;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.ErrorReporter;
 import cube.d.n.commoncore.Util;
+import cube.d.n.commoncore.eq.DragEquation;
+import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.FixedSize;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.BinaryEquation;
+import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.MultiEquation;
@@ -25,6 +28,7 @@ import cube.d.n.commoncore.lines.Line;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Created by Colin on 1/6/2015.
@@ -78,6 +82,28 @@ public class WritingEquation extends Equation {
     public Equation copy() {
         Equation result = new WritingEquation(owner,this);
         return result;
+    }
+
+    public ArrayList<EquationDis> closest(DragEquation dragging) {
+        if (size() !=0){
+            return super.closest(dragging);
+        }else{
+            ArrayList<EquationDis> result = new ArrayList<>();
+            result.add(new EquationDis(this, dragging, EquationDis.Side.left));
+            result.add(new EquationDis(this, dragging, EquationDis.Side.right));
+            return result;
+        }
+    }
+
+    public ArrayList<EquationDis> closest(float x, float y) {
+        if (size() !=0){
+            return super.closest(x,y);
+        }else{
+            ArrayList<EquationDis> result = new ArrayList<>();
+            result.add(new EquationDis(this, x,y, EquationDis.Side.left));
+            result.add(new EquationDis(this, x,y, EquationDis.Side.right));
+            return result;
+        }
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.Action.SuperAction;
 import cube.d.n.commoncore.eq.any.Equation;
 
 public class Button implements Physical {
@@ -21,6 +22,7 @@ public class Button implements Physical {
     float top;
     //  in percent of height (1 = full height)
 
+
     float canvasWidth;
     float canvasHeight;
 
@@ -30,14 +32,15 @@ public class Button implements Physical {
     int highlightColor;
     int targetBkgColor;
     String text;
-    Action myAction;
+    SuperAction myAction;
     boolean hover = false;
+    private int h=-1;
 
     public Button() {
 
     }
 
-    public Button( String text, Action myAction) {
+    public Button( String text, SuperAction myAction) {
         super();
         this.myAction = myAction;
         this.text = text;
@@ -46,6 +49,7 @@ public class Button implements Physical {
         targetBkgColor = BaseApp.getApp().lightColor;
         bkgPaint.setColor(targetBkgColor);
         this.textPaint = new TextPaint(BaseApp.getApp().textPaint);
+
         //TODO scale by dpi
         //TODO does not work at all
     }
@@ -91,8 +95,9 @@ public class Button implements Physical {
         return measureHeight();
     }
 
+    float offset=0;
     protected float top() {
-        return top * canvasHeight;
+        return (top * canvasHeight) + offset;
     }
 
     protected float left() {
@@ -100,7 +105,7 @@ public class Button implements Physical {
     }
 
     protected float bottom() {
-        return bottom * canvasHeight;
+        return bottom * canvasHeight+ offset;
     }
 
     protected float right() {
@@ -231,7 +236,7 @@ public class Button implements Physical {
         canvasHeight = canvas.getHeight();
         canvasWidth = canvas.getWidth();
 
-        float localTop =top()+t;
+        offset = t;
 
         if (!hover) {
             int currentColor = bkgPaint.getColor();
@@ -241,7 +246,7 @@ public class Button implements Physical {
         Paint bkgbkgPaint = new Paint();
         bkgbkgPaint.setColor(targetBkgColor);
         bkgbkgPaint.setAlpha(Math.min(p.getAlpha() ,bkgbkgPaint.getAlpha()));
-        RectF r = new RectF(left(), localTop, right(), bottom());
+        RectF r = new RectF(left(), top(), right(), bottom());
         canvas.drawRect(r, bkgbkgPaint);
 
 
@@ -249,28 +254,13 @@ public class Button implements Physical {
         // this happen on fade ins
         if (p.getAlpha() == 0xff) {
             float smaller = 3 * BaseApp.getApp().getDpi();
-            RectF r2 = new RectF(left() + smaller, localTop + smaller, right() - smaller, bottom() - smaller);
+            RectF r2 = new RectF(left() + smaller, top() + smaller, right() - smaller, bottom() - smaller);
             bkgPaint.setAlpha(p.getAlpha());
             canvas.drawRoundRect(r2, BaseApp.getApp().getCornor(), BaseApp.getApp().getCornor(), bkgPaint);
         }
 
-        Rect out = new Rect();
-        //TODO scale by dpi
-        float buffer = BaseApp.getApp().getBuffer();
-        String textToMeasure = text;
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        }
-        textToMeasure = "A";
-        textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
-            textPaint.setTextSize(textPaint.getTextSize() - 1);
-            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
-        }
-        float h = out.height();
 
+        measureText();
 
         //TODO this seems ugly
         if (!(this instanceof PopUpButton ) ){
@@ -286,6 +276,37 @@ public class Button implements Physical {
             }
         }
         textPaint.setAlpha(textPaint.getAlpha() * p.getAlpha() / (0xff));
-        canvas.drawText(text, getX(), (getY() + h + t) / 2, textPaint);
+        canvas.drawText(text, getX(), getY() +(h / 2), textPaint);
+    }
+
+    protected void measureText() {
+        if (h ==-1) {
+            Rect out = new Rect();
+            //TODO scale by dpi
+            float buffer = BaseApp.getApp().getBuffer();
+            String textToMeasure = text;
+            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+            int loops = 0;
+            while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
+                textPaint.setTextSize(textPaint.getTextSize() - 1);
+                textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+                loops++;
+                if (loops == 100) {
+                    Log.e("Button.draw", "i am stuck in a loop!");
+                    //TODO error reporter
+                }
+            }
+            textToMeasure = "A";
+            textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+            while (out.width() + 2 * buffer > measureWidth() || out.height() + 2 * buffer > targetHeight()) {
+                textPaint.setTextSize(textPaint.getTextSize() - 1);
+                textPaint.getTextBounds(textToMeasure, 0, textToMeasure.length(), out);
+                loops++;
+                if (loops == 100) {
+                    Log.e("Button.draw", "i am stuck in a loop!");
+                }
+            }
+            h = out.height();
+        }
     }
 }

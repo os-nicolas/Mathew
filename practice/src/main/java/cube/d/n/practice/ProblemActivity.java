@@ -9,7 +9,16 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import cube.d.n.commoncore.Action.MainActions.LastAction;
+import cube.d.n.commoncore.Action.MainActions.NextAction;
+import cube.d.n.commoncore.Action.MainActions.ResetAction;
+import cube.d.n.commoncore.Action.MainActions.UpAction;
+import cube.d.n.commoncore.Action.WriteScreen.LeftAction;
+import cube.d.n.commoncore.Action.WriteScreen.RightAction;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.HappyView;
 import cube.d.n.commoncore.ISolveController;
@@ -39,7 +48,6 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
         myProblem = Problem.problems.get(problemId).getRow().myProblem;
 
-        hideStatusBar();
 
         if (myProblem.view != null) {
             if (myProblem.view.getParent() != null) {
@@ -98,6 +106,20 @@ public class ProblemActivity extends FullAct implements ISolveController {
             public  void finish(){
                 that.finish();
             }
+
+            @Override
+            public boolean hasLast(){
+                return myProblem.last()!= null;
+            }
+
+            @Override
+            public void last() {
+                Intent intent = new Intent(that, ProblemActivity.class);
+                //based on item add info to intent
+                intent.putExtra("problem", myProblem.last().myId);
+                startActivity(intent);
+                that.finish();
+            }
         };
 
         ((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
@@ -112,7 +134,12 @@ public class ProblemActivity extends FullAct implements ISolveController {
         if (myProblem.equation == null || myProblem.input) {
             main.initWI();
         } else {
-            main.initWE(myProblem.equation);
+            ArrayList<Button> buttons = new ArrayList<Button>();
+            buttons.add(new Button("<-",new LastAction(main)));
+            buttons.add(new Button("Reset",new ResetAction(main)));
+            buttons.add(new Button("Menu",new UpAction(main)));
+            buttons.add(new Button("->",new NextAction(main)));
+            main.initWE(myProblem.equation, buttons );
         }
 
         if (myProblem.name.equals("")) {

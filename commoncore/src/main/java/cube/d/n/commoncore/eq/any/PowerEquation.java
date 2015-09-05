@@ -164,7 +164,6 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
 
     @Override
     public ArrayList<SelectedRow> getSelectedRow() {
-        ArrayList<SelectedRow> startWith = super.getSelectedRow();
 
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
 
@@ -277,9 +276,13 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         if (buttons.size() != 0) {
             SelectedRow sr = new SelectedRow(1f / 9f);
             sr.addButtonsRow(buttons, 0, 1);
-            startWith.add(sr);
+            ArrayList<SelectedRow> res = new ArrayList<SelectedRow>();
+            res.add(sr);
+            return res;
+        }else{
+            ArrayList<SelectedRow> startWith = super.getSelectedRow();
+            return startWith;
         }
-       return startWith;
     }
 
     private Equation power_PowerPowerEquation(Equation result) {

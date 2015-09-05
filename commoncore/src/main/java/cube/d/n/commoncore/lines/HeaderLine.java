@@ -2,12 +2,17 @@ package cube.d.n.commoncore.lines;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
+import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.PopUpButton;
+import cube.d.n.commoncore.SelectedRow;
+import cube.d.n.commoncore.TouchMode;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
@@ -22,20 +27,21 @@ public class HeaderLine extends Line {
         super(owner);
     }
 
-    protected void setButtonsRow(ArrayList<Button> row, float left, float right) {
+    public void setButtonsRow(ArrayList<Button> row, float left, float right) {
         float count = row.size();
         float at = left;
-        float step = (right - left) / count;
+        if (count != 0) {
+            float step = (right - left) / count;
 
-        for (float i = 0; i < count; i++) {
-            Button b = row.get((int) i);
-            if (b!=null){
-                b.setLocation(at, at + step, 0, measureHeight());
-                buttons.add(b);
+            for (float i = 0; i < count; i++) {
+                Button b = row.get((int) i);
+                if (b != null) {
+                    b.setLocation(at, at + step, 0,BaseApp.getApp().buttonHeight());
+                    buttons.add(b);
+                }
+                at += step;
             }
-            at += step;
         }
-
     }
 
     @Override
@@ -52,7 +58,49 @@ public class HeaderLine extends Line {
         for (Button myBut: buttons) {
             myBut.draw(canvas,paint,top);
         }
-        Util.drawShadow(canvas,paint.getAlpha()/2,top+measureHeight(),measureWidth(),true);
+
+        Paint p = new Paint();
+        p.setColor(BaseApp.getApp().lightColor);
+        Rect r = new Rect(0,0,(int)owner.width+1,(int)top+1);
+        canvas.drawRect(r,p);
+
+        Util.drawShadow(canvas,paint.getAlpha()/2,top+BaseApp.getApp().buttonHeight()*owner.height,measureWidth(),true);
+    }
+    TouchMode myMode;
+    @Override
+    public boolean onTouch(MotionEvent event) {
+
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                if (in(event)) {
+                    myMode = TouchMode.KEYBOARD;
+
+                } else {
+                    myMode = TouchMode.NOPE;
+                }
+            }
+            if (myMode == TouchMode.KEYBOARD) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    for (Button myBut : buttons) {
+                        myBut.click(event);
+                    }
+
+                } else {
+                    for (Button myBut : buttons) {
+                        myBut.hover(event);
+                    }
+                }
+                return true;
+            }
+        return false;
+    }
+
+    private boolean in(MotionEvent event) {
+        for (Button b : buttons) {
+            if (b.couldClick(event)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -67,6 +115,6 @@ public class HeaderLine extends Line {
 
     @Override
     public float measureHeight() {
-        return owner.height* BaseApp.getApp().buttonHeight();
+        return (owner.height* BaseApp.getApp().buttonHeight())*2;
     }
 }

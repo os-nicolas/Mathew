@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.HasHeaderLine;
+import cube.d.n.commoncore.eq.any.BinaryEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.EquationDis;
 import cube.d.n.commoncore.eq.PlaceholderEquation;
@@ -123,7 +124,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
     }
 
     public void removeSelected() {
-            if (selected.parent.size() != 1) {
+            if (!(selected.parent.size() == 1 && selected.parent.parent == null)) {
                 Equation oldEq = selected;
                 oldEq.remove();
             }
@@ -151,24 +152,27 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         // TODO 100 to var scale by dpi
         //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
         //if (Math.abs(event.getY() - lcp.y) < minDis) {
-        if (lcp instanceof PlaceholderEquation) {
-            lcp.setSelected(true);
-        } else {
+        //if (lcp instanceof PlaceholderEquation) {
+        //    lcp.setSelected(true);
+        //} else {
             // the the lcp is the left or right end of something we might want to select it's parent
             Equation current = lcp;
 
             boolean left = event.getX() < lcp.x;
             int depth = 0;
             // find how many layor deep we are
-            while (current.parent != null && current.parent.indexOf(current) == (left ? 0 : current.parent.size() - 1)) {
+            while (current.parent != null &&
+                    (current.parent.indexOf(current) == (left ? 0 : current.parent.size() - 1)||
+                    current.parent instanceof BinaryEquation)) {
                 // we don't count binary eq because they are fixed size
-                //if (!(current.parent instanceof BinaryEquation)) {
-                depth++;
-                //}
+                if (!(current.parent instanceof BinaryEquation)) {
+                    depth++;
+                }
                 current = current.parent;
             }
             // we really should figure how much space we have to work with so we can divide it up
 
+        Log.d("depth",depth +"");
 
             if (depth != 0) {
                 float distance = 100 * BaseApp.getApp().getDpi() + (lcp.measureWidth() / 2f);
@@ -186,11 +190,13 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
                     num = depth;
                 }
 
+                Log.d("num",num +"");
+
                 current = lcp;
                 while (num != 0) {
-                    //if (!(current.parent instanceof BinaryEquation)) {
-                    num--;
-                    //}
+                    if (!(current.parent instanceof BinaryEquation)) {
+                        num--;
+                    }
                     current = current.parent;
                 }
                 lcp = current;
@@ -209,6 +215,8 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
                 int at = lcp.parent.indexOf(lcp);
                 lcp.parent.add(at + (left ? 0 : 1), toSelect);
             } else {
+                Log.e("InputLine.resolveSelected","we should never hit this case!");
+
                 Equation oldEq = lcp;
                 Equation holder = new WritingEquation(this);
                 oldEq.replace(holder);
@@ -221,7 +229,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
                 }
                 toSelect.setSelected(true);
             }
-        }
+        //}
 
         //}
         if (selected != null) {

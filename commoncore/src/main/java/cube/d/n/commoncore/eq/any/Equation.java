@@ -256,6 +256,8 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     //public abstract boolean isFlex();
 
+
+
     public ArrayList<EquationDis> closest(DragEquation dragging) {
         ArrayList<EquationDis> result = new ArrayList<EquationDis>();
         for (int i = 0; i < size(); i++) {
@@ -263,10 +265,11 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             result.addAll(get(i).closest(dragging));
 
         }
-        if (this instanceof DivEquation) {
-            result.add(new EquationDis(this, dragging, EquationDis.Side.left));
-            result.add(new EquationDis(this, dragging, EquationDis.Side.right));
-        }
+        // I don't think i need this, guess i will find out
+//        if (this instanceof DivEquation) {
+//            result.add(new EquationDis(this, dragging, EquationDis.Side.left));
+//            result.add(new EquationDis(this, dragging, EquationDis.Side.right));
+//        }
 
         Collections.sort(result);
         return result;
@@ -279,10 +282,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             result.addAll(get(i).closest(x, y));
 
         }
-        if (this instanceof DivEquation) {
-            result.add(new EquationDis(this, x, y, EquationDis.Side.left));
-            result.add(new EquationDis(this, x, y, EquationDis.Side.right));
-        }
+//        if (this instanceof DivEquation) {
+//            result.add(new EquationDis(this, x, y, EquationDis.Side.left));
+//            result.add(new EquationDis(this, x, y, EquationDis.Side.right));
+//        }
 
         Collections.sort(result);
         return result;

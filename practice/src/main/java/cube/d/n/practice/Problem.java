@@ -122,4 +122,20 @@ public class Problem {
     public TopicRow getTopic() {
         return TopicRow.topics.get(topic);
     }
+
+    public Problem last() {
+        ArrayList<ProblemRow> siblins = TopicRow.topics.get(topic).getProblems();
+        ProblemRow last = null;
+        for (ProblemRow pr: siblins){
+            if (pr.myProblem.equals(this)){
+                if (last== null){
+                    return null;
+                }
+                return last.myProblem;
+            }
+            last = pr;
+        }
+        Log.e("Problem.last","we should never get here");
+        return null;
+    }
 }

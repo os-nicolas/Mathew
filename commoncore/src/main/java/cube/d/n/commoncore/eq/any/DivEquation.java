@@ -189,7 +189,6 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
 
     @Override
     public ArrayList<SelectedRow> getSelectedRow() {
-        ArrayList<SelectedRow> startWith = super.getSelectedRow();
         final Equation a = get(0);
         final Equation b = get(1);
 
@@ -297,12 +296,16 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
         // we try to reduce too
         tryToReduce(buttons, that);
 
-        if (buttons.size() != 0){
-            SelectedRow sr = new SelectedRow(1f/9f);
-            sr.addButtonsRow(buttons,0,1);
-            startWith.add(sr);
+        if (buttons.size() != 0) {
+            SelectedRow sr = new SelectedRow(1f / 9f);
+            sr.addButtonsRow(buttons, 0, 1);
+            ArrayList<SelectedRow> res = new ArrayList<SelectedRow>();
+            res.add(sr);
+            return res;
+        }else{
+            ArrayList<SelectedRow> startWith = super.getSelectedRow();
+            return startWith;
         }
-        return startWith;
     }
 	
 	public void tryOperator(ArrayList<Equation> eqs) {

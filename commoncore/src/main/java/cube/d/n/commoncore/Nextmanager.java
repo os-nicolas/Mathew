@@ -14,4 +14,8 @@ public abstract class Nextmanager {
         public abstract void next();
 
         public abstract void finish();
+
+    public boolean hasLast(){return false;}
+
+    public abstract void last();
 }

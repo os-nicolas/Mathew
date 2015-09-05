@@ -17,7 +17,7 @@ import cube.d.n.commoncore.lines.InputLine;
 /**
  * Created by Colin_000 on 5/8/2015.
  */
-public abstract class Action {
+public abstract class Action extends SuperAction {
 
     public final EquationLine owner;
 
@@ -25,14 +25,12 @@ public abstract class Action {
         this.owner =owner;
     }
 
-    public boolean canAct(){
-        return true;
-    }
+
 
     public void act(){
+        super.act();
         if (canAct()){
-            privateAct();
-            ErrorReporter.log("acted",owner.stupid.get().toString());
+            ErrorReporter.log("acted", owner.stupid.get().toString());
         }
     }
 
@@ -45,7 +43,7 @@ public abstract class Action {
         ((AlgebraLine)owner).updateHistory();
     }
 
-    protected abstract void privateAct();
+
 
     public static int countEquals(Equation stupid) {
         int count = 0;
