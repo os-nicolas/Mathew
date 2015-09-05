@@ -139,7 +139,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
             currentBkgAlpha = selected.bkgAlpha;
         }
 
-        removeSelected();
+
 
 
         // if it's an action up
@@ -152,9 +152,17 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         // TODO 100 to var scale by dpi
         //float minDis = 100 * Algebrator.getAlgebrator().getDpi();
         //if (Math.abs(event.getY() - lcp.y) < minDis) {
-        //if (lcp instanceof PlaceholderEquation) {
-        //    lcp.setSelected(true);
-        //} else {
+        if ((lcp.parent.size() == 1 && lcp.parent.parent == null)) {
+            lcp.setSelected(true);
+        } else {
+            removeSelected();
+            int cIndex = 1;
+            while (lcp instanceof PlaceholderEquation) {
+                lcp = closest.get(cIndex).equation;
+                cIndex++;
+            }
+
+
             // the the lcp is the left or right end of something we might want to select it's parent
             Equation current = lcp;
 
@@ -234,7 +242,9 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
                 }
                 toSelect.setSelected(true);
             }
-        //}
+        }
+
+        Log.d("current", stupid.get().toString());
 
         //}
         if (selected != null) {

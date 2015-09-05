@@ -26,8 +26,8 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
             @Override
             public void run() {
                 if (!BuildConfig.DEBUG) {
-                    //SES.sendEmail("MathildaApp@gmail.com","crash!",res);
-                    //Log.e("sent Email","done did it!");
+                    SES.sendEmail("MathildaApp@gmail.com","crash!",res);
+                    Log.e("sent Email","done did it!");
                 }
 
             }
