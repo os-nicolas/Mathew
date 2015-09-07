@@ -1100,6 +1100,20 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         return at.parent.get(at.parent.indexOf(at) + (left ? -1 : 1));
     }
 
+    private Equation nextNoDiv(boolean left) {
+        Equation at = this;
+        if (at.parent == null) {
+            return null;
+        }
+        while (at.parent.indexOf(at) == (left ? 0 : (at.parent.size() - 1)) || (at.parent != null && at.parent instanceof DivEquation)) {
+            at = at.parent;
+            if (at.parent == null) {
+                return null;
+            }
+        }
+        return at.parent.get(at.parent.indexOf(at) + (left ? -1 : 1));
+    }
+
     public Integer deepIndexOf(Equation eq) {
         Equation at = eq;
         if (at.parent == null) {
@@ -1696,6 +1710,16 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     public void addWatcher(GS<Equation> watcher) {
         watchers.add(watcher);
+    }
+
+    // finds a leaf equation to the right of this
+    // we actually just don't look at DivEquations
+    public Equation nonDivRight() {
+        return nextNoDiv(false);
+    }
+
+    public Equation nonDivLeft() {
+        return nextNoDiv(false);
     }
 
     private class Clostest {

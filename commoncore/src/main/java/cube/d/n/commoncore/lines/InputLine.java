@@ -175,10 +175,15 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
         Log.d("depth",depth +"");
 
             if (depth != 0) {
+
+                //TODO
+                // I am not sure I should use 100
+                // it is wierd to have to drag different distances for different embedednesse
+                // yuk tho I probably want to use inches
                 float distance = 100 * BaseApp.getApp().getDpi() + (lcp.measureWidth() / 2f);
 
                 // this means use left or right
-                Equation next = (left ? lcp.left() : lcp.right());
+                Equation next = (left ? lcp.nonDivLeft() : lcp.nonDivRight());
                 if (next != null) {
                     distance = Math.abs(lcp.x - next.x) / 2;
                 }
