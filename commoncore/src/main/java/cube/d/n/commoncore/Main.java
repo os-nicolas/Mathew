@@ -523,9 +523,18 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         }else if (lines.get(0) instanceof  HeaderLine){
             maxOffsetY=0;
             for (int i =0; i< lines.size(); i++) {
-                maxOffsetY += lines.get(i).measureHeight();
+                Line l = lines.get(i);
+                maxOffsetY += l.measureHeight();
                 //if (lines.get(i) instanceof InputLine){
                 //}
+                //TODO this is UGLY
+                //it should not be here and it should not be in onDraw
+                //this should probably be used in the next block also anyway
+                if (i == lines.size() - 1) {
+                    if (l instanceof EquationLine) {
+                        maxOffsetY -= ((EquationLine) l).stupid.get().measureHeightUpper();
+                    }
+                }
             }
         } else {
             maxOffsetY = height - keyBoardManager.get().measureHeight();// - lines.get(0).measureHeight() - lines.get(0).measureHeight() - 2* EquationLine.getBuffer()
