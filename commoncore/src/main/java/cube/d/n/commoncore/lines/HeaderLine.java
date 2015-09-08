@@ -60,7 +60,7 @@ public class HeaderLine extends Line {
         }
 
         Paint p = new Paint();
-        p.setColor(BaseApp.getApp().lightColor);
+        p.setColor(BaseApp.getApp().darkDarkColor);
         Rect r = new Rect(0,0,(int)owner.width+1,(int)top+1);
         canvas.drawRect(r,p);
 

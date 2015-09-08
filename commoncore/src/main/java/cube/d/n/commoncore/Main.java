@@ -466,7 +466,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 if (l instanceof ImageLine){
                     ((ImageLine) l).updateBitMap((int)width);
                 }
-                tolHeight += l.measureHeight();
+                if (!(l instanceof HeaderLine)) {
+                    tolHeight += l.measureHeight();
+                }
             }
             offsetY = tolHeight;
         }
@@ -522,6 +524,8 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             maxOffsetY=0;
             for (int i =0; i< lines.size(); i++) {
                 maxOffsetY += lines.get(i).measureHeight();
+                //if (lines.get(i) instanceof InputLine){
+                //}
             }
         } else {
             maxOffsetY = height - keyBoardManager.get().measureHeight();// - lines.get(0).measureHeight() - lines.get(0).measureHeight() - 2* EquationLine.getBuffer()
@@ -535,7 +539,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             maxOffsetY = Math.max(0, maxOffsetY);
 
 
-            // this has throw concurrent modification
+            // this has thrown concurrent modification
             for (int i =0; i< lines.size(); i++) {
                 maxOffsetY += lines.get(i).measureHeight();
             }
