@@ -15,4 +15,7 @@
             <enum name="problem_wi" value="7"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="HappyViewAttrs">
+        <attr name="top" format="boolean"/>
+    </declare-styleable>
 </resources>

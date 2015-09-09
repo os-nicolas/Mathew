@@ -16,13 +16,16 @@ android:layout_height="match_parent">
     <cube.d.n.commoncore.HappyView
         android:layout_width="fill_parent"
         android:layout_height="100dp"
-        android:id="@+id/happy"/>
+        android:id="@+id/happy"
+        custom:top="false"
+        android:layout_gravity="bottom"/>
 
     <cube.d.n.commoncore.YayProblemView
         android:visibility="gone"
         android:id="@+id/problem_yay"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
     </cube.d.n.commoncore.YayProblemView>
 
     <LinearLayout

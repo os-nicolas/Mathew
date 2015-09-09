@@ -23,7 +23,7 @@ public class PopUpEquationDisplay extends PopUpEquationButton {
     public void updateCanAct() {
         super.updateCanAct();
         if (can && !((AlgebraLine)al).getSelected().equals(lastSelect)){
-            myEq = ((ActionWithDisplay)myAction).getDisplay();
+            myEq = ((ActionWithDisplay)myAction).getDisplay(!(left==0 && right==1));
             lastSelect = ((AlgebraLine)al).getSelected();
         }
     }

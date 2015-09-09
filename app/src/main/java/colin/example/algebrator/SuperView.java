@@ -384,14 +384,14 @@ public abstract class SuperView extends BaseView implements
         if (dragging != null) {
             if (dragging.eq.x - 2*buffer < 0) {
                 Log.d("out,left","dragging");
-                //message.db("outleft, dragging");
+                //message.db("outright, dragging");
                 return -(dragging.eq.x - 2*buffer);
             }
         }
         if (selected != null) {
             if (selected.x - buffer < 0) {
                 Log.d("out,left","selected");
-                //message.db("outleft, select");
+                //message.db("outright, select");
                 return -(selected.x - buffer);
             }
         }

@@ -13,5 +13,5 @@ public abstract class ActionWithDisplay extends Action {
         super(owner);
     }
 
-    public abstract Equation getDisplay();
+    public abstract Equation getDisplay(boolean shorten);
 }

@@ -433,8 +433,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
         //Log.d("drew keyboaed","yep");
         progressManager.draw(canvas);
-        // TODO this is probably really bad for CPU and GPU use
-        invalidate();
+
 
         long now = System.currentTimeMillis();
         float elapsedTime = (now - startTime) / 1000f;
@@ -454,6 +453,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             fingerPaint.setARGB(0xff / 2, (0xd5 - (0xff / 2)) * 2, 0x04, 0x06);
             canvas.drawCircle(trackFingerX, trackFingerY, 20 * BaseApp.getApp().getDpi(), fingerPaint);
         }
+
+        // TODO this is probably really bad for CPU and GPU use
+        invalidate();
 
     }
 
@@ -837,8 +839,9 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
         keyBoardManager.hardSet(lines.get(3).getKeyboad());
     }
 
-    public void initWI() {
-        keyBoardManager.hardSet(lines.get(1).getKeyboad());
+    public void initWI(ArrayList<Button> buttons) {
+        ((HeaderLine) lines.get(0)).setButtonsRow(buttons,0,1);
+        keyBoardManager.hardSet(lines.get(2).getKeyboad());
     }
 
     public void initE(Equation equation) {
@@ -899,11 +902,22 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                                     @Override
                                     public void run() {
                                         try {
-                                            Thread.sleep(2200);
+                                            Thread.sleep(3500);
                                             acti.runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    overlay.animate().alpha(0).setDuration(500).withLayer();
+                                                    overlay.animate().alpha(0).setDuration(2000).withLayer().withEndAction(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            acti.runOnUiThread(new Runnable() {
+                                                                                   @Override
+                                                                                   public void run() {
+                                                                                       overlay.setVisibility(GONE);
+                                                                                   }
+                                                                               });
+
+                                                        }
+                                                    });
                                                 }
                                             });
                                         } catch (Exception e) {

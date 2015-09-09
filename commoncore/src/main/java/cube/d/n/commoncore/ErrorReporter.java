@@ -1,5 +1,7 @@
 package cube.d.n.commoncore;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,7 +27,7 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
         Thread th = new Thread( new Runnable() {
             @Override
             public void run() {
-                if (!BuildConfig.DEBUG) {
+                if (!isDebug()) {
                     SES.sendEmail("MathildaApp@gmail.com","crash!",res);
                     Log.e("sent Email","done did it!");
                 }
@@ -34,6 +36,20 @@ public class ErrorReporter implements Thread.UncaughtExceptionHandler {
         });
         th.start();
         old.uncaughtException(thread,ex);
+    }
+
+    private boolean isDebug() {
+        //!BuildConfig.DEBUG
+        PackageManager pacMan =  BaseApp.getApp().getApplicationContext().getPackageManager();
+        String pacName = BaseApp.getApp().getApplicationContext().getPackageName();
+        ApplicationInfo appInfo=null;
+        try {
+            appInfo = pacMan.getApplicationInfo(pacName, 0);
+            return (appInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     private static String recentLog() {

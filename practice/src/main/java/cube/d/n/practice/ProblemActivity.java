@@ -1,6 +1,7 @@
 package cube.d.n.practice;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,8 +16,6 @@ import cube.d.n.commoncore.Action.MainActions.LastAction;
 import cube.d.n.commoncore.Action.MainActions.NextAction;
 import cube.d.n.commoncore.Action.MainActions.ResetAction;
 import cube.d.n.commoncore.Action.MainActions.UpAction;
-import cube.d.n.commoncore.Action.WriteScreen.LeftAction;
-import cube.d.n.commoncore.Action.WriteScreen.RightAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CircleView;
@@ -98,7 +97,9 @@ public class ProblemActivity extends FullAct implements ISolveController {
                 Intent intent = new Intent(that, ProblemActivity.class);
                 //based on item add info to intent
                 intent.putExtra("problem", myProblem.next().myId);
-                startActivity(intent);
+                Bundle settings = ActivityOptions.makeCustomAnimation(that,R.anim.inright,R.anim.outleft).toBundle();
+                startActivity(intent, settings);
+                that.overridePendingTransition(R.anim.outleft, R.anim.inright);
                 that.finish();
             }
 
@@ -117,7 +118,9 @@ public class ProblemActivity extends FullAct implements ISolveController {
                 Intent intent = new Intent(that, ProblemActivity.class);
                 //based on item add info to intent
                 intent.putExtra("problem", myProblem.last().myId);
-                startActivity(intent);
+                Bundle settings = ActivityOptions.makeCustomAnimation(that,R.anim.inleft,R.anim.outright).toBundle();
+                startActivity(intent,settings);
+                that.overridePendingTransition(R.anim.outright,R.anim.inleft);
                 that.finish();
             }
         };
@@ -131,14 +134,14 @@ public class ProblemActivity extends FullAct implements ISolveController {
 
 
     private void setUp(Main main) {
+        ArrayList<Button> buttons = new ArrayList<Button>();
+        buttons.add(new Button("←",new LastAction(main)));
+        buttons.add(new Button("Reset",new ResetAction(main)));
+        buttons.add(new Button("Menu",new UpAction(main)));
+        buttons.add(new Button("→",new NextAction(main)));
         if (myProblem.equation == null || myProblem.input) {
-            main.initWI();
+            main.initWI(buttons);
         } else {
-            ArrayList<Button> buttons = new ArrayList<Button>();
-            buttons.add(new Button("<-",new LastAction(main)));
-            buttons.add(new Button("Reset",new ResetAction(main)));
-            buttons.add(new Button("Menu",new UpAction(main)));
-            buttons.add(new Button("->",new NextAction(main)));
             main.initWE(myProblem.equation, buttons );
         }
 
@@ -199,7 +202,6 @@ public class ProblemActivity extends FullAct implements ISolveController {
     @Override
     public void reset(final Main main,final Runnable r) {
         // todo
-        Log.d("reset", "ProblemActivty.reset is not yet implemented");
 
         View root = (View)main.getParent();
 //        while (root.getParent() != null && root.getParent() instanceof View){

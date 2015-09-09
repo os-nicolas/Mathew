@@ -42,6 +42,33 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
                     changed(p);
                 }
             }));
+        }else if (get(0) instanceof MinusEquation){
+            buttons.add(new SeletedRowEquationButton(that.get(0).get(0).copy(),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(that.get(0).get(0).copy());
+                    changed(p);
+                }
+            }));
+        }else if (get(0) instanceof PlusMinusEquation){
+            buttons.add(new SeletedRowEquationButton(that.get(0).copy(),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(that.get(0).copy());
+                    changed(p);
+                }
+            }));
+        }else if (Operations.sortaNumber(get(0)) && Operations.getValue(get(0)).doubleValue() ==0){
+            buttons.add(new SeletedRowEquationButton(NumConstEquation.create(0,owner),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(NumConstEquation.create(0,owner));
+                    changed(p);
+                }
+            }));
         }
 
         // we try to reduce too

@@ -62,20 +62,20 @@ public class EmilyAct extends Activity {
 
                 EquationLine el = ((EquationLine)((Main) myView).getLine(i));
 
-                Equation write = new WritingEquation(el);
-                Equation eq = new SineEquation(el);
-                    Equation div = new DivEquation(el);
-                    div.add(NumConstEquation.create(1,el));
-                    div.add(NumConstEquation.create(2,el));
-                eq.add(div);
-                write.add(eq);
-                if (el instanceof InputLine) {
-                    write.add(((InputLine) el).getSelected());
-                }
-
-                Log.d("setting Eq:", write.toString());
-
-                el.stupid.set(write);
+//                Equation write = new WritingEquation(el);
+//                Equation eq = new SineEquation(el);
+//                    Equation div = new DivEquation(el);
+//                    div.add(NumConstEquation.create(1,el));
+//                    div.add(NumConstEquation.create(2,el));
+//                eq.add(div);
+//                write.add(eq);
+//                if (el instanceof InputLine) {
+//                    write.add(((InputLine) el).getSelected());
+//                }
+//
+//                Log.d("setting Eq:", write.toString());
+//
+//                el.stupid.set(write);
                 Equation st = el.stupid.get();
                 if (st != null) {
                     st.deepNeedsUpdate();

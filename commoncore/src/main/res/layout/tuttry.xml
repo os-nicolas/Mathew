@@ -99,6 +99,7 @@
                                 custom:start_layout="tut_e" />
 
                             <cube.d.n.commoncore.HappyView
+                                custom:top="true"
                                 android:layout_width="fill_parent"
                                 android:layout_height="100dp"
                                 android:id="@+id/happy"/>

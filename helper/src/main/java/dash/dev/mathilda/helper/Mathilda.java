@@ -93,4 +93,9 @@ public class Mathilda extends BaseApp {
     public boolean includeClear() {
         return true;
     }
+
+    @Override
+    public boolean bothSidesPopUps() {
+        return false;
+    }
 }

@@ -16,7 +16,7 @@ public class ClearAction extends TimeOutAction {
         super(emilyView);
     }
 
-    long lastCalled=0l;
+    long lastCalled=System.currentTimeMillis();
     long lastShown=0l;
     long lastActed =0l;
     long showFor = BaseApp.getApp().acceptedTime*4;
@@ -25,16 +25,21 @@ public class ClearAction extends TimeOutAction {
     @Override
     public boolean canAct(){
         long now = System.currentTimeMillis();
-        if (now - lastCalled > timeOut  && owner.stupid.get().size() != 1 && owner.stupid.get() instanceof WritingEquation){
+        // if it has not been called in a while
+        // and the the line we would clear is not just "(|)
+        if (now - lastCalled > timeOut  && owner.stupid.get().size() != 1){ //&& owner.stupid.get() instanceof WritingEquation
             lastShown= now;
             lastCalled = now;
             return true;
-        }else if (now - lastShown < showFor && lastShown > lastActed){
+        // if it has been shown more recently than it has been call
+        // and it has not been shown for too long
+        }else if (lastShown > lastActed && now - lastShown < showFor ){
             lastCalled = now;
             return true;
+        }else {
+            lastCalled = now;
+            return false;
         }
-        lastCalled = now;
-        return false;
     }
 
     protected void timeout() {

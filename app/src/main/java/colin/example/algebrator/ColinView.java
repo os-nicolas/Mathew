@@ -494,7 +494,7 @@ public class ColinView extends SuperView implements CanTrackChanges, CanWarn {
         Physical right = rightest();
         if (left.getX() + left.measureWidth() / 2 - buffer < 0 && right.getX() + right.measureWidth() / 2 + buffer < width) {
             Log.d("out,left", "closest");
-            //message.db("outleft, closest");
+            //message.db("outright, closest");
             return -(left.getX() + left.measureWidth() / 2 - buffer);
         }
         return super.outLeft();

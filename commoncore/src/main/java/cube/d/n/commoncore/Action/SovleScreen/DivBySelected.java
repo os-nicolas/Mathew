@@ -3,6 +3,7 @@ package cube.d.n.commoncore.Action.SovleScreen;
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Action.ActionWithDisplay;
 import cube.d.n.commoncore.Util;
+import cube.d.n.commoncore.eq.Operations;
 import cube.d.n.commoncore.eq.any.AddEquation;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.EqualsEquation;
@@ -25,16 +26,20 @@ public class DivBySelected extends SelectedOpAction {
     }
 
     @Override
-    public Equation getDisplay() {
+    public Equation getDisplay(boolean shorten) {
         Equation res = new WritingEquation(owner);
-        res.add(new VarEquation("Divide both sides by ",owner));
+        if (!shorten) {
+            res.add(new VarEquation("Divide both sides by ", owner));
+        }else{
+            res.add(new VarEquation("Divide by ", owner));
+        }
         res.add(getSel().copy());
         return res;
     }
 
     @Override
     protected void privateAct() {
-
+        ((AlgebraLine) owner).tryWarn(getSel().copy());
         setNewStupid((EqualsEquation)getResultEq());
     }
 
@@ -73,6 +78,10 @@ public class DivBySelected extends SelectedOpAction {
     }
 
     public static boolean canAct(Equation stup, Equation sel) {
+        // we don't want to divide both sides by 0
+        if (sel!= null && Operations.sortaNumber(sel) && Operations.getValue(sel).doubleValue() ==0){
+            return false;
+        }
 
         if (sel != null  && stup instanceof EqualsEquation){
             while (sel.parent instanceof SignEquation){

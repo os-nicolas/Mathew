@@ -25,10 +25,14 @@ public class MultiBySelected extends SelectedOpAction {
     }
 
     @Override
-    public Equation getDisplay() {
+    public Equation getDisplay(boolean shorten) {
 
         Equation res = new WritingEquation(owner);
-        res.add(new VarEquation("Multiply both sides by ",owner));
+        if (!shorten) {
+            res.add(new VarEquation("Multiply both sides by ", owner));
+        }else {
+            res.add(new VarEquation("Multiply by ", owner));
+        }
         res.add(getSel().copy());
         return res;
     }
@@ -75,6 +79,11 @@ public class MultiBySelected extends SelectedOpAction {
     }
 
     public static boolean canAct(Equation stup, Equation sel) {
+        // we don't want to multiply both sides by 0 that means we had x/0 =y and that just makes us really unfortable
+        if (sel!= null && Operations.sortaNumber(sel) && Operations.getValue(sel).doubleValue() ==0){
+            return false;
+        }
+
         if (sel != null && stup instanceof EqualsEquation){
             while (sel.parent instanceof SignEquation){
                 sel = sel.parent;

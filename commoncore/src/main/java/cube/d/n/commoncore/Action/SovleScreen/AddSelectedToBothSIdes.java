@@ -70,6 +70,10 @@ public class AddSelectedToBothSIdes extends SelectedOpAction {
     }
 
     public static boolean canAct(Equation stup,Equation sel) {
+        // we don't really care to add 0 to both sides
+        if (sel!= null && Operations.sortaNumber(sel) && Operations.getValue(sel).doubleValue() ==0){
+            return false;
+        }
 
         if (sel != null  && stup instanceof EqualsEquation){
             while (sel.parent instanceof SignEquation){
@@ -90,11 +94,13 @@ public class AddSelectedToBothSIdes extends SelectedOpAction {
     }
 
     @Override
-    public Equation getDisplay() {
+    public Equation getDisplay(boolean shorten) {
         Equation res = new WritingEquation(owner);
         res.add(new VarEquation("Add ",owner));
         res.add(getSel().copy().negate());
-        res.add(new VarEquation(" to both sides ",owner));
+        if (!shorten) {
+            res.add(new VarEquation(" to both sides ", owner));
+        }
         return res;
     }
 }

@@ -1681,22 +1681,25 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     public ArrayList<SelectedRow> getSelectedRow() {
         ArrayList<SelectedRow> res = new ArrayList<>();
         if (BaseApp.getApp().bothSidesPopUps()){
-            ArrayList<SelectedRowButtons> butts = new ArrayList<>();
+            ArrayList<SelectedOpAction> acts = new ArrayList<>();
             if (AddSelectedToBothSIdes.canAct(owner.stupid.get(),this)){
-                Log.i("Generating Selected Row","Add");
-                SelectedOpAction a = new AddSelectedToBothSIdes((AlgebraLine)owner);
-                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+                //Log.i("Generating Selected Row","Add");
+                acts.add( new AddSelectedToBothSIdes((AlgebraLine)owner));
             }
             if (MultiBySelected.canAct(owner.stupid.get(),this)){
-                Log.i("Generating Selected Row","Multi");
-                SelectedOpAction a = new MultiBySelected((AlgebraLine)owner);
-                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+                //Log.i("Generating Selected Row","Multi");
+                acts.add( new MultiBySelected((AlgebraLine)owner));
             }
             if (DivBySelected.canAct(owner.stupid.get(),this)){
-                Log.i("Generating Selected Row","Div");
-                SelectedOpAction a = new DivBySelected((AlgebraLine)owner);
-                butts.add(new SeletedRowEquationButton(a.getDisplay(),a));
+                //Log.i("Generating Selected Row","Div");
+                acts.add( new DivBySelected((AlgebraLine)owner));
             }
+
+            ArrayList<SelectedRowButtons> butts = new ArrayList<>();
+            for (SelectedOpAction a : acts){
+                butts.add(new SeletedRowEquationButton(a.getDisplay(acts.size()>1),a));
+            }
+
             if (butts.size()!= 0 ){
 
                 SelectedRow row = new SelectedRow(1f/9f);

@@ -28,13 +28,13 @@ public class YayProblemView extends LinearLayout implements YayView {
         LayoutInflater layoutInflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         view=layoutInflater.inflate(R.layout.problem_winner,this);
 //        ((android.widget.Button)view.findViewById(R.id.reset)).setTypeface(BaseApp.getApp().getDJVL());
-//        ((android.widget.Button)view.findViewById(R.id.next)).setTypeface(BaseApp.getApp().getDJVL());
-//        (view.findViewById(R.id.overlay_background)).setOnTouchListener(new OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return true;
-//            }
-//        });
+        ((android.widget.Button)view.findViewById(R.id.next)).setTypeface(BaseApp.getApp().getDJVL());
+        (view.findViewById(R.id.overlay_background)).setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return true;
+            }
+        });
         ((TextView)view.findViewById(R.id.winner_yaytext)).setTypeface(BaseApp.getApp().getDJVL());
         ((TextView)view.findViewById(R.id.winner_yaytext)).setText(getText());
     }
@@ -66,40 +66,40 @@ public class YayProblemView extends LinearLayout implements YayView {
 //                }
 //            }
 //        });
-//        if (main.next.hasNext()) {
-//            ((android.widget.Button) view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                    Log.d("bClick","NEXT clicked");
-//                    if (!clicked) {
-//                        clicked = true;
-//                        main.next.next();
-//                    }
-//                }
-//            });
-//        }else{
-//            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
-//            nxt.setText("Up");
-//            nxt.setOnClickListener(new OnClickListener() {
-//               @Override
-//                public void onClick(View v) {
-//                   Log.d("bClick","UP clicked");
-//                    if (!clicked) {
-//                        clicked = true;
-//                        main.next.finish();
-//                    }
-//                }
-//            });
-//        }
+        if (main.next.hasNext()) {
+            ((android.widget.Button) view.findViewById(R.id.next)).setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Log.d("bClick","NEXT clicked");
+                    if (!clicked) {
+                        clicked = true;
+                        main.next.next();
+                    }
+                }
+            });
+        }else{
+            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
+            nxt.setText("Up");
+            nxt.setOnClickListener(new OnClickListener() {
+               @Override
+                public void onClick(View v) {
+                   Log.d("bClick","UP clicked");
+                    if (!clicked) {
+                        clicked = true;
+                        main.next.finish();
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public void turnOn(Main that) {
-//        if (!that.next.hasNext()) {
-//            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
-//            nxt.setText("Up");
-//        }
+        if (!that.next.hasNext()) {
+            android.widget.Button nxt = ((android.widget.Button) view.findViewById(R.id.next));
+            nxt.setText("Up");
+        }
     }
 
     public void reset() {

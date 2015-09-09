@@ -1,6 +1,7 @@
 package cube.d.n.commoncore;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
@@ -21,6 +22,7 @@ import cube.d.n.commoncore.lines.EquationLine;
  * Created by Colin_000 on 7/15/2015.
  */
 public class HappyView extends View {
+    private boolean top = false;
     long startedAt=-1;
     private final long runTime= 400;
 
@@ -32,6 +34,27 @@ public class HappyView extends View {
 
     public HappyView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.HappyViewAttrs);
+
+
+        final int N = a.getIndexCount();
+
+
+
+        for (int i = 0; i < N; ++i)
+
+
+        {
+            if (a.getIndex(i) ==R.styleable.HappyViewAttrs_top){
+                top = a.getBoolean(R.styleable.HappyViewAttrs_top, false);
+            }
+        }
+
+
+
+
     }
 
     public void start(){
@@ -58,8 +81,11 @@ public class HappyView extends View {
             Random r = new Random();
             float x = at + ((r.nextFloat()-.5f)*(getHeight())/2f);
             float y= r.nextFloat()*(getHeight()-45* BaseApp.getApp().getDpi());
+            if (top){}else{
+                y+=45* BaseApp.getApp().getDpi();
+            }
 
-            Log.d("adding a pop", "adding a pop at: "+ at + " x: "+x+ " y: " + y);
+            //Log.d("adding a pop", "adding a pop at: "+ at + " x: "+x+ " y: " + y);
 
             Point point = new Point((int)x,(int)y);
             Pop p =new Pop(point,pops).widthColor(0xffff0000);
