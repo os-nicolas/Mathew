@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.SolvedAction;
 import cube.d.n.commoncore.eq.Pro.ACosEquation;
 import cube.d.n.commoncore.eq.Pro.ASineEquation;
 import cube.d.n.commoncore.eq.Pro.ATanEquation;
@@ -847,6 +848,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public void initE(Equation equation) {
         ((HiddenInputLine) lines.get(0)).stupid.set(equation.copy());
         ((AlgebraLine) lines.get(1)).initEquation(equation.copy());
+        keyBoardManager.hardSet(lines.get(1).getKeyboad());
     }
 
     public void initEK(Equation equation) {
@@ -858,14 +860,14 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     private Equation goal;
-    private int overlayId;
+//    private int overlayId;
     private boolean alreadySolved=false;
     private ISolveController myMainTut;
 
-    public void solvable(Equation goal,int overlayId , ISolveController controller){
+    public void solvable(Equation goal, ISolveController controller){//int overlayId ,
         allowSolve = true;
         this.goal = goal;
-        this.overlayId = overlayId;
+//        this.overlayId = overlayId;
         myMainTut = controller;
     }
 
@@ -879,57 +881,68 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
             if (copy.same(goal)){
                 alreadySolved = true;
                 //allowTouch =false;
-                final View root = (View)this.getParent();;
+//                final View root = (View)this.getParent();;
 //                while (root.getParent() != null && root.getParent() instanceof View){
 //                    root = (View)root.getParent();
 //                }
-                final View overlay = root.findViewById(overlayId);
-                overlay.setVisibility(VISIBLE);
-                overlay.setAlpha(0);
-                final Main that = this;
-                final Activity acti = (Activity) getContext();
-                myMainTut.solved(new Runnable() {
+//                final View overlay = root.findViewById(overlayId);
+//                overlay.setVisibility(VISIBLE);
+//                overlay.setAlpha(0);
+//                final Main that = this;
+//                final Activity acti = (Activity) getContext();
+//                myMainTut.solved(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        final YayView ytv = (YayView)root.findViewById(overlayId);
+//                        ytv.turnOn(that);
+//                        overlay.animate().alpha(1).setDuration(500).withLayer().withEndAction(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//                                ytv.initOnClickListeners(that);
+//                                new Thread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        try {
+//                                            Thread.sleep(3500);
+//                                            acti.runOnUiThread(new Runnable() {
+//                                                @Override
+//                                                public void run() {
+//                                                    overlay.animate().alpha(0).setDuration(2000).withLayer().withEndAction(new Runnable() {
+//                                                        @Override
+//                                                        public void run() {
+//                                                            acti.runOnUiThread(new Runnable() {
+//                                                                                   @Override
+//                                                                                   public void run() {
+//                                                                                       overlay.setVisibility(GONE);
+//                                                                                   }
+//                                                                               });
+//
+//                                                        }
+//                                                    });
+//                                                }
+//                                            });
+//                                        } catch (Exception e) {
+//                                            e.printStackTrace();
+//                                        }
+//                                    }
+//                                }).start();
+//
+//                            }
+//                        });
+//                    }
+//                });
+                myMainTut.solved(this,new Runnable() {
                     @Override
-                    public void run() {
-                        final YayView ytv = (YayView)root.findViewById(overlayId);
-                        ytv.turnOn(that);
-                        overlay.animate().alpha(1).setDuration(500).withLayer().withEndAction(new Runnable() {
-                            @Override
-                            public void run() {
+                    public void run() {}}
+                );
 
-                                ytv.initOnClickListeners(that);
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            Thread.sleep(3500);
-                                            acti.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    overlay.animate().alpha(0).setDuration(2000).withLayer().withEndAction(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            acti.runOnUiThread(new Runnable() {
-                                                                                   @Override
-                                                                                   public void run() {
-                                                                                       overlay.setVisibility(GONE);
-                                                                                   }
-                                                                               });
-
-                                                        }
-                                                    });
-                                                }
-                                            });
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                        }
-                                    }
-                                }).start();
-
-                            }
-                        });
-                    }
-                });
+//                SelectedRow toAdd = new SelectedRow(1f/9f);
+//                ArrayList<SelectedRowButtons> buttonRow  = new ArrayList<>();
+//                SolvedAction sa = new SolvedAction((EquationLine)lastLine());
+//                buttonRow.add(new SelectedRowButtons(sa.getDisplay(),sa));
+//                toAdd.addButtonsRow(buttonRow,0,1);
+//                ((AlgebraLine)lastLine()).addPopUpLine(toAdd);
             }
         }
     }
@@ -974,11 +987,20 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     }
 
     public void message(final String toDisp){
+        Line ll = lastLine();
+        final KeyBoard k = ll.getKeyboad();
+        if (k!= null&& ll instanceof EquationLine) {
+
+            final MessageButton mb = new MessageButton(toDisp, (EquationLine) ll);
+            message(mb);
+        }
+    }
+
+    public void message(final MessageButton mb){
 
         Line ll = lastLine();
         final KeyBoard k = ll.getKeyboad();
         if (k!= null&& ll instanceof EquationLine){
-            final MessageButton mb = new MessageButton(toDisp,(EquationLine)ll);
             k.popUpButtons.add(mb);
             new Thread(new Runnable() {
 
@@ -990,16 +1012,12 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                         e.printStackTrace();
                     }
                     for (PopUpButton pub: k.popUpButtons){
-                        if (!mb.equals(pub) &&pub instanceof  MessageButton && ((MessageButton)pub).message.equals(toDisp)){
+                        if (!mb.equals(pub) &&pub instanceof  MessageButton && ((MessageButton)pub).message.equals(mb.message)){
                             ((MessageAction)pub.myAction).done();
                         }
-
                     }
                 }
             }).start();
-
-
-
         }
     }
 

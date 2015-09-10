@@ -35,6 +35,8 @@ public class Button implements Physical {
     SuperAction myAction;
     boolean hover = false;
     private int h=-1;
+    private long lastClick=0;
+    private final long fadeTime=300;
 
     public Button() {
 
@@ -123,6 +125,7 @@ public class Button implements Physical {
             if (myAction.canAct()) {
                 bkgPaint.setColor(highlightColor);
                 if (myAction != null) {
+                    lastClick = System.currentTimeMillis();
 //                    TutMessage.getMessage(TypeEqTut.class).alreadyDone();
                     myAction.act();
                 }
@@ -192,6 +195,8 @@ public class Button implements Physical {
         b.canvasHeight = canvas.getHeight();
         b.canvasWidth = canvas.getWidth();
 
+        long now = System.currentTimeMillis();
+
         if (!b.hover) {
             int currentColor = b.bkgPaint.getColor();
             currentColor = BaseApp.colorFade(currentColor, b.targetBkgColor);
@@ -238,10 +243,17 @@ public class Button implements Physical {
 
         offset = t;
 
-        if (!hover) {
-            int currentColor = bkgPaint.getColor();
-            currentColor = BaseApp.colorFade(currentColor, targetBkgColor);
-            bkgPaint.setColor(currentColor);
+        long now = System.currentTimeMillis();
+
+        if (!hover){
+            if (now - lastClick < fadeTime) {
+                long elapsedTime = now - lastClick;
+                float prcnt = ((float) elapsedTime) / ((float) fadeTime);
+                int currentColor = Util.colorMix(highlightColor, targetBkgColor, prcnt);
+                bkgPaint.setColor(currentColor);
+            } else {
+                bkgPaint.setColor(targetBkgColor);
+            }
         }
         Paint bkgbkgPaint = new Paint();
         bkgbkgPaint.setColor(targetBkgColor);

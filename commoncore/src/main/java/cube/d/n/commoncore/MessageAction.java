@@ -11,7 +11,7 @@ public class MessageAction extends Action {
         super(equationLine);
     }
 
-    boolean can = true;
+    private boolean can = true;
 
     @Override
     public boolean canAct(){

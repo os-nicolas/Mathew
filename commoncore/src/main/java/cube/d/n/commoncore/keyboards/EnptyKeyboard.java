@@ -1,6 +1,7 @@
 package cube.d.n.commoncore.keyboards;
 
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -8,6 +9,10 @@ import cube.d.n.commoncore.Main;
 public class EnptyKeyboard extends KeyBoard {
     public EnptyKeyboard(Main owner) {
         super(owner,null);
+    }
+
+    public EnptyKeyboard(Main owner,EquationLine l ) {
+        super(owner,l);
     }
 
     @Override

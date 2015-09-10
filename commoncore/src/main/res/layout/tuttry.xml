@@ -99,19 +99,19 @@
                                 custom:start_layout="tut_e" />
 
                             <cube.d.n.commoncore.HappyView
-                                custom:top="true"
                                 android:layout_width="fill_parent"
                                 android:layout_height="100dp"
+                                android:layout_gravity="bottom"
                                 android:id="@+id/happy"/>
 
-                            <cube.d.n.commoncore.tuts.YayTutView
-                                android:visibility="gone"
-                                android:id="@+id/tuttry_yay"
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent">
+                            <!--<cube.d.n.commoncore.tuts.YayTutView-->
+                                <!--android:visibility="gone"-->
+                                <!--android:id="@+id/tuttry_yay"-->
+                                <!--android:layout_width="fill_parent"-->
+                                <!--android:layout_height="fill_parent">-->
 
 
-                            </cube.d.n.commoncore.tuts.YayTutView>
+                            <!--</cube.d.n.commoncore.tuts.YayTutView>-->
 
                             <LinearLayout
                                 android:visibility="gone"

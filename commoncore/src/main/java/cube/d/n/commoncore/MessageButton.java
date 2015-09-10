@@ -12,17 +12,21 @@ import cube.d.n.commoncore.lines.EquationLine;
  */
 public class MessageButton  extends  PopUpButton {
     boolean done = false;
-    long runTime = 2000l;
     KeyBoard k;
     public String message;
 
-    public MessageButton(String text, EquationLine equationLine) {
-        super(text, new MessageAction(equationLine));
+    public MessageButton(String text, MessageAction ma) {
+        this(text,ma,2000l);
+    }
+
+    public MessageButton(String text, MessageAction ma, final long runTime) {
+        super(text, ma);
         message = text;
 
-        k = equationLine.getKeyboad();
+        k = ma.owner.getKeyboad();
         targetBkgColor=BaseApp.getApp().darkDarkColor;
         this.textPaint.setColor(Color.WHITE);
+        if (runTime!= -1){
         Thread th = new Thread(new Runnable(){
             @Override
             public void run() {
@@ -33,12 +37,21 @@ public class MessageButton  extends  PopUpButton {
                 }
                 ((MessageAction)myAction).done();
             }
-        });
-        th.start();
+        });  th.start();
+        }
+
+    }
+
+    public MessageButton(String text, EquationLine equationLine) {
+        this(text, new MessageAction(equationLine));
     }
 
     protected void fullyHidden() {
         // we need to remove from keyboard
         k.popUpLines.remove(this);
+    }
+
+    public boolean getCan(){
+        return ((MessageAction)myAction).canAct();
     }
 }

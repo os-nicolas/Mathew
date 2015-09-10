@@ -912,6 +912,19 @@ public class AlgebraLine extends EquationLine implements CanTrackChanges,Selects
         }
     }
 
+    public void addPopUpLine(SelectedRow toAdd){
+        KeyBoard ak = getKeyboad();
+        //TODO remove old all popUpLines
+        for (int i= ak.popUpLines.size()-1;i >=0;i--){
+            SelectedRow sr =ak.popUpLines.get(i);
+            sr.kill();
+            if (sr.done()){
+                ak.popUpLines.remove(i);
+            }
+        }
+        ak.popUpLines.add(toAdd);
+    }
+
     @Override
     public void setSelected(Equation equation) {
                 selected=equation;

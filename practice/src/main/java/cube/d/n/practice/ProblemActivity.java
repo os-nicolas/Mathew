@@ -16,14 +16,17 @@ import cube.d.n.commoncore.Action.MainActions.LastAction;
 import cube.d.n.commoncore.Action.MainActions.NextAction;
 import cube.d.n.commoncore.Action.MainActions.ResetAction;
 import cube.d.n.commoncore.Action.MainActions.UpAction;
+import cube.d.n.commoncore.Action.SolvedAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.CircleView;
 import cube.d.n.commoncore.HappyView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.MessageButton;
 import cube.d.n.commoncore.Nextmanager;
 import cube.d.n.commoncore.YayProblemView;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 6/27/2015.
@@ -125,7 +128,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
             }
         };
 
-        ((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
+        //((YayProblemView) myProblem.view.findViewById(R.id.problem_yay)).reset();
         BaseApp.getApp().recordScreen(myProblem.topic + "-" + myProblem.myId);
     }
 
@@ -169,8 +172,8 @@ public class ProblemActivity extends FullAct implements ISolveController {
         Log.d("myProblem.solution", "" + myProblem.solution);
 
         if (myProblem.solution != null) {
-            main.solvable(myProblem.solution, R.id.problem_yay, this);
-        }
+            main.solvable(myProblem.solution, this);
+        } //R.id.problem_yay,
     }
 
 
@@ -190,10 +193,15 @@ public class ProblemActivity extends FullAct implements ISolveController {
     LooperThread solvedLooper;
 
     @Override
-    public void solved(Runnable runnable) {
+    public void solved(Main m,Runnable runnable) {
         myProblem.setSolved(true);
-        main.getProblemImage().circleDrawer.setPrecent(1);
-        main.getProblemImage().circleDrawer.setSubText("SOLVED");
+        m.getProblemImage().circleDrawer.setPrecent(1);
+        m.getProblemImage().circleDrawer.setSubText("SOLVED");
+
+        SolvedAction sa= new SolvedAction((EquationLine)m.lastLine());
+        MessageButton mb = new MessageButton(sa.getDisplay(),sa,4500);
+        m.message(mb);
+
         solvedLooper.mHandler.post(runnable);
         HappyView hv = (HappyView)myProblem.view.findViewById(R.id.happy);
         hv.start();
@@ -207,28 +215,28 @@ public class ProblemActivity extends FullAct implements ISolveController {
 //        while (root.getParent() != null && root.getParent() instanceof View){
 //            root = (View)root.getParent();
 //        }
-        final View overlay = root.findViewById(R.id.problem_yay);
+        //final View overlay = root.findViewById(R.id.problem_yay);
 
 
         final Activity context = (Activity)main.getContext();
 
-        headerLooper.mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-
-                overlay.animate().alpha(0).setDuration(400).withLayer().withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        context.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                overlay.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+//        headerLooper.mHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                overlay.animate().alpha(0).setDuration(400).withLayer().withEndAction(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        context.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                overlay.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
 
         final View whiteout = root.findViewById(R.id.problem_white_out);
         whiteout.setVisibility(View.VISIBLE);
@@ -264,7 +272,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
                                 context.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        overlay.setVisibility(View.GONE);
+//                                        overlay.setVisibility(View.GONE);
                                         main.allowTouch = true;
                                     }
                                 });

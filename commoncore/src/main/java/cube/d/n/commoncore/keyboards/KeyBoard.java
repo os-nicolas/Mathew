@@ -1,26 +1,24 @@
 package cube.d.n.commoncore.keyboards;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-
-import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
-import cube.d.n.commoncore.Measureable;
-import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.Measureable;
+import cube.d.n.commoncore.MessageButton;
+import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.SelectedRow;
 import cube.d.n.commoncore.TouchMode;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.lines.EquationLine;
 
 /**
-* Created by Colin_000 on 5/7/2015.
-*/
+ * Created by Colin_000 on 5/7/2015.
+ */
 public abstract class KeyBoard implements Measureable {
 
     public final Main owner;
@@ -29,26 +27,25 @@ public abstract class KeyBoard implements Measureable {
     public ArrayList<SelectedRow> popUpLines = new ArrayList<>();
     public float buttonsPercent;
     protected final EquationLine line;
-    private boolean active= true;
+    private boolean active = true;
 
 
-
-    public KeyBoard(Main owner,EquationLine line){
+    public KeyBoard(Main owner, EquationLine line) {
         this.owner = owner;
         this.line = line;
         addButtons();
         buttonsPercent = getBaseButtonsPercent();
     }
 
-    public float measureHeight(){
-        return owner.height*buttonsPercent;
+    public float measureHeight() {
+        return owner.height * buttonsPercent;
     }
 
-    public float measureTargetHeight(){
+    public float measureTargetHeight() {
         float baseHeight = measureHeight();
 
 
-        float contextButPercent=0f;
+        float contextButPercent = 0f;
         if (owner.allowPopups) {
             for (PopUpButton b : popUpButtons) {
                 b.updateCanAct();
@@ -60,7 +57,7 @@ public abstract class KeyBoard implements Measureable {
                 contextButPercent += pub.getTargetHeight();
             }
         }
-        return baseHeight + (contextButPercent*owner.height);
+        return baseHeight + (contextButPercent * owner.height);
     }
 
     protected boolean inButtons(MotionEvent event) {
@@ -77,7 +74,7 @@ public abstract class KeyBoard implements Measureable {
         return false;
     }
 
-    public float measureWidth(){
+    public float measureWidth() {
         return owner.width;
     }
 
@@ -87,6 +84,7 @@ public abstract class KeyBoard implements Measureable {
 
     /**
      * null in row indicate a skip
+     *
      * @param row
      * @param left
      * @param right
@@ -100,7 +98,7 @@ public abstract class KeyBoard implements Measureable {
 
         for (float i = 0; i < count; i++) {
             Button b = row.get((int) i);
-            if (b!=null){
+            if (b != null) {
                 b.setLocation(at, at + step, top, bottum);
                 buttons.add(b);
             }
@@ -156,25 +154,32 @@ public abstract class KeyBoard implements Measureable {
                 return true;
             }
         }
-        if (owner.allowPopups){
-        for (Button b : popUpButtons) {
-            if (b.couldClick(event)) {
-                return true;
+        if (owner.allowPopups) {
+            for (Button b : popUpButtons) {
+                if (b.couldClick(event)) {
+                    return true;
+                }
             }
-        }
-        for (SelectedRow pub : popUpLines) {
-            if (pub.couldClick(event)) {
-                return true;
+            for (SelectedRow pub : popUpLines) {
+                if (pub.couldClick(event)) {
+                    return true;
+                }
             }
-        }
+        } else {
+            // even if we don't allow pop ups we allow messages
+            for (PopUpButton myPUB : popUpButtons) {
+                if (myPUB.couldClick(event)) {
+                    return true;
+                }
+            }
         }
         return false;
     }
 
 
-    public void draw(Canvas canvas, float top, float left, Paint paint){
-        for (Button myBut: buttons) {
-            myBut.draw(canvas,paint);
+    public void draw(Canvas canvas, float top, float left, Paint paint) {
+        for (Button myBut : buttons) {
+            myBut.draw(canvas, paint);
         }
 
 
@@ -192,20 +197,29 @@ public abstract class KeyBoard implements Measureable {
                 myPUB.updateLocation(this);
                 myPUB.draw(canvas, paint);
             }
+        } else {
+            // even if we don't allow pop ups we allow messages
+            for (PopUpButton myPUB : popUpButtons) {
+                if (myPUB instanceof MessageButton) {
+                    myPUB.updateLocation(this);
+                    myPUB.draw(canvas, paint);
+                }
+            }
         }
-        drawShadow(canvas,paint.getAlpha()/2,startAt1);
 
-        drawShadow(canvas,paint.getAlpha()/2);
+        drawShadow(canvas, paint.getAlpha() / 2, startAt1);
+
+        drawShadow(canvas, paint.getAlpha() / 2);
     }
 
     private void drawShadow(Canvas canvas, int alpha, int startAt) {
-        Util.drawShadow(canvas, alpha, startAt,measureWidth(),false);
+        Util.drawShadow(canvas, alpha, startAt, measureWidth(), false);
     }
 
 
-    protected void drawShadow(Canvas canvas,int alpha) {
+    protected void drawShadow(Canvas canvas, int alpha) {
         int startAt = ((int) (owner.height - measureHeight()));
-        Util.drawShadow(canvas, alpha, startAt,measureWidth(),false);
+        Util.drawShadow(canvas, alpha, startAt, measureWidth(), false);
     }
 
     abstract protected void addButtons();

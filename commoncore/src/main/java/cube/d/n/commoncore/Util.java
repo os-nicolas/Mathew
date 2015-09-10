@@ -300,4 +300,23 @@ public class Util {
         }
     }
 
+    public static int colorMix(int c1, int c2, float p) {
+        int currentAlpha = android.graphics.Color.alpha(c1);
+        int currentRed = android.graphics.Color.red(c1);
+        int currentGreen = android.graphics.Color.green(c1);
+        int currentBlue = android.graphics.Color.blue(c1);
+
+
+        int targetAlpha = android.graphics.Color.alpha(c2);
+        int targetRed = android.graphics.Color.red(c2);
+        int targetGreen = android.graphics.Color.green(c2);
+        int targetBlue = android.graphics.Color.blue(c2);
+
+        int res = android.graphics.Color.argb(
+                (int) (((1-p) * currentAlpha +  p*targetAlpha) ),
+                (int) (((1-p) * currentRed +  p*targetRed) ),
+                (int) (((1 - p) * currentGreen + p*targetGreen) ),
+                (int) (((1 - p) * currentBlue + p*targetBlue) ));
+        return res;
+    }
 }

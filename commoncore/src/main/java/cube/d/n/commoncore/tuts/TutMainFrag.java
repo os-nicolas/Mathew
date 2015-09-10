@@ -12,13 +12,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Random;
+
+import cube.d.n.commoncore.Action.RunnableAction;
+import cube.d.n.commoncore.Action.SolvedAction;
 import cube.d.n.commoncore.FadeInTextView;
 import cube.d.n.commoncore.HappyView;
 import cube.d.n.commoncore.ISolveController;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.MessageAction;
+import cube.d.n.commoncore.MessageButton;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.HiddenInputLine;
 
 /**
@@ -148,7 +155,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
 
 
         if (goal != "") {
-            main.solvable(Util.stringEquation(goal.split(",")), R.id.tuttry_yay,this);
+            main.solvable(Util.stringEquation(goal.split(",")),this); //R.id.tuttry_yay,
         }
         main.allowRevert = allowRevert;
         main.allowPopups = allowPopUps;
@@ -186,7 +193,24 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
     }
 
     @Override
-    public void solved(Runnable runnable) {
+    public void solved(final Main m,Runnable runnable) {
+        MessageAction sa= new RunnableAction((EquationLine)m.lastLine(), new Runnable() {
+            @Override
+            public void run() {
+                m.reset(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                });
+            }
+        });
+        Random r = new Random();
+        String[] res = {"Yay!","Well Done!", "Good Work!", "Solved!", "Nice!"};
+        int num = r.nextInt(res.length);
+        String str=res[num] + " (Reset)";
+        MessageButton mb = new MessageButton(str,sa,-1);
+        m.message(mb);
 
         hv.start();
         looperThread.mHandler.post(runnable);
@@ -199,32 +223,31 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
 //        while (root.getParent() != null && root.getParent() instanceof View){
 //            root = (View)root.getParent();
 //        }
-        final View overlay = root.findViewById(R.id.tuttry_yay);
+        //final View overlay = root.findViewById(R.id.tuttry_yay);
 
         final Activity context = (Activity)main.getContext();
 
-        headerLooper.mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-
-                overlay.animate().alpha(0).setDuration(400).withLayer().withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        context.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                overlay.setVisibility(View.GONE);
-                            }
-                        });
-                    }
-                });
-            }
-        });
+//        headerLooper.mHandler.post(new Runnable() {
+//            @Override
+//            public void run() {
+//
+//                overlay.animate().alpha(0).setDuration(400).withLayer().withEndAction(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        context.runOnUiThread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                overlay.setVisibility(View.GONE);
+//                            }
+//                        });
+//                    }
+//                });
+//            }
+//        });
 
         final View whiteout = root.findViewById(R.id.tuttry_white_out);
         whiteout.setVisibility(View.VISIBLE);
         whiteout.setAlpha(0);
-
 
         looperThread.mHandler.post(new Runnable() {
             @Override
@@ -253,7 +276,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
                                 context.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        overlay.setVisibility(View.GONE);
+//                                        overlay.setVisibility(View.GONE);
                                         main.allowTouch = true;
                                     }
                                 });
@@ -263,6 +286,7 @@ public class TutMainFrag  extends TutFrag  implements ISolveController {
                 });
             }
         });
+
     }
 
     private void setUp(Main main) {

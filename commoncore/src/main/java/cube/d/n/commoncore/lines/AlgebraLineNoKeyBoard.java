@@ -22,7 +22,7 @@ public class AlgebraLineNoKeyBoard extends AlgebraLine {
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard = new EnptyKeyboard(owner);
+            myKeyBoard = new EnptyKeyboard(owner,this);
         }
         return myKeyBoard;
     }

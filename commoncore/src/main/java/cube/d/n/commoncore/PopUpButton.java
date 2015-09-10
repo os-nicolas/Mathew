@@ -79,8 +79,13 @@ public class PopUpButton extends Button {
 
     }
 
+
+    //boolean lastcan = can;
     public void updateCanAct() {
+        //lastcan = can;
         can = myAction.canAct();
+        //if (can && !lastcan){
+        //}
     }
 
     protected void fullyHidden() {
