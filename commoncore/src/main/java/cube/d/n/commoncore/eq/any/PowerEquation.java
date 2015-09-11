@@ -505,15 +505,12 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
                 }
                 justRemove();
             } else {
-                if (result.isPlusMinus()){
-                    Equation toReplace= this;
-                    while (toReplace.parent instanceof PlusMinusEquation){
-                        toReplace=toReplace.parent;
+                if (this.parent != null && this.parent instanceof PlusMinusEquation){
+                    while (result instanceof PlusMinusEquation) {
+                        result = result.get(0);
                     }
-                    toReplace.replace(result);
-                }else {
-                    replace(result);
                 }
+                replace(result);
             }
         }
     }

@@ -115,10 +115,12 @@ public class Util {
         Equation outerLast = null;
         int startAt = 0;
         while (outerLast == null || !outerLast.reallySame(stupid.get())) {
+            Log.d("reduce outerloop",stupid.get().toString());
             int at = startAt;
             outerLast = stupid.get().copy();
 
             while (at < stupid.get().size()) {
+                Log.d("reduce innerloop",stupid.get().toString() + " "+at);
                 reduce(stupid.get(), at);
 
                 stupid.get().fixIntegrety();
@@ -163,10 +165,12 @@ public class Util {
         Equation newEq = parent.get(index);
         int startAt = 0;
         while (outerLast == null || !outerLast.reallySame(newEq)) {
+            Log.d("reduce outerloop",parent.toString());
             int at = startAt;
             outerLast = newEq.copy();
 
             while (at < newEq.size()) {
+                Log.d("reduce innerloop",parent.toString()  + " at:"+at);
                 reduce(newEq, at);
                 newEq = parent.get(index);
                 newEq.fixIntegrety();
@@ -216,6 +220,13 @@ public class Util {
             if (equation instanceof MultiDivSuperEquation) {
                 if ((equation.get(at).removeSign() instanceof NumConstEquation || equation.get(at).removeSign() instanceof DivEquation) &&
                         (equation.get(at + 1).removeSign() instanceof NumConstEquation || equation.get(at + 1).removeSign() instanceof DivEquation)) {
+                    return true;
+                }
+            }
+            // we want to handle (2+-4)/5
+            if (equation instanceof DivEquation) {
+                if (equation.get(at) instanceof AddEquation &&
+                        equation.get(at + 1).removeSign() instanceof NumConstEquation) {
                     return true;
                 }
             }

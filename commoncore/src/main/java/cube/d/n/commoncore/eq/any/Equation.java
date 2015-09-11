@@ -1340,15 +1340,23 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     public Equation negate() {
-        Equation result = new MinusEquation(owner);
-        result.add(this.copy());
-        return result;
+        if (!(Operations.sortaNumber(this) && Operations.getValue(this).doubleValue()==0)){
+            Equation result = new MinusEquation(owner);
+            result.add(this.copy());
+            return result;
+        }else{
+            return this.copy();
+        }
     }
 
     public Equation plusMinus() {
-        Equation result = new PlusMinusEquation(owner);
-        result.add(this.copy());
-        return result;
+        if (!(Operations.sortaNumber(this) && Operations.getValue(this).doubleValue()==0)){
+            Equation result = new PlusMinusEquation(owner);
+            result.add(this.copy());
+            return result;
+        }else{
+            return this.copy();
+        }
     }
 
     private boolean canPower(Equation dragging) {

@@ -305,7 +305,14 @@ public class Operations {
     }
 
     public static boolean add_canAddNumber(MultiCountData left, MultiCountData right, EquationLine owner) {
-        return left.numbers.size() == 1 && right.numbers.size() == 1 && left.under == null && right.under == null && left.key.size() ==0 &&  right.key.size() ==0 ;
+        return left.numbers.size() == 1 &&
+                right.numbers.size() == 1 &&
+                left.under == null &&
+                right.under == null &&
+                left.key.size() ==0 &&
+                right.key.size() ==0 &&
+                !left.plusMinus &&
+                !right.plusMinus;
     }
 
     public static Equation add_Common(MultiCountData left, MultiCountData right, EquationLine owner) {
