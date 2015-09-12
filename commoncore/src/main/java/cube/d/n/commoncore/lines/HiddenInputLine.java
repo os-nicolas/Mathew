@@ -12,8 +12,8 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
  * Created by Colin on 6/30/2015.
  */
 public class HiddenInputLine extends  InputLine implements HasHeaderLine {
-    public HiddenInputLine(Main owner,App app) {
-        super(owner,app);
+    public HiddenInputLine(Main owner) {
+        super(owner);
     }
 
     @Override

@@ -9,8 +9,8 @@ import cube.d.n.commoncore.keyboards.TrigInputKeyboard;
  * Created by Colin_000 on 8/25/2015.
  */
 public class TrigInput extends InputLine {
-    public TrigInput(Main main,App app) {
-        super(main,app);
+    public TrigInput(Main main) {
+        super(main);
     }
 
     @Override

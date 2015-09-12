@@ -40,12 +40,8 @@ import cube.d.n.commoncore.lines.InputLine;
 public class InputKeyboard extends KeyBoard {
 
     public InputKeyboard(Main owner,InputLine line){
-
         super(owner,line);
-
     }
-
-
 
 
     @Override

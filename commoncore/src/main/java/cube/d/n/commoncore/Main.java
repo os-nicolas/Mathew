@@ -14,6 +14,8 @@ import android.view.ViewParent;
 
 import java.util.ArrayList;
 
+import javax.crypto.BadPaddingException;
+
 import cube.d.n.commoncore.eq.Pro.ACosEquation;
 import cube.d.n.commoncore.eq.Pro.ASineEquation;
 import cube.d.n.commoncore.eq.Pro.ATanEquation;
@@ -115,6 +117,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     private void init(Context context, InputLineEnum startLine) {
 
         Log.d("life is complex", "" + startLine);
+        modeController = BaseApp.getApp().getModeController(startLine);
         this.startLine=startLine;
         initStartLines(startLine);
         keyBoardManager.hardSet(lastLine().getKeyboad());
@@ -123,36 +126,36 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     private void initStartLines(InputLineEnum startLine) {
         if (startLine == InputLineEnum.TRIG) {
-            lines.add(new TrigInput(this, InputLine.App.CALC));
+            lines.add(new TrigInput(this));
         } else if (startLine == InputLineEnum.INPUT) {
-            lines.add(new InputLine(this, InputLine.App.CALC));
+            lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.CALC) {
-            lines.add(new SimpleCalcLine(this, InputLine.App.CALC));
+            lines.add(new SimpleCalcLine(this));
         } else if (startLine == InputLineEnum.PROBLEM_WC) {
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this, InputLine.App.PRAC));
+            lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.PROBLEM_WCI) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this, InputLine.App.PRAC));
+            lines.add(new InputLine(this));
         } else if (startLine == InputLineEnum.PROBLEM_WE) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
+            lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.TUT_E) {
-            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
+            lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoKeyBoard(this));
         } else if (startLine == InputLineEnum.TUT_EK) {
-            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
+            lines.add(new HiddenInputLine(this));
             lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.PROBLEM_WI) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this, InputLine.App.PRAC));
+            lines.add(new InputLine(this));
         }else {
             Log.e("main.init", "InputLineEnum not recognized");
-            lines.add(new InputLine(this, InputLine.App.PRAC));
+            lines.add(new InputLine(this));
         }
     }
 

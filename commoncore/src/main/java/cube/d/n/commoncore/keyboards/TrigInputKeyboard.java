@@ -35,7 +35,7 @@ import cube.d.n.commoncore.lines.InputLine;
 /**
  * Created by Colin_000 on 8/25/2015.
  */
-public abstract class TrigInputKeyboard extends InputKeyboard {
+public class TrigInputKeyboard extends InputKeyboard {
     public TrigInputKeyboard(Main owner, InputLine line) {
         super(owner, line);
     }

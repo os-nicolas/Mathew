@@ -90,7 +90,7 @@ public class CalcEnterAction extends Action {
     }
 
     protected InputLine getInputLine(Main main){
-        return new InputLine(main, InputLine.App.CALC);
+        return new InputLine(main);
     }
 
     protected boolean passes(Equation equation) {

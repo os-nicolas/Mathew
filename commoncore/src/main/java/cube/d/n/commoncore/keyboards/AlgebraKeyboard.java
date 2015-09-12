@@ -32,7 +32,7 @@ import cube.d.n.commoncore.lines.EquationLine;
 /**
  * Created by Colin_000 on 5/9/2015.
  */
-public abstract class AlgebraKeyboard extends KeyBoard {
+public class AlgebraKeyboard extends KeyBoard {
     public AlgebraKeyboard(Main owner, AlgebraLine algebraLine) {
         super(owner,algebraLine);
     }
@@ -53,13 +53,13 @@ public abstract class AlgebraKeyboard extends KeyBoard {
         firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
 
         addButtonsRow(firstRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), getDone(line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), owner.modeController.getDone(line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
 
     }
 
-    protected abstract SuperAction getDone(EquationLine line);
+
 
     @Override
     public float getBaseButtonsPercent() {

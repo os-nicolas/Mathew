@@ -10,7 +10,7 @@ import cube.d.n.commoncore.eq.any.Equation;
  */
 public abstract class InlineInputLine extends  InputLine {
     public InlineInputLine(Main owner) {
-        super(owner,App.INLINE);
+        super(owner);
     }
 
     public abstract void updateModie();

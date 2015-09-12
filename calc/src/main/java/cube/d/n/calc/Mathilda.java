@@ -65,4 +65,9 @@ public class Mathilda extends BaseApp {
     public boolean allowsSub(){
         return true;
     }
+
+    @Override
+    public ModeController getModeController(InputLineEnum startLine) {
+        return new CalcModeController();
+    }
 }

@@ -51,11 +51,6 @@ public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
     }
 
     @Override
-    protected SuperAction getDone(EquationLine line) {
-        return null;
-    }
-
-    @Override
     public float getBaseButtonsPercent() {
         return 0f;
     }

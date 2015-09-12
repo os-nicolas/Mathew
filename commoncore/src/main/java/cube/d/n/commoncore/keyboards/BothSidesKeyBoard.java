@@ -107,11 +107,14 @@ public class BothSidesKeyBoard extends KeyBoard {
     }
 
     private SuperAction getCancel(InlineInputLine line) {
-        return new CancelAction(line);
+
+        return owner.modeController.getCancel(line);
+
     }
 
     private SuperAction getOk(InlineInputLine line) {
-        return new CheckAction(line);
+        return owner.modeController.getOk(line);
+
     }
 
     @Override

@@ -443,4 +443,6 @@ public abstract class BaseApp extends Application{
 
     public void stupidLittleBackDoor(Main main, Context context){
     }
+
+    public abstract ModeController getModeController(InputLineEnum startLine);
 }

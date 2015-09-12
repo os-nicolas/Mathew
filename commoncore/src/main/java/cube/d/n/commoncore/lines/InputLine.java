@@ -21,12 +21,8 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.TouchMode;
-import cube.d.n.commoncore.keyboards.CalcInputKeyboard;
-import cube.d.n.commoncore.keyboards.HelperInputKeyboard;
 import cube.d.n.commoncore.keyboards.InputKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
-import cube.d.n.commoncore.keyboards.PracInputKeyboard;
-import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 
 /**
 * Created by Colin_000 on 5/7/2015.
@@ -53,7 +49,7 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard = owner.modeController.getInputKeyboard(this);
+            myKeyBoard = new InputKeyboard(owner,this);// owner.modeController.getInputKeyboard(this);
 
         }
         return myKeyBoard;
