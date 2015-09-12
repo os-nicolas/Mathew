@@ -17,7 +17,7 @@ public class Done extends Action {
     @Override
     protected void privateAct() {
         ((Selects)owner.owner.lastLine()).setSelected(null);
-        InputLine line = (InputLine)BaseApp.getApp().getInputLine(owner.owner);
+        InputLine line = new InputLine(owner.owner, InputLine.App.CALC);
         owner.owner.addLine(line);
         line.updateOffset();
     }

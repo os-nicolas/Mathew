@@ -1,6 +1,8 @@
 package cube.d.n.commoncore;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -22,17 +24,11 @@ import com.google.android.gms.analytics.Tracker;
 import java.util.Random;
 
 
-import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Action.BothSides.CancelAction;
-import cube.d.n.commoncore.Action.BothSides.CheckAction;
-import cube.d.n.commoncore.Action.SovleScreen.Done;
-import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.eq.any.DivEquation;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.keyboards.AlgebraKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 import cube.d.n.commoncore.lines.AlgebraLine;
-import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 
@@ -125,23 +121,6 @@ public abstract class BaseApp extends Application{
             e.printStackTrace();
         }
         return "";
-    }
-
-
-    public Action getEnter(InputLine line) {
-        return new Solve(line);
-    }
-
-    public Action getDone(EquationLine line) {
-        return new Done(line);
-    }
-
-    public Action getOk(BothSidesLine line) {
-        return new CheckAction(line);
-    }
-
-    public Action getCancel(BothSidesLine line) {
-        return new CancelAction(line);
     }
 
     public int getRate() {
@@ -386,26 +365,19 @@ public abstract class BaseApp extends Application{
     }
 
 
-    public boolean includeClear() {
-        return false;
-    }
 
-    public EquationLine getInputLine(Main owner) {
-        return new InputLine(owner);
-    }
-
-    public KeyBoard getSolveScreenKeyboard(Main owner, AlgebraLine algebraLine) {
-//        SharedPreferences settings = BaseApp.getApp().getSharedPreferences("crazy", 0);
-//        boolean firstTime = settings.getBoolean("firstTime", true);
-//
-//        if (firstTime){
-//            SharedPreferences.Editor editor = settings.edit();
-//            editor.putBoolean("firstTime", false);
-//            editor.commit();
-//            return new ReturnKeyBoard(owner,algebraLine);
-//        }
-        return  new AlgebraKeyboard(owner,algebraLine);
-    }
+//    public KeyBoard getSolveScreenKeyboard(Main owner, AlgebraLine algebraLine) {
+////        SharedPreferences settings = BaseApp.getApp().getSharedPreferences("crazy", 0);
+////        boolean firstTime = settings.getBoolean("firstTime", true);
+////
+////        if (firstTime){
+////            SharedPreferences.Editor editor = settings.edit();
+////            editor.putBoolean("firstTime", false);
+////            editor.commit();
+////            return new ReturnKeyBoard(owner,algebraLine);
+////        }
+//        return  new AlgebraKeyboard(owner,algebraLine);
+//    }
 
     public Typeface getDJV(){
         Typeface dj = Typeface.createFromAsset(this.getAssets(),
@@ -463,5 +435,12 @@ public abstract class BaseApp extends Application{
 
     public float buttonHeight() {
         return 1f/9f;
+    }
+
+    public boolean allowsSub(){
+        return false;
+    }
+
+    public void stupidLittleBackDoor(Main main, Context context){
     }
 }

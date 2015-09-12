@@ -9,9 +9,9 @@ import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 /**
  * Created by Colin_000 on 5/21/2015.
  */
-public class CalcLine extends InputLine  implements HasHeaderLine {
-    public CalcLine(Main owner) {
-        super(owner);
+public class SimpleCalcLine extends InputLine  implements HasHeaderLine {
+    public SimpleCalcLine(Main owner, App app) {
+        super(owner,app);
     }
 
     private KeyBoard myKeyBoard = null;

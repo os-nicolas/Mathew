@@ -9,6 +9,7 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.BothSidesLine;
+import cube.d.n.commoncore.lines.InlineInputLine;
 
 /**
  * Created by Colin_000 on 3/30/2015.
@@ -56,7 +57,7 @@ public class CheckAction extends Action {
         converted.add(((WritingEquation)mine.copy()).convert());
         converted.add(((WritingEquation)mine.copy()).convert());
 
-        Equation newStupid =  ((BothSidesLine)owner).makeModie(converted);
+        Equation newStupid =  ((InlineInputLine)owner).makeModie(converted);
 
         AlgebraLine daLine = ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2));
         daLine.changed();
@@ -69,7 +70,7 @@ public class CheckAction extends Action {
         owner.owner.floorScroll();
     }
 
-    public CheckAction(BothSidesLine myView) {
+    public CheckAction(InlineInputLine myView) {
         super(myView);
     }
 }

@@ -26,7 +26,7 @@ import cube.d.n.commoncore.keyboards.KeyBoard;
 /**
  * Created by Colin_000 on 5/11/2015.
  */
-public class BothSidesLine extends InputLine implements HasHeaderLine {
+public class BothSidesLine extends InlineInputLine implements HasHeaderLine {
 
     BothSidesKeyBoard myKeyboard;
     private BothSidesMode myBothSidesMode;

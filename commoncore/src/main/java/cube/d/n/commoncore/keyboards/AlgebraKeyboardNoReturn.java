@@ -10,6 +10,7 @@ import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
 import cube.d.n.commoncore.Action.SovleScreen.DivBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.MultiBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
+import cube.d.n.commoncore.Action.SuperAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
@@ -17,6 +18,7 @@ import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.PopUpEquationDisplay;
 import cube.d.n.commoncore.R;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 7/7/2015.
@@ -46,6 +48,11 @@ public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
 //
 //        addButtonsRow(firstRow, 0f, 1f,8f / 9f, 9f / 9f);
 
+    }
+
+    @Override
+    protected SuperAction getDone(EquationLine line) {
+        return null;
     }
 
     @Override

@@ -1,24 +1,23 @@
-package dash.dev.mathilda.helper.Actions.Solve;
+package cube.d.n.commoncore.Action.helper;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.lines.EquationLine;
-import dash.dev.mathilda.helper.ColinAct;
 
 /**
  * Created by Colin_000 on 5/20/2015.
  */
-public class DoneAction extends Action {
-    public DoneAction(EquationLine line) {
+public class HelperDoneAction extends Action {
+    public HelperDoneAction(EquationLine line) {
         super(line);
     }
 
     @Override
     public boolean canAct(){
-        return ColinAct.getInstance() !=null;
+        return owner.owner.modeController.DoneCanAct();
     }
 
     @Override
     protected void privateAct() {
-        ColinAct.getInstance().finish();
+        owner.owner.modeController.DoneAct();
     }
 }

@@ -6,18 +6,18 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
-import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.SimpleCalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.OutputLine;
 
 
-public class Solve extends Action {
+public class CalcEnterAction extends Action {
 
-    public Solve(InputLine emilyView) {
+    public CalcEnterAction(InputLine emilyView) {
         super(emilyView);
     }
 
@@ -65,18 +65,18 @@ public class Solve extends Action {
     protected void privateAct() {
 
 
-        Equation newEq = ((WritingEquation) Solve.mine).convert();
+        Equation newEq = ((WritingEquation) CalcEnterAction.mine).convert();
         if (passes(newEq.copy())) {
 
             ArrayList<String> vars = Util.getVars(newEq);
             ((InputLine) owner).deActivate();
             EquationLine line;
-            if (vars.size() != 0 || countEquals(((WritingEquation) Solve.mine)) == 1) {
+            if (vars.size() != 0 || countEquals(((WritingEquation) CalcEnterAction.mine)) == 1) {
 
                 line = getAlgebraLine(((InputLine) owner).owner,newEq);
 
             } else {
-                line = new OutputLine(owner.owner, newEq);
+                line = new OutputLine(owner.owner, newEq, getInputLine(((InputLine) owner).owner));
             }
             newEq.updateOwner(line);
             owner.owner.addLine(line);
@@ -87,6 +87,10 @@ public class Solve extends Action {
 
     protected EquationLine getAlgebraLine(Main main, Equation newEq) {
         return new AlgebraLine(main, newEq);
+    }
+
+    protected InputLine getInputLine(Main main){
+        return new InputLine(main, InputLine.App.CALC);
     }
 
     protected boolean passes(Equation equation) {

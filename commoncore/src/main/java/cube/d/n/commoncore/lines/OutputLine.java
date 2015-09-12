@@ -31,7 +31,7 @@ public class OutputLine extends EquationLine implements HasHeaderLine {
     float currentAlpha;
 
 
-    public OutputLine(final Main owner, Equation newEq) {
+    public OutputLine(final Main owner, Equation newEq,final InputLine il) {
         super(owner);
 
         //Equation oldEq = newEq.copy();
@@ -50,7 +50,7 @@ public class OutputLine extends EquationLine implements HasHeaderLine {
             public void run() {
                 try {
                     sleep(500l);
-                    InputLine inputLine = (InputLine)BaseApp.getApp().getInputLine(owner);
+                    InputLine inputLine = il;
                     owner.addLine(inputLine);
                     //sleep(500l);
                     inputLine.updateOffset();

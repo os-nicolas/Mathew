@@ -1,6 +1,5 @@
 package cube.d.n.commoncore;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -12,11 +11,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 
-import cube.d.n.commoncore.Action.SolvedAction;
 import cube.d.n.commoncore.eq.Pro.ACosEquation;
 import cube.d.n.commoncore.eq.Pro.ASineEquation;
 import cube.d.n.commoncore.eq.Pro.ATanEquation;
@@ -47,17 +44,14 @@ import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.AlgebraLineNoKeyBoard;
 import cube.d.n.commoncore.lines.AlgebraLineNoReturn;
 import cube.d.n.commoncore.lines.BothSidesLine;
-import cube.d.n.commoncore.lines.CalcLine;
+import cube.d.n.commoncore.lines.SimpleCalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.HeaderLine;
 import cube.d.n.commoncore.lines.HiddenInputLine;
 import cube.d.n.commoncore.lines.ImageLine;
 import cube.d.n.commoncore.lines.InputLine;
 import cube.d.n.commoncore.lines.Line;
-import cube.d.n.commoncore.lines.OutputLine;
 import cube.d.n.commoncore.lines.TrigInput;
-import cube.d.n.commoncore.tuts.TutMainFrag;
-import cube.d.n.commoncore.tuts.YayTutView;
 
 /**
  * Created by Colin_000 on 5/7/2015.
@@ -80,6 +74,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
     public float width;
     private InputLineEnum startLine ;
     public ViewParent holder;
+    public ModeController modeController;
 
     public Main(Context context) {
         super(context);
@@ -128,36 +123,36 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
 
     private void initStartLines(InputLineEnum startLine) {
         if (startLine == InputLineEnum.TRIG) {
-            lines.add(new TrigInput(this));
+            lines.add(new TrigInput(this, InputLine.App.CALC));
         } else if (startLine == InputLineEnum.INPUT) {
-            lines.add(new InputLine(this));
+            lines.add(new InputLine(this, InputLine.App.CALC));
         } else if (startLine == InputLineEnum.CALC) {
-            lines.add(new CalcLine(this));
+            lines.add(new SimpleCalcLine(this, InputLine.App.CALC));
         } else if (startLine == InputLineEnum.PROBLEM_WC) {
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this));
+            lines.add(new InputLine(this, InputLine.App.PRAC));
         } else if (startLine == InputLineEnum.PROBLEM_WCI) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this));
+            lines.add(new InputLine(this, InputLine.App.PRAC));
         } else if (startLine == InputLineEnum.PROBLEM_WE) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new HiddenInputLine(this));
+            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
             lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.TUT_E) {
-            lines.add(new HiddenInputLine(this));
+            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
             lines.add(new AlgebraLineNoKeyBoard(this));
         } else if (startLine == InputLineEnum.TUT_EK) {
-            lines.add(new HiddenInputLine(this));
+            lines.add(new HiddenInputLine(this, InputLine.App.PRAC));
             lines.add(new AlgebraLineNoReturn(this));
         } else if (startLine == InputLineEnum.PROBLEM_WI) {
             lines.add(new HeaderLine(this));
             lines.add(new ImageLine(this));
-            lines.add(new InputLine(this));
+            lines.add(new InputLine(this, InputLine.App.PRAC));
         }else {
             Log.e("main.init", "InputLineEnum not recognized");
-            lines.add(new InputLine(this));
+            lines.add(new InputLine(this, InputLine.App.PRAC));
         }
     }
 

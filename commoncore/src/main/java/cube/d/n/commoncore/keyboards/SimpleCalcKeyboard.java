@@ -5,10 +5,11 @@ import android.graphics.Typeface;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.SuperAction;
+import cube.d.n.commoncore.Action.WriteScreen.CalcEnterAction;
 import cube.d.n.commoncore.Action.WriteScreen.DecimalAction;
 import cube.d.n.commoncore.Action.WriteScreen.DeleteAction;
 import cube.d.n.commoncore.Action.WriteScreen.DivAction;
-import cube.d.n.commoncore.Action.WriteScreen.EqualsAction;
 import cube.d.n.commoncore.Action.WriteScreen.LeftAction;
 import cube.d.n.commoncore.Action.WriteScreen.MinusAction;
 import cube.d.n.commoncore.Action.WriteScreen.NumberAction;
@@ -18,22 +19,19 @@ import cube.d.n.commoncore.Action.WriteScreen.PowerAction;
 import cube.d.n.commoncore.Action.WriteScreen.RightAction;
 import cube.d.n.commoncore.Action.WriteScreen.SqrtAction;
 import cube.d.n.commoncore.Action.WriteScreen.TimesAction;
-import cube.d.n.commoncore.Action.WriteScreen.VarAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.EmptyButton;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.R;
-import cube.d.n.commoncore.keyboards.KeyBoard;
-import cube.d.n.commoncore.lines.BothSidesLine;
-import cube.d.n.commoncore.lines.CalcLine;
+import cube.d.n.commoncore.lines.SimpleCalcLine;
 import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin_000 on 5/21/2015.
  */
 public class SimpleCalcKeyboard extends KeyBoard {
-    public SimpleCalcKeyboard(Main owner, CalcLine calcLine) {
+    public SimpleCalcKeyboard(Main owner, SimpleCalcLine calcLine) {
         super(owner,calcLine);
     }
 
@@ -52,7 +50,7 @@ public class SimpleCalcKeyboard extends KeyBoard {
 
         addButtonsRow(firstRow, 0f, 7f / 9f,6f / 9f, 7f / 9f);
         char[] backSpaceUnicode = {'\u232B'};
-        Button del = new Button( new String(backSpaceUnicode), new DeleteAction((CalcLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
+        Button del = new Button( new String(backSpaceUnicode), new DeleteAction((SimpleCalcLine)line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         Typeface myTypeface = Typeface.createFromAsset(BaseApp.getApp().getAssets(), "fonts/DejaVuSans.ttf");
         del.textPaint.setTypeface(myTypeface);
         del.setLocation(7f / 9f, 1f, 6f / 9f, 7f / 9f);
@@ -87,9 +85,13 @@ public class SimpleCalcKeyboard extends KeyBoard {
         thridRow.add(new Button(new String(sqrtUnicode), new SqrtAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
 
         addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
-        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), BaseApp.getApp().getEnter((InputLine) line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
+        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), getEnter((InputLine) line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
+    }
+
+    private SuperAction getEnter(InputLine line) {
+        return new CalcEnterAction(line);
     }
 
     @Override

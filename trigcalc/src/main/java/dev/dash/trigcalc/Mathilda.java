@@ -10,7 +10,6 @@ import java.util.HashMap;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
-import cube.d.n.commoncore.lines.CalcLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.TrigInput;
 

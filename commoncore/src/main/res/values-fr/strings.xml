@@ -24,5 +24,6 @@
     <string name="tut_5_title" >Il est si facile</string>
     <string name="tut_5_body" >Balayez vers la gauche pour commencer</string>
     <string name="tut_5_at" >5/5</string>
+    <string name="Sub">Suppléant</string>
 
 </resources>

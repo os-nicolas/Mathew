@@ -1,6 +1,8 @@
 package dash.dev.mathilda.helper;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -12,10 +14,10 @@ import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
-import dash.dev.mathilda.helper.Actions.BothSides.CancelAction;
-import dash.dev.mathilda.helper.Actions.BothSides.OkAction;
-import dash.dev.mathilda.helper.Actions.Solve.DoneAction;
-import dash.dev.mathilda.helper.Actions.Write.EnterAction;
+import cube.d.n.commoncore.Action.helper.HelperCancelAction;
+import cube.d.n.commoncore.Action.helper.HelperOkAction;
+import cube.d.n.commoncore.Action.helper.HelperDoneAction;
+import cube.d.n.commoncore.Action.helper.HelperEnterAction;
 
 /**
  * Created by Colin_000 on 5/20/2015.
@@ -37,30 +39,9 @@ public class Mathilda extends BaseApp {
         return "UA-59613283-1";
     }
 
-    @Override
-    public Action getEnter(InputLine line) {
-        return new EnterAction(line);
-    }
-
-    @Override
-    public Action getDone(EquationLine line) {
-        return new DoneAction(line);
-    }
-
-    @Override
-    public Action getOk(BothSidesLine line) {
-        return new OkAction(line);
-    }
-
-    @Override
-    public Action getCancel(BothSidesLine line) {
-        return new CancelAction(line);
-    }
-
     private static HashMap<String,View> views = new HashMap<>();
 
     public static void setMain(String mainActivity,Main main) {
-
             views.put(mainActivity, main);
     }
 
@@ -89,6 +70,14 @@ public class Mathilda extends BaseApp {
         return result;
     }
 
+
+    @Override
+    public void stupidLittleBackDoor(Main main, Context context){
+        Mathilda.setMain(ColinAct.screenName,main);
+
+        Intent myIntent = new Intent(context, ColinAct.class);
+        context.startActivity(myIntent);
+    }
 
     public boolean includeClear() {
         return true;

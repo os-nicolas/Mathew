@@ -60,4 +60,9 @@ public class Mathilda extends BaseApp {
     public String getVar2() {
         return "y";
     }
+
+    @Override
+    public boolean allowsSub(){
+        return true;
+    }
 }

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 
 import java.util.ArrayList;
 
+import cube.d.n.commoncore.Action.SuperAction;
 import cube.d.n.commoncore.Action.WriteScreen.ClearAction;
 import cube.d.n.commoncore.Action.WriteScreen.DecimalAction;
 import cube.d.n.commoncore.Action.WriteScreen.DeleteAction;
@@ -38,21 +39,14 @@ import cube.d.n.commoncore.lines.InputLine;
  */
 public class InputKeyboard extends KeyBoard {
 
-
-
     public InputKeyboard(Main owner,InputLine line){
 
         super(owner,line);
 
     }
 
-    boolean alreadyWithClear = false;
-    public void withClear(){
-        if (!alreadyWithClear) {
-            popUpButtons.add((PopUpButton)(new PopUpButton("clear", new ClearAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
-            alreadyWithClear = true;
-        }
-    }
+
+
 
     @Override
     protected void addButtons() {
@@ -109,9 +103,13 @@ public class InputKeyboard extends KeyBoard {
         addButtonsRow(firstRow, 6f / 9f, 7f / 9f);
         addButtonsRow(secondRow, 7f / 9f, 8f / 9f);
         addButtonsRow(thridRow,0f, 7f / 9f,  8f / 9f, 9f / 9f);
-        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), BaseApp.getApp().getEnter((InputLine) line)  ).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
+        Button solve = new Button(BaseApp.getApp().getResources().getString(R.string.enter), getEnter((InputLine) line)  ).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
+    }
+
+    protected SuperAction getEnter(InputLine line){
+        return line.owner.modeController.getEnter(line);
     }
 
     @Override

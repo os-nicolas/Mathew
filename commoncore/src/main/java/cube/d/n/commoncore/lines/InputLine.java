@@ -21,8 +21,11 @@ import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.TouchMode;
+import cube.d.n.commoncore.keyboards.CalcInputKeyboard;
+import cube.d.n.commoncore.keyboards.HelperInputKeyboard;
 import cube.d.n.commoncore.keyboards.InputKeyboard;
 import cube.d.n.commoncore.keyboards.KeyBoard;
+import cube.d.n.commoncore.keyboards.PracInputKeyboard;
 import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 
 /**
@@ -33,6 +36,9 @@ import cube.d.n.commoncore.keyboards.SimpleCalcKeyboard;
 // it's a header and it handles inputs
 
 public class InputLine extends EquationLine implements Selects, HasHeaderLine {
+
+    public enum App {CALC,HELP, INLINE, PRAC}
+
 
     private final PlaceholderEquation selected;
 
@@ -47,10 +53,8 @@ public class InputLine extends EquationLine implements Selects, HasHeaderLine {
     @Override
     public KeyBoard getKeyboad() {
         if (myKeyBoard == null){
-            myKeyBoard = new InputKeyboard(owner,this);
-            if (BaseApp.getApp().includeClear()){
-                ((InputKeyboard)myKeyBoard).withClear();
-            }
+            myKeyBoard = owner.modeController.getInputKeyboard(this);
+
         }
         return myKeyBoard;
     }

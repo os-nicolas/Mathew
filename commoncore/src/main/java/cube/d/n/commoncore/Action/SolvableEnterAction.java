@@ -1,16 +1,14 @@
-package cube.d.n.practice;
+package cube.d.n.commoncore.Action;
 
 import android.util.Log;
 
-import cube.d.n.commoncore.Action.WriteScreen.Solve;
+import cube.d.n.commoncore.Action.WriteScreen.CalcEnterAction;
 import cube.d.n.commoncore.GS;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Util;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
-import cube.d.n.commoncore.eq.write.WritingLeafEquation;
-import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.AlgebraLineNoReturn;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
@@ -18,8 +16,8 @@ import cube.d.n.commoncore.lines.InputLine;
 /**
  * Created by Colin_000 on 8/20/2015.
  */
-public class EnterAction extends Solve {
-    public EnterAction(InputLine emilyView) {
+public class SolvableEnterAction extends CalcEnterAction {
+    public SolvableEnterAction(InputLine emilyView) {
         super(emilyView);
     }
 

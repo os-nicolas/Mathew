@@ -1,11 +1,7 @@
 package cube.d.n.practice;
 
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +13,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cube.d.n.commoncore.Action.Action;
-import cube.d.n.commoncore.Action.WriteScreen.Solve;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
-import cube.d.n.commoncore.lines.InputLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -61,10 +54,6 @@ public class Mathilda extends BaseApp {
 
     public static Mathilda getMathilda(){
         return (Mathilda)BaseApp.getApp();
-    }
-
-    public Action getEnter(InputLine line) {
-        return new EnterAction(line);
     }
 
     public ArrayList<TopicRow> getTopics(){

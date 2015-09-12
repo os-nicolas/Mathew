@@ -24,5 +24,6 @@
     <string name="tut_5_title" >Это так просто</string>
     <string name="tut_5_body" >Проведите пальцем влево, чтобы начать</string>
     <string name="tut_5_at" >5 из 5</string>
+    <string name="Sub">Замена</string>
 
 </resources>

@@ -11,6 +11,7 @@ import cube.d.n.commoncore.Action.SovleScreen.BothSidesMode;
 import cube.d.n.commoncore.Action.SovleScreen.DivBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.MultiBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.SqrtBothSides;
+import cube.d.n.commoncore.Action.SuperAction;
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.Main;
@@ -26,11 +27,12 @@ import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.VarEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
+import cube.d.n.commoncore.lines.EquationLine;
 
 /**
  * Created by Colin_000 on 5/9/2015.
  */
-public class AlgebraKeyboard extends KeyBoard {
+public abstract class AlgebraKeyboard extends KeyBoard {
     public AlgebraKeyboard(Main owner, AlgebraLine algebraLine) {
         super(owner,algebraLine);
     }
@@ -51,11 +53,13 @@ public class AlgebraKeyboard extends KeyBoard {
         firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
 
         addButtonsRow(firstRow, 0f, 7f / 9f,8f / 9f, 9f / 9f);
-        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), BaseApp.getApp().getDone(line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
+        Button solve =new Button( BaseApp.getApp().getResources().getString(R.string.retrn), getDone(line)).withColor(BaseApp.getApp().darkDarkColor).withTextColor(Color.WHITE);
         solve.setLocation(7f / 9f, 1f, 8f / 9f, 9f / 9f);
         buttons.add(solve);
 
     }
+
+    protected abstract SuperAction getDone(EquationLine line);
 
     @Override
     public float getBaseButtonsPercent() {

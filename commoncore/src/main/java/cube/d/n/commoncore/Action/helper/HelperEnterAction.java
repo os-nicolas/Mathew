@@ -1,23 +1,21 @@
-package dash.dev.mathilda.helper.Actions.Write;
+package cube.d.n.commoncore.Action.helper;
 
 import android.content.Intent;
 
 import cube.d.n.commoncore.Action.Action;
+import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
 import cube.d.n.commoncore.Selects;
 import cube.d.n.commoncore.eq.any.Equation;
 import cube.d.n.commoncore.eq.write.WritingEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.InputLine;
-import dash.dev.mathilda.helper.ColinAct;
-import dash.dev.mathilda.helper.Mathilda;
-import dash.dev.mathilda.helper.tuts.TutActivity;
 
 /**
  * Created by Colin_000 on 5/20/2015.
  */
-public class EnterAction extends Action {
-    public EnterAction(InputLine line) {
+public class HelperEnterAction extends Action {
+    public HelperEnterAction(InputLine line) {
         super(line);
     }
 
@@ -78,9 +76,6 @@ public class EnterAction extends Action {
 
         main.addLine(line);
 
-        Mathilda.setMain(ColinAct.screenName,main);
-
-        Intent myIntent = new Intent(owner.owner.getContext(), ColinAct.class);
-        owner.owner.getContext().startActivity(myIntent);
+        BaseApp.getApp().stupidLittleBackDoor(main,  owner.owner.getContext());
     }
 }

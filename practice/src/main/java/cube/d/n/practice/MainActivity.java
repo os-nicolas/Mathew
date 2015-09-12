@@ -105,6 +105,7 @@ public class MainActivity extends FullAct {
         }
 
         rows.add(new MainRow("Feedback", "Send us your comments",FeedBack.class).withSimpleColors());
+        rows.add(new MainRow("Calc", "test",CalcActivity.class).withSimpleColors());
         //rows.add(new MainRow("Donate", "",Support.class).withSimpleColors());
 
         return rows;
