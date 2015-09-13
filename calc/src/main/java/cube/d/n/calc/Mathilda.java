@@ -49,23 +49,6 @@ public class Mathilda extends BaseApp {
         return result;
     }
 
-    public String getMultiSymbol() {
-        return "*";
-    }
-
-    public String getVar1() {
-        return "x";
-    }
-
-    public String getVar2() {
-        return "y";
-    }
-
-    @Override
-    public boolean allowsSub(){
-        return true;
-    }
-
     @Override
     public ModeController getModeController(InputLineEnum startLine) {
         return new CalcModeController();

@@ -54,7 +54,7 @@ public class VarEquation extends LeafEquation implements LegallityCheck {
 
         ArrayList<SelectedRowButtons> buttons = new ArrayList<>();
 
-        if (BaseApp.getApp().allowsSub()){
+        if (owner.modeController().allowsSub()){
             SelectedRowButtons srb = new SelectedRowButtons(BaseApp.getApp().getResources().getString(R.string.Sub), new SubAction((AlgebraLine)owner,(VarEquation)this.copy()));
             buttons.add(srb);
         }

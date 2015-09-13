@@ -86,7 +86,7 @@ public class MultiEquation extends FlexOperation implements MultiDivSuperEquatio
     }
 
     private void init() {
-        display = BaseApp.getApp().getMultiSymbol();
+        display = owner.modeController().getMultiSymbol();
     }
 
     @Override

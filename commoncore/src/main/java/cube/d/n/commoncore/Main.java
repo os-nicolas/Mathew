@@ -711,7 +711,7 @@ public class Main extends View implements View.OnTouchListener, NoScroll {
                 s = "+";
             }
             if (eq instanceof MultiEquation) {
-                s = BaseApp.getApp().getMultiSymbol();
+                s = modeController.getMultiSymbol();
             }
 
             write = new WritingEquation(owner);

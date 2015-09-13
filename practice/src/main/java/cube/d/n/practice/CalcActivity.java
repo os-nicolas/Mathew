@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
 
 import cube.d.n.commoncore.BaseApp;
 
@@ -18,7 +19,7 @@ public class CalcActivity extends FullAct {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
-            setContentView(Mathilda.getView("calc",this));
+            setContentView(((View) Mathilda.getMathilda().getCalcView(this)));
         }
 
         @Override

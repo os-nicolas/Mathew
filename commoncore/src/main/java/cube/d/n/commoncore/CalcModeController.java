@@ -40,4 +40,25 @@ public class CalcModeController extends ModeController {
     public SuperAction getDone(EquationLine line) {
         return new Done(line);
     }
+
+    @Override
+    public boolean bothSidesPopUps() {
+        return false;
+    }
+    @Override
+    public String getMultiSymbol() {
+        return "*";
+    }
+    @Override
+    public String getVar1() {
+        return "x";
+    }
+    @Override
+    public String getVar2() {
+        return "y";
+    }
+    @Override
+    public boolean allowsSub(){
+        return true;
+    }
 }

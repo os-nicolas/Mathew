@@ -46,6 +46,34 @@ public abstract class ModeController {
     public abstract SuperAction getOk(InlineInputLine line);
 
     public abstract SuperAction getDone(EquationLine line);
+
+    public String getVar1(){
+        return "a";
+    }
+
+    public boolean hasB() {
+        return true;
+    }
+
+    public String getVar2() {
+        return "b";
+    }
     //
+    public String getMultiSymbol() {
+        char[] timesUnicode = { '\u00D7'};
+        return new String(timesUnicode);
+    }
+
+    public boolean showReduce(){
+        return true;
+    }
+
+    public boolean bothSidesPopUps(){
+        return false;
+    };
+
+    public boolean allowsSub(){
+        return false;
+    }
 
 }

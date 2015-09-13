@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.ModeController;
 
 /**
  * Created by Colin_000 on 5/9/2015.
@@ -92,10 +94,6 @@ public class Mathilda extends BaseApp {
         return false;
     }
 
-    @Override
-    public boolean bothSidesPopUps() {
-        return true;
-    }
 
     private ArrayList<ProblemRow> initProblems() {
 
@@ -144,8 +142,24 @@ public class Mathilda extends BaseApp {
     }
 
     @Override
-    public boolean showReduce(){
-        return false;
+    public ModeController getModeController(InputLineEnum startLine) {
+        if (InputLineEnum.PROBLEM_WI==startLine || InputLineEnum.PROBLEM_WE==startLine){//(new ArrayList<InputLineEnum>(){InputLineEnum.PROBLEM_WI,InputLineEnum.PROBLEM_WE}).contains(startLine)
+            return new ProblemModeController();
+        }
+        if (InputLineEnum.INPUT == startLine){
+            return new PracCalcModeController();
+        }
+        return null;
     }
 
+    private Main calcView;
+    public Main getCalcView(CalcActivity calcActivity) {
+        if (calcView == null){
+            calcView = new Main(calcActivity,InputLineEnum.INPUT);
+        }
+        if(calcView.getParent() != null) {
+            ((ViewGroup) calcView.getParent()).removeView(calcView);
+        }
+        return calcView;
+    }
 }

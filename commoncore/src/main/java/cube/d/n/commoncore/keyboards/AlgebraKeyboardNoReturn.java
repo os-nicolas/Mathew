@@ -31,7 +31,6 @@ public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
 
     @Override
     protected void addButtons() {
-
 //        popUpButtons.add(new PopUpEquationDisplay((AlgebraLine)line,new AddSelectedToBothSIdes(((AlgebraLine)line))));
 //        popUpButtons.add(new PopUpEquationDisplay((AlgebraLine)line,new MultiBySelected(((AlgebraLine)line))));
 //        popUpButtons.add(new PopUpEquationDisplay((AlgebraLine)line,new DivBySelected(((AlgebraLine)line))));
@@ -47,7 +46,6 @@ public class AlgebraKeyboardNoReturn extends AlgebraKeyboard {
 //        firstRow.add(new Button( new String(sqrtUnicode), new SqrtBothSides((AlgebraLine)line)));
 //
 //        addButtonsRow(firstRow, 0f, 1f,8f / 9f, 9f / 9f);
-
     }
 
     @Override

@@ -414,31 +414,8 @@ public abstract class BaseApp extends Application{
         t.send(new HitBuilders.AppViewBuilder().build());
     }
 
-    public abstract boolean bothSidesPopUps();
-
-    public String getMultiSymbol() {
-        char[] timesUnicode = { '\u00D7'};
-        return new String(timesUnicode);
-    }
-
-    public String getVar1() {
-        return "a";
-    }
-
-    public String getVar2() {
-        return "b";
-    }
-
-    public boolean showReduce(){
-        return true;
-    }
-
     public float buttonHeight() {
         return 1f/9f;
-    }
-
-    public boolean allowsSub(){
-        return false;
     }
 
     public void stupidLittleBackDoor(Main main, Context context){

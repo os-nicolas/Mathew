@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.ModeController;
 import cube.d.n.commoncore.Physical;
 import cube.d.n.commoncore.keyboards.AlgebraKeyboardNoReturn;
 import cube.d.n.commoncore.keyboards.KeyBoard;
@@ -78,4 +79,7 @@ public abstract class Line implements Physical {
     }
 
 
+    public ModeController modeController(){
+        return owner.modeController;
+    }
 }

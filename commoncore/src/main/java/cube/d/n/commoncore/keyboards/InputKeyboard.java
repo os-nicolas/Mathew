@@ -26,6 +26,7 @@ import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.Button;
 import cube.d.n.commoncore.EmptyButton;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.ModeController;
 import cube.d.n.commoncore.PopUpButton;
 import cube.d.n.commoncore.PopUpEquationButton;
 import cube.d.n.commoncore.R;
@@ -55,9 +56,9 @@ public class InputKeyboard extends KeyBoard {
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));
         firstRow.add(new Button("8", new NumberAction((InputLine)line, "8")));
         firstRow.add(new Button("9", new NumberAction((InputLine)line, "9")));
-        firstRow.add(new Button(BaseApp.getApp().getVar1(), new VarAction((InputLine)line, BaseApp.getApp().getVar1())));
-        firstRow.add((BaseApp.getApp().hasB()?
-                new Button( BaseApp.getApp().getVar2(), new VarAction((InputLine)line, BaseApp.getApp().getVar2())):
+        firstRow.add(new Button(mc().getVar1(), new VarAction((InputLine)line, mc().getVar1())));
+        firstRow.add((mc().hasB()?
+                new Button( mc().getVar2(), new VarAction((InputLine)line, mc().getVar2())):
                 new EmptyButton()
         ));
         firstRow.add(new Button("+", new PlusAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
@@ -76,7 +77,7 @@ public class InputKeyboard extends KeyBoard {
         secondRow.add(new Button("6", new NumberAction((InputLine)line, "6")));
         secondRow.add(new Button("(", new ParenthesesAction((InputLine)line, true)));
         secondRow.add(new Button(")", new ParenthesesAction((InputLine)line, false)));
-        secondRow.add(new Button(BaseApp.getApp().getMultiSymbol(), new TimesAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
+        secondRow.add(new Button(owner.modeController.getMultiSymbol(), new TimesAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] divisionUnicode = {'\u00F7'};
         secondRow.add(new Button(new String(divisionUnicode), new DivAction((InputLine)line)).withColor(BaseApp.getApp().darkLightColor));
         char[] leftUnicode = {'\u2190'};
@@ -104,8 +105,12 @@ public class InputKeyboard extends KeyBoard {
         buttons.add(solve);
     }
 
+    private ModeController mc() {
+       return line.owner.modeController;
+    }
+
     protected SuperAction getEnter(InputLine line){
-        return line.owner.modeController.getEnter(line);
+        return line.modeController().getEnter(line);
     }
 
     @Override

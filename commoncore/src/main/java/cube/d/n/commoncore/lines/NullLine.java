@@ -4,6 +4,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.Log;
 
+import cube.d.n.commoncore.CalcModeController;
+import cube.d.n.commoncore.ModeController;
 import cube.d.n.commoncore.keyboards.KeyBoard;
 
 /**
@@ -15,6 +17,7 @@ public class NullLine extends EquationLine {
 
     public NullLine() {
         super(null);
+
     }
 
     @Override
@@ -48,5 +51,10 @@ public class NullLine extends EquationLine {
     public float requestedMinX() {
         Log.e("error","this should not be called");
         return 0;
+    }
+
+    ModeController mmc = new CalcModeController();
+    public ModeController modeController(){
+        return mmc;
     }
 }

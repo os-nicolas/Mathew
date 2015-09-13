@@ -13,11 +13,11 @@ public class HelperDoneAction extends Action {
 
     @Override
     public boolean canAct(){
-        return owner.owner.modeController.DoneCanAct();
+        return owner.modeController().DoneCanAct();
     }
 
     @Override
     protected void privateAct() {
-        owner.owner.modeController.DoneAct();
+        owner.modeController().DoneAct();
     }
 }

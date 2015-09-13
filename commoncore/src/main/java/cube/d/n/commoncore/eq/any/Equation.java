@@ -1688,7 +1688,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
 
     public ArrayList<SelectedRow> getSelectedRow() {
         ArrayList<SelectedRow> res = new ArrayList<>();
-        if (BaseApp.getApp().bothSidesPopUps()){
+        if (owner.modeController().bothSidesPopUps()){
             ArrayList<SelectedOpAction> acts = new ArrayList<>();
             if (AddSelectedToBothSIdes.canAct(owner.stupid.get(),this)){
                 //Log.i("Generating Selected Row","Add");
@@ -2001,7 +2001,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
     }
 
     protected void tryToReduce(ArrayList<SelectedRowButtons> buttons, final Equation that) {
-        if (BaseApp.getApp().showReduce()) {
+        if (owner.modeController().showReduce()) {
 
             ArrayList<String> vars = Util.getVars(this);
             if (vars.size() == 0) {

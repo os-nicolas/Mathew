@@ -457,7 +457,7 @@ public class WritingEquation extends Equation {
     }
 
     private String times() {
-        return BaseApp.getApp().getMultiSymbol();
+        return owner.modeController().getMultiSymbol();
     }
 
     private Equation convert(Equation at) {

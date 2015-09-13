@@ -12,7 +12,7 @@ public class TimesAction extends InlineOpAction {
     public TimesAction(InputLine emilyView) {
         super(emilyView);
 
-        display = BaseApp.getApp().getMultiSymbol();
+        display = owner.modeController().getMultiSymbol();
     }
 
     @Override
