@@ -29,6 +29,10 @@ public class ProblemModeController extends CalcModeController {
         return new SolvableEnterAction(line);
     }
 
+    public boolean bothSidesPopUps(){
+        return true;
+    };
+
 //    @Override
 //    public SuperAction getCancel(InlineInputLine line) {
 //        return new CancelAction(line);
