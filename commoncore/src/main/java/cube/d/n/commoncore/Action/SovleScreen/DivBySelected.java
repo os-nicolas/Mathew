@@ -103,7 +103,7 @@ public class DivBySelected extends SelectedOpAction {
                 if (sideRoot.equals(sel)){
                     return true;
                 }
-                while (sideRoot instanceof SignEquation){
+                while ((sideRoot instanceof SignEquation ) && !sideRoot.equals(sel)){
                     sideRoot = sideRoot.get(0);
                 }
                 return (sideRoot.contains(sel)&& sideRoot instanceof MultiEquation) ||

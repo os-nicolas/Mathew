@@ -149,7 +149,7 @@ public class Mathilda extends BaseApp {
         if (InputLineEnum.INPUT == startLine){
             return new PracCalcModeController();
         }
-        return null;
+        return new PracCalcModeController();
     }
 
     private Main calcView;

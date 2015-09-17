@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import cube.d.n.commoncore.BaseApp;
 import cube.d.n.commoncore.InputLineEnum;
@@ -52,7 +53,48 @@ public class MainActivity extends FullAct {
 
         final TwoLineArrayAdaptor adapter = new TwoLineArrayAdaptor(this, getMainRows(),listView);
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
+//        LinearLayout ll = (LinearLayout)findViewById(R.id.main_header);
+
+        findViewById(R.id.icon_how).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Random r = new Random();
+                int actNum = r.nextInt(5);
+                final View target = findViewById(R.id.icon_how);
+                if (actNum==0) {
+                    target.animate().withLayer().rotationBy(360).setDuration(600).start();
+                }else  if (actNum==1){
+                    target.animate().withLayer().scaleX(1.2f).scaleY(1.2f).setDuration(200).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            target.animate().setStartDelay(50).withLayer().scaleX(1).scaleY(1).setDuration(200).start();
+                        }
+                    }).start();
+                }else  if (actNum==2){
+                    target.animate().withLayer().rotationBy(20).setDuration(200).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            target.animate().withLayer().rotationBy(-40).setDuration(200).withEndAction(new Runnable() {
+                                @Override
+                                public void run() {
+                                    target.animate().withLayer().rotationBy(20).setDuration(200).start();
+                                }
+                            }).start();
+                        }
+                    }).start();
+                }else  if (actNum==3){
+                    target.animate().withLayer().rotationBy(-360).setDuration(400).start();
+                }else  if (actNum==4){
+                    target.animate().withLayer().scaleX(.8f).scaleY(.8f).setDuration(200).withEndAction(new Runnable() {
+                        @Override
+                        public void run() {
+                            target.animate().setStartDelay(50).withLayer().scaleX(1).scaleY(1).setDuration(200).start();
+                        }
+                    }).start();
+                }
+            }
+        });
+
 
         if (Mathilda.getMathilda().hasSupported()){
             findViewById(R.id.thank_you).setVisibility(View.VISIBLE);
@@ -100,12 +142,14 @@ public class MainActivity extends FullAct {
 
         rows.add(new Divider());
 
+        rows.add(new MainRow("Calculator", "",CalcActivity.class).withSimpleColors());
+
         if (Mathilda.hasCompletedTut()) {
             rows.add(new MainRow("Tutorial", "Get to know Drag & Drop Algebra", TutActivity.class).withSimpleColors());
         }
 
         rows.add(new MainRow("Feedback", "Send us your comments",FeedBack.class).withSimpleColors());
-        rows.add(new MainRow("Calc", "test",CalcActivity.class).withSimpleColors());
+
         //rows.add(new MainRow("Donate", "",Support.class).withSimpleColors());
 
         return rows;

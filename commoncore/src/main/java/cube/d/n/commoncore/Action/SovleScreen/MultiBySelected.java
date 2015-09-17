@@ -97,7 +97,7 @@ public class MultiBySelected extends SelectedOpAction {
                 // a/5 = 100 where 5 is selected
                 int side = ((EqualsEquation)stup).side(sel);
                 Equation sideRoot = stup.get(side);
-                while (sideRoot instanceof SignEquation || sideRoot instanceof MultiEquation){
+                while ((sideRoot instanceof SignEquation || sideRoot instanceof MultiEquation) && !sideRoot.equals(sel)){
                     sideRoot = sideRoot.get(sideRoot.deepIndexOf(sel));
                 }
 

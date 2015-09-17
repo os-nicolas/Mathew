@@ -17,6 +17,7 @@ import cube.d.n.commoncore.eq.any.MultiEquation;
 import cube.d.n.commoncore.eq.any.NumConstEquation;
 import cube.d.n.commoncore.eq.any.PlusMinusEquation;
 import cube.d.n.commoncore.eq.any.PowerEquation;
+import cube.d.n.commoncore.eq.any.SignEquation;
 import cube.d.n.commoncore.lines.AlgebraLine;
 import cube.d.n.commoncore.lines.EquationLine;
 
@@ -1033,11 +1034,12 @@ public class Operations {
 
     public static BigDecimal getValue(Equation e) {
         BigDecimal minus = BigDecimal.ONE;
-        while (e instanceof MinusEquation || e instanceof PlusMinusEquation) {
-            e = e.get(0);
+        Equation ee= e.copy();
+        while (ee instanceof MinusEquation || ee instanceof PlusMinusEquation) {
+            ee = ee.get(0);
             minus = minus.negate();
         }
-        return ((NumConstEquation) e).getValue().multiply(minus);
+        return ((NumConstEquation) ee).getValue().multiply(minus);
     }
 
     public static boolean sortaNumber(Equation e) {
@@ -1047,15 +1049,40 @@ public class Operations {
     public static Equation flip(Equation demo) {
 
         EquationLine owner = demo.owner;
-        // if it's a div equation flip it over
-        if (demo instanceof DivEquation) {
-            if (demo.get(0) instanceof NumConstEquation && ((NumConstEquation) demo.get(0)).getValue().doubleValue() == 1) {
-                return demo.get(1);
+
+        // if we have a number we invert it
+        if (sortaNumber(demo)){
+            return NumConstEquation.create(BigDecimal.ONE.divide(getValue(demo)),owner);
+        }
+
+        // if it's div equation we flip it over
+        if (demo.removeSign() instanceof DivEquation) {
+            Equation at = (Equation)demo;
+            Equation atPrnt = null;
+            while (at instanceof SignEquation) {
+                atPrnt= at;
+                at = at.get(0);
             }
-            Equation result = new DivEquation(owner);
-            result.add(demo.get(1));
-            result.add(demo.get(0));
-            return result;
+
+            // if we have 1/asdfas we just want asdfas not asdfas/1
+            if (at.get(0) instanceof NumConstEquation && ((NumConstEquation) at.get(0)).getValue().doubleValue() == 1) {
+                if (atPrnt==null){
+                    return at.get(1);
+                }else{
+                    atPrnt.set(0,at.get(1));
+                    return demo;
+                }
+            }else {
+                Equation result = new DivEquation(owner);
+                result.add(at.get(1));
+                result.add(at.get(0));
+                if (atPrnt==null){
+                    return result;
+                }else{
+                    atPrnt.set(0,result);
+                    return demo;
+                }
+            }
         }
         // else just throw a 1 over it
         Equation result = new DivEquation(owner);

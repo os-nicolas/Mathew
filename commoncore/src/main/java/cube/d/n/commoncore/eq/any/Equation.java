@@ -18,6 +18,7 @@ import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.Action.SovleScreen.AddSelectedToBothSIdes;
 import cube.d.n.commoncore.Action.SovleScreen.DivBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.MultiBySelected;
+import cube.d.n.commoncore.Action.SovleScreen.PowerBySelected;
 import cube.d.n.commoncore.Action.SovleScreen.SelectedOpAction;
 import cube.d.n.commoncore.Animation;
 import cube.d.n.commoncore.BaseApp;
@@ -918,7 +919,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (owner.stupid.get().equals(this)) {
                 owner.stupid.set(eq);
             }
-            // we make an arrya to avoid concurrent modification
+            // we make an array to avoid concurrent modification
             for(Object watcher : watchers.toArray()){
                 ((GS<Equation>)watcher).set(eq);
             }
@@ -1701,6 +1702,9 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
             if (DivBySelected.canAct(owner.stupid.get(),this)){
                 //Log.i("Generating Selected Row","Div");
                 acts.add( new DivBySelected((AlgebraLine)owner));
+            }
+            if (PowerBySelected.canAct(owner.stupid.get(), this)){
+                acts.add( new PowerBySelected((AlgebraLine)owner));
             }
 
             ArrayList<SelectedRowButtons> butts = new ArrayList<>();

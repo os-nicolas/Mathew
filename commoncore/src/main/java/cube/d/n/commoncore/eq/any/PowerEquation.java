@@ -335,10 +335,12 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
     public void power_PowerPower(Equation result, boolean wasEvenRoot) {
         result = power_PowerPowerExp(result);
 
+        Equation inner = null;
         if (result instanceof NumConstEquation && ((NumConstEquation) result).getValue().doubleValue() == 1) {
-            get(0).replace(get(0).get(0));
+            inner =get(0).get(0);
         } else {
-            get(0).get(1).replace(result);
+            inner =get(0).copy();
+            inner.get(1).replace(result);
         }
 
         if (wasEvenRoot && !(Operations.sortaNumber(result) && Operations.getValue(result).doubleValue() == 0)) {
@@ -346,9 +348,9 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             while (toReplace.parent instanceof PlusMinusEquation){
                 toReplace=toReplace.parent;
             }
-            toReplace.replace(get(0).plusMinus());
+            toReplace.replace(inner.plusMinus());
         } else {
-            replace(get(0));
+            replace(inner);
         }
     }
 
