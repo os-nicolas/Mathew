@@ -37,7 +37,7 @@ public class DecimalAction extends Action {
     }
 
     private Equation getEq() {
-        NumConstEquation numEq = new NumConstEquation(0, owner);
+        NumConstEquation numEq = (NumConstEquation)NumConstEquation.create(0, owner);
         numEq.setDisplay(numEq.getDisplay(0) + ".");
         return numEq;
     }

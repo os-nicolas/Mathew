@@ -170,7 +170,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
     public Equation remove(int pos) {
         if (pos == 0) {
             Equation result = get(0);
-            this.get(0).replace(new NumConstEquation(BigDecimal.ONE, owner));
+            this.get(0).replace(NumConstEquation.create(BigDecimal.ONE, owner));
             return result;
         } else if (pos == 1) {
             this.replace(get(0));
@@ -239,6 +239,15 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
                     changed(p);
                 }
             }));
+        }else if (Operations.divide_CanBotIsOne(a,b)) {
+            buttons.add(new SeletedRowEquationButton(Operations.divide_BotIsOne(a,b,owner),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_BotIsOne(a,b,owner));
+                    changed(p);
+                }
+            }));
         }else if (Operations.divide_CanCancel(common)) {
             buttons.add(new SeletedRowEquationButton(Operations.divide_Cancel(owner, new MultiCountData(top), new MultiCountData(bot), common),new Action(owner) {
                 @Override
@@ -251,15 +260,7 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
                     changed(p);
                 }
             }));
-        }else if (Operations.divide_CanBringIn(a.copy())){
-            buttons.add(new SeletedRowEquationButton(Operations.divide_BringIn(a.copy(), b.copy(), owner),new Action(owner) {
-                @Override
-                protected void privateAct() {
-                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
-                    that.replace(Operations.divide_BringIn(a.copy(), b.copy(), owner));
-                    changed(p);
-                }
-            }));
+
         }else if (Operations.divide_CanFlatten(a.copy(),b.copy())){
             buttons.add(new SeletedRowEquationButton(Operations.divide_Flatten(a.copy(), b.copy(), owner),new Action(owner) {
                 @Override
@@ -291,6 +292,18 @@ public class DivEquation extends Operation implements MultiDivSuperEquation, Bin
                     }
                 }));
             }
+
+        }
+        //a^2/9 -> (a/sqrt(9))^2
+        if (Operations.divide_CanBringIn(a.copy())){
+            buttons.add(new SeletedRowEquationButton(Operations.divide_BringIn(a.copy(), b.copy(), owner),new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(Operations.divide_BringIn(a.copy(), b.copy(), owner));
+                    changed(p);
+                }
+            }));
         }
 
         // we try to reduce too

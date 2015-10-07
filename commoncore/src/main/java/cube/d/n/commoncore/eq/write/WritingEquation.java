@@ -255,7 +255,7 @@ public class WritingEquation extends Equation {
                             Equation oldEq = left;
                             left = new PowerEquation(owner);
                             left.add(oldEq);
-                            left.add(new NumConstEquation(new BigDecimal(.5),owner));
+                            left.add(NumConstEquation.create(new BigDecimal(.5),owner));
                         }
                         wasParen = true;
 
@@ -400,7 +400,7 @@ public class WritingEquation extends Equation {
                                 Equation oldEq = at;
                                 at = new PowerEquation(owner);
                                 at.add(oldEq);
-                                at.add(new NumConstEquation(new BigDecimal(.5),owner));
+                                at.add(NumConstEquation.create(new BigDecimal(.5),owner));
                             }
                             wasParen = true;
 

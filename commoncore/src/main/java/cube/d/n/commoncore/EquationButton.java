@@ -54,7 +54,7 @@ public class EquationButton extends Button {
             warnEq.add(new WritingLeafEquation(BaseApp.getApp().getResources().getString(R.string.assume) + ": ", owner));
             warnEq.add(bot);
             warnEq.add(new WritingLeafEquation("\u2260", owner));
-            warnEq.add(new NumConstEquation(0, owner));
+            warnEq.add(NumConstEquation.create(0, owner));
 
         }
         return this;

@@ -117,11 +117,11 @@ public class EquationCounts {
             if ( v.doubleValue()  == 1) {
                 return root;
             }else if (v.doubleValue()  == 0){
-                return new NumConstEquation(BigDecimal.ONE, owner);
+                return NumConstEquation.create(BigDecimal.ONE, owner);
             }else {
                 Equation newEq = new PowerEquation(owner);
                 newEq.add(root);
-                newEq.add(new NumConstEquation(v, owner));
+                newEq.add(NumConstEquation.create(v, owner));
                 return newEq;
             }
         }else if (equations.size()==1 && v.doubleValue()==0){
@@ -129,7 +129,7 @@ public class EquationCounts {
             newEq.add(root);
             Equation key =(Equation)equations.keySet().toArray()[0];
             if (equations.get(key)==0){
-                newEq = new NumConstEquation(BigDecimal.ONE,owner);
+                newEq = NumConstEquation.create(BigDecimal.ONE,owner);
             }else if (equations.get(key)==1){
                 newEq.add(key);
             }else{
@@ -158,10 +158,10 @@ public class EquationCounts {
                 }
             }
             if (v.doubleValue() != 0) {
-                addEq.add(new NumConstEquation(v, owner));
+                addEq.add(NumConstEquation.create(v, owner));
             }
             if (addEq.size()==0) {
-                newEq = new NumConstEquation(BigDecimal.ONE,owner);
+                newEq = NumConstEquation.create(BigDecimal.ONE,owner);
             }else if (addEq.size()==1){
                 newEq = addEq.get(0);
             }else{

@@ -10,7 +10,9 @@ import java.util.HashMap;
 
 import cube.d.n.commoncore.Action.Action;
 import cube.d.n.commoncore.BaseApp;
+import cube.d.n.commoncore.InputLineEnum;
 import cube.d.n.commoncore.Main;
+import cube.d.n.commoncore.ModeController;
 import cube.d.n.commoncore.lines.BothSidesLine;
 import cube.d.n.commoncore.lines.EquationLine;
 import cube.d.n.commoncore.lines.InputLine;
@@ -18,6 +20,7 @@ import cube.d.n.commoncore.Action.helper.HelperCancelAction;
 import cube.d.n.commoncore.Action.helper.HelperOkAction;
 import cube.d.n.commoncore.Action.helper.HelperDoneAction;
 import cube.d.n.commoncore.Action.helper.HelperEnterAction;
+import dash.dev.mathilda.helper.tuts.HelperModeController;
 
 /**
  * Created by Colin_000 on 5/20/2015.
@@ -79,12 +82,17 @@ public class Mathilda extends BaseApp {
         context.startActivity(myIntent);
     }
 
-    public boolean includeClear() {
-        return true;
+    @Override
+    public ModeController getModeController(InputLineEnum startLine) {
+        return new HelperModeController();
     }
 
-    @Override
-    public boolean bothSidesPopUps() {
-        return false;
-    }
+//    public boolean includeClear() {
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean bothSidesPopUps() {
+//        return false;
+//    }
 }

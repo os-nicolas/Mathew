@@ -182,7 +182,7 @@ public class MultiCountData {
         }
 
         if (getNumbersValue().doubleValue() == 0){
-            top = new NumConstEquation(BigDecimal.ZERO,owner);
+            top = NumConstEquation.create(BigDecimal.ZERO,owner);
             if (under != null){
                 if (!(under.getNumbersValue().doubleValue()==0.0)){
                     bot =null;
@@ -199,7 +199,7 @@ public class MultiCountData {
                     top.add(e);
                 }
             }else{
-                top = new NumConstEquation(BigDecimal.ONE, owner);
+                top = NumConstEquation.create(BigDecimal.ONE, owner);
             }
         } else {
             if (key.size() == 1 && getNumbersValue().abs().doubleValue()==1.0) {

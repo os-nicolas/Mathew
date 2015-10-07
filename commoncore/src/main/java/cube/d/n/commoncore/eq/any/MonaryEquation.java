@@ -147,7 +147,7 @@ public abstract class MonaryEquation extends Equation {
     public void remove(){
         super.remove();
         if (size() ==0){
-            add(new NumConstEquation(BigDecimal.ONE,owner));
+            add(NumConstEquation.create(BigDecimal.ONE,owner));
         }
     }
 

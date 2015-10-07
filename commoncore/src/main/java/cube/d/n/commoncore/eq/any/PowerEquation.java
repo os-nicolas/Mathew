@@ -110,7 +110,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
        if (size()==2){
            if (isSqrt() && this.get(1) instanceof DivEquation) {
                Equation oldEq = this.get(1);
-               Equation newEq = new NumConstEquation(new BigDecimal(.5), owner);
+               Equation newEq = NumConstEquation.create(new BigDecimal(.5), owner);
                if (oldEq.isSelected()) {
                    newEq.setSelected(true);
                }
@@ -360,24 +360,20 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
         MultiCountDatas left = new MultiCountDatas(get(0).get(1).copy());
         MultiCountDatas right = new MultiCountDatas(get(1).copy());
 
-        left = Operations.Multiply(left, right, true, owner);
+        MultiCountDatas outcome = Operations.Multiply(left, right, true, owner);
 
-        if (left.size() == 1) {
-            MultiCountData mine = ((MultiCountData) left.toArray()[0]);
+        if (outcome.size() == 1) {
+            MultiCountData mine = ((MultiCountData) outcome.toArray()[0]);
             result = mine.getEquation(owner);
-        } else if (left.size() > 1) {
+        } else if (outcome.size() > 1) {
             result = new AddEquation(owner);
-            for (MultiCountData e : left) {
+            for (MultiCountData e : outcome) {
                 result.add(e.getEquation(owner));
             }
         }
 
-        if (left.neg) {
-            if (result instanceof NumConstEquation) {
-                result = result.get(0);
-            } else {
-                result = result.negate();
-            }
+        if (outcome.neg) {
+            result = result.negate();
         }
         return result;
     }
@@ -419,7 +415,7 @@ public class PowerEquation extends Operation implements BinaryEquation, BinaryOp
             inner.add(this.get(0).copy());
             inner.add(exp);
             result = new DivEquation(owner);
-            result.add(new NumConstEquation(BigDecimal.ONE, owner));
+            result.add(NumConstEquation.create(BigDecimal.ONE, owner));
             result.add(inner);
         }
         return result;

@@ -60,7 +60,7 @@ public class HelperOkAction extends Action {
         converted.add(((WritingEquation)mine.copy()).convert());
         converted.add(((WritingEquation)mine.copy()).convert());
 
-        Equation newStupid =  ((BothSidesLine)owner).makeModie(converted);
+        Equation newStupid =  ((InlineInputLine)owner).makeModie(converted);
 
         AlgebraLine daLine = ((AlgebraLine)owner.owner.getLine(owner.owner.getLinesSize()-2));
         daLine.changed();

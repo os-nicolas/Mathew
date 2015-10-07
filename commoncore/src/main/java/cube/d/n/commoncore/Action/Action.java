@@ -28,10 +28,12 @@ public abstract class Action extends SuperAction {
 
 
     public void act(){
+        ErrorReporter.log("tried to act " + name(), owner.stupid.get().toString());
         super.act();
-        if (canAct()){
-            ErrorReporter.log("acted", owner.stupid.get().toString());
-        }
+    }
+
+    protected String name(){
+        return this.getClass().getName();
     }
 
     protected void setNewStupid(EqualsEquation myStup) {

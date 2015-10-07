@@ -1209,7 +1209,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 // write as 1/8 or decimal?
                 //&& Math.floor(1/((NumConstEquation) dragging).getValue()) == 1/((NumConstEquation) dragging).getValue()
                 if (dragging instanceof NumConstEquation && ((NumConstEquation) dragging).getValue().doubleValue() != 0) {
-                    power = new NumConstEquation(BigDecimal.ONE.divide(((NumConstEquation) dragging).getValue(), 20, RoundingMode.HALF_UP), ((NumConstEquation) dragging).owner);
+                    power = NumConstEquation.create(BigDecimal.ONE.divide(((NumConstEquation) dragging).getValue(), 20, RoundingMode.HALF_UP), ((NumConstEquation) dragging).owner);
                 } else {
                     power = Operations.flip(dragging);
                 }
@@ -1244,7 +1244,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                     dragging.justRemove();
                 } else {
                     if (op == Op.MULTI && dragging.parent instanceof EqualsEquation) {
-                        dragging.replace(new NumConstEquation(BigDecimal.ONE, owner));
+                        dragging.replace(NumConstEquation.create(BigDecimal.ONE, owner));
                     } else {
                         dragging.remove();
                     }
@@ -1260,7 +1260,7 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
                 }
             } else {
                 if ((op == Op.DIV || op == Op.MULTI) && dragging.parent instanceof EqualsEquation) {
-                    dragging.replace(new NumConstEquation(BigDecimal.ONE, owner));
+                    dragging.replace(NumConstEquation.create(BigDecimal.ONE, owner));
                 } else {
                     dragging.remove();
                 }

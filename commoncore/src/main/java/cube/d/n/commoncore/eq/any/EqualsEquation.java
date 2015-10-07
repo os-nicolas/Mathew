@@ -78,7 +78,7 @@ public class EqualsEquation extends Equation {
 		Equation result = get(pos);
 		super.justRemove(get(pos));
 		//TODO this is only sort right
-		NumConstEquation num = new NumConstEquation(BigDecimal.ZERO, owner);
+		NumConstEquation num = (NumConstEquation)NumConstEquation.create(BigDecimal.ZERO, owner);
 		add(pos,num);
 		return result;
 	}
@@ -87,7 +87,7 @@ public class EqualsEquation extends Equation {
 	public void justRemove(Equation equation) {
 		int pos = indexOf(equation);
 		super.justRemove(equation);
-		NumConstEquation num = new NumConstEquation(BigDecimal.ZERO, owner);
+		NumConstEquation num = (NumConstEquation)NumConstEquation.create(BigDecimal.ZERO, owner);
 		add(pos,num);
 	}
 

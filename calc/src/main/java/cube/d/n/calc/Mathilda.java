@@ -25,11 +25,6 @@ public class Mathilda extends BaseApp {
     }
 
     @Override
-    public boolean bothSidesPopUps() {
-        return false;
-    }
-
-    @Override
     public String getPropertyId(){
         return "UA-59613283-3";
     }

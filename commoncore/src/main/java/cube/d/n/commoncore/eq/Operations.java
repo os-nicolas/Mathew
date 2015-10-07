@@ -398,7 +398,7 @@ public class Operations {
         // otherwise make an add equation and throw them both in it
         if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0
                 && right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
-            return new NumConstEquation(0, owner);
+            return NumConstEquation.create(0, owner);
         } else if (left.key.isEmpty() && left.numbers.size() == 1 && left.getValue().doubleValue() == 0) {
             return right.getEquation(owner);
         } else if (right.key.isEmpty() && right.numbers.size() == 1 && right.getValue().doubleValue() == 0) {
@@ -764,6 +764,8 @@ public class Operations {
             if (owner instanceof AlgebraLine) {
                 ((AlgebraLine) owner).tryWarn(b.copy());
             }
+        }else if (divide_CanBotIsOne(a, b)){
+            result = divide_BotIsOne(a, b, owner);
         }else if (divide_CanSamePower(a, b)) {
             result = divide_samePower(a, b, owner);
 
@@ -783,10 +785,6 @@ public class Operations {
                 if (owner instanceof AlgebraLine) {
                     ((AlgebraLine) owner).tryWarn(common.getEquation(owner));
                 }
-                // if we have sqrt(5)/23
-            }else if (divide_CanBringIn(a)){
-                result = divide_BringIn(a, b, owner);
-                // if we have a/b where a and b are sortaNumbers
             }else  if (divide_CanFlatten(a,b)){
                 result = divide_Flatten(a, b, owner);
             } else if (divide_CanSortaNumbers(top, bot)) {
@@ -801,13 +799,25 @@ public class Operations {
                     result = divide_Divide(owner, top, bot);
                 }
 
-            } else {
+                // if we have sqrt(5)/23
+            }else if (divide_CanBringIn(a)) {
+                result = divide_BringIn(a, b, owner);
+                // if we have a/b where a and b are sortaNumbers
+            }else {
                 Equation topEq = a;
                 Equation botEq = b;
                 result = getResult(topEq, botEq,owner);
             }
         }
         return result;
+    }
+
+    public static Equation divide_BotIsOne(Equation top, Equation bot, EquationLine owner) {
+        return top.copy();
+    }
+
+    public static boolean divide_CanBotIsOne(Equation topEq, Equation botEq) {
+        return (sortaNumber(botEq) && getValue(botEq).doubleValue() == 1) && !((sortaNumber(topEq) && getValue(topEq).doubleValue() == 0));
     }
 
     public static DivEquation divide_Flatten(Equation oldTop, Equation oldBot, EquationLine owner) {
@@ -921,7 +931,7 @@ public class Operations {
 
 
     public static boolean divide_CanSortaNumbers(MultiCountData top, MultiCountData bot) {
-        return  bot.numbers.size() == 1 && top.numbers.size() == 1 && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);//
+        return  bot.numbers.size() == 1 && top.numbers.size() <= 1  && bot.under == null && top.under == null && !(bot.getValue().doubleValue() == 0);// we don't care if top has a number a/.5 is totally ok
     }
 
     public static Equation divide_BringIn(Equation a, Equation b, EquationLine owner) {
@@ -1006,7 +1016,7 @@ public class Operations {
             if (owner instanceof CanWarn) {
                 ((CanWarn) owner).tryWarn(botEq);
             }
-            return new NumConstEquation(0.0, owner);
+            return NumConstEquation.create(0.0, owner);
         } else
             // they are both meaningful
             if (!(sortaNumber(botEq) && getValue(botEq).abs().doubleValue() == 1)) {
@@ -1086,7 +1096,7 @@ public class Operations {
         }
         // else just throw a 1 over it
         Equation result = new DivEquation(owner);
-        result.add(new NumConstEquation(BigDecimal.ONE, owner));
+        result.add(NumConstEquation.create(BigDecimal.ONE, owner));
         result.add(demo);
         return result;
     }

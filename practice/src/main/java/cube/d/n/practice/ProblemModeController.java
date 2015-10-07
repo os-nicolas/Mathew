@@ -29,9 +29,18 @@ public class ProblemModeController extends CalcModeController {
         return new SolvableEnterAction(line);
     }
 
+    public boolean showReduce(){
+        return false;
+    }
+
     public boolean bothSidesPopUps(){
         return true;
     };
+
+    @Override
+    public boolean allowsSub(){
+        return false;
+    }
 
 //    @Override
 //    public SuperAction getCancel(InlineInputLine line) {

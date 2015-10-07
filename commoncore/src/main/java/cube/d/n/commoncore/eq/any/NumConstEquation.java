@@ -19,7 +19,7 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
         this.round = round;
     }
 
-	public NumConstEquation(BigDecimal number, EquationLine owner) {
+	private NumConstEquation(BigDecimal number, EquationLine owner) {
 		super(owner);
         if (owner instanceof InputLine){
             showAll = true;
@@ -28,13 +28,13 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 	}
 
 
-    public NumConstEquation(double i, EquationLine emilyView) {
+    private NumConstEquation(double i, EquationLine emilyView) {
         this(new BigDecimal(i), emilyView);
     }
 
     private void init(BigDecimal number) {
         if (number.compareTo(BigDecimal.ZERO) < 0){
-            Log.e("", "should be positive");
+            Log.e("err", "should be positive");
         }
         this.display = number+"";
         if (display.contains(".")) {

@@ -43,4 +43,9 @@ public class PracCalcModeController extends CalcModeController {
     public boolean bothSidesPopUps(){
         return true;
     };
+
+    @Override
+    public boolean allowsSub(){
+        return false;
+    }
 }

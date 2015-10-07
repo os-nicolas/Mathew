@@ -34,7 +34,7 @@ public class NumberAction extends Action {
                     l.setDisplay(num);
                 }
             } else {
-                Equation newEq = new NumConstEquation(Integer.parseInt(num), ((InputLine) owner));
+                Equation newEq = NumConstEquation.create(Integer.parseInt(num), ((InputLine) owner));
                 ((InputLine) owner).insert(newEq);
             }
         } else {
@@ -46,7 +46,7 @@ public class NumberAction extends Action {
                     r.setDisplay(num);
                 }
             } else {
-                Equation newEq = new NumConstEquation(Integer.parseInt(num), ((InputLine) owner));
+                Equation newEq = NumConstEquation.create(Integer.parseInt(num), ((InputLine) owner));
                 ((InputLine) owner).insert(newEq);
             }
         }
