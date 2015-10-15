@@ -1523,14 +1523,10 @@ abstract public class Equation extends ArrayList<Equation> implements Physical {
         if (this.parent != null && !dragging.deepContains(this)) {
             if (ops.contains(Op.MULTI) && canMuli(dragging,true) && !(this instanceof MultiEquation)) {
                 dragLocations.add(new DragLocation(Op.MULTI, dragging, this, true));
-            }
-            if (ops.contains(Op.MULTI) && canMuli(dragging,false) && !(this instanceof MultiEquation)) {
                 dragLocations.add(new DragLocation(Op.MULTI, dragging, this, false));
             }
-            if (ops.contains(Op.ADD) && canAdd(dragging) && !(this instanceof AddEquation)) {
+            if (ops.contains(Op.ADD) && canAdd(dragging) && !(this instanceof AddEquation) && !(this instanceof NumConstEquation && this.parent instanceof MinusEquation)) {
                 dragLocations.add(new DragLocation(Op.ADD, dragging, this, true));
-            }
-            if (ops.contains(Op.ADD) && canAdd(dragging) && !(this instanceof AddEquation)) {
                 dragLocations.add(new DragLocation(Op.ADD, dragging, this, false));
             }
             if (ops.contains(Op.DIV) && canDiv(dragging)) {

@@ -4,4 +4,7 @@ One-Step Equations	1Step	"(,=,26,(,+,8,a,),)"
 Two-Step Equations	2Step	"(,=,(,+,-6,(,/,a,4,),),-5,)"
 Multi-Step Equations	*Step	"(,=,6,(,+,(,+,1,(,*,-2,a,),5,),),)"
 Proportion Equations	Props	"(,=,(,/,2,6,),(,/,8,a,),)"
-Word Problems	Words
+Word Problems	Words	
+Rational Equations	Ratio	"(,=,(,/,(,+,a,-6,),a,),(,+,(,/,(,+,a,4,),a,),1,),)"
+Equations with Two Variables	2vars	"(,=,(,+,(,*,2,a,),(,*,5,b,),),9,)"
+Using the Quadratic Formula	Quad	"(,=,(,+,(,^,a,2,),(,*,-4,a,),4,),0,)"

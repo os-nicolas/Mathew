@@ -199,7 +199,7 @@ public class ProblemActivity extends FullAct implements ISolveController {
         m.getProblemImage().circleDrawer.setSubText("SOLVED");
 
         SolvedAction sa= new SolvedAction((EquationLine)m.lastLine());
-        MessageButton mb = new MessageButton(sa.getDisplay(),sa,4500);
+        MessageButton mb = new MessageButton(sa.getDisplay(),sa,6000);
         m.message(mb);
 
         solvedLooper.mHandler.post(runnable);

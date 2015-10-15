@@ -56,4 +56,9 @@ public class HelperModeController extends ModeController {
     public KeyBoard getAlgebraKeyboard(Main main, AlgebraLine algebraLine) {
         return new AlgebraKeyboard(main,algebraLine);
     }
+
+    @Override
+    public boolean hasClear(){
+        return true;
+    }
 }

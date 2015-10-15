@@ -76,4 +76,7 @@ public abstract class ModeController {
         return false;
     }
 
+    public boolean hasClear(){
+        return false;
+    }
 }

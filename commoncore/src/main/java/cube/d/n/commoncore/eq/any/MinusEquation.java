@@ -42,6 +42,18 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
                     changed(p);
                 }
             }));
+        }else if (this.get(0) instanceof MultiDivSuperEquation){
+            final Equation yo = that.get(0).copy();
+            yo.get(0).replace(yo.get(0).negate());
+
+            buttons.add(new SeletedRowEquationButton(yo,new Action(owner) {
+                @Override
+                protected void privateAct() {
+                    MyPoint p = that.getNoneNullLastPoint(that.getX(),that.getY());
+                    that.replace(yo.copy());
+                    changed(p);
+                }
+            }));
         }else if (get(0) instanceof MinusEquation){
             buttons.add(new SeletedRowEquationButton(that.get(0).get(0).copy(),new Action(owner) {
                 @Override
@@ -122,6 +134,10 @@ public class MinusEquation extends MonaryEquation implements SignEquation{
             replace(get(0).get(0));
         }else if (get(0) instanceof PlusMinusEquation){
             replace(get(0));
+        }else if (get(0) instanceof MultiDivSuperEquation){
+            final Equation yo = get(0).copy();
+            yo.get(0).replace(yo.get(0).negate());
+            replace(yo);
         }else if (get(0) instanceof AddEquation){
             replace(negateAll(get(0).copy()));
         }else if (Operations.sortaNumber(get(0)) && Operations.getValue(get(0)).doubleValue() ==0){

@@ -879,7 +879,9 @@ public class Operations {
     }
 
     public static Equation divide_Divide(EquationLine owner, MultiCountData top, MultiCountData bot) {
-        Equation result;BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
+        Equation result;
+        BigDecimal value = top.getValue().divide(bot.getValue(), 20, RoundingMode.HALF_UP);
+        top.negative = false;
         bot.numbers = new ArrayList<Equation>();
         top.numbers = new ArrayList<Equation>();
         top.numbers.add(NumConstEquation.create(value, owner));

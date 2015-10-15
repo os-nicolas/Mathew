@@ -51,6 +51,9 @@ public class InputKeyboard extends KeyBoard {
         if(owner.getLast()!=null) {
             popUpButtons.add((PopUpButton) (new PopUpEquationButton(owner.getLast().copy(), new LastAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
         }
+        if (line.owner.modeController.hasClear()) {
+            popUpButtons.add((PopUpButton) (new PopUpButton("Clear", new ClearAction((InputLine) line)).withColor(BaseApp.getApp().lightLightColor)));
+        }
 
         ArrayList<Button> firstRow = new ArrayList<Button>();
         firstRow.add(new Button("7", new NumberAction((InputLine)line, "7")));

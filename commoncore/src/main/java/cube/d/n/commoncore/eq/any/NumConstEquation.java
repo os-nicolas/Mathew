@@ -107,8 +107,8 @@ public class NumConstEquation extends LeafEquation implements LegallityCheck {
 	}
 	
 	@Override
-	public Equation copy() {
-		Equation result = new NumConstEquation(this.getValue(), this.owner,this);
+	public NumConstEquation copy() {
+        NumConstEquation result = new NumConstEquation(this.getValue(), this.owner,this);
 
 		return result;
 	}
