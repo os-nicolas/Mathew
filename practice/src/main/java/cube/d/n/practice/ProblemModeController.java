@@ -24,6 +24,18 @@ public class ProblemModeController extends CalcModeController {
         return new AlgebraKeyboardNoReturn(main,algebraLine);
     }
 
+    public String getVar1(){
+        return "a";
+    }
+
+    public boolean hasB() {
+        return false;
+    }
+
+    public String getVar2() {
+        return "b";
+    }
+
     @Override
     public SuperAction getEnter(InputLine line) {
         return new SolvableEnterAction(line);
